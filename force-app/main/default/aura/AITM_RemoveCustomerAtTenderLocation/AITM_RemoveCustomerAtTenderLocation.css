@@ -1,0 +1,8 @@
+.THIS.slds-modal{
+ max-width: 500px !important;
+ width:500px !important;
+}
+
+.THIS .slds-button_icon-inverse,.THIS .slds-button--icon-inverse {
+    color: rgb(255, 255, 255);
+}

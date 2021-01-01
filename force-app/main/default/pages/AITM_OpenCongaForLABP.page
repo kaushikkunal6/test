@@ -1,0 +1,11 @@
+<apex:page sidebar="false" showHeader="false">
+    <apex:includeLightning />
+    <script type = "text/javascript">
+        window.onload = function () {
+            var base_url = window.location.origin;
+            var queryString = window.location.search;
+            queryString = queryString.substring(1);
+            window.location.href = base_url + '/labptendering/apex/APXTConga4__Conga_Composer?serverUrl=' +'{!$Api.Partner_Server_URL_370}' + '&Id='+queryString;
+        }
+    </script>
+</apex:page>

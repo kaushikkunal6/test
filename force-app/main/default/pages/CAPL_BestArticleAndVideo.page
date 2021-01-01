@@ -1,0 +1,285 @@
+<apex:page showHeader="true" sidebar="true" controller="CAPL_BestArticleAndVideoController">
+	
+	<apex:slds /> 
+
+	<style>
+		.slds-scope .slds-truncate {
+			white-space: normal !important;
+		}
+
+		#articles, #comments {
+			display: none;
+		}
+
+		.slds-scope img {
+		    width: 50% !important;
+    		height: 50% !important;
+		}
+	</style>
+
+	<div class="slds-scope">
+
+    <apex:actionStatus id="status">
+        <apex:facet name="start">
+            <div class="demo-only demo--inverse">
+			  <div class="slds-spinner_container">
+			    <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+			      <span class="slds-assistive-text">Loading</span>
+			      <div class="slds-spinner__dot-a"></div>
+			      <div class="slds-spinner__dot-b"></div>
+			    </div>
+			  </div>
+			</div>
+        </apex:facet>
+    </apex:actionStatus> 
+
+    <apex:form >
+    	<apex:outputPanel id="form">
+			<div class="slds-grid_align-center slds-grid slds-wrap" style="margin-top: 2rem;">
+				<div class="slds-tabs_default">
+				    <ul class="slds-tabs_default__nav" role="tablist">
+				        <li id="videosTab" class="slds-tabs_default__item slds-is-active" onclick="showVideos();">
+				        	<a class="slds-tabs_default__link"  id="tab-default-1__item">VIDEOS</a>
+				        </li>
+				        <li id="articlesTab" class="slds-tabs_default__item" onclick="showArticles();">
+				        	<a class="slds-tabs_default__link"  id="tab-default-2__item" >ARTICLES</a>
+				        </li>
+				        <li id="commentsTab" class="slds-tabs_default__item" onclick="showComments();">
+				        	<a class="slds-tabs_default__link"  id="tab-default-2__item" >COMMENTS</a>
+				        </li>
+				    </ul>
+				</div>
+
+		    	<div id="videos" class="slds-size_12-of-12">
+					<div class="slds-box_x-small slds-text-align_center slds-m-around_x-small">
+						<table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_col-bordered">
+						    <thead>
+						        <tr class="slds-text-title_caps">
+						            <th scope="col">
+						                <div class="slds-truncate" title="Title">Title</div>
+						            </th>
+						            <th scope="col">
+						                <div class="slds-truncate" title="Image">Image</div>
+						            </th>
+						            <th scope="col">
+						                <div class="slds-truncate" title="Description">Description</div>
+						            </th>
+						            <th scope="col">
+						                <div class="slds-truncate" title="LinkToVideo">LinkToVideo</div>
+						            </th>
+						            <th scope="col">
+						                <div class="slds-truncate">The best video</div>
+						            </th>
+						        </tr>
+						    </thead>
+						    <tbody>
+						    	<apex:repeat var="video" value="{!videosList}">
+							        <tr>
+							            <td scope="row">
+							                <div class="slds-truncate" title="{!video.CAPL_Title__c}">
+							                	{!video.CAPL_Title__c}
+							                </div>
+							            </td>
+							            <td >
+							                <div class="slds-truncate" title="{!video.CAPL_Image__c}">
+							                	<apex:outputText value="{!video.CAPL_Image__c}" escape="false" />
+							                </div>
+							            </td>
+							            <td >
+							                <div class="slds-truncate" title="{!video.CAPL_Description__c}">
+							                	{!video.CAPL_Description__c}
+							                </div>
+							            </td>
+							            <td >
+							                <div class="slds-truncate" title="{!video.CAPL_LinkToVideo__c}">
+							                	{!video.CAPL_LinkToVideo__c}
+							                </div>
+							            </td>
+							            <td >
+							                <div class="slds-truncate" style="width: 150px;">
+							                	<button id="{!video.Id}" onclick="selectBestVideo(this.id)" class="slds-button slds-button_brand" type="button">
+							                		Select as best
+							                	</button>
+							                </div>
+							            </td>
+							        </tr>
+						        </apex:repeat>
+						    </tbody>
+						</table>
+					</div>
+				</div>
+				<div id="articles" class="slds-size_12-of-12">
+					<div class="slds-box_x-small slds-text-align_center slds-m-around_x-small">
+						<table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_col-bordered">
+						    <thead>
+						        <tr class="slds-text-title_caps">
+						            <th scope="col">
+						                <div class="slds-truncate" title="Title">Title</div>
+						            </th>
+						            <th scope="col">
+						                <div class="slds-truncate" title="ArticleTotalViewCount">ArticleTotalViewCount</div>
+						            </th>
+						            <th scope="col">
+						                <div class="slds-truncate" title="LastPublishedDate">LastPublishedDate</div>
+						            </th>
+						            <th scope="col">
+						                <div class="slds-truncate">The best article</div>
+						            </th>
+						        </tr>
+						    </thead>
+						    <tbody>
+						    	<apex:repeat var="article" value="{!articlesList}">
+							        <tr>
+							            <td scope="row">
+							                <div class="slds-truncate" title="{!article.Title}">
+							                	{!article.Title}
+							                </div>
+							            </td>
+							            <td >
+							                <div class="slds-truncate" title="{!article.ArticleTotalViewCount}">
+							                	{!article.ArticleTotalViewCount}
+							                </div>
+							            </td>
+							            <td >
+							                <div class="slds-truncate" title="{!article.LastPublishedDate}">
+							                	{!article.LastPublishedDate}
+							                </div>
+							            </td>
+							            <td >
+							                <div class="slds-truncate" style="width: 150px;">
+							                	<button id="{!article.Id}" onclick="selectBestArticle(this.id)" class="slds-button slds-button_brand" type="button">
+							                		Select as best
+							                	</button>
+							                </div>
+							            </td>
+							        </tr>
+						        </apex:repeat>
+						    </tbody>
+						</table>
+					</div>
+				</div>
+				<div id="comments" class="slds-size_12-of-12">
+					<div class="slds-grid_align-center slds-grid slds-wrap" style="margin-top: 2rem; padding: 1rem;">
+						<div class="slds-size_8-of-12">
+							<div class="slds-form-element">
+								<label class="slds-form-element__label" for="backgroundURL">
+									Background URL
+								</label>
+								<div class="slds-form-element__control">
+									<input value="{!backgroundURL}" class="slds-input backgroundURL"/>
+								</div>
+							</div>
+						</div>
+						
+						<div class="slds-size_4-of-12">
+							<div class="slds-form-element" style="padding-left: 20px;">
+								<label class="slds-form-element__label" for="backgroundURL">
+									<span style="visibility: hidden;">lol</span>
+								</label>
+								<div class="slds-form-element__control">
+									<a href="" onclick="assignBackground()" class="slds-button slds-button_neutral">Add</a>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+					<div class="slds-box_x-small slds-text-align_center slds-m-around_x-small">
+						<table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_col-bordered">
+						    <thead>
+						        <tr class="slds-text-title_caps">
+						            <th scope="col">
+						                <div class="slds-truncate" title="Body">Body</div>
+						            </th>
+						            <th scope="col">
+						                <div class="slds-truncate" title="Created By">Created By</div>
+						            </th>
+						            <th scope="col">
+						                <div class="slds-truncate">The best article</div>
+						            </th>
+						        </tr>
+						    </thead>
+						    <tbody>
+						    	<apex:repeat var="comment" value="{!comments}">
+							        <tr>
+							            <td scope="row">
+							                <div class="slds-truncate" title="{!comment.CommentBody}">
+							                	<apex:outputText value="{!comment.CommentBody}" escape="false" /> 
+							                </div>
+							            </td>
+							            <td >
+							                <div class="slds-truncate" title="{!comment.CreatedBy.Name}">
+							                	{!comment.CreatedBy.Name}
+							                </div>
+							            </td>
+							            <td >
+							                <div class="slds-truncate" style="width: 150px;">
+							                	<button id="{!comment.Id}" onclick="selectBestComment(this.id)" class="slds-button slds-button_brand" type="button">
+							                		Select as best
+							                	</button>
+							                </div>
+							            </td>
+							        </tr>
+						        </apex:repeat>
+						    </tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</apex:outputPanel>
+
+		<apex:actionFunction action="{!assingBestArticle}" name="selectBestArticle" reRender="form" status="status">
+	        <apex:param name="articleId" value="" />
+	    </apex:actionFunction>
+	    <apex:actionFunction action="{!assingBestVideo}" name="selectBestVideo" reRender="form" status="status">
+	        <apex:param name="videoId" value="" />
+	    </apex:actionFunction>
+	    <apex:actionFunction action="{!assingBestComment}" name="selectBestComment" reRender="form" status="status">
+	        <apex:param name="commentId" value="" />
+	    </apex:actionFunction>
+	    <apex:actionFunction action="{!assingCommentBackground}" name="selectBestCommentBackground" reRender="form" status="status">
+	        <apex:param name="backgroundURL" value="" />
+	    </apex:actionFunction>
+
+	</apex:form>
+
+	</div>
+
+	<script>
+		function showVideos() {
+			document.getElementById("articles").style.display = "none";
+			document.getElementById("comments").style.display = "none";
+			document.getElementById("videos").style.display = "block";
+
+			document.getElementById("videosTab").classList.add("slds-is-active");
+			document.getElementById("articlesTab").classList.remove("slds-is-active");
+			document.getElementById("commentsTab").classList.remove("slds-is-active");
+		}
+
+		function showArticles() {
+			document.getElementById("videos").style.display = "none";
+			document.getElementById("comments").style.display = "none";
+			document.getElementById("articles").style.display = "block";
+
+			document.getElementById("articlesTab").classList.add("slds-is-active");
+			document.getElementById("videosTab").classList.remove("slds-is-active");
+			document.getElementById("commentsTab").classList.remove("slds-is-active");
+		}
+
+		function showComments() {
+			document.getElementById("videos").style.display = "none";
+			document.getElementById("articles").style.display = "none";
+			document.getElementById("comments").style.display = "block";
+
+			document.getElementById("commentsTab").classList.add("slds-is-active");
+			document.getElementById("videosTab").classList.remove("slds-is-active");
+			document.getElementById("articlesTab").classList.remove("slds-is-active");
+		}
+
+		function assignBackground() {
+			var background = document.getElementsByClassName("backgroundURL")[0].value;
+
+			selectBestCommentBackground(background);
+		}
+	</script>
+
+</apex:page>

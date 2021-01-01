@@ -1,0 +1,55 @@
+<template>        
+    <template if:true={loading}>
+        <lightning-spinner size="small" variant="brand"></lightning-spinner>
+    </template>
+    <div class="formBody">
+        <lightning-record-edit-form
+                density="comfy"
+                object-api-name={tenderLocLineItemObject}
+                onload={handleOnLoad}
+                onerror={handleError}
+                onsubmit={handleSubmit}
+                onsuccess={handleSuccess}
+                record-id={lineId}> 
+            <div class="slds-grid slds-wrap slds-m-top_small">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Requested_Volume_USG__c" onchange={onFirstKeyUp} disabled={isInDebriefStage}>
+                    </lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Offered_Volume__c" onchange={onFirstKeyUp}>
+                    </lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Volume__c" disabled={isInDebriefStage} onchange={onFirstKeyUp}>
+                    </lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Percentage_Volume_Offered__c" onchange={onFirstKeyUp} disabled={isInDebriefStage}>
+                    </lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Requested_Volume_UoM__c" onchange={onFirstKeyUp} disabled={isInDebriefStage}>
+                    </lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Ad_hoc_Volume__c" onchange={onFirstKeyUp} disabled={isInDebriefStage}>
+                    </lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Awarded_Volume__c" onchange={onFirstKeyUp} disabled={isInDebriefStage}>
+                    </lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-m-around_medium slds-align_absolute-center">
+                <lightning-button variant="success" class="slds-align-absolute_center" type="submit" label="Save" disabled={isSaveDisabled}></lightning-button>
+            </div>
+        </lightning-record-edit-form>
+    </div>
+</template>

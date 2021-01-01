@@ -1,0 +1,134 @@
+<aura:component controller="AITM_DeBriefKeyPerMetricsController">
+	<aura:attribute name="tender" type="AITM_Tender__c" />
+	<aura:attribute name="isAfterInit" type="Boolean" default="false" />
+	<aura:attribute name="grossProfitVariance" type="Decimal" />
+	<aura:attribute name="volumeVariance" type="Decimal" />
+	<aura:attribute name="workingCapitalVariance" type="Decimal" />
+	<aura:attribute name="pricePerfIndexVariance" type="Decimal" />
+	<aura:attribute name="rowcVariance" type="Decimal" />
+
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+	<aura:handler event="force:refreshView" action="{!c.doInit}" />
+
+	<aura:registerEvent name="updateTenderEvent" type="c:AITM_UpdateTenderEvent" />
+
+	<div class="slds-page-header noborderbottom" role="banner">
+		<div class="slds-grid">
+			<div class="slds-col slds-has-flexi-truncate">
+				<div class="slds-grid">
+					<div class="slds-grid slds-type-focus slds-no-space">
+						<h1 class="slds-page-header__title slds-truncate" title="My Items" style="font-family: 'Salesforce Sans',Arial,sans-serif; font-weight: 300; padding-bottom: 5px;">Key Performance Metrics</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<table class="slds-table slds-table_bordered slds-table_cell-buffer">
+		<thead>
+			<tr class="slds-text-title_caps">
+				<th scope="col">
+					<div class="slds-truncate" title="KPI's">KPI's</div>
+				</th>
+				<th scope="col">
+					<div class="slds-truncate" title="PREVIOUS CONTRACT">PREVIOUS CONTRACT</div>
+				</th>
+				<th scope="col">
+					<div class="slds-truncate" title="NEW CONTRACT">NEW CONTRACT</div>
+				</th>
+				<th scope="col">
+					<div class="slds-truncate" title="VARIANCE">VARIANCE</div>
+				</th>
+				<th scope="col">
+					<div class="slds-truncate" title="NOTES">NOTES</div>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th scope="row" data-label="KPI's">
+					Gross Profit (USD/yr)
+				</th>
+				<td data-label="PREVIOUS CONTRACT">
+					<ui:InputNumber value="{!v.tender.AITM_Gross_Profit_Previous_Contract__c}" format="###,###,###,###"/>
+				</td>
+				<td data-label="NEW CONTRACT">
+					<ui:InputNumber value="{!v.tender.AITM_Gross_Profit_New_Contract__c}" format="###,###,###,###"/>
+				</td>
+				<td data-label="VARIANCE">
+					<ui:outputNumber value="{!v.grossProfitVariance}" format="###,###,###,###"/>
+				</td>
+				<td data-label="NOTES">
+					<ui:inputText value="{!v.tender.AITM_Gross_Profit_Notes__c}" placeholder="Insert notes in to here" focus="{!c.updateTender}"/>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row" data-label="KPI's">
+					Volume (USG/yr)
+				</th>
+				<td data-label="PREVIOUS CONTRACT">
+					<ui:InputNumber value="{!v.tender.AITM_Volume_Previous_Contract__c}" format="###,###,###,###"/>
+				</td>
+				<td data-label="NEW CONTRACT">
+					<ui:InputNumber value="{!v.tender.AITM_Volume_New_Contract__c}" format="###,###,###,###"/>
+				</td>
+				<td data-label="VARIANCE">
+					<ui:outputNumber value="{!v.volumeVariance}" format="###,###,###,###"/>
+				</td>
+				<td data-label="NOTES">
+					<ui:inputText value="{!v.tender.AITM_Volume_Notes__c}" placeholder="Insert notes in to here" focus="{!c.updateTender}"/>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row" data-label="KPI's">
+					Working Capital (USD)
+				</th>
+				<td data-label="PREVIOUS CONTRACT">
+					<ui:InputNumber value="{!v.tender.AITM_Working_Capital_Previous_Contract__c}" format="###,###,###,###"/>
+				</td>
+				<td data-label="NEW CONTRACT">
+					<ui:InputNumber value="{!v.tender.AITM_Working_Capital_New_Contract__c}" format="###,###,###,###"/>
+				</td>
+				<td data-label="VARIANCE">
+					<ui:outputNumber value="{!v.workingCapitalVariance}" format="###,###,###,###"/>
+				</td>
+				<td data-label="NOTES">
+					<ui:inputText value="{!v.tender.AITM_Working_Capital_Notes__c}" placeholder="Insert notes in to here" focus="{!c.updateTender}" />
+				</td>
+			</tr>
+			<tr>
+				<th scope="row" data-label="KPI's">
+					Price Performance Index
+				</th>
+				<td data-label="PREVIOUS CONTRACT">
+					<ui:InputNumber value="{!v.tender.AITM_Price_Perf_Index_Prev_Contract__c}" format="###,###,###,###"/>
+				</td>
+				<td data-label="NEW CONTRACT">
+					<ui:InputNumber value="{!v.tender.AITM_Price_Perf_Index_New_Contract__c}" format="###,###,###,###"/>
+				</td>
+				<td data-label="VARIANCE">
+					<ui:outputNumber value="{!v.pricePerfIndexVariance}" format="###,###,###,###"/>
+				</td>
+				<td data-label="NOTES">
+					<ui:inputText value="{!v.tender.AITM_Price_Performance_Index_Notes__c}" placeholder="Insert notes in to here" focus="{!c.updateTender}" />
+				</td>
+			</tr>
+			<tr>
+				<th scope="row" data-label="KPI's">
+					ROWC (%)
+				</th>
+				<td data-label="PREVIOUS CONTRACT">
+					<ui:outputNumber value="{!v.tender.AITM_ROWC_Previous_Contract__c}" format="###,###,###,###"/>
+				</td>
+				<td data-label="NEW CONTRACT">
+					<ui:outputNumber value="{!v.tender.AITM_ROWC_New_Contract__c}" format="###,###,###,###"/>
+				</td>
+				<td data-label="VARIANCE">
+					<ui:outputNumber value="{!v.rowcVariance}" format="###,###,###,###"/>
+				</td>
+				<td data-label="NOTES">
+					<ui:inputText value="{!v.tender.AITM_ROWC_Notes__c}" placeholder="Insert notes in to here" focus="{!c.updateTender}" />
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</aura:component>

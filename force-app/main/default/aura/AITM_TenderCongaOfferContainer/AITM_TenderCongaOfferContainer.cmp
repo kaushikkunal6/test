@@ -1,0 +1,126 @@
+<aura:component controller="AITM_TenderCongaOfferContainerController" implements="force:LightningQuickActionWithoutHeader,force:hasRecordId,forceCommunity:availableForAllPageTypes">
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:attribute name="includePriced" type="Boolean" description="Should we include only pricied locations?" default="false"/>
+    <aura:attribute name="filterOptions" type="List" description="Filter Options stored as a inner class - List of FilterOption" />
+    <aura:attribute name="filterCustomerOptions" type="List" description="Customer Filter Options stored as a inner class - List of AccountOption" />
+    <aura:attribute name="selectedFilter" type="String" description="Selected filter name" />
+    <aura:attribute name="reseller" type="Boolean" description="account classification reseller flag" />
+    <aura:attribute name="selectedCustomerFilter" type="String" description="Selected filter name" />
+    <aura:attribute name="selectedCustomerName" type="String" description="Selected Customer name" />
+    <aura:attribute name="selectedLeadAffiliate" type="String" description="Selected Lead Affiliate" />
+    <aura:attribute name="selectedBSpokeTemplate" type="String" description="Selected BSpoke Template name" />
+    <aura:attribute name="tenderName" type="String" description="Tender name" />
+    <aura:attribute name="oldTaxFeeFlag" type="Boolean" description="Indicates whether tender uses new tax and fees format" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="isTenderOld" type="Boolean" description="Indicates old or new tender taxes and fees" />
+    <aura:attribute name="isButtonValue" type="Boolean" description="Indicates display of buttons"/>
+    <aura:attribute name="offerSelection" type="String" description ="Selected option of offer" />
+    <aura:attribute name="labpUrl" type="String" description="Holds labp site url for labp community" />
+    <aura:attribute name="grnNumber" type="String" description="GRN Number" />
+    <aura:attribute name="isWordPopUp" type="Boolean" default="false"/>
+    <aura:attribute name="isWordDoc" type="Boolean" default="false"/>
+    <aura:attribute name="isShowOffer" type="Boolean" default="true"/>
+    <aura:attribute name="isRefreshForWord" type="Boolean" default="false"/>
+    
+    <aura:if isTrue = "{!v.isShowOffer}">
+        <div class="slds-modal__header">
+            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.close}"><lightning:icon iconName="utility:close" variant="inverse" size="small"/></button>
+            <h2 class="slds-text-heading--medium">Generate Offer For:</h2>
+        </div>
+    
+        <div class="slds-form-element">
+            <div class="slds-form-element__control slds-p-around_x-small">
+                <div class="slds-radio">
+                    <!--<lightning:input aura:id="standardOffer" type="radio" value="1"
+                                   label="Non IATA Conga Offer (Standard/Bespoke)" checked="" name="options" id="radio-306" onchange="{!c.showTaxesCheckBox}"/>-->
+                    <lightning:input aura:id="locationAgreement" type="radio" value="3"
+                               label="IATA Compliant Offer (Location Agreement Only)" checked="" name="options" id="radio-306" onchange="{!c.showTaxesCheckBox}"/>
+                  
+                </div>
+            </div>
+        </div>   
+        <div class="slds-form-element" style="height:35px">
+            <div class="slds-form-element__control slds-p-around_x-small">
+                <div class="slds-radio grid-item left">
+                  <lightning:input aura:id="ffsa" type="radio" value="2"
+                                   label="IATA Compliant Offer (FFSA only)" checked="" name="options" id="radio-306" onchange="{!c.hideTaxesCheckBox}"/>
+                </div>
+                <div class="grid-item right">
+                    <lightning:helptext content="FFSA = Framework Fuel Supply Agreement"/>              
+                  
+                </div>
+          </div>
+        </div>
+        <div class="slds-form-element">
+            <div class="slds-form-element__control slds-p-around_x-small">
+                <div class="slds-radio">
+                    <!--<lightning:input aura:id="locationAgreement" type="radio" value="3"
+                                   label="IATA Compliant Conga Offer (Location Agreement Only)" checked="" name="options" id="radio-306" onchange="{!c.showTaxesCheckBox}"/>-->
+                    <lightning:input aura:id="standardOffer" type="radio" value="1"
+                               label="Non IATA Offer (Standard/Bespoke)" checked="" name="options" id="radio-306" onchange="{!c.showTaxesCheckBox}"/>
+                  
+                </div>
+          </div>
+        </div>
+        
+        <aura:if isTrue = "{!!v.oldTaxFeeFlag}"> 
+            <div class="slds-form-element">
+                <div class="slds-form-element__control slds-p-around--medium">
+                <!--<div class="slds-checkbox">
+                  <lightning:input aura:id="refreshcheckbox" type="checkbox" 
+                                   label="Refresh all the Taxes and Fees charges for this tender" checked="false" name="options" id="checkbox-44" value="checkbox-44" />
+                  
+                </div>
+                     <div class="slds-text" style="margin-top:5px;font-size:12px;">Please note that any customer specific changes made to the taxes and fees within this tender will be over-written by this refresh, please re-adjust them afterwards as required.</div>-->
+                <div class="slds-checkbox" style="margin-top:15px;">
+                    <lightning:input aura:id="wordcheckbox" type="checkbox" label="Generate Word Document Version" checked="false" name="options" id="checkbox-44" value="checkbox-44" />
+                </div>
+                <div class="slds-text" style="margin-top:5px;font-size:12px;">Select this if you wish to generate the documents in Word format. Any changes in content must be approved by legal.</div>
+                </div>
+            </div>
+        </aura:if>
+    
+        <div class="slds-modal__content slds-p-around--medium">
+            <header class="filters slds-m-bottom_small">
+                <lightning:spinner aura:id="loaderSpinner" class="slds-hide"/>
+                <lightning:select aura:id="filter" class="filtersSelect" onchange="{!c.onFilterChange}" value="{!v.selectedFilter}">
+                    <aura:iteration items="{!v.filterOptions}" var="filter" indexVar="index">
+                        <option text="{!filter.name}" label="{!filter.name}" disabled="{!filter.disabled}"/>
+                    </aura:iteration>
+                </lightning:select>
+                <!--<lightning:combobox name="filterCustomer" label="Customer" value="{!v.selectedCustomerFilter}" placeholder="Select Progress" options="{! v.filterCustomerOptions }" onchange="{! c.onFilterCustomerChange }"/>-->
+                <lightning:select aura:id="filterCustomer" class="filtersSelect" onchange="{!c.onFilterCustomerChange}" value="{!v.selectedCustomerFilter}">
+                    <aura:iteration items="{!v.filterCustomerOptions}" var="filter" indexVar="index">
+                        <option value="{!filter.tenderAccountId}" label="{!filter.grn + ' - '+ filter.name}" disabled="{!filter.disabled}"/>
+                    </aura:iteration>
+                </lightning:select>
+            </header>
+        </div>
+    
+        <div class="slds-modal__footer">
+		<aura:if isTrue = "{!v.isButtonValue}"> 
+			<lightning:button variant="neutral" label="Cancel"  onclick="{!c.close}"/>
+			<lightning:button variant="brand" label="Generate" onclick="{!c.checkIsWordBeforeGenerate}"/> 
+		</aura:if>
+		<aura:if isTrue = "{!!v.isButtonValue}"> 
+			<lightning:button variant="neutral" disabled="true" label="Cancel"/>
+			<lightning:button variant="neutral" disabled="true" label="Generate"/> 
+		</aura:if>
+	    </div>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.isWordPopUp}">
+        <div class="slds-modal__header">
+            <h2 class="slds-text-heading--medium">Generate Word Document</h2>
+        </div>
+        <div class="slds-modal__content slds-p-around--medium">
+            <div class="slds-text" style="margin-top:5px;font-size:15px;">Any changes to document content must be approved by legal. Do you wish to proceed?</div>
+        </div>   
+        
+        <div class="slds-modal__footer">
+            <lightning:button variant="neutral" label="No" onclick="{!c.closeIsWordPopUp}"/>
+            <lightning:button variant="brand" label="Yes" onclick="{!c.generate}"/>
+        </div>
+    </aura:if>
+    <lightning:navigation aura:id="nav-service" />
+</aura:component>

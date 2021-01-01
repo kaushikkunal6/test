@@ -1,0 +1,27 @@
+<aura:component access="GLOBAL"
+                controller="AITM_GeneratedOfferButtonController"
+                implements="force:LightningQuickActionWithoutHeader,force:hasRecordId">
+    
+    <aura:attribute name="tenderValid" type="Boolean" description="Indicates if tender is valid for the email sending" default="true"/>
+    <aura:attribute name="errorMessage" type="String" description="String to search locations started with" />
+
+    <aura:attribute name="emailBody" type="Object" description="Email Body" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="c:AITM_EmailGeneratorSent" action="{!c.updateTender}" />
+
+    <aura:if isTrue="{!v.tenderValid}">
+        <div aura:id="EmailGeneratorHolder">
+
+        </div>
+    </aura:if>
+
+    <aura:if isTrue="{!!v.tenderValid}">
+        <div class="slds-modal__header">
+            <h2 class="slds-text-heading--medium">Review Errors Below</h2>
+        </div>
+        <div class="slds-modal__content slds-p-around--medium">
+            <h3>{!v.errorMessage}</h3>
+        </div>
+    </aura:if>   
+</aura:component>

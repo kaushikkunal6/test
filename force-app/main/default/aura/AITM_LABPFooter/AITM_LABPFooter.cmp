@@ -1,0 +1,7 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global">
+   <aura:handler name="init" action="{!c.init}" value="{!this}" />
+   <aura:attribute name="today" type="String" />
+	<div class="footerText">
+        &#169; AirBP <ui:outputText value="{!v.today}" />
+    </div>	
+</aura:component>

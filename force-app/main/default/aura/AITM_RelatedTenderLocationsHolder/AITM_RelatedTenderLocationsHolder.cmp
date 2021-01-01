@@ -1,0 +1,84 @@
+<aura:component controller="AITM_RelatedTenderLocationsHolderCntrl" implements="forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,force:hasRecordId" extends="c:AITM_RelatedRecordsHolder">
+    <aura:attribute name="showLocations" type="Boolean" description="Show Locations section on this page?" default="true"/>
+    <aura:attribute name="showSummaryCountry" type="Boolean" description="Show Summary of Tender Locations section on this page?" default="false"/>
+    <aura:attribute name="showEnhancedSummaryCountry" type="Boolean" description="Show Enhanced Summary of Tender Locations section on this page." default="false"/>
+    <aura:attribute name="showPackages" type="Boolean" description="Show Packages section on this page?" default="false"/>
+    <aura:attribute name="bidsInBy" type="Date" description="Bids In By Date (from Tender)" />
+    <aura:attribute name="displaySummaryByCountry" type="Boolean" description="Show tab SUMMARY BY COUNTRY on this page?" default="false" />
+    <aura:attribute name="roundOptions" type="List" description="Round Options" />
+    <aura:attribute name="selectedRound" type="String" description="Selected filter name" />
+    <aura:attribute name="NewTaxesTender" type="Boolean" description="New or old Taxes Tender" default="false" />
+    <aura:attribute name="showFeedback" type="Boolean" description="Show Feedback/Comments section on this page" default="false"/>
+    <aura:attribute name="doPartialRefresh" type="Boolean" default="true" description="Key attribute for partial refresh"/>
+    <aura:attribute name="toggleView" type="Boolean" description="Key attribute for storing old vs new"/>
+    
+    <aura:dependency resource="markup://c:AITM_RelatedTenderLocations"/>
+    <aura:dependency resource="markup://c:AITM_RelatedTenderLocationLineItems"/>
+    <aura:dependency resource="markup://c:AITM_RelatedTenderLocationsByCountry"/>
+    <aura:dependency resource="markup://c:AITM_TenderFeedbackComments"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="force:refreshView" action="{!c.resetFilterOption}"/>
+    <header class="filters slds-m-bottom_small">
+        <ui:inputSelect aura:id="rounds" class="filtersSelect" change="{!c.onFilterChange}" value="{!v.selectedRound}">
+            <aura:iteration items="{!v.roundOptions}" var="round">
+                <ui:inputSelectOption text="{!round.name}" label="{!round.name}"/>
+            </aura:iteration>
+        </ui:inputSelect>
+        <lightning:button class="slds-button slds-button_brand" variant="neural"  label="Delete Round"  onclick="{!c.deleteRound}"/>
+        <aura:if isTrue="{!v.showLocations}">
+            <ui:inputSelect aura:id="filter" class="filtersSelect" change="{!c.onFilterChange}" value="{!v.selectedFilter}">
+                <aura:iteration items="{!v.filterOptions}" var="filter">
+                    <ui:inputSelectOption text="{!filter.name}" label="{!filter.name}" disabled="{!filter.disabled}"/>
+                </aura:iteration>
+            </ui:inputSelect>
+            <ui:inputText aura:id="searchLocationInput" class="searchLocationInput" updateOn="keyup" change="{!c.search}" placeholder="Search Locations" value="{!v.searchTerm}" keyup="{!c.search}"/>
+        </aura:if>
+        <aura:if isTrue="{!!v.NewTaxesTender}">
+            <div style="position: relative; float: right; right: 4em; top: 0em;">
+                <lightning:button class="slds-button slds-button_brand" variant="neural" label="Refresh T&amp;F" onclick="{!c.generateRefreshTaxes}" />
+            </div>
+        </aura:if>
+    </header>
+
+    <h1 class="slds-page-header__title slds-m-right--small slds-truncate slds-align-middle bidsInBy" title="Bids In By">
+        <span class="uiOutputText" data-aura-class="uiOutputText">Bids In By: {!v.bidsInBy}</span>
+    </h1>
+    <lightning:tabset class="uiTabBar tabWidthCSS" variant="scoped">
+        <lightning:tab onactive="{! c.showLocations }" label="LOCATIONS" id="locations">
+            <aura:if isTrue="{!v.showLocations}">
+                <c:AITM_RelatedTenderLocations recordId="{!v.recordId}"/>
+            </aura:if>          
+        </lightning:tab>
+        
+        <lightning:tab onactive="{! c.showSummaryCountry }" label="SUMMARY BY COUNTRY" id="summarycountry">
+            <aura:if isTrue="{!v.showSummaryCountry}">
+                <div class="slds-clearfix">
+					<div class="slds-clearfix slds-float_left">						
+                        <c:aITM_ToggleSBCPage onrefreshaura="{!c.hookUpSBCToggle}">                  	
+                        </c:aITM_ToggleSBCPage>
+					</div>	
+					<div class="slds-clearfix slds-float_right">
+                        <aura:if isTrue="{!v.doPartialRefresh}">
+                            <c:aITM_RedirectToSummaryByCountry tenderId="{!v.recordId}" isToggleEnabled="{!v.toggleView}" selectedRound="{!v.selectedRound}">                  	
+                            </c:aITM_RedirectToSummaryByCountry>
+                        </aura:if> 
+					</div>	
+				</div>
+                <c:AITM_RelatedTenderLocationsByCountry recordId="{!v.recordId}" selectedRound="{!v.selectedRound}" />          
+            </aura:if>
+        </lightning:tab>
+        <lightning:tab onactive="{! c.showFeedback}" label="Comms/Feedback" id="feedback">
+             <aura:if isTrue="{!v.showFeedback}"> 
+             <c:AITM_TenderFeedbackComments recordId="{!v.recordId}" selectedRound="{!v.selectedRound}"/>
+             </aura:if>
+        </lightning:tab>
+        
+        <aura:if isTrue="{!v.showPackages}">
+            <lightning:tab>
+                <aura:set attribute="label"><span class="tabHeader">PACKAGES</span></aura:set> 
+            </lightning:tab>
+        </aura:if>
+    </lightning:tabset>
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+</aura:component>

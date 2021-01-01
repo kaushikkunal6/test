@@ -1,0 +1,9 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global">
+	<div class="header">
+		<div class="roundel">
+			<div class="logo-container">
+                <img class="logo" src="{!$Resource.AITM_LABP_Login_Left_Content}"/>
+			</div>
+		</div>
+	</div>
+</aura:component>

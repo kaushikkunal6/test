@@ -1,0 +1,108 @@
+<apex:component >
+<style type="text/css">
+
+.contect-container {
+	position:fixed;
+	left: 25%;
+	right: 25%;
+	height: 100%;
+    overflow:hidden;
+}
+.scroll-wraper{
+	width: 100%;
+    height: 90%;
+    overflow-y: scroll;
+    padding-right: 17px; 
+}
+.privacy-header{
+	font-size: 42px;
+	margin-top: 50px;
+}
+.privacy-paragraph-header{
+	font-size: 16px;
+	margin-top: 40px;
+}
+.privacy-paragraph-content{
+	font-size: 14px;
+	margin-top: 20px;
+}
+.bold-text{
+	 font-weight: bold;
+}
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
+
+</style>
+<div class="contect-container">
+	<div class="scroll-wraper">
+	<div class="privacy-header">Data Privacy Stament</div>
+	<div class="privacy-paragraph-header bold-text">Information about the Survey and Organisations</div>
+	<div class="privacy-paragraph-content">
+		<p>CASTROL has implemented a Customer Feedback Tool which triggers surveys to be sent to our existing customers, the triggers are:</p>
+		<p>(1) when a complaint is closed,</p>
+		<p>(2) when an order is placed and the customer has not had a survey in the last 30 days</p>
+		<p>These short surveys have been designed so that we can better understand our service levels and the experience we’re offering our customers. </p>
+		<p>The information relating to these survey is collected by BP International Limited, Chertsey Road, Sunbury on Thames, Middlesex, TW16 7LN in registered in the United Kingdom.</p>
+		<p>BP has outsourced some of the services to approved third parties and these are:</p>
+		<p>Salesforce.com are the application and cloud storage provider. Infosys are the support provider and IBM UK Ltd are the development team for Live Customer Feedback. </p>
+	</div>
+
+	<div class="privacy-paragraph-header bold-text">Collection and Use of Personal Information</div>
+	<div class="privacy-paragraph-content">
+		<p>Participation in these surveys is on a voluntary basis. This will enable BP/Castrol to impove the customer experience they provide to their existing customers.</p>
+		<p>BP Customer Operations teams may access and handle your personal data to better understand the feedback you gave. We will only contact you regarding your experience where you have stated that we can.</p>
+		<p>Our customer operations team may also contact you in connection with other activities related to your feedback e.g.: in relation to customer improvements across other touchpoints.</p>
+		<p class="bold-text">By participating and clicking on the “take survey” button you are choosing to provide Castrol with some limited personal data and you agree that you are consenting to Castrol processing the survey data in accordance with this Privacy statement.</p>
+	</div>
+
+	<div class="privacy-paragraph-header bold-text">Data Retention</div>
+	<div class="privacy-paragraph-content">
+		<p>Survey Information will be kept for a minimum of 3 years upon submitting a survey (or longer if legally required in your country) unless you request for the information to be deleted from our database. You can do this by contacting your Castrol account manager or by calling your in-country enquiry team. Details can be found by going to <a href="http://www.Castrol.com/">http://www.BP/Castrol.com/</a>.</p>
+	</div>
+
+	<div class="privacy-paragraph-header bold-text">Disclosures, Transfers and Security of Personal Information</div>
+	<div class="privacy-paragraph-content">
+		<p>Any personal data and responses you submit in the survey will be hosted by the CASTROL approved service provider, Salesforce.com</p>
+		<p>Germany salesforce.com Germany GmbH. Erika-Mann-Strasse 31-37 80636 München Main: DE. Their platform and software is based in Germany.  Backup and data recovery are held in the UK.</p>
+		<p>Salesforce have access to the personal data contained in the system. Written contracts which contain relevant standard contractual privacy clauses including any sub-contracting requirements are in place.</p>
+		<p>A robust service contract has been put in place to ensure your data is adequately secured and handled in accordance with the required legislation.</p>
+		<p>Appropriate technical and organizational security measures are implemented to prevent unauthorized access, improper use or disclosure, unauthorised modification or unlawful destruction or accidental loss of your personal information.</p>
+		<p>Since CASTROL operates globally we may transfer your data in countries other than this site’s country of operation.  CASTROL group internal transfers of your personal data are governed and legitimize by a set of Binding Corporate Rules</p>
+		<p>CASTROL group internal transfers of your personal data are governed and legitimized by a set of <a href="http://www.bp.com/content/dam/bp/pdf/about-bp/privacy-statement/bp-data-privacy-rules-public-document-16-april-2010.pdf">Binding Corporate Rules</a>.</p>
+		<p>We reserve the right to disclose your personal information as required by law, or when we believe that disclosure is necessary to protect our rights and/or comply with a judicial proceeding, court order, request from a regulator or any other legal process served on CASTROL. In the event that CASTROL is subject to a takeover, divestment or acquisition we may disclose your personal information to the new owner of the business.</p>
+	</div>
+
+	<div class="privacy-paragraph-header bold-text">“Cookies”and Information automatically collected</div>
+	<div class="privacy-paragraph-content">
+		<p>When you participate in a customer survey, you may be sent one or more cookies – small text files containing a string of alphanumeric characters – to your computer. The LCF application may use both session cookies and persistent cookies. A session cookie disappears after you close your browser. A persistent cookie remains after you close your browser and may be used by your browser on subsequent visits to the Service. Persistent cookies can be removed. Please review your web browser “Help” file to learn the proper way to modify your cookie settings. Please note that if you delete, or choose not to accept, cookies, you may not be able to utilize the full features of the process.</p>
+	</div>
+
+	<div class="privacy-paragraph-header bold-text">Individuals’ rights</div>
+	<div class="privacy-paragraph-content">
+		<p>As an EU citizen, with regard to your personal information which CASTROL collects and process for these surveys, you are entitled to:</p>
+		<p>•	Access and review a copy of your personal data</p>
+		<p>•	Have incomplete or inaccurate personal data which relate to you corrected</p>
+		<p>•	Ask for deletion of your personal data, where it is being processed unlawfully</p>
+		<p>•	Object (i.e. ask CASTROL to stop processing your personal data to profile you or send you direct marketing materials)</p>
+		<p>Your exercise of these rights may by subject to certain exemptions.</p>
+		<p>To amend or request that your personal data is deleted or you have any other questions about these surveys and the data processed, please email <a href="mailto:customerservices@castrol.com">customerservices@castrol.com</a></p>
+		<p>You can also:</p>
+		<p>•	Withdraw any previous consent at any time where consent is solicited by Castrol as the legitimate ground to justify any processing activies</p>
+		<p>•	As an EU citizen you have the right to lodge a complaint with your national data protection supervisory authority.  However, you should first think of using Castrol’s EU-approved complaint resolution mechanism under its Binding Corporate Rules by clicking here.</p>
+	</div>
+
+	<div class="privacy-paragraph-header bold-text">Changes to this Privacy Statement</div>
+	<div class="privacy-paragraph-content">
+		<p>This privacy statement is regularly reviewed and BP/CASTROL may modify it from time to time.  It was last updated on 17th July 2017. </p>
+	</div>
+
+	<div class="privacy-paragraph-header bold-text">Contact us:</div>
+	<div class="privacy-paragraph-content">
+		<p>Privacy: If you have questions or concerns relating to the handling of your personal information please email those to <a href="mailto:customerservices@castrol.com">customerservices@castrol.com</a>.</p>
+	</div>
+
+	</div>
+</div>
+</apex:component>

@@ -1,0 +1,367 @@
+<aura:component controller="AITM_TenderPathShowMoreController" implements="forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction">
+    <aura:attribute name="recordId" type="Id" />
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:attribute name="currentStage" type="String"/>
+    <aura:attribute name="changeFeedbackToDebrief" type="Boolean"/>
+    <aura:attribute name="overlayPanel" type="Aura.Component[]" />
+    <aura:attribute name="showButtons" type="Boolean" default="false" />
+    <aura:attribute name="showPolish" type="Boolean" default="false" />
+    <aura:attribute name="showNonPolish" type="Boolean" default="false" />
+    <aura:attribute name="showConga" type="Boolean" default="false" />
+	<aura:attribute name="excelDownloadUrl" type="Boolean" default="false" />
+    <aura:attribute name="reportID" type="String" />
+    <aura:attribute name="isReportButton" type="Boolean" default="false" /><!--Kunal-->
+    <aura:attribute name="taxAndFeeReportID" type="String" /><!--Kunal-->
+    <aura:handler event="c:AITM_CustomTenderSendStageEvent" action="{!c.handleCurrentStage}"/>
+    <aura:handler event="c:AITM_ClosePathQuickAction" action="{!c.closePopup}"/>
+    <aura:attribute name="targetFields" type="Object"/><!--Kunal-->
+    <aura:attribute name="isTenderOld" type="Boolean" />
+    <aura:attribute name="isGenerateOfferButton" type="Boolean" default="false" />
+    <aura:attribute name="additionalNotesReportID" type="String" />
+     <aura:attribute name="showReportTOLM" type="Boolean" />
+    <aura:attribute name="pageReference" type="Object"/>
+    <lightning:navigation aura:id="navService"/>
+    <force:recordData aura:id="recordLoaderId"
+                    layoutType="FULL"
+                    recordId="{!v.recordId}"
+                    targetFields="{!v.targetFields}"
+                    />
+
+    <!-- *********************************************************************************************************************************************************************************************** -->
+    <aura:if isTrue="{!v.currentStage == 'Tender Created'}">
+        <div class="cd-drawer drawer visibleSlide">
+            <div class="stepBody">
+                <span class="runtime_sales_pathassistantPathAssistantBody--desktop runtime_sales_pathassistantPathAssistantBody">
+                    <aura:if isTrue="{!v.showButtons}">
+                        <section class="pa-fields">
+                            <div class="runtime_sales_pathassistantPathAssistantFields inlineEditEnabled">
+                                <span class="bodyHeader">
+                                    <h2 class="title" style="margin-left: 10px;">Available Actions</h2>
+                                </span>
+                                <div class="content">
+                                    <div class="path_assistant forcePageBlock forceRecordLayout">
+                                        <div class="test-id__section slds-section  slds-is-open path_assistant forcePageBlockSection forcePageBlockSectionView">
+                                            <div class="test-id__section-content slds-section__content section__content slds-p-top--none">
+                                                <div class="slds-form " role="list">
+                                                    <div class="slds-grid path_assistant forcePageBlockSectionRow">
+                                                        <div class="slds-has-flexi-truncate slds-has-divider_top slds-p-horizontal_x-small path_assistant forcePageBlockItem forcePageBlockItemView marginTop05">
+                                                            <lightning:button variant="brand" label="Add Customer" onclick="{!c.addCustomer}" />
+                                                            <lightning:button variant="brand" label="Add Group" onclick="{!c.addGroup}" />
+                                                            <lightning:button variant="brand" label="Add Location" onclick="{!c.addLocation}" />
+                                                            <lightning:button variant="brand" label="Upload Location" onclick="{!c.uploadLocation}" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </aura:if>
+                    <section class="pa-info">
+                        <div class="guidance runtime_sales_pathassistantPathAssistantInfo">
+                            <h2 class="bodyHeader">
+                                <p class="title">Guidance for Success</p>
+                            </h2>
+                            <div class="content">
+                                <div class="slds-rich-text-editor__output uiOutputRichText forceOutputRichText">Add customer data, location &amp; volume information and 'mark stage as complete' to send tender to Location Managers.&nbsp;</div>
+                            </div>
+                        </div>
+                    </section>
+                </span>
+            </div>
+        </div>
+    </aura:if>
+    <!-- *********************************************************************************************************************************************************************************************** -->
+    <aura:if isTrue="{!v.currentStage == 'Awaiting Price'}">
+        <div class="cd-drawer drawer visibleSlide">
+            <div class="stepBody">
+                <span class="runtime_sales_pathassistantPathAssistantBody--desktop runtime_sales_pathassistantPathAssistantBody">
+                    <aura:if isTrue="{!v.showButtons}">
+                        <section class="pa-fields">
+                            <div class="runtime_sales_pathassistantPathAssistantFields inlineEditEnabled">
+                                <span class="bodyHeader">
+                                    <h2 class="title" style="margin-left: 10px;">Available Actions</h2>
+                                </span>
+                                <div class="content">
+                                    <div class="path_assistant forcePageBlock forceRecordLayout">
+                                        <div class="test-id__section slds-section  slds-is-open path_assistant forcePageBlockSection forcePageBlockSectionView">
+                                            <div class="test-id__section-content slds-section__content section__content slds-p-top--none">
+                                                <div class="slds-form " role="list">
+                                                    <div class="slds-grid path_assistant forcePageBlockSectionRow">
+                                                        <div class="slds-has-flexi-truncate slds-has-divider_top slds-p-horizontal_x-small path_assistant forcePageBlockItem forcePageBlockItemView marginTop05">
+                                                            <lightning:button variant="brand" label="Add Customer" onclick="{!c.addCustomer}" />
+                                                            <lightning:button variant="brand" label="Add Location" onclick="{!c.addLocation}" />
+                                                            <lightning:button variant="brand" label="Upload Location" onclick="{!c.uploadLocation}" />
+                                                            <aura:if isTrue="{!v.showNonPolish}">
+                                                            <lightning:button variant="brand" label="Send Tender Invitation" onclick="{!c.chasePrices}" />
+                                                            </aura:if>
+                                                            <aura:if isTrue="{!v.showPolish}">
+                                                            <lightning:button variant="brand" label="Send Tender Invitation Polish" onclick="{!c.chasePolishPrices}" />
+                                                            </aura:if>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </aura:if>
+                    <section class="pa-info">
+                        <div class="guidance runtime_sales_pathassistantPathAssistantInfo">
+                            <h2 class="bodyHeader">
+                                <p class="title">Guidance for Success</p>
+                            </h2>
+                            <div class="content">
+                                <div class="slds-rich-text-editor__output uiOutputRichText forceOutputRichText">Once all location status shown as priced sales stage will automatically move to 'Priced'</div>
+                            </div>
+                        </div>
+                    </section>
+                </span>
+            </div>
+        </div>
+    </aura:if>
+    <!-- *********************************************************************************************************************************************************************************************** -->
+    <aura:if isTrue="{!v.currentStage == 'Priced'}">
+        <div class="cd-drawer drawer visibleSlide">
+            <div class="stepBody ">
+                <span class="runtime_sales_pathassistantPathAssistantBody--desktop runtime_sales_pathassistantPathAssistantBody">
+                    <aura:if isTrue="{!v.showButtons}">
+                        <section class="pa-fields">
+                            <div class="runtime_sales_pathassistantPathAssistantFields inlineEditEnabled">
+                                <span class="bodyHeader">
+                                    <h2 class="title" style="margin-left: 10px;">Available Actions</h2>
+                                </span>
+                                <div class="content">
+                                    <div class="path_assistant forcePageBlock forceRecordLayout">
+                                        <div class="test-id__section slds-section  slds-is-open path_assistant forcePageBlockSection forcePageBlockSectionView">
+                                            <div class="test-id__section-content slds-section__content section__content slds-p-top--none">
+                                                <div class="slds-form " role="list">
+                                                    <div class="slds-grid path_assistant forcePageBlockSectionRow">
+                                                        <div class="slds-has-flexi-truncate slds-has-divider_top slds-p-horizontal_x-small path_assistant forcePageBlockItem forcePageBlockItemView marginTop05">
+                                                            <aura:if isTrue="{!v.isGenerateOfferButton}">
+															    <lightning:button variant="brand" label="Generate Offer (Old)" onclick="{!c.generateOffer}" />
+                                                            </aura:if>
+															<aura:if isTrue="{!v.showConga}">
+                                                            	<lightning:button variant="brand" label="Generate Offer" onclick="{!c.generateCongaOffer}" />
+                                                            </aura:if>
+                                                            <lightning:button variant="brand" label="Send Offer" onclick="{!c.sendOffer}" />
+                                                            <lightning:button variant="brand" label="Generate Offer Report" onclick="{!c.downloadExcelFile }" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </aura:if>
+                     <aura:if isTrue="{!v.showReportTOLM}">	
+                        <section class="pa-fields">	
+                            <div class="runtime_sales_pathassistantPathAssistantFields inlineEditEnabled">	
+                                <span class="bodyHeader">	
+                                    <h2 class="title" style="margin-left: 10px;">Available Actions</h2>	
+                                </span>	
+                                <div class="content">	
+                                    <div class="path_assistant forcePageBlock forceRecordLayout">	
+                                        <div class="test-id__section slds-section  slds-is-open path_assistant forcePageBlockSection forcePageBlockSectionView">	
+                                            <div class="test-id__section-content slds-section__content section__content slds-p-top--none">	
+                                                <div class="slds-form " role="list">	
+                                                    <div class="slds-grid path_assistant forcePageBlockSectionRow">	
+                                                        <div class="slds-has-flexi-truncate slds-has-divider_top slds-p-horizontal_x-small path_assistant forcePageBlockItem forcePageBlockItemView marginTop05">	
+                                                            <lightning:button variant="brand" label="Generate Offer Report" onclick="{!c.downloadExcelFile }" />	
+                                                        </div>	
+                                                    </div>	
+                                                </div>	
+                                            </div>	
+                                        </div>	
+                                    </div>	
+                                </div>	
+                            </div>	
+                        </section>	
+                    </aura:if>
+                    <section class="pa-info">
+                        <div class="guidance runtime_sales_pathassistantPathAssistantInfo">
+                            <h2 class="bodyHeader">
+                                <p class="title">Guidance for Success</p>
+                            </h2>
+                            <div class="content">
+                                <div class="slds-rich-text-editor__output uiOutputRichText forceOutputRichText">Tender Manager must verify pricing and all details before being ready to submit to customer. Click 'mark stage as complete' to submit offer to customer</div>
+                            </div>
+                        </div>
+                    </section>
+                </span>
+            </div>
+        </div>
+    </aura:if>
+    <!-- *********************************************************************************************************************************************************************************************** -->
+    <aura:if isTrue="{!v.currentStage == 'Offer Submitted'}">
+        <div class="cd-drawer drawer visibleSlide">
+            <div class="stepBody">
+                <span class="runtime_sales_pathassistantPathAssistantBody--desktop runtime_sales_pathassistantPathAssistantBody">
+                    <section class="pa-info">
+                        <div class="guidance runtime_sales_pathassistantPathAssistantInfo">
+                            <h2 class="bodyHeader">
+                                <p class="title">Guidance for Success</p>
+                            </h2>
+                            <div class="content">
+                                <div class="slds-rich-text-editor__output uiOutputRichText forceOutputRichText">
+                                    <p>The offer PDF is generated and can be accessed in the tender attachments.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </span>
+            </div>
+        </div>
+    </aura:if>
+    <!-- *********************************************************************************************************************************************************************************************** -->
+    <aura:if isTrue="{!v.currentStage == 'Feedback and Negotiation'}">
+        <div class="cd-drawer drawer visibleSlide">
+            <div class="stepBody ">
+                <span class="runtime_sales_pathassistantPathAssistantBody--desktop runtime_sales_pathassistantPathAssistantBody">
+                    <aura:if isTrue="{!v.showButtons}">
+                        <section class="pa-fields">
+                            <div class="runtime_sales_pathassistantPathAssistantFields inlineEditEnabled">
+                                <span class="bodyHeader">
+                                    <h2 class="title" style="margin-left: 10px;">Available Actions</h2>
+                                </span>
+                                <div class="content">
+                                    <div class="path_assistant forcePageBlock forceRecordLayout">
+                                        <div class="test-id__section slds-section  slds-is-open path_assistant forcePageBlockSection forcePageBlockSectionView">
+                                            <div class="test-id__section-content slds-section__content section__content slds-p-top--none">
+                                                <div class="slds-form ">
+                                                    <div class="slds-grid path_assistant forcePageBlockSectionRow">
+                                                        <div class="slds-has-flexi-truncate slds-has-divider_top slds-p-horizontal_x-small path_assistant forcePageBlockItem forcePageBlockItemView buttonAligned" style="display: inline-block;">
+                                                            <aura:if isTrue="{!v.showNonPolish}">
+                                                                <lightning:button variant="brand" label="Send Feedback Email" onclick="{!c.sendFeedback}" />
+                                                            </aura:if>
+                                                            <aura:if isTrue="{!v.showPolish}">
+                                                                <lightning:button variant="brand" label="Send Feedback Email Polish" onclick="{!c.sendFeedbackPolish}" />
+                                                            </aura:if>
+                                                        </div>
+                                                        <div class="slds-has-flexi-truncate slds-has-divider_top slds-p-horizontal_x-small path_assistant forcePageBlockItem forcePageBlockItemView" style="display: inline-block;">
+                                                            <div class="slds-form-element slds-form-element_edit slds-grow slds-hint-parent slds-p-vertical_xx-small override--slds-form-element">
+                                                                <div class="test-id__field-label-container"><span class="test-id__field-label slds-form-element__label">No feedback, progress to debrief</span></div>
+                                                                <div class="slds-form-element__control slds-grid itemBody">
+                                                                    <span class="test-id__field-value slds-form-element__static slds-grow">
+                                                                        <span onclick="{!c.setCheckBoxFeedbackToDeBrief}">
+                                                                            <ui:outputCheckbox value="{!v.changeFeedbackToDebrief}"/>
+                                                                        </span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </aura:if>
+                    <section class="pa-info">
+                        <div class="guidance runtime_sales_pathassistantPathAssistantInfo">
+                            <h2 class="bodyHeader">
+                                <p class="title">Guidance for Success</p>
+                            </h2>
+                            <div class="content">
+                                <div class="slds-rich-text-editor__output uiOutputRichText forceOutputRichText">
+                                    <p>Account manager adds feedback from a customer to the Tender Locations, feedback tab. If there is feedback on any locations, the next stage will be Awaiting price and new round for the Tender is created. If there is no feedback, check the <i>No feedback, progress to debrief</i> checkbox.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </span>
+            </div>
+        </div>
+    </aura:if>
+    <!-- *********************************************************************************************************************************************************************************************** -->
+    <aura:if isTrue="{!v.currentStage == 'Debrief'}">
+        <div class="cd-drawer drawer visibleSlide">
+            <div class="stepBody">
+                <span class="runtime_sales_pathassistantPathAssistantBody--desktop runtime_sales_pathassistantPathAssistantBody">
+                    <aura:if isTrue="{!v.showButtons}">
+                        <section class="pa-fields">
+                            <div class="runtime_sales_pathassistantPathAssistantFields inlineEditEnabled">
+                                <span class="bodyHeader">
+                                    <h2 class="title" style="margin-left: 10px;">Available Actions</h2>
+                                </span>
+                                <div class="content">
+                                    <div class="path_assistant forcePageBlock forceRecordLayout">
+                                        <div class="test-id__section slds-section  slds-is-open path_assistant forcePageBlockSection forcePageBlockSectionView">
+                                            <div class="test-id__section-content slds-section__content section__content slds-p-top--none">
+                                                <div class="slds-form " role="list">
+                                                    <div class="slds-grid path_assistant forcePageBlockSectionRow">
+                                                        <div class="slds-has-flexi-truncate slds-has-divider_top slds-p-horizontal_x-small path_assistant forcePageBlockItem forcePageBlockItemView marginTop05">
+                                                            <aura:if isTrue="{!v.showNonPolish}">
+                                                                <lightning:button variant="brand" label="Send DeBrief Email" onclick="{!c.sendDeBriefEmail}" />
+                                                            </aura:if>
+                                                            <aura:if isTrue="{!v.showPolish}">
+                                                                <lightning:button variant="brand" label="Send DeBrief Email Polish" onclick="{!c.sendDeBriefEmailPolish}" />
+                                                            </aura:if>
+															<aura:if isTrue="{!v.isGenerateOfferButton}">
+                                                                <lightning:button variant="brand" label="Generate Contract (Old)" onclick="{!c.generateContract}" />
+                                                            </aura:if>
+															<aura:if isTrue="{!v.showConga}">
+                                                                <lightning:button variant="brand" label="Generate Contract" onclick="{!c.generateCongaContract}" />
+                                                            </aura:if>
+                                                            <lightning:button variant="brand" label="Send Contract To A Customer" onclick="{!c.sendContract}" />
+                                                            <lightning:button variant="brand" label="Use Conga e-Sign" onclick="{!c.sendWithCongaSign}" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </aura:if>
+                    <section class="pa-info">
+                        <div class="guidance runtime_sales_pathassistantPathAssistantInfo">
+                            <h2 class="bodyHeader">
+                                <p class="title">Guidance for Success</p>
+                            </h2>
+                            <div class="content">
+                                <div class="slds-rich-text-editor__output uiOutputRichText forceOutputRichText" >
+                                    <p>Debrief of tender is on Debrief tab. After filling the Debrief executive summary send the debrief email to the distribution list using button <i>Send debrief email</i>. Moving to next stage will generate a contract PDFs as attachments.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </span>
+            </div>
+        </div>
+    </aura:if>
+    <!-- *********************************************************************************************************************************************************************************************** -->
+    <aura:if isTrue="{!v.currentStage == 'Closed'}">
+        <div class="cd-drawer drawer visibleSlide" >
+            <div class="stepBody ">
+                <span class="runtime_sales_pathassistantPathAssistantBody--desktop runtime_sales_pathassistantPathAssistantBody">
+                    <section class="pa-info">
+                        <div class="guidance runtime_sales_pathassistantPathAssistantInfo">
+                            <h2 class="bodyHeader">
+                                <p class="title">Guidance for Success</p>
+                            </h2>
+                            <div class="content">
+                                <div class="slds-rich-text-editor__output uiOutputRichText forceOutputRichText">
+                                    <p>A contract was generated and tender is closed.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </span>
+            </div>
+        </div>
+    </aura:if>
+    <!-- *********************************************************************************************************************************************************************************************** -->
+
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+
+</aura:component>

@@ -1,0 +1,68 @@
+<template>
+    <template if:true={lineId}>   
+        <template if:true={showDefaultTab}> 
+            <div class="slds-p-left_x-small customBoxCSS scrollTopCSS doFixingCSS fixedCSS slds-scrollable_y scrollable" style="position:fixed; width:33%; padding-bottom: 13rem;">
+                <span style="font-size:15px;cursor:pointer;color:blueviolet;font-weight:bold;" class="slds-align_absolute-left" onclick={openNav}>&#9776;</span>
+                <lightning-tabset class="tab-active" active-tab-value ="">
+                    <lightning-tab label={labels.TFTAB_TITLE} value="1" onactive={handleChange}>
+                        <c-a-i-t-m-t-f-new-summary-page line-id={selLineId} do-partial-refresh={doPartialRefresh}></c-a-i-t-m-t-f-new-summary-page>
+                    </lightning-tab>           
+                    <lightning-tab label={labels.PRICETAB_TITLE} value="2" onactive={handleChange}>
+                        <c-a-i-t-m-price-summary-page tender-loc-id={recordId} is-in-debrief-stage={isInDebrief} line-id={lineId} do-partial-refresh={doPartialRefresh}></c-a-i-t-m-price-summary-page>
+                    </lightning-tab>
+                    <lightning-tab label="COMMS/ADS" value="3" onactive={handleChange}>
+                        <c-a-i-t-m-feedback-summary-page line-id={lineId} tender-loc-id={recordId} is-in-debrief-stage={isInDebrief} pass-record-edit-change={handleAuraRecordChange} do-partial-refresh={doPartialRefresh}></c-a-i-t-m-feedback-summary-page >
+                    </lightning-tab>
+                    <lightning-tab label="TENDER INFO" value="4" onactive={handleChange}>
+                        <c-a-i-t-m-tender-info-summary-page line-id={lineId} is-in-debrief-stage={isInDebrief} pass-record-edit-change={handleAuraRecordChange} do-partial-refresh={doPartialRefresh}></c-a-i-t-m-tender-info-summary-page>
+                    </lightning-tab>
+                    <lightning-tab label={labels.VOLUMETAB_TITLE} value="5" onactive={handleChange}>
+                        <c-a-i-t-m-volume-summary-page line-id={selLineId} is-in-debrief-stage={isInDebrief} pass-record-edit-change={handleAuraRecordChange} do-partial-refresh={doPartialRefresh}></c-a-i-t-m-volume-summary-page>
+                    </lightning-tab>
+                    <lightning-tab label={labels.DELIVERYPOINTTAB_TITLE} value="6" onactive={handleChange}>
+                        <c-a-i-t-m-delivery-point-summary-page line-id={lineId} is-in-debrief-stage={isInDebrief} title="Delivery Point" do-partial-refresh={doPartialRefresh}></c-a-i-t-m-delivery-point-summary-page>
+                    </lightning-tab>
+                    <lightning-tab label={labels.CREDITTERMS_TITLE} value="7" onactive={handleChange}>
+                        <c-a-i-t-m-credit-terms-summary-page line-id={lineId} is-in-debrief-stage={isInDebrief} do-partial-refresh={doPartialRefresh}></c-a-i-t-m-credit-terms-summary-page>
+                    </lightning-tab>
+                    <lightning-tab label={labels.LOCATIONTAB_TITLE} value="8" onactive={handleChange}>
+                        <c-a-i-t-m-location-summary-page line-id={lineId} is-in-debrief-stage={isInDebrief} tender-loc-id={recordId} do-partial-refresh={doPartialRefresh}></c-a-i-t-m-location-summary-page>
+                    </lightning-tab>
+                </lightning-tabset>
+            </div>  
+        </template>
+        <div class="overlay">
+            <a href="javascript:void(0)" class="closebtn" onclick={handleCloseButtonClick}>&times;</a>
+            <div class="overlay-content">
+                <div class="slds-p-left_x-small customBoxCSS">
+                    <lightning-tabset class="tab-active" active-tab-value ="">
+                        <lightning-tab label={labels.TFTAB_TITLE} value="1" onactive={handleChange}>
+                            <c-a-i-t-m-t-f-new-summary-page line-id={lineId} apply-overlay-screen={applyOverlayScreen}></c-a-i-t-m-t-f-new-summary-page>
+                        </lightning-tab>           
+                        <lightning-tab label={labels.PRICETAB_TITLE} value="2" onactive={handleChange}>
+                            <c-a-i-t-m-price-summary-page line-id={lineId} is-in-debrief-stage={isInDebrief} apply-overlay-screen={applyOverlayScreen} tender-loc-id={recordId}></c-a-i-t-m-price-summary-page>
+                        </lightning-tab>
+                        <lightning-tab label="COMMS/ADS" value="3" onactive={handleChange}>
+                            <c-a-i-t-m-feedback-summary-page line-id={lineId} tender-loc-id={recordId} is-in-debrief-stage={isInDebrief} pass-record-edit-change={handleAuraRecordChange} do-partial-refresh={doPartialRefresh}></c-a-i-t-m-feedback-summary-page>
+                        </lightning-tab>
+                        <lightning-tab label="TENDER INFO" value="4" onactive={handleChange}>
+                            <c-a-i-t-m-tender-info-summary-page line-id={lineId} is-in-debrief-stage={isInDebrief} pass-record-edit-change={handleAuraRecordChange} do-partial-refresh={doPartialRefresh}></c-a-i-t-m-tender-info-summary-page>
+                        </lightning-tab>
+                        <lightning-tab label={labels.VOLUMETAB_TITLE} value="5" onactive={handleChange}>
+                            <c-a-i-t-m-volume-summary-page line-id={lineId} is-in-debrief-stage={isInDebrief} pass-record-edit-change={handleAuraRecordChange} do-partial-refresh={doPartialRefresh}></c-a-i-t-m-volume-summary-page>
+                        </lightning-tab>
+                        <lightning-tab label={labels.DELIVERYPOINTTAB_TITLE} value="6" onactive={handleChange}>
+                            <c-a-i-t-m-delivery-point-summary-page line-id={lineId} is-in-debrief-stage={isInDebrief} title="Delivery Point" do-partial-refresh={doPartialRefresh}></c-a-i-t-m-delivery-point-summary-page>
+                        </lightning-tab>
+                        <lightning-tab label={labels.CREDITTERMS_TITLE} value="7" onactive={handleChange}>
+                            <c-a-i-t-m-credit-terms-summary-page line-id={lineId} is-in-debrief-stage={isInDebrief} do-partial-refresh={doPartialRefresh}></c-a-i-t-m-credit-terms-summary-page>
+                        </lightning-tab>
+                        <lightning-tab label={labels.LOCATIONTAB_TITLE} value="8" onactive={handleChange}>
+                            <c-a-i-t-m-location-summary-page line-id={lineId} is-in-debrief-stage={isInDebrief} tender-loc-id={recordId} do-partial-refresh={doPartialRefresh}></c-a-i-t-m-location-summary-page>
+                        </lightning-tab>
+                    </lightning-tabset>
+                </div>
+            </div>
+        </div>
+    </template>
+</template>

@@ -1,0 +1,164 @@
+<!--
+* @author Nazim Aliyev
+* @company Bluewolf, an IBM Company
+* @date 6/2017
+*
+* BP Community Template
+-->
+<apex:page showHeader="false"
+           standardStylesheets="false"
+           sidebar="false"
+           applyBodyTag="false"
+           id="CommunityTemplate"
+           >
+    <head>
+        
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1"/>
+        <apex:includeLightning />
+        <apex:slds />
+        <style>
+            @media all and (max-width: 499px) {
+                .container {
+                    width: 80%;
+                }
+            }
+            @media all and (min-width: 500px) {
+                .container {
+                    width: 300px;
+                }
+            	body {
+            		background: #007833;
+                    background: rgba(0,120,51,1);
+                    background: -moz-linear-gradient(left, rgba(0,120,51,1) 0%, rgba(153,204,0,1) 100%);
+                    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(0,120,51,1)), color-stop(100%, rgba(153,204,0,1)));
+                    background: -webkit-linear-gradient(left, rgba(0,120,51,1) 0%, rgba(153,204,0,1) 100%);
+                    background: -o-linear-gradient(left, rgba(0,120,51,1) 0%, rgba(153,204,0,1) 100%);
+                    background: -ms-linear-gradient(left, rgba(0,120,51,1) 0%, rgba(153,204,0,1) 100%);
+                    background: linear-gradient(to right, rgba(0,120,51,1) 0%, rgba(153,204,0,1) 100%);
+                    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#007833', endColorstr='#99cc00', GradientType=1 );
+            	}
+            }
+            
+            @font-face {
+                font-family: 'univers45light';
+                src: url('{!URLFOR($Resource.REIDP_UniversFont, 'univelig-webfont.woff')}') format('woff2'),
+                url('{!URLFOR($Resource.REIDP_UniversFont, 'univelig-webfont.woff')}') format('woff');
+                font-weight: normal;
+                font-style: normal;
+            }
+            
+            * {
+                font-family: 'univers45light';
+            }
+            
+            html {
+                height: 100vh;
+            }
+            
+            body {
+                margin: 0;
+            	background-color: #fafafa;
+            }
+            
+            .form {
+                height: 100%;
+                width: 100%;   
+                font-family: 'univers45light';
+            }
+            
+            .mainDiv {
+                /* z-index: -1; */
+                min-height: 100%;
+                width: 100%;
+                position: absolute;
+                display: -webkit-box;
+                display: -webkit-flex;
+                display: -ms-flexbox;
+                display: flex;
+            }
+            
+            .container {
+                max-width: 100% !important;
+                margin: 0 auto;
+                padding: 20px;
+                display: inline-block;
+                background-color: #fafafa;
+                border-radius: 4px;
+                margin: auto;
+                width: 300px;
+            }
+            
+            .button {
+                width: 100%;
+                padding: 10px 12px;
+                color: #FFFFFF !important;
+                -webkit-box-shadow: none;
+                -moz-box-shadow: none;
+                box-shadow: none;
+                text-shadow: none;
+                background-color: #009900;
+                border-radius: 2px;
+                border: 0 solid transparent;
+                font-size: 16px !important;
+                -webkit-transition: all 0.5s ease !important;
+                transition: all 0.5s ease !important;
+	            -webkit-tap-highlight-color: #007833 !important; /* iOS :active fix */	
+            }
+            
+            input[type=submit]:disabled {
+                background-color:#D8D8D8 !important;
+                cursor:pointer !important;
+            }
+            
+            input[type=submit]:disabled .label {
+	            color: #ffffff !important;
+            }
+            
+            a {
+                color:#009900 !important;
+                text-decoration: none !important;
+            }
+            
+            .input-container {
+                padding: 7px 0px;
+                background-color: #ffffff;
+                border: 1px;
+                border-color: #cccccc;
+                border-style: solid;
+                border-radius: 2px;
+                margin-top: 10px;
+                margin-bottom: 2px;
+            }
+            
+            input {
+            	color: #444444 !important;
+            }
+            
+            input::-webkit-input-placeholder {
+            	color: #b6b6b6 !important;
+            }
+            input::-moz-placeholder {
+	            color: #b6b6b6 !important;
+            }
+            input:-ms-input-placeholder {
+    	        color: #b6b6b6 !important;
+            }
+            input:-moz-placeholder {
+        	    color: #b6b6b6 !important;
+            }
+            
+            .error-message {
+                text-align: center;
+                color: #ff0000;
+            }
+        </style>
+        <apex:insert name="head"/>
+    </head>
+    <body>
+        <div class="mainDiv" >
+            <div class="container ">
+                <apex:insert name="body"/>
+            </div>            
+        </div>
+    </body>
+</apex:page>

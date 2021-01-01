@@ -1,0 +1,126 @@
+<aura:component controller="AITM_TenderLocationTaxesFeesController" implements="forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,force:appHostable,force:hasRecordId" >
+    
+    <aura:attribute name="tenderLocation" type="AITM_Tender_Location__c"/>
+    <aura:attribute name="fieldsAccess" type="Map"/>
+    <aura:attribute name="auraIdToFieldName" type="Map" default="{
+        'include-taxes-fees-in-contract' : 'AITM_Include_Taxes_Fees_in_Contract__c',
+        'include-notes-in-contract' : 'AITM_Include_Notes_in_Contract__c'
+    }" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="force:refreshView" action="{!c.doInit}" />
+    <lightning:spinner aura:id="tenderLocationTaxesFeesSpinner" class="slds-hide" />
+    
+    
+    <div class="slds-section slds-is-open" aura:Id="section-2-container">
+        <h3 class="slds-section__title">
+            <button onclick="{!c.toggleSection}" aria-controls="section-2" id="section-2-button"  aria-expanded="true" class="slds-button slds-section__title-action">
+                <lightning:icon aura:Id="section-2-icon" iconName="utility:switch" size="x-small" class="slds-m-right_xx-small" />
+                <span class="slds-truncate" title="Section Title">Taxes&amp;Fees</span>
+            </button>
+        </h3>
+        <div aria-hidden="false" class="slds-section__content" aura:id="section-2" id="section-2">
+            <lightning:layout class="slds-m-bottom_small" horizontalAlign="spread" multipleRows="true">
+                <lightning:layoutItem flexibility="grow" size="6" mediumDeviceSize="6" largeDeviceSize="6" padding="around-small">
+                    <div class="slds-form-element">
+                        <div aura:id="form-element" class="slds-form-element__control slds-has-divider--bottom">
+                            <label class="slds-form-element__label">Taxes&amp;Fees</label>  
+                            <div aura:id="toggle-text-block" class="slds-grid_vertical-align-bottom">
+                                <ui:outputTextArea value="{!v.tenderLocation.AITM_Taxes_Fees__c}" click="{!c.toggleToEdit}" />&nbsp;
+                                <aura:renderIf isTrue="{!v.fieldsAccess.aitm_taxes_fees__c.isUpdateable}">
+                                <button 
+                                        class="slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small hide-button slds-float_right" 
+                                        onclick="{!c.toggleToEdit}"
+                                        >
+                                    <span class="slds-assistive-text">Edit {!v.name}</span>
+                                    <lightning:icon iconName="utility:edit" size="xx-small" />
+                                </button>
+                                </aura:renderIf>                                
+                            </div>
+                            <div aura:id="toggle-edit-block" class="slds-hide">
+                                <aura:renderIf isTrue="{!v.fieldsAccess.aitm_taxes_fees__c.isUpdateable}">
+                                    <ui:inputTextArea value="{!v.tenderLocation.AITM_Taxes_Fees__c}" placeholder="Taxes&amp;Fees" rows="14"/>
+                                <aura:set attribute="else">
+                                    <div class="slds-form-element__control slds-has-divider--bottom">
+                                        <ui:outputTextArea value="{!v.tenderLocation.AITM_Taxes_Fees__c}" />
+                                    </div>
+                                </aura:set>
+                                </aura:renderIf>
+                            </div>
+                        </div>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem flexibility="grow" size="6" mediumDeviceSize="6" largeDeviceSize="6" padding="around-small">
+                    <div class="slds-form-element">
+                        <div aura:id="form-element" class="slds-form-element__control slds-has-divider--bottom">
+                            <label class="slds-form-element__label">Additional Notes</label>  
+                            <div aura:id="toggle-text-block" class="slds-grid_vertical-align-bottom">
+                                <ui:outputTextArea value="{!v.tenderLocation.AITM_Additional_Notes__c}" click="{!c.toggleToEdit}" />&nbsp;
+                                <aura:renderIf isTrue="{!v.fieldsAccess.aitm_additional_notes__c.isUpdateable}">
+                                <button 
+                                        class="slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small hide-button slds-float_right" 
+                                        onclick="{!c.toggleToEdit}"
+                                        >
+                                    <span class="slds-assistive-text">Edit {!v.name}</span>
+                                    <lightning:icon iconName="utility:edit" size="xx-small" />
+                                </button>
+                                </aura:renderIf>                                
+                            </div>
+                            <div aura:id="toggle-edit-block" class="slds-hide">
+                                <aura:renderIf isTrue="{!v.fieldsAccess.aitm_additional_notes__c.isUpdateable}">
+                                    <ui:inputTextArea value="{!v.tenderLocation.AITM_Additional_Notes__c}" placeholder="Additional Notes" rows="14"/>
+                                <aura:set attribute="else">
+                                    <div class="slds-form-element__control slds-has-divider--bottom">
+                                        <ui:outputTextArea value="{!v.tenderLocation.AITM_Additional_Notes__c}" />
+                                    </div>
+                                </aura:set>
+                                </aura:renderIf>
+                            </div>
+                        </div>
+                    </div>
+                </lightning:layoutItem>
+            </lightning:layout>
+            
+            <lightning:layout class="slds-m-bottom_small" horizontalAlign="spread" multipleRows="true">
+                <lightning:layoutItem flexibility="grow" size="6" mediumDeviceSize="6" largeDeviceSize="6" padding="around-small">
+                    <div class="slds-form-element">
+                        <div aura:id="form-element" class="slds-form-element__control">
+                            <label class="slds-form-element__label">Include Taxes&amp;Fees in Contract</label>  
+                            <div aura:id="toggle-text-block" class="slds-grid_vertical-align-bottom">
+                                <ui:inputCheckbox aura:id="include-taxes-fees-in-contract" 
+                                                    value="{!v.tenderLocation.AITM_Include_Taxes_Fees_in_Contract__c}"
+                                                    change="{!c.saveFormValues}"
+                                                    disabled="{!not(v.fieldsAccess.aitm_include_taxes_fees_in_contract__c)}"                                                    
+                                                   />&nbsp;                             
+                            </div>
+                            <div aura:id="toggle-edit-block" class="slds-hide">
+                                <ui:inputCheckbox value="{!v.tenderLocation.AITM_Include_Taxes_Fees_in_Contract__c}" />
+                            </div>
+                        </div>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem flexibility="grow" size="6" mediumDeviceSize="6" largeDeviceSize="6" padding="around-small">
+                    <div class="slds-form-element">
+                        <div aura:id="form-element" class="slds-form-element__control">
+                            <label class="slds-form-element__label">Include Notes in Contract</label>  
+                            <div aura:id="toggle-text-block" class="slds-grid_vertical-align-bottom">
+                                <ui:inputCheckbox value="{!v.tenderLocation.AITM_Include_Notes_in_Contract__c}"
+                                                  change="{!c.saveFormValues}"
+                                                  disabled="{!not(v.fieldsAccess.aitm_include_notes_in_contract__c)}"
+                                                  aura:id="include-notes-in-contract" />&nbsp;                             
+                            </div>
+                            <div aura:id="toggle-edit-block" class="slds-hide">
+                                <ui:inputCheckbox value="{!v.tenderLocation.AITM_Include_Notes_in_Contract__c}" />
+                            </div>
+                        </div>
+                    </div>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </div>
+    </div>
+    
+    <div aura:id="toggle-edit-block" class="slds-docked-form-footer slds-hide">
+        <button type="button" class="slds-button slds-button_neutral" onclick="{!c.canceEditForm}">Cancel</button>
+        <button type="button" class="slds-button slds-button_brand"  onclick="{!c.saveFormValues}">Save</button>
+    </div>    
+    
+</aura:component>

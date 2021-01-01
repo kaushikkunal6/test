@@ -1,0 +1,59 @@
+<template>        
+    <template if:true={loading}>
+        <lightning-spinner size="small" variant="brand"></lightning-spinner>
+    </template>
+    <div class="formBody">
+        <lightning-record-edit-form
+                density="comfy"
+                object-api-name={tenderLocLineItemObject}
+                onload={handleOnLoad}
+                onerror={handleError}
+                onsubmit={handleSubmit}
+                onsuccess={handleSuccess}
+                record-id={lineId}>                
+            <div class="slds-grid slds-wrap slds-m-top_small ">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Delivery_Method__c" onchange={onFirstKeyUp} disabled={isInDebriefStage}>
+                    </lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Delivery_By__c" onchange={onFirstKeyUp} disabled={isInDebriefStage}>
+                    </lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Measure__c" onchange={onFirstKeyUp} disabled={isInDebriefStage}>
+                    </lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Product_Density_for_Pricing__c" disabled={isInDebriefStage} onchange={onFirstKeyUp}>
+                    </lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Product_Specification__c" onchange={onFirstKeyUp} disabled={isInDebriefStage}>
+                    </lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Product_Default__c" onchange={onFirstKeyUp} disabled={isInDebriefStage}>
+                    </lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Additional_Refueling_Information__c" onchange={onFirstKeyUp} disabled={isInDebriefStage}>
+                    </lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Density__c" disabled={isInDebriefStage} onchange={onFirstKeyUp}>
+                    </lightning-input-field>
+                </div>
+            </div>       
+            <div class="slds-col slds-size_1-of-1 slds-m-around_medium slds-align_absolute-center">
+                <lightning-button variant="success" class="slds-align-absolute_center" type="submit" label="Save" disabled={isSaveDisabled}></lightning-button>
+            </div>
+        </lightning-record-edit-form>
+    </div>
+</template>

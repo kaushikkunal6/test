@@ -1,0 +1,52 @@
+<apex:component id="CAJBP_PDF_MultipleRebateTurnover">
+    <apex:attribute name="currencyIsoCode" description="The currency for the rebates." type="String"/>
+    <apex:attribute name="rebates" description="The context rebates to render." type="Object[]"/>
+
+    <apex:variable var="" value="" rendered="{!AND(NOT(ISBLANK(rebates)), rebates.size > 0)}">
+        <div class="cajbp-table-break cajbp-rebates">
+            <apex:repeat value="{!rebates}" var="rebate">
+                <table>
+                    <thead>
+                        <colgroup>
+                            <col style="width: 150px;"></col>
+                            <col></col>
+                            <col></col>
+                            <col></col>
+                        </colgroup>
+                        <tr>
+                            <th rowspan="1" style="background-color: #FFFFFF; border: 0px solid  #FFFFFF;"></th>
+                            <th colspan="3" style="background-color: #3F87A6; text-align: left; color: #FFFFFF; text-align: center;">{!rebate['name']}</th>
+                        </tr>
+                        <tr>
+                            <th rowspan="2" style="background-color: #FFFFFF; border: 0px solid  #FFFFFF;"></th>
+                            <th style="background-color: #3F87A6; text-align: left; color: #FFFFFF; text-align: center;">{!$Label.CAJBP_PDF_Target_Turnover} ({!currencyIsoCode})</th>
+                            <th style="background-color: #3F87A6; text-align: left; color: #FFFFFF; text-align: center;">{!$Label.CAJBP_PDF_Target_Percentage} (%)</th>
+                            <th style="background-color: #3F87A6; text-align: left; color: #FFFFFF; text-align: center;">{!$Label.CAJBP_PDF_Target_Rebate_Amount} ({!currencyIsoCode})</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th style="background-color: #3F87A6; text-align: left; color: #FFFFFF;">{!$Label.CAJBP_PDF_Threshold}</th>
+                            <td><span><apex:outputText value="{!rebate['thresholdTurnover']}"/></span></td>
+                            <td><span><apex:outputText value="{!rebate['thresholdPercentage']}"/></span></td>
+                            <td><span><apex:outputText value="{!rebate['thresholdRebate']}"/></span></td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #3F87A6; text-align: left; color: #FFFFFF;">{!$Label.CAJBP_PDF_Target}</th>
+                            <td><span><apex:outputText value="{!rebate['targetTurnover']}"/></span></td>
+                            <td><span><apex:outputText value="{!rebate['targetPercentage']}"/></span></td>
+                            <td><span><apex:outputText value="{!rebate['targetRebate']}"/></span></td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #3F87A6; text-align: left; color: #FFFFFF;">{!$Label.CAJBP_PDF_Stretch}</th>
+                            <td><span><apex:outputText value="{!rebate['stretchTurnover']}"/></span></td>
+                            <td><span><apex:outputText value="{!rebate['stretchPercentage']}"/></span></td>
+                            <td><span><apex:outputText value="{!rebate['stretchRebate']}"/></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br/>
+            </apex:repeat>
+        </div>
+    </apex:variable>
+</apex:component>

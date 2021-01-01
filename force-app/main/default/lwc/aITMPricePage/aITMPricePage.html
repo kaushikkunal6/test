@@ -1,0 +1,138 @@
+<template>
+    <template if:true={loading}>
+        <lightning-spinner size="small" variant="brand"></lightning-spinner>
+    </template>
+    <div class="priceBody">
+        <lightning-record-edit-form
+                density="comfy"
+                object-api-name={tenderLocLineItemObject}
+                onload={handleOnLoad}
+                onerror={handleError}
+                onsubmit={handleSubmit}
+                onsuccess={handleSuccess}
+                record-id={lineId}>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-1 boldCSS">
+                    <strong>{labels.AITM_DIFFERENTIAL_LABEL}</strong>
+                </div>
+            </div>       
+            <div class="slds-grid slds-wrap slds-m-top_small ">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Offered_Differential__c" onchange={onFirstKeyUp}>
+                    </lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Bid_Expiry_Date__c" onchange={onFirstKeyUp} disabled={isInDebriefStage}>
+                    </lightning-input-field>               
+                </div>
+            </div>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Currency__c" onchange={onFirstKeyUp}>
+                    </lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Pricing_Basis__c" disabled={isInDebriefStage} onchange={onFirstKeyUp}>
+                    </lightning-input-field>               
+                </div>
+            </div>
+            <div class="slds-grid slds-wrap">            
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Unit_Of_Measure__c" onchange={onFirstKeyUp} disabled={isInDebriefStage}>
+                    </lightning-input-field>
+                </div>
+                <div class="slds-col slds-wrap slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Pricing_Basis_Description__c" onchange={onFirstKeyUp} class="slds-wrap" disabled={isInDebriefStage}>
+                    </lightning-input-field>
+                </div>
+            </div>
+        
+            <div class="slds-grid slds-wrap slds-m-top_small">
+                <div class="slds-col slds-size_1-of-1 boldCSS">
+                    <strong>{labels.AITM_CURRENT_VALUE_LABEL}</strong>
+                </div>
+            </div>       
+            <div class="slds-grid slds-wrap slds-m-top_small ">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Current_Value__c" onchange={onFirstKeyUp} disabled={isInDebriefStage}>
+                    </lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Currency_Pricing_Basis1__c" onchange={onFirstKeyUp} disabled={isInDebriefStage}>
+                    </lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Unit_of_Measure_Pricing_Basis1__c" onchange={onFirstKeyUp} disabled={isInDebriefStage}>
+                    </lightning-input-field>
+                </div>
+            </div>
+            
+            <div class="slds-grid slds-wrap slds-m-top_small">
+                <div class="slds-col slds-size_1-of-1 boldCSS">
+                    <strong>{labels.AITM_REBATE_LABEL}</strong>
+                </div>
+            </div>       
+            <div class="slds-grid slds-wrap slds-m-top_small ">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Rebate__c" onchange={onFirstKeyUp} disabled={isInDebriefStage}>
+                    </lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Duration__c" onchange={onFirstKeyUp} disabled={isInDebriefStage}>
+                    </lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Currency_Rebate1__c" onchange={onFirstKeyUp} disabled={isInDebriefStage}>
+                    </lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Quantity__c" onchange={onFirstKeyUp} disabled={isInDebriefStage}>
+                    </lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Unit_Of_Measure_Rebate1__c" onchange={onFirstKeyUp} disabled={isInDebriefStage}>
+                    </lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid slds-wrap slds-m-top_small">
+                <div class="slds-col slds-size_1-of-1 boldCSS">
+                    <strong>{labels.AITM_EXCHANGE_LABEL}</strong>
+                </div>
+            </div>       
+            <div class="slds-grid slds-m-top_small ">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Exchange__c" onchange={onFirstKeyUp}>
+                    </lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <div class="slds-m-left_small">
+                        <div class="customLabelApplyCss">
+                            Include in revised offer
+                        </div>
+                        <div class="slds-m-top_xx-small">
+                            <template if:true={isInDebriefStage}>
+                                <lightning-input type="checkbox" checked={offer} disabled={isInDebriefStage} onchange={onFirstKeyUp} class="newOffer" name="Offer">
+                                </lightning-input>
+                            </template>
+                            <template if:false={isInDebriefStage}>
+                                <lightning-input type="checkbox" checked={offer} disabled={isOfferDisabled} onchange={onFirstKeyUp} class="newOffer" name="Offer">
+                                </lightning-input>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-m-around_medium slds-align_absolute-center">
+                <lightning-button variant="success" class="slds-align-absolute_center" type="submit" label="Save" disabled={isSaveDisabled}></lightning-button>
+            </div>
+        </lightning-record-edit-form>
+    </div>
+</template>

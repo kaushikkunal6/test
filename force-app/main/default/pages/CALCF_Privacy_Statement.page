@@ -1,0 +1,152 @@
+<apex:page cache="false" showheader="false" standardStylesheets="false" controller="CALCF_PrivacyController">
+
+<html>
+<style>
+body {
+	background-color: #fafafa;
+}
+@media only screen and (max-width: 480px) {
+	.country {
+		display: none;
+	}
+}
+
+.wrapper {
+	margin:0 auto;
+	max-width: 780px;
+}
+
+@media only screen and (max-width: 632px) {
+	.survey-container {
+		margin:0 auto;
+		box-shadow: none;
+	}
+}
+
+.footer {
+	padding: 19px 0 19px 0;
+}
+@media screen and (max-width: 780px) {
+	.footer {
+		padding: 19px 10px 19px 10px;
+	}
+}
+.copyright-holder {
+	float:left;
+}
+
+.copyright-holder, .legal-holder {
+	font-family: CastrolSansCon-Regular, helvetica neue, helvetica, freesans, sans-serif;
+	color: #525759;
+	font-size: 14px;
+}
+.copyright-holder a, .legal-holder a {
+	font-size: 14px;
+	color: #525759;
+	text-decoration: none;
+}
+@media screen and (max-width: 480px) {
+	.copyright-holder, .legal-holder, .copyright-holder a, .legal-holder a {
+		font-size: 12px;
+	}
+}
+
+html, body {
+	height: 100%;
+	overflow: hidden;
+}
+.page-outer-wrapper {
+	min-height: 100%;
+	margin-bottom: -53px;
+}
+.page-outer-wrapper:after {
+	content: "";
+	display: block;
+}
+.footer, .page-outer-wrapper:after {
+	height: 53px; 
+}
+.footer{
+	border-top: 1px #d9d9d9 solid;
+	box-sizing: border-box;
+}
+</style>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+	<meta name="viewport" content="width=device-width"></meta>
+	<title>Privacy Statements</title>
+	<meta name="keywords"></meta>
+	<meta name="description"></meta>
+	<link rel="apple-touch-icon" sizes="180x180" href="http://159.122.235.197:4203/etc/designs/castrol/assets/img/favicons/apple-touch-icon.png"></link>
+	<link rel="icon" type="image/png" href="http://159.122.235.197:4203/etc/designs/castrol/assets/img/favicons/favicon-32x32.png" sizes="32x32"></link>
+	<link rel="icon" type="image/png" href="http://159.122.235.197:4203/etc/designs/castrol/assets/img/favicons/favicon-16x16.png" sizes="16x16"></link>
+	<link rel="manifest" href="http://159.122.235.197:4203/etc/designs/castrol/assets/img/favicons/manifest.json"></link>
+	<link rel="mask-icon" href="http://159.122.235.197:4203/etc/designs/castrol/assets/img/favicons/safari-pinned-tab.svg" color="#5bbad5"></link>
+	<meta name="theme-color" content="#ffffff"></meta>
+
+	<apex:pageBlock rendered="{! or(brand == 'castrol', ISBLANK(brand))}">
+        <apex:stylesheet value="{!URLFOR($Resource.CastrolFonts, 'fonts.css')}"/>
+        <apex:stylesheet value="{!URLFOR($Resource.LCFResources, 'css/header.css')}"/>
+        <apex:stylesheet value="{!URLFOR($Resource.LCFResources, 'css/styles.css')}"/>
+    </apex:pageBlock>
+
+	<apex:pageBlock rendered="{! brand == 'aral'}">
+        <apex:stylesheet value="{!URLFOR($Resource.CastrolFonts, 'fonts.css')}"/>
+        <apex:stylesheet value="{!URLFOR($Resource.LCFAralResources, 'css/header.css')}"/>
+        <apex:stylesheet value="{!URLFOR($Resource.LCFAralResources, 'css/styles.css')}"/>
+    </apex:pageBlock>
+
+	<script type="text/javascript" src="chrome-extension://aadgmnobpdmgmigaicncghmmoeflnamj/ng-inspector.js"></script></head>
+	<body class="page" data-pinterest-extension-installed="cr2.0.5">
+
+		<div class="page__main page-outer-wrapper">
+
+			<div class="clearfix">
+				<div class="header">
+					<div class="overflow-left"></div>
+					<div class="header-middle">
+						<div class="roundel"></div>
+						<div class="logo-container">
+							<div class="logo"></div>
+							<div class="separator"></div>
+							<apex:outputPanel rendered="{! or(brand == 'castrol', ISBLANK(brand))}">
+								<div class="title"><apex:outputText value="IT'S MORE THAN JUST OIL. IT'S LIQUID ENGINEERING."/></div>
+							</apex:outputPanel>
+							<apex:outputPanel rendered="{! brand == 'aral'}">
+								<div class="title"><apex:outputText value="Alles super."/></div>
+							</apex:outputPanel>
+						</div>
+						<div class="globe-container">
+						</div>
+					</div>
+					<div class="overflow-right"></div>
+				</div>
+				<apex:outputPanel rendered="{!language == 'uk'}">
+					<c:CALCF_Privacy_Statement_UK ></c:CALCF_Privacy_Statement_UK>
+				</apex:outputPanel>
+
+				<apex:outputPanel rendered="{!language == 'at'}">
+					<c:CALCF_Privacy_Statement_AT ></c:CALCF_Privacy_Statement_AT>
+				</apex:outputPanel>
+
+				<apex:outputPanel rendered="{!language == 'it'}">
+					<c:CALCF_Privacy_Statement_IT ></c:CALCF_Privacy_Statement_IT>
+				</apex:outputPanel>
+
+				<apex:outputPanel rendered="{!language == 'pl'}">
+					<c:CALCF_Privacy_Statement_PL ></c:CALCF_Privacy_Statement_PL>
+				</apex:outputPanel>
+
+				<apex:outputPanel rendered="{!language == 'de' && brand == 'aral'}">
+					<c:CALCF_Privacy_Statement_ARAL_DE ></c:CALCF_Privacy_Statement_ARAL_DE>
+				</apex:outputPanel>
+
+				<apex:outputPanel rendered="{!language == 'de' && brand == 'castrol'}">
+					<c:CALCF_Privacy_Statement_CASTROL_DE ></c:CALCF_Privacy_Statement_CASTROL_DE>
+				</apex:outputPanel>
+			</div>
+		</div>
+	</body>
+
+	</html>
+</apex:page>

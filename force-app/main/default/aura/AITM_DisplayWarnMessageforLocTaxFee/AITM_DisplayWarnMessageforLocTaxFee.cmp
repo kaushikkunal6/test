@@ -1,0 +1,11 @@
+<!-- * Class Name :AITM_DisplayWarnMessageforLocTaxFee
+ * Created Date : 29-Aug-2019
+ * Author : Thanuja Undralla
+ * Description : This component is created to display error message on the Location Taxes and Fees related list of the Tender Location Line Item 
+ -->
+
+<aura:component implements="flexipage:availableForAllPageTypes" access="global" >
+    <aura:attribute name="message" type="string" />
+    <ui:outputtext value="*IMPORTANT NOTICE*" class="textClass"/> <br/>
+    <ui:outputtext value = "Please ensure that all relevant invoice systems are updated if you make any amendments to Taxes and Fees in this offer. Please also update the ‘Notes for Set up’ in the Debrief Executive Summary section." class="textClassPara" />
+</aura:component>

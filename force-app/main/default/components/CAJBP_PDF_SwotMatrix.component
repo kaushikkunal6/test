@@ -1,0 +1,124 @@
+<apex:component id="CAJBP_PDF_SwotMatrix">
+    <apex:attribute name="strengths" description="The context strengths to render." type="Object[]"/>
+    <apex:attribute name="weaknesses" description="The context weaknesses to render." type="Object[]"/>
+    <apex:attribute name="opportunities" description="The context opportunities to render." type="Object[]"/>
+    <apex:attribute name="threats" description="The context threats to render."  type="Object[]"/>
+
+    <div class="cajbp-swots">
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="1" style="background-color: #29C9BB">
+                        <div style="text-align: center; padding-top: 8px; padding-bottom: 8px; padding-left: 2px; font-size: 14px; position: relative;">
+                            {!$Label.CAJBP_PDF_SWOT_Strength}:&nbsp;
+                            <apex:variable var="" value="" rendered="{!AND(NOT(ISBLANK(strengths)), strengths.size > 0)}">
+                                ({!strengths.size})
+                            </apex:variable>
+                        </div>
+                    </th>
+                    <th colspan="1" style="background-color: #A36B43;">
+                        <div style="text-align: center; padding-top: 8px; padding-bottom: 8px; padding-left: 2px; font-size: 14px; position: relative;">
+                            {!$Label.CAJBP_PDF_SWOT_Weakness}:&nbsp;
+                            <apex:variable var="" value="" rendered="{!AND(NOT(ISBLANK(weaknesses)), weaknesses.size > 0)}">
+                                ({!weaknesses.size})
+                            </apex:variable>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td valign="top">
+                        <apex:variable var="" value="" rendered="{!AND(NOT(ISBLANK(strengths)), strengths.size > 0)}">
+                            <ul>
+                                <apex:repeat value="{!strengths}" var="swot">
+                                    <li>
+                                        <span><apex:outputText value="{!swot['title']}" escape="false"/></span>
+                                        <ul class="reset">
+                                            <li><apex:outputText value="{!swot['description']}" escape="false"/></li>
+                                        </ul>
+                                    </li>
+                                </apex:repeat>
+                            </ul>
+                        </apex:variable>
+                    </td>
+                    <td valign="top">
+                        <apex:variable var="" value="" rendered="{!AND(NOT(ISBLANK(weaknesses)), weaknesses.size > 0)}">
+                            <ul>
+                                <apex:repeat value="{!weaknesses}" var="swot">
+                                     <li>
+                                        <span><apex:outputText value="{!swot['title']}" escape="false"/></span>
+                                        <ul class="reset">
+                                            <li><apex:outputText value="{!swot['description']}" escape="false"/></li>
+                                        </ul>
+                                    </li>
+                                </apex:repeat>
+                            </ul>
+                        </apex:variable>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br/>
+
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="1" style="background-color: #0DAAC1;">
+                        <div style="text-align: center; padding-top: 8px; padding-bottom: 8px; padding-left: 2px; font-size: 14px; ; position: relative;">
+                            {!$Label.CAJBP_PDF_SWOT_Opportunity}:&nbsp;
+                            <apex:variable var="" value="" rendered="{!AND(NOT(ISBLANK(opportunities)), opportunities.size > 0)}">
+                                ({!opportunities.size})
+                            </apex:variable>
+                        </div>
+                    </th>
+                    <th colspan="1" style="background-color: #C66366;">
+                        <div style="text-align: center; padding-top: 8px; padding-bottom: 8px; padding-left: 2px; font-size: 14px; ; position: relative;">
+                            {!$Label.CAJBP_PDF_SWOT_Threats}:&nbsp;
+                            <apex:variable var="" value="" rendered="{!AND(NOT(ISBLANK(threats)), threats.size > 0)}">
+                                ({!threats.size})
+                            </apex:variable>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td valign="top">
+                        <apex:variable var="" value="" rendered="{!AND(NOT(ISBLANK(opportunities)), opportunities.size > 0)}">
+                            <div>
+                                <ul>
+                                    <apex:repeat value="{!opportunities}" var="swot">
+                                        <li>
+                                            <span><apex:outputText value="{!swot['title']}" escape="false"/></span>
+                                            <ul class="reset">
+                                                <li><apex:outputText value="{!swot['description']}" escape="false"/></li>
+                                            </ul>
+                                        </li>
+                                    </apex:repeat>
+                                </ul>
+                            </div>
+                        </apex:variable>
+                    </td>
+                    <td valign="top">
+                        <apex:variable var="" value="" rendered="{!AND(NOT(ISBLANK(threats)), threats.size > 0)}">
+                            <div>
+                                <ul>
+                                    <apex:repeat value="{!threats}" var="swot">
+                                        <li>
+                                            <span><apex:outputText value="{!swot['title']}" escape="false"/></span>
+                                            <ul class="reset">
+                                                <li><apex:outputText value="{!swot['description']}" escape="false"/></li>
+                                            </ul>
+                                        </li>
+                                    </apex:repeat>
+                                </ul>
+                            </div>
+                        </apex:variable>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br/>
+    </div>
+</apex:component>

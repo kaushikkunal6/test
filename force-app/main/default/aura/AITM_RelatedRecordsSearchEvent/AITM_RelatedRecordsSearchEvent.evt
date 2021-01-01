@@ -1,0 +1,6 @@
+<aura:event type="APPLICATION" description="Event which is fired when search term entered on any related records component">
+    <aura:attribute name="searchTerm" 
+                    type="String" 
+                    description="Contains search term"
+    />
+</aura:event>

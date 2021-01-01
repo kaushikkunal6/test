@@ -1,0 +1,30 @@
+<!--
+ * @author Nazim Aliyev
+ * @company Bluewolf, an IBM Company
+ * @date 7/2017
+ *
+ * A custom branded Change Password Visualforce page for BP Community
+-->
+<apex:page showHeader="false"
+           standardStylesheets="false"
+           sidebar="false"
+           applyBodyTag="false"
+           title="{!$Label.site.error2}"
+           cache="false">
+    <apex:composition template="{!$Site.Template}">
+        <apex:define name="body">
+            <div class="slds-scope">
+                <apex:outputText styleClass="title" value="{!$Label.site.error}">
+                    <apex:param value="{!$Site.ErrorMessage}"/>
+                    <!-- this parameter needs to be italic in the site.error label -->
+                </apex:outputText>
+                <br/>
+                <br/>
+                <apex:outputText escape="false" value=" {!$Label.IDPGetInTouch}">
+                    <apex:param value="mailto:{!HTMLENCODE($Site.AdminEmailAddress)}"/>
+                    <apex:param value="{!$Label.IDPGetInTouch}"/>
+                </apex:outputText>
+            </div>
+        </apex:define>
+    </apex:composition>
+</apex:page>

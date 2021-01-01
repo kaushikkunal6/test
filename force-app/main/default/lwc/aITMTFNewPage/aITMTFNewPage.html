@@ -1,0 +1,284 @@
+<template>
+    <template if:true={loading}>
+        <lightning-spinner size="small" variant="brand"></lightning-spinner>
+    </template>
+    <div class="formBody">
+        <lightning-record-edit-form
+                                density="auto"
+                                object-api-name={tenderLocLineItemObject}
+                                onload={handleOnLoad}
+                                onerror={handleOnerror}
+                                onsuccess={handleOnsuccess}
+                                onsubmit={handleSubmit}
+                                record-id={lineId}>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-3 alertCSS">
+                    <lightning-formatted-rich-text value={labels.ALERT_MESSAGE_1_LABEL}>               
+                    </lightning-formatted-rich-text>  
+                </div>        
+            </div>
+            <div class="slds-m-top_x-large">
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-1">
+                        <div class="slds-clearfix slds-float_left slds-m-left_small">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-1">
+                                    <div class="slds-align_absolute-center">
+                                        <button class="slds-button slds-button_icon slds-button_icon-inverse slds-button_icon-border" title="Refresh" onclick={refreshTimeline}>
+                                            <svg class="slds-button__icon" aria-hidden="true">
+                                                <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.28.0#refresh"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <template if:false={isInDebriefStage}>
+                            <div class="slds-clearfix slds-float_right">
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-align_absolute-center">
+                                            <lightning-button label="Add New" icon-name="utility:add" class="slds-m-left_x-small" onclick={addTaxesAndFees}></lightning-button>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2 slds-p-left_xx-small slds-p-right_large">
+                                        <div class="slds-align_absolute-center">
+                                            <lightning-button variant={redVariant} label="Save" icon-name="utility:save" class="slds-m-left_x-small" onclick={saveTaxesAndFees}></lightning-button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>           
+                </div>
+            </div>
+            <div class="slds-col slds-size_1-of-1">
+                <div class="slds-m-top_large slds-border_top"></div>       
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-m-top_large">
+                <table class="slds-table slds-table_header-hidden slds-no-row-hover backgroundTableCSS">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="boldCSS">Name</th>
+                            <th class="boldCSS">
+                                COMP/
+                                <lightning-helptext class="helpIconCSS" 
+                                    icon-name="utility:info" 
+                                    content={labels.COMP_COND_HELPTEXT} 
+                                    size="xx-small">
+                                </lightning-helptext>
+                                <br/>COND.        
+                            </th>
+                            <th class="boldCSS">FUEL<br/>TYPE</th>
+                            <th class="boldCSS">VALUE</th>
+                            <th class="boldCSS">CURR.</th>
+                            <th class="boldCSS">UOM</th>
+                            <th class="boldCSS">OFF/<br/>CRT</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={taxesAndFees} for:item="row" for:index="index">
+                            <tr key={row.Id}>
+                                <td class="tooltip overlayDynamicNameCSS">
+                                    <template if:true={row.isFreezed}>
+                                        <template if:false={applyOverlayScreen}>
+                                            <input type="text" value={row.Name} disabled={row.isFreezed} onchange={newFeeChanged} name="Name">                               
+                                        </template>
+                                        <template if:true={applyOverlayScreen}>
+                                            <lightning-input id={index} type="text" value={row.Name} disabled={row.isFreezed} onchange={newFeeChanged} name="Name">                               
+                                            </lightning-input>
+                                        </template>
+                                    </template>
+                                    <template if:true={row.isNew}>
+                                        <template if:true={applyOverlayScreen}>
+                                            <lightning-input access-key={index} id={index} type="text" value={row.Name} variant-label="hidden" class="mandatoryField overlayNameCSS" disabled={row.isFreezed} onchange={newFeeChanged} name="Name">                               
+                                            </lightning-input>
+                                        </template>
+                                        <template if:false={applyOverlayScreen}>
+                                            <lightning-input access-key={index} id={index} type="text" value={row.Name} variant-label="hidden" class="mandatoryField" disabled={row.isFreezed} onchange={newFeeChanged} name="Name">                               
+                                            </lightning-input>
+                                        </template>
+                                    </template>
+                                    <template if:true={row.isFreezed}>
+                                        <span class="tooltiptext">{row.Name}</span>
+                                    </template>
+                                </td>  
+                                <td class="dynamicTDCSS">
+                                    <template if:true={row.isFreezed}>
+                                        <template if:false={applyOverlayScreen}>
+                                            <input type="text" class="slds-truncate" onchange={newFeeChanged} name="AITM_Compulsory_Conditional__c" disabled={row.isFreezed} value={row.AITM_Compulsory_Conditional__c}>                               
+                                        </template>
+                                        <template if:true={applyOverlayScreen}>
+                                            <lightning-input type="text" class="slds-truncate" onchange={newFeeChanged} name="AITM_Compulsory_Conditional__c" disabled={row.isFreezed} id={index} value={row.AITM_Compulsory_Conditional__c}>                               
+                                            </lightning-input>
+                                        </template>
+                                    </template>
+                                    <template if:true={row.isNew}>
+                                        <template if:true={compCondValues.data}>
+                                            <lightning-combobox
+                                                    variant="label-hidden"
+                                                    class="slds-m-top_medium mandatoryField"
+                                                    name="AITM_COMP_COND__c"
+                                                    onchange={newFeeChanged}
+                                                    access-key={index}
+                                                    options={compCondValues.data.values}
+                                                    placeholder="-Select-"
+                                                    value={row.AITM_COMP_COND__c}>
+                                            </lightning-combobox>
+                                        </template>
+                                    </template>
+                                </td>  
+                                <td class="dynamicTDCSS">
+                                    <template if:true={row.isFreezed}>
+                                        <template if:false={applyOverlayScreen}>
+                                            <input type="text" name="AITM_Fuel_Type__c" onchange={newFeeChanged} disabled={row.isFreezed} value={row.AITM_Fuel_Type__c}>                               
+                                        </template>
+                                        <template if:true={applyOverlayScreen}>
+                                            <lightning-input type="text" name="AITM_Fuel_Type__c" onchange={newFeeChanged} disabled={row.isFreezed} id={index} value={row.AITM_Fuel_Type__c}> 
+                                            </lightning-input>                                 
+                                        </template>
+                                    </template>
+                                    <template if:true={row.isNew}>
+                                        <lightning-combobox
+                                                    variant="label-hidden"
+                                                    class="slds-m-top_medium mandatoryField"
+                                                    name="AITM_Fuel_Type__c"
+                                                    onchange={newFeeChanged}
+                                                    access-key={index}
+                                                    options={fuelTypeValues.data.values}
+                                                    placeholder="-Select-"
+                                                    value={row.AITM_Fuel_Type__c}>
+                                            </lightning-combobox>
+                                    </template>
+                                </td>                  
+                                <td class="dynamicTDCSS">
+                                    <template if:true={row.isFreezed}>
+                                        <template if:false={applyOverlayScreen}>
+                                            <input type="text" id={row.Id} value={row.AITM_Value__c} name="value" onchange={feeValueChanged} class="slds-m-bottom_xx-small" disabled={isInDebriefStage}> 
+                                        </template> 
+                                        <template if:true={applyOverlayScreen}>
+                                            <lightning-input type="text" id={row.Id} value={row.AITM_Value__c} name="value" onchange={feeValueChanged} class="customValueCSS" disabled={isInDebriefStage}> 
+                                            </lightning-input>
+                                        </template>                             
+                                    </template>
+                                    <template if:true={row.isNew}>
+                                        <lightning-input type="text" access-key={index} id={row.Id} value={row.AITM_Value__c} variant-label="hidden" name="AITM_Value__c" disabled={isInDebriefStage} onchange={newFeeChanged} class="customValueCSS mandatoryField">                               
+                                        </lightning-input>
+                                    </template>
+                                </td>  
+                                <td class="dynamicTDCSS">
+                                    <template if:true={row.isFreezed}>
+                                        <template if:false={applyOverlayScreen}>
+                                            <input type="text" onchange={newFeeChanged} name="CurrencyIsoCode" disabled={row.isFreezed} id={index} value={row.AITM_Rectified_Display_Currency__c}>                               
+                                        </template>
+                                        <template if:true={applyOverlayScreen}>
+                                            <lightning-input type="text" onchange={newFeeChanged} name="CurrencyIsoCode" disabled={row.isFreezed} id={index} value={row.AITM_Rectified_Display_Currency__c}>
+                                            </lightning-input>                                  
+                                        </template>                                    
+                                    </template>
+                                    <template if:true={row.isNew}>
+                                        <lightning-combobox
+                                                variant="label-hidden"
+                                                class="slds-m-top_medium"
+                                                name="CurrencyIsoCode"
+                                                access-key={index}
+                                                onchange={newFeeChanged}
+                                                options={currencyOptions}
+                                                placeholder="-Select-"
+                                                value={row.AITM_Display_Currency__c}>
+                                        </lightning-combobox>
+                                    </template>                
+                                </td>  
+                                <td class="dynamicTDCSS">
+                                    <template if:true={row.isFreezed}>
+                                        <template if:false={applyOverlayScreen}>
+                                            <input type="text" name="AITM_Unit_of_measure__c" disabled={row.isFreezed} value={row.AITM_Unit_of_measure__c}>                               
+                                        </template>
+                                        <template if:true={applyOverlayScreen}>
+                                            <lightning-input type="text" name="AITM_Unit_of_measure__c" disabled={row.isFreezed} id={index} value={row.AITM_Unit_of_measure__c}> 
+                                            </lightning-input>                                  
+                                        </template>
+                                    </template>
+                                    <template if:true={row.isNew}>
+                                        <lightning-input type="text" class="mandatoryField" onchange={newFeeChanged} name="AITM_Unit_of_measure__c" disabled={row.isFreezed} access-key={index} id={index} value={row.AITM_Unit_of_measure__c} variant-label="hidden">                               
+                                        </lightning-input>
+                                    </template>
+                                </td> 
+                                <td class="slds-m-top_small">
+                                    <template if:true={row.isFreezed}>
+                                        <template if:false={applyOverlayScreen}>
+                                            <lightning-input type="checkbox" onchange={feeValueChanged} id={row.Id} value={row.AITM_Select_to_Apply_in_Contract__c} checked={row.AITM_Select_to_Apply_in_Contract__c} name="AITM_Select_to_Apply_in_Contract__c" disabled={isInDebriefStage}>                               
+                                            </lightning-input> 
+                                        </template>
+                                        <template if:true={applyOverlayScreen}>
+                                            <lightning-input type="checkbox" onchange={feeValueChanged} id={row.Id} value={row.AITM_Select_to_Apply_in_Contract__c} class="slds-m-top_medium" checked={row.AITM_Select_to_Apply_in_Contract__c} name="AITM_Select_to_Apply_in_Contract__c" disabled={isInDebriefStage}>  
+                                            </lightning-input>                             
+                                        </template>
+                                    </template>
+                                    <template if:true={row.isNew}>
+                                        <lightning-input type="checkbox" class="slds-m-top_medium" onchange={newFeeChanged} access-key={index} id={index} value={row.AITM_Select_to_Apply_in_Contract__c} checked={row.AITM_Select_to_Apply_in_Contract__c} name="AITM_Select_to_Apply_in_Contract__c" variant-label="hidden" disabled={isInDebriefStage}>                               
+                                        </lightning-input>
+                                    </template>
+                                </td>
+                                <template if:true={row.visibleDelete}>
+                                    <td>
+                                        <lightning-icon variant="error" style="cursor: pointer;" icon-name="utility:delete"  access-key={index} id={index} size="xx-small" name={row.Id} onclick={removeFee} class="slds-float_left">
+                                        </lightning-icon> 
+                                    </td> 
+                                </template>
+                                <template key={row.Id} if:true={hasToolTip}>
+                                    <div key={row.Id} class="slds-glutters slds-cell-wrap mainToolTipDivCSS">
+                                        <div class="slds-popover slds-popover_tooltip slds-nubbin_top-left sectionToolTipDivCSS" role="tooltip">
+                                            <div class="slds-popover__body">
+                                                {selectedContent}
+                                            </div>
+                                        </div>
+                                    </div>	 
+                                </template>                                                     
+                            </tr>                                                        
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-1 slds-m-top_large slds-m-left_x-small boldCSS">
+                    {labels.AITM_Add_Notes_Label}
+                </div>                         
+            </div>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-1 topCSS">
+                    <textarea
+                        placeholder="Enter notes/instructions here" 
+                        class="slds-m-top_small textAreaCSS"
+                        name="AITM_Additional_Notes_Taxes_and_Fees__c"
+                        onchange={handleChange}
+                        disabled={isInDebriefStage}>
+                            {notes}
+                    </textarea>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-size_1-of-1 slds-m-top_small slds-m-left_x-small boldCSS">
+                            {labels.AITM_TF_Notes_Label}
+                        </div>                         
+                    </div>
+                    <lightning-textarea
+                        placeholder="Taxes & Fees" 
+                        value={taxesNotes}
+                        name="AITM_Taxes_Fees__c"
+                        onchange={handleChange}
+                        disabled={isInDebriefStage}>
+                    </lightning-textarea>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input-field data-field="AITM_Include_Taxes_and_Fees_in_Contract__c" field-name="AITM_Include_Taxes_and_Fees_in_Contract__c" onchange={handleChange} disabled={isInDebriefStage}>
+                            </lightning-input-field>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input-field data-field="AITM_Include_Notes_in_Contract__c" field-name="AITM_Include_Notes_in_Contract__c" onchange={handleChange} disabled={isInDebriefStage}>
+                            </lightning-input-field>
+                        </div>
+                    </div>                       
+                </div>
+            </div>        
+        </lightning-record-edit-form>
+    </div>
+</template>

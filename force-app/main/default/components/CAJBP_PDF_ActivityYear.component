@@ -1,0 +1,50 @@
+<apex:component id="CAJBP_PDF_ActivityYear">
+    <apex:attribute name="data" description="The activity year records." required="true" type="Map"/>
+
+    <apex:variable var="" value="" rendered="{!NOT(ISBLANK(data))}">
+        <div class="new-page"/>
+        <c:CAJBP_PDF_Section title="{!UPPER($Label.CAJBP_PDF_Heading_Activities_Calendar)}"/>
+
+        <div style="margin-top: -20px;">
+            <apex:repeat value="{!data}" var="key">
+                <div style="visibility: hidden;">{!key}</div>
+
+                <div class="cajbp-activity-year" style="margin-top: -5px;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th colspan="2" style="background-color: #FFFFFF; border: 0px solid  #FFFFFF;">&nbsp;</th>
+                                <th colspan="12">{!key}</th>
+                            </tr>
+                            <tr>
+                                <th colspan="2" style="background-color: #FFFFFF; border: 0px solid  #FFFFFF;"></th>
+                                <th>{!$Label.CAJBP_PDF_Calendar_JAN}</th>
+                                <th>{!$Label.CAJBP_PDF_Calendar_FEB}</th>
+                                <th>{!$Label.CAJBP_PDF_Calendar_MAR}</th>
+                                <th>{!$Label.CAJBP_PDF_Calendar_APR}</th>
+                                <th>{!$Label.CAJBP_PDF_Calendar_MAY}</th>
+                                <th>{!$Label.CAJBP_PDF_Calendar_JUN}</th>
+                                <th>{!$Label.CAJBP_PDF_Calendar_JUL}</th>
+                                <th>{!$Label.CAJBP_PDF_Calendar_AUG}</th>
+                                <th>{!$Label.CAJBP_PDF_Calendar_SEP}</th>
+                                <th>{!$Label.CAJBP_PDF_Calendar_OCT}</th>
+                                <th>{!$Label.CAJBP_PDF_Calendar_NOV}</th>
+                                <th>{!$Label.CAJBP_PDF_Calendar_DEC}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <apex:repeat value="{!data[key]}" var="item">
+                                <tr>
+                                    <td colspan="2" style="background-color: #3F87A6; color: #FFFFFF; border: 0px solid  #FFFFFF;"><span><c:CAJBP_LineSplitter input="{!item['title']}" lineLength="25" escape="false"/></span></td>
+                                    <apex:repeat value="{!item['months']}" var="month">
+                                        <td style="{!IF(LEN(month) = 0, 'background-color: tan;', 'background-color: #C66366;')}"><span>&nbsp;</span></td>
+                                    </apex:repeat>
+                                </tr>
+                            </apex:repeat>
+                        </tbody>
+                    </table>
+                </div>
+            </apex:repeat>
+        </div>
+    </apex:variable>
+</apex:component>

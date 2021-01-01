@@ -1,0 +1,88 @@
+<apex:page controller="CALCF_OpManagersSettingController" sidebar="false">
+
+<apex:form >
+<apex:slds >
+<style type="text/css">
+    .blank_row
+{
+    height: 10px !important; /* overwrites any other rules */
+    background-color: #FFFFFF;
+}
+</style>
+
+<div style="width:1000px; margin:0 auto;">
+    <apex:outputpanel id="theValBlock">
+
+    <div class="slds-form-element">
+        <p>&nbsp;</p><h>Operation Manager Settings</h><p>&nbsp;</p>
+    </div>
+    <div class="slds-form-element">
+        <p>This setting site allow you to change setup of Operation Managers. Per Sales Organization there is name and email address which will be used during sending a low scoring alert in case a survey with score 3 or less in NPS question was submitted. </p><p>&nbsp;</p>
+    </div>
+
+    <table cellspacing="10">
+        <tr>
+        <td><label class="slds-form-element__label" for="firstName">
+            Sales Organization
+        </label></td>
+        <td><label class="slds-form-element__label" for="firstName">
+            Survey Type
+        </label></td>
+        <td></td>
+        </tr>
+        <tr>
+            <td>
+                <div class="slds-form-element slds-size--1-of-2">
+                    <apex:selectList value="{!selectedVal}" size="1" styleClass="slds-input"> 
+                        <apex:selectOptions value="{!SalesOrgs}"/> 
+                    </apex:selectList>
+                </div>             
+        </td>
+        <td>
+             <div class="slds-form-element slds-size--2-of-3">
+                    <apex:selectList value="{!selectedType}" size="1" styleClass="slds-input"> 
+                        <apex:selectOptions value="{!SurveyTypes}"/> 
+                    </apex:selectList>
+                </div>
+        </td>
+        <td/>
+        <td>
+            <apex:commandbutton action="{!LoadTextBoxes}" value="Select OP Manager" rerender="theValBlock" styleClass="slds-button slds-button_neutral"/>   
+        </td>
+    </tr>
+    <tr class="blank_row">
+    <td colspan="3"></td>
+    </tr>
+    <tr>
+        <td><label class="slds-form-element__label" for="firstName">
+            Operation Manager Name
+        </label></td>
+        <td><label class="slds-form-element__label" for="firstName">
+            Operation Manager Email Address
+        </label></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>
+            <div class="slds-form-element slds-size--4-of-5">
+                <apex:inputText value="{!SettingProxy.Name}" styleClass="slds-input" />
+            </div>
+        </td>
+        <td>
+            <div class="slds-form-element slds-size--4-of-5">
+                <apex:inputText value="{!SettingProxy.Email}" styleClass="slds-input" id="email"/>
+            </div>
+        </td>
+         <td/>
+        <td>
+            <apex:commandbutton action="{!Save}" value="Save Changes" rerender="theValBlock" styleClass="slds-button slds-button_neutral" disabled="{!SaveDisabled}"/>
+        </td>
+    </tr>
+</table>
+
+</apex:outputpanel>
+</div>
+
+</apex:slds>
+</apex:form> 
+</apex:page>

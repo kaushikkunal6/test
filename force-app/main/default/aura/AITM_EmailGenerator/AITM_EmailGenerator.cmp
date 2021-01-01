@@ -1,0 +1,74 @@
+<aura:component access="GLOBAL" controller="AITM_EmailGeneratorController">
+    <aura:attribute name="emailDTO" type="Object" description="Email Data Transfer Object" />
+    <aura:attribute name="toAddress" type="String" description="ToAddresses separated by a ;" />
+    <aura:attribute name="ccAddresses" type="String" description="CCAddresses separated by a ;" />
+    <aura:attribute name="subject" type="String" description="Subject " />
+    <aura:attribute name="bodies" type="List" description="Body Of The Email" />
+    <aura:attribute name="attachments" type="List" description="Attachmnets Of The Email" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="c:AITM_EmailGeneratorLoad" action="{!c.handleLoad}" />
+
+    <div class="slds-modal__header">
+        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.close}"><lightning:icon iconName="utility:close" variant="inverse" size="small"/></button>
+        <h1 class="slds-page-header__title slds-m-right--small slds-truncate slds-align-left" title="Send Email" style="text-align: center;">Send Email</h1>
+    </div>
+
+    <div class="slds-modal__content slds-p-around--medium">    
+        <div class="slds-form slds-form_stacked">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">To:</label>
+                <div class="slds-form-element__control">
+                    <ui:inputText placeholder="To addresses separated by ;" value="{!v.toAddress}" required="true"/>
+                </div>
+            </div>
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">CC:</label>
+                <div class="slds-form-element__control">
+                    <ui:inputText placeholder="CC addresses separated by ;" value="{!v.ccAddresses}" required="false"/>
+                </div>
+            </div>
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">Subject:</label>
+                <div class="slds-form-element__control">
+                    <ui:inputText placeholder="Subject" value="{!v.subject}"/>
+                </div>
+            </div>
+            <div class="slds-form-element">
+                <div class="slds-form-element__control">
+                    <aura:iteration items="{!v.bodies}" var="body">
+                        <aura:if isTrue="{!body.isEditable}">
+                            <lightning:textarea aura:id="uniqueEmailBody" variant="label-hidden" class="fixedWidthTextArea" name="emailText" label="Message:" value="{!body.plainTextBody}" disabled="false"/>
+                        </aura:if>
+                        <aura:if isTrue="{!!body.isEditable}">
+                            <aura:unescapedHtml value="{!body.htmlBody}"/>
+                        </aura:if>
+                    
+                    </aura:iteration>
+                </div>
+            </div>
+
+            <aura:if isTrue="{!!empty(v.attachments)}">
+            <div class="slds-form-element" style="max-width: 38rem !important; overflow-x:scroll;">
+                <label class="slds-form-element__label">Attachments:</label>
+                <div class="slds-grid">
+                    <aura:iteration items="{!v.attachments}" var="attachment" indexVar="i">
+                    <div class="slds-col gridItem">
+					    <lightning:icon iconName="utility:file" size="x-small" />
+						<button class="slds-button" data-index="{!i}" onclick="{!c.removeAttachment}" value="{!attachment.documentLink}">
+						    <lightning:icon iconName="utility:delete"  size="x-small" />
+						</button>
+                        <a class="itemTitle desktop uiOutputText" href="{! attachment.documentUrl == null ? '#/sObject/ContentDocument/' + attachment.documentLink : attachment.documentUrl }" target="_blank">{!attachment.fileName}</a>
+                    </div>
+                    </aura:iteration>
+                </div>
+            </div>
+            </aura:if>
+        </div>
+    </div>
+
+    <div class="slds-modal__footer">
+        <lightning:button variant="neutral" label="Cancel"  onclick="{!c.close}"/>
+        <lightning:button  aura:id="button1" variant="brand" label="Send" onclick="{!c.send}"/>
+    </div>
+</aura:component>

@@ -1,0 +1,8 @@
+<design:component>
+    <design:attribute name="pageLayoutName" label="Page Layout Name" description="The API name of the page layout." />
+    <design:attribute name="sObjectName" label="SObject Name" description="The API name of the Object." />
+    <design:attribute name="recordId" label="Record Id" description="The id of the record." />
+    <design:attribute name="relatedRecordId" label="Record Id" description="The related id of the record." />
+    <design:attribute name="recordTypeId" label="Record Type Id" description="The id of the record type. Useful for picklists." />
+    <design:attribute name="fields" label="Fields" description="The list of field api name to be displayed in form." />
+</design:component>

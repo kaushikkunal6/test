@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>45.0</apiVersion>
+    <availableInTouch>false</availableInTouch>
+    <confirmationTokenRequired>false</confirmationTokenRequired>
+    <description>This page generates debrief xls attachment for the tender stage debrief and being referred in debrief email generator component.</description>
+    <label>AITM_DebriefGenerateXLS</label>
+</ApexPage>

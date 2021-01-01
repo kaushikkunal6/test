@@ -1,0 +1,35 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,force:hasRecordId">
+    
+    <aura:attribute name="tenderLocId" type="String"/>
+    <aura:attribute name="selLineId" type="String"/>
+    <aura:attribute name="holdLastSelectedTab" type="String"/>
+    <aura:attribute name="forceRefresh" type="Boolean" default="true"/>
+    <aura:attribute name="valuesUpdatedViaAura" type="Boolean" default="false"/>
+    <aura:attribute name="calledViaAuraRefresh" type="Boolean" default="false"/>
+    <aura:attribute name="isCalledOnLoad" type="Boolean" default="false"/>
+    
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    <aura:registerEvent name="partialRefreshLinesEvent" type="c:AITM_PartialRefreshEvent"/>
+    <aura:handler name="splitScreenEvent" event="c:AITM_SplitScreenEvent" action="{!c.handleNextSelectedLineEvent}"/>
+    
+	<div class="panel-container" aura:id="panel-container">
+        <div class="slds-float_left left-panel" id="{!GlobalId + '-textarea'}">
+            <div class="slds-scrollable_y" style="height:45rem;">
+                <c:AITM_TenderCustomLocNewOffer tenderLocId="{!v.recordId}"></c:AITM_TenderCustomLocNewOffer>
+            </div>           
+        </div>
+        <div class="slds-float_right right-panel" aura:id="right-panel" id="{!GlobalId + '-right'}">
+            <aura:if isTrue="{!and(v.selLineId, v.forceRefresh)}">
+            	<c:aITM_TenderLocationCustomTabs lineId="{!v.selLineId}" 
+                   recordId="{!v.recordId}"
+                   calledViaAuraRefresh = "{!v.calledViaAuraRefresh}"                              
+                   holdLastSelectedTab="{!v.holdLastSelectedTab}" 
+                   onrefreshaura="{!c.injectedFromLWC}" 
+                   onselectedtab="{!c.holdLastSelectedTabState}"                            
+                   dynamicOffSetLeft="{!v.dynamicOffSetLeft}"                             
+                   dynamicOffSetTop="{!v.dynamicOffSetTop}">
+                </c:aITM_TenderLocationCustomTabs>
+            </aura:if>   
+        </div>
+    </div>
+</aura:component>

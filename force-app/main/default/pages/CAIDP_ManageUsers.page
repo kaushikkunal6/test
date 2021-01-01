@@ -1,0 +1,16 @@
+<apex:page tabStyle="CAIDP_Manage_Users__tab" showHeader="true" standardStylesheets="false" sidebar="false" docType="html-5.0">    
+
+<apex:includeScript value="/lightning/lightning.out.js"/>
+    <script>
+        $Lightning.use("c:CAIDP_ManageUsersApp", function() {
+            $Lightning.createComponent(
+                "c:CAIDP_ManageUsers",
+                {},
+                "userList",
+                function(cmp) {
+                });
+            });
+    </script>  
+    <div id="userList">
+    </div>
+</apex:page>

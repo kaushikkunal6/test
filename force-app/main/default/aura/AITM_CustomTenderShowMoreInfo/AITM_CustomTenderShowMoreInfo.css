@@ -1,0 +1,299 @@
+.THIS .runtime_sales_pathassistantPathAssistantFields .actionLink:active {
+    background-color: rgb(238, 241, 246)
+}
+.THIS .runtime_sales_pathassistantPathAssistantFields .forcePageBlockSection .forcePageBlockItem {
+    margin: auto
+}
+.THIS .runtime_sales_pathassistantPathAssistantFields .forcePageBlockSection .forcePageBlockSectionRow {
+    width: 100%
+}
+
+.THIS .cAITM_LoadLocations {
+    background: rgb(255, 255, 255);
+}
+
+.THIS .cAITM_EmailGenerator {
+    max-height: 665px;
+}
+
+.THIS .marginTop05 {
+    margin-top: -0.5rem !important;
+}
+
+.THIS .buttonAligned {
+    margin-right: 2rem;
+    position: relative;
+    top: -0.5rem;
+    display: inline-block;
+}
+
+.THIS .runtime_sales_pathassistantPathAssistantFields .forcePageBlockSection .forcePageBlockItem .dataCol {
+    font-weight: normal
+}
+.THIS .runtime_sales_pathassistantPathAssistantFields .forcePageBlockSection .osOutputLabel {
+    color: rgb(112, 110, 107)
+}
+.THIS .runtime_sales_pathassistantPathAssistantFields .forceInlineEdit .forcePageBlock.path_assistant:last-of-type {
+    padding-bottom: 72px
+}
+.THIS .runtime_sales_pathassistantPathAssistantFields .forceInlineEdit .uiAutocompleteList {
+    position: relative!important
+}
+.THIS .runtime_sales_pathassistantPathAssistantFields:not(.inlineEditEnabled) .inline-edit-trigger {
+    display: none
+}
+.THIS .runtime_sales_pathassistantPathAssistantFields .slds-has-divider_top {
+    border: none
+}
+
+.THIS .runtime_sales_pathassistantPathAssistantInfo ul {
+    list-style: disc;
+    margin: 1rem 0;
+    padding-left: 2rem
+}
+.THIS .runtime_sales_pathassistantPathAssistantInfo ol {
+    list-style: decimal;
+    margin: 1rem 0;
+    padding-left: 2rem
+}
+.THIS .runtime_sales_pathassistantPathAssistantInfo.guidance {
+    word-break: break-word;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto
+}
+.THIS .runtime_sales_pathassistantPathAssistantInfo .content {
+    overflow: hidden
+}
+@media only screen and (max-width: 599px) {
+    .THIS .runtime_sales_pathassistantPathAssistantInfo.guidance {
+        -webkit-order: 2;
+        -ms-flex-order: 2;
+        order: 2
+    }
+}
+
+.THIS .runtime_sales_pathassistantPathAssistantInfo ul {
+    list-style: disc;
+    margin: 1rem 0;
+    padding-left: 2rem
+}
+.THIS .runtime_sales_pathassistantPathAssistantInfo ol {
+    list-style: decimal;
+    margin: 1rem 0;
+    padding-left: 2rem
+}
+.THIS .runtime_sales_pathassistantPathAssistantInfo.guidance {
+    word-break: break-word;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto
+}
+.THIS .runtime_sales_pathassistantPathAssistantInfo .content {
+    overflow: hidden
+}
+@media only screen and (max-width: 599px) {
+    .THIS .runtime_sales_pathassistantPathAssistantInfo.guidance {
+        -webkit-order: 2;
+        -ms-flex-order: 2;
+        order: 2
+    }
+}
+
+.THIS .runtime_sales_pathassistantPathAssistantBody {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex
+}
+.THIS .runtime_sales_pathassistantPathAssistantBody .pa-fields+.pa-info {
+    margin-left: 2rem
+}
+.THIS .runtime_sales_pathassistantPathAssistantBody p {
+    margin: auto
+}
+.THIS .runtime_sales_pathassistantPathAssistantBody>* {
+    -webkit-flex: auto;
+    -ms-flex: auto;
+    flex: auto;
+    -webkit-flex-basis: 50%;
+    -ms-flex-preferred-size: 50%;
+    flex-basis: 50%;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between
+}
+.THIS .runtime_sales_pathassistantPathAssistantBody .bodyHeader {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    vertical-align: bottom;
+    text-transform: uppercase;
+    color: rgb(112, 110, 107)
+}
+.THIS .runtime_sales_pathassistantPathAssistantBody .bodyHeader .title {
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    margin: auto
+}
+.THIS .runtime_sales_pathassistantPathAssistantBody .emptyBody {
+    text-align: center
+}
+
+.THIS .runtime_sales_pathassistantPathAssistantBody--desktop {
+    padding: .5rem .5rem 0 .5rem;
+    line-height: 19px
+}
+.THIS .runtime_sales_pathassistantPathAssistantBody--desktop .slds-form-element__label {
+    font-size: 12px
+}
+.THIS .runtime_sales_pathassistantPathAssistantBody--desktop .slds-form-element__static span {
+    font-size: 13px
+}
+.THIS .runtime_sales_pathassistantPathAssistantBody--desktop .pa-info,
+.THIS .runtime_sales_pathassistantPathAssistantBody--desktop .pa-fields {
+    padding-top: .25rem
+}
+.THIS .runtime_sales_pathassistantPathAssistantBody--desktop .bodyHeader {
+    padding: 0 .5rem .5rem .5rem;
+    border-bottom: solid 1px rgb(250, 250, 249)
+}
+.THIS .runtime_sales_pathassistantPathAssistantBody--desktop .actionLink {
+    text-transform: none
+}
+.THIS .runtime_sales_pathassistantPathAssistantBody--desktop .pa-info .content,
+.THIS .runtime_sales_pathassistantPathAssistantBody--desktop .pa-fields .forcePageBlockSectionRow {
+    padding: .5rem
+}
+.THIS .runtime_sales_pathassistantPathAssistantBody--desktop .pa-fields .path_assistant.forcePageBlockSectionRow {
+    display: block;
+    width: 100%
+}
+.THIS .runtime_sales_pathassistantPathAssistantBody--desktop .pa-fields .path_assistant.forcePageBlockItem {
+    display: block
+}
+.THIS .runtime_sales_pathassistantPathAssistantBody--desktop .pa-fields .path_assistant .labelCol {
+    display: inline-block;
+    width: 30%;
+    vertical-align: top
+}
+.THIS .runtime_sales_pathassistantPathAssistantBody--desktop .pa-fields .path_assistant .dataCol {
+    display: inline-block;
+    -ms-flex-positive: 1;
+    -ms-flex-negative: 1;
+    -ms-flex-preferred-size: 0
+}
+.THIS .runtime_sales_pathassistantPathAssistantBody--desktop .pa-fields .slds-form-element {
+    padding: 0
+}
+.THIS .runtime_sales_pathassistantPathAssistantBody--desktop .pa-fields .slds-section {
+    margin-bottom: 0
+}
+.THIS .runtime_sales_pathassistantPathAssistantBody--desktop .pa-fields .slds-form-element__static {
+    font-size: 13px;
+    line-height: 19px;
+    min-height: 21px
+}
+.THIS .runtime_sales_pathassistantPathAssistantBody--desktop .pa-fields .slds-form-element__label {
+    margin-bottom: 0
+}
+.THIS .runtime_sales_pathassistantPathAssistantBody--desktop .pa-fields .forcePageBlockSection .slds-section__content {
+    padding-top: 0
+}
+.THIS .runtime_sales_pathassistantPathAssistantBody--mobile .pa-fields .forcePageBlockSectionRow:last-child {
+    padding-bottom: 0
+}
+.THIS .runtime_sales_pathassistantPathAssistantBody--mobile .forcePageBlockItem {
+    padding-left: 0;
+    padding-right: 0;
+    border-bottom: none;
+    border-top: solid 1px rgb(250, 250, 249)
+}
+.THIS .runtime_sales_pathassistantPathAssistantBody--mobile .bodyHeader {
+    border-bottom: 1px solid rgb(221, 219, 218)
+}
+@media only screen and (max-width: 599px) {
+    .THIS .runtime_sales_pathassistantPathAssistantBody--mobile {
+        -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap
+    }
+    .THIS .runtime_sales_pathassistantPathAssistantBody--mobile .pa-info div.content {
+        padding: 1rem 1rem
+    }
+    .THIS .runtime_sales_pathassistantPathAssistantBody--mobile .slds-section {
+        margin-bottom: .5rem
+    }
+    .THIS .runtime_sales_pathassistantPathAssistantBody--mobile>* {
+        -webkit-flex-basis: 100%;
+        -ms-flex-preferred-size: 100%;
+        flex-basis: 100%;
+        padding: 0 1rem
+    }
+    .THIS .runtime_sales_pathassistantPathAssistantBody--mobile .pa-fields {
+        padding-bottom: 0
+    }
+    .THIS .runtime_sales_pathassistantPathAssistantBody--mobile .pa-fields+.pa-info {
+        margin-left: 0
+    }
+    .THIS .runtime_sales_pathassistantPathAssistantBody--mobile .pa-fields .forcePageBlockItemView .mainBody {
+        padding: .75rem 0
+    }
+    .THIS .runtime_sales_pathassistantPathAssistantBody--mobile .pa-info .guidance {
+        padding: 0 0
+    }
+    .THIS .runtime_sales_pathassistantPathAssistantBody--mobile .emptyBody {
+        padding: .5rem 1rem 1.5rem 1rem
+    }
+    .THIS .runtime_sales_pathassistantPathAssistantBody--mobile .guidance div.content {
+        padding: 1rem 0 1rem 0
+    }
+    .THIS .runtime_sales_pathassistantPathAssistantBody--mobile:nth-child(2) .bodyHeader {
+        border-top: 1px solid rgb(221, 219, 218)
+    }
+    .THIS .runtime_sales_pathassistantPathAssistantBody--mobile  .runtime_sales_pathassistantPathAssistantInfo .bodyHeader {
+        padding: .5rem 0 .5rem 0
+    }
+    .THIS .runtime_sales_pathassistantPathAssistantBody--mobile  .runtime_sales_pathassistantPathAssistantFields .bodyHeader {
+        padding: 0 0 .5rem 0;
+        margin-bottom: .5rem
+    }
+    .THIS .runtime_sales_pathassistantPathAssistantBody--mobile .forcePageBlockItem {
+        margin-top: .25rem
+    }
+    .THIS .runtime_sales_pathassistantPathAssistantBody--mobile .slds-form:nth-child(1) .forcePageBlockItem {
+        border-top: none
+    }
+    .THIS .runtime_sales_pathassistantPathAssistantBody--mobile .slds-form-element {
+        padding-top: .5rem
+    }
+}
+@media only screen and (min-width: 600px) {
+    .THIS .runtime_sales_pathassistantPathAssistantBody--mobile .slds-form-element__label {
+        margin: 0;
+        padding: .25rem 0 .25rem 0
+    }
+    .THIS .runtime_sales_pathassistantPathAssistantBody--mobile  .runtime_sales_pathassistantPathAssistantFields .bodyHeader {
+        padding: 0 0 .75rem 0
+    }
+    .THIS .runtime_sales_pathassistantPathAssistantBody--mobile  .runtime_sales_pathassistantPathAssistantInfo .bodyHeader {
+        padding: 0 1rem .75rem 0
+    }
+    .THIS .runtime_sales_pathassistantPathAssistantBody--mobile  .runtime_sales_pathassistantPathAssistantFields,
+    .THIS .runtime_sales_pathassistantPathAssistantBody--mobile  .runtime_sales_pathassistantPathAssistantInfo {
+        border-top: 1px solid rgb(221, 219, 218);
+        padding-top: 1rem
+    }
+    .THIS .runtime_sales_pathassistantPathAssistantBody--mobile  .runtime_sales_pathassistantPathAssistantFields .forcePageBlockSection {
+        margin-bottom: .5rem
+    }
+    .THIS .runtime_sales_pathassistantPathAssistantBody--mobile .pa-info div.content {
+        padding: .5rem 0 1rem 0
+    }
+    .THIS .runtime_sales_pathassistantPathAssistantBody--mobile .emptyBody {
+        padding: 2rem
+    }
+}

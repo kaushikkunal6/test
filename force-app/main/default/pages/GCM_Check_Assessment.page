@@ -1,0 +1,24 @@
+<apex:page lightningStylesheets="true" cache="true" expires="10" showHeader="false" applyHtmlTag="true" applyBodyTag="false" controller="GCM_Check_Assessment" action="{!checkResults}" >
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+    <head>
+      <meta charset="utf-8" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+        <title>BP GBS Salesforce Training</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <!-- Import the Design System style sheet -->
+      <apex:slds />
+    </head>
+
+    <body>
+      <!-- REQUIRED SLDS WRAPPER -->
+      <div class="slds-scope">
+         <!-- PRIMARY CONTENT WRAPPER -->
+         <div style="max-width: 100px">
+         <img width="100%" src="https://www.bp.com/etc/designs/refresh/bp/images/navigation/bp-logo.svg"/>
+         </div>
+         <br/>
+         <apex:outputText value="{!message}" escape="false" /><br/>
+      </div>
+    </body>
+</html>
+</apex:page>

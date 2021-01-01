@@ -1,0 +1,62 @@
+.THIS .panel-container {
+    width: 100%;
+    height: 100px;
+    display: flex;
+}
+
+.THIS .splitter {
+    cursor: col-resize;
+    background-color: #aaa;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='30'><path d='M2 0 v30 M5 0 v30 M8 0 v30' fill='none' stroke='black'/></svg>");
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 1%;
+    height: 100%;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: absolute;
+}
+
+.THIS .left-panel {
+    width: 66%;
+    height: 100%;
+}
+
+.THIS .right-panel {
+    width: 33%;
+    height: 100%;
+    position: relative;
+}
+
+.THIS .splitter {
+    position: absolute;
+    width:4px;
+    height: 100%;
+    cursor: col-resize;
+    content: " ";
+    background-color: #ccc;
+}
+
+.THIS .splitterCSS{ 
+    max-width: 100%;
+    cursor: w-resize;
+}
+
+/*.THIS ::-webkit-scrollbar {
+  width: 12px;
+}
+
+.THIS ::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+}
+ 
+.THIS ::-webkit-scrollbar-thumb {
+  background: #ff3f6c;
+  border-radius: 10px;
+}
+
+.THIS ::-webkit-scrollbar-thumb:hover {
+  background: #e52e71; 
+}*/

@@ -1,0 +1,92 @@
+<aura:component controller="AITM_OfferCustomerPlanController" implements="forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,force:hasRecordId">
+
+    <aura:attribute name="customers" type="List" description="Contains list of customer records - tender accounts" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <div class="slds">
+        <div class="slds-page-header noborderbottom" role="banner">
+            <div class="slds-grid">
+                <div class="slds-col slds-has-flexi-truncate">
+                    <div class="slds-grid">
+                        <div class="slds-grid slds-type-focus slds-no-space">
+                            <h1 class="slds-page-header__title slds-truncate" title="My Items" style="font-family: 'Salesforce Sans',Arial,sans-serif; font-weight: 300; margin-bottom: 5px;">Customer Plan Information</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-max-medium-table--stacked-horizontal">
+        <thead>
+            <tr class="slds-text-title--caps">
+                <th class="initialSortAsc sortable ascending slds-is-sortable  slds-is-resizable" scope="col" title="Customer">
+                    <div>
+                        <span class="slds-truncate" title="Customer">Customer</span>
+                    </div>
+                </th>
+                <th class="initialSortAsc sortable ascending slds-is-sortable  slds-is-resizable" scope="col" title="GRN">
+                    <div>
+                        <span class="slds-truncate" title="GRN">GRN</span>
+                    </div>
+                </th>
+                <th class="initialSortAsc sortable ascending slds-is-sortable  slds-is-resizable" scope="col" title="Customer Plan">
+                    <div>
+                        <span class="slds-truncate" title="Customer Plan">Customer Plan</span>
+                    </div>
+                </th>
+                <th class="initialSortAsc sortable ascending slds-is-sortable  slds-is-resizable" scope="col" title="Interest">
+                    <div>
+                        <span class="slds-truncate" title="Interest">Interest</span>
+                    </div>
+                </th>
+                <th class="initialSortAsc sortable ascending slds-is-sortable  slds-is-resizable" scope="col" title="Probability">
+                    <div>
+                        <span class="slds-truncate" title="Probability">Probability</span>
+                    </div>
+                </th>
+                <th class="initialSortAsc sortable ascending slds-is-sortable  slds-is-resizable" scope="col" title="Requested Volume">
+                    <div>
+                        <span class="slds-truncate" title="Requested Volume">Requested <br/> Volume</span>
+                    </div>
+                </th>
+            </tr>
+        </thead>
+        <tfoot></tfoot>
+        <tbody>
+            <aura:iteration items="{!v.customers}" var="customer">
+                <tr>
+                    <th scope="row" class="slds-cell-edit cellContainer" tabindex="-1">
+                        <span class="slds-grid slds-grid--align-spread forceInlineEditCell">
+                        <a class="slds-truncate outputLookupLink slds-truncate forceOutputLookup" data-refid="recordId" data-recordid="{!customer.recordId}" data-special-link="true" href="{!'#/sObject/' + customer.recordId + '/view'}" target="_blank" rel="noreferrer" title="{!customer.name}">{!customer.name}</a>
+                    </span>
+                    </th>
+                    <td class="slds-cell-edit cellContainer" tabindex="-1">
+                        <span class="slds-grid slds-grid--align-spread forceInlineEditCell">
+                        <span class="slds-truncate">{!customer.grn}</span>
+                        </span>
+                    </td>
+                    <td class="slds-cell-edit cellContainer" tabindex="-1">
+                        <span class="slds-grid slds-grid--align-spread forceInlineEditCell">
+                        <span class="slds-truncate">{!customer.customerPlan}</span>
+                        </span>
+                    </td>
+                    <td class="slds-cell-edit cellContainer" tabindex="-1">
+                        <span class="slds-grid slds-grid--align-spread forceInlineEditCell">
+                        <span class="slds-truncate">{!customer.interest}</span>
+                        </span>
+                    </td>
+                    <td class="slds-cell-edit cellContainer" tabindex="-1">
+                        <span class="slds-grid slds-grid--align-spread forceInlineEditCell">
+                        <span class="slds-truncate">{!customer.probability}</span>
+                        </span>
+                    </td>
+                    <td class="slds-cell-edit cellContainer" tabindex="-1">
+                        <span class="slds-grid slds-grid--align-spread forceInlineEditCell">
+                        <span class="slds-truncate">{!customer.requestedVolume}</span>
+                        </span>
+                    </td>
+                </tr>
+            </aura:iteration>
+        </tbody>
+    </table>
+</aura:component>

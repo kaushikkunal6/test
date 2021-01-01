@@ -1,0 +1,126 @@
+<!--
+ * @author Nazim Aliyev
+ * @company Bluewolf, an IBM Company
+ * @date 6/2017
+ *
+ * This is Digital Asset Links file, required for Android App to handle links on this domain.
+ * As described in https://developer.android.com/training/app-links/index.html
+-->
+<apex:page controller="REIDP_Constants" contentType="application/json" showHeader="false" sidebar="false">
+<apex:outputText escape="false" rendered="{!isSandbox}">
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.bp.mobile.bpme.uk",
+      "sha256_cert_fingerprints": [
+        "47:F8:C5:8F:53:80:07:12:6F:0B:45:0B:4E:B4:EB:17:1F:4B:79:02:96:12:3D:CF:97:E2:CC:0D:23:BF:A8:EE"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.bp.mobile.bpme.aus",
+      "sha256_cert_fingerprints": [
+        "47:F8:C5:8F:53:80:07:12:6F:0B:45:0B:4E:B4:EB:17:1F:4B:79:02:96:12:3D:CF:97:E2:CC:0D:23:BF:A8:EE"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.bp.mobile.bpme.nl",
+      "sha256_cert_fingerprints": [
+        "47:F8:C5:8F:53:80:07:12:6F:0B:45:0B:4E:B4:EB:17:1F:4B:79:02:96:12:3D:CF:97:E2:CC:0D:23:BF:A8:EE"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.bp.mobile.bpme.us",
+      "sha256_cert_fingerprints": [
+        "47:F8:C5:8F:53:80:07:12:6F:0B:45:0B:4E:B4:EB:17:1F:4B:79:02:96:12:3D:CF:97:E2:CC:0D:23:BF:A8:EE"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.bp.mobile.bpme.mex",
+      "sha256_cert_fingerprints": [
+        "47:F8:C5:8F:53:80:07:12:6F:0B:45:0B:4E:B4:EB:17:1F:4B:79:02:96:12:3D:CF:97:E2:CC:0D:23:BF:A8:EE"
+      ]
+    }
+  }
+]
+</apex:outputText>
+<apex:outputText escape="false" rendered="{!NOT(isSandbox)}">
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.bp.mobile.bpme.uk",
+      "sha256_cert_fingerprints": [
+        "5E:F8:2F:2B:57:AE:0D:7C:21:33:99:33:F1:E2:B8:5B:85:E8:30:FF:7E:AA:59:12:CB:13:BE:BF:83:BD:85:62"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.bp.mobile.bpme.us",
+      "sha256_cert_fingerprints": [
+        "F8:E1:98:BF:D5:9D:B9:70:BF:82:F1:2A:F2:81:33:AB:F6:EE:E9:69:94:FC:3A:CE:18:4C:92:28:2B:74:B6:73"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.bp.mobile.bpme.aus",
+      "sha256_cert_fingerprints": [
+        "6E:6B:E0:26:26:F4:B0:E1:6A:38:07:0A:D0:57:A5:25:DB:0F:76:F3:CA:FE:58:0A:02:54:81:D8:DA:F7:04:BF"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.bp.mobile.bpme.nl",
+      "sha256_cert_fingerprints": [
+        "65:A4:A3:F7:D2:0B:BE:76:72:B2:EC:23:DF:DA:5E:8F:62:90:23:C1:AF:5A:83:F8:CE:EF:A4:05:A9:04:9E:CE"
+      ]
+    }
+  }
+]
+</apex:outputText>
+</apex:page>

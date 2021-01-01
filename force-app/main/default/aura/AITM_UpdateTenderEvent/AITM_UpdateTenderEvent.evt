@@ -1,0 +1,1 @@
+<aura:event type="COMPONENT" description="Event which is fired when tender record should be updated on de-brief summary"/>

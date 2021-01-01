@@ -1,0 +1,136 @@
+<apex:component >
+    <script type='text/javascript'>
+        
+        var overwriteInt = setInterval(function() {
+            if(typeof(logACall_Finish) == 'function') {
+                clearInterval(overwriteInt);
+                //for debugging issues if something is misplaced...
+                console.log('Modifying standard Log a Call function. Please check custom components for issues.');
+
+                //change the above function to new logic
+                logACall_Finish = function() {
+                    //show loading
+                    
+                    var $logACallMessage = MAToastMessages.showLoading({message:MASystem.Labels.MAActionFramework_Log_a_Call,subMessage:'Updating Records...',timeOut:0,extendedTimeOut:0});
+                    var $popup = $('#LogACallPopup');
+                    $popup.data({ batchCount: 0, successCount: 0, failureCount: 0 })
+
+                    //grab our Ids
+                    var recordIds = $popup.data('recordIds') || [];
+                    var hasErrors = false;
+                    //create a batchable array
+                    var batchableIds = MA.Util.createBatchable(recordIds,200);
+
+                    //hide our modal
+                    MALayers.hideModal('LogACallPopup');
+
+                    var callQueue = async.queue(function (batchOptions, callback) {
+                        Visualforce.remoting.Manager.invokeAction(MARemoting.processAJAXRequest,
+                            batchOptions,
+                            function(response, event){
+                                if (response.success)
+                                {
+                                    var failures = 0;
+                                    var successes = 0;
+                                    var errorHTML = '<table>';
+                                    var errorRow = '';
+                                    $.each(response.results, function (index, result) {
+                                        if (result.success) {
+                                            successes++;
+                                        }
+                                        else {
+                                            failures++;
+                                            var errorArr = result.errors || [];
+                                            var errorObj = errorArr[0] || {};
+                                            hasErrors = true;
+                                            var errorMsg = errorObj.message || 'Unknown Error';
+                        
+                                            errorRow = '<tr><td>'+errorMsg+'</td></tr>';
+                                        }
+                                    });
+                                    errorHTML += errorRow + '</table>';
+                        
+                                    if(hasErrors) {
+                                        var getErrors = $popup.data('errorArr') || [];
+                                        getErrors.push(errorHTML);
+                        
+                                        $popup.data('errorArr',getErrors);
+                                    }
+                                    //decrement the batches we have out
+                                    $popup.data('batchCount', $popup.data('batchCount') - 1);
+                                    $popup.data('failureCount',$popup.data('failureCount') + failures);
+                                    $popup.data('successCount',$popup.data('successCount') + successes);
+                                }
+                                else
+                                {
+                                    //decrement the batches we have out
+                                    $popup.data('batchCount', $popup.data('batchCount') - 1);
+                                    var recordCount = 0;
+                                    try {
+                                        var recordParse = JSON.parse(batchOptions.serializedRecordIds);
+                                        recordCount = recordParse.length;
+                                    }
+                                    catch(e) {
+                                        recordCount = 0;
+                                    }
+                                    $popup.data('failureCount',$popup.data('failureCount') + recordCount);
+                                }
+                                $logACallMessage.find('.toast-message').text('Updating...' + $popup.data('batchCount') + ' batches remaining');
+                                callback();
+                            },{buffer:false,escape:false}
+                        );
+                    });
+                    
+                    callQueue.concurrency = 1;
+                    
+                    /****************************************************************************************************************************
+                    *
+                    *   Modify the below object with the fields to be updated
+                    *   adding checkbox field called " MA_Created" and defaulting it to true.
+                    *
+                    ****************************************************************************************************************************/
+                    var callInfo = JSON.stringify({
+                        TaskSubtype : 'Call',
+                        Status : 'Completed',
+                        Subject : $popup.find('.callSubject').val(),
+                        Description : $popup.find('.callComments').val(),
+                        MA_Created__c : true
+                    });
+                    
+                    //loop over the visibleOnly queries and add to que
+                    for(var b = 0; b < batchableIds.length; b++) {
+                        var recordIds = batchableIds[b];
+                        var processData = { 
+                            ajaxResource : 'MATooltipAJAXResources',
+                            
+                            action: 'LogACallBatch',
+                            serializedRecordIds : JSON.stringify(recordIds),
+                            callInfo : callInfo
+                        };
+                        $popup.data('batchCount',$popup.data('batchCount') + 1);
+                        callQueue.push(processData);
+                    }
+                    
+                    callQueue.drain = function(){
+                        MAToastMessages.hideMessage($logACallMessage);
+                        var finalMessage = $popup.data('successCount') + ' successful, ' + $popup.data('failureCount') + ' failures';
+                        //show a final message based on success and failures
+                        if($popup.data('failureCount') > 0 && $popup.data('successCount') > 0) {
+                            //show warning that some failed
+                            MAToastMessages.showWarning({message:MASystem.Labels.MAActionFramework_Log_a_Call,subMessage:finalMessage,timeOut:0,extendedTimeOut:0, closeButton:true});
+                        }
+                        else if ($popup.data('failureCount') === 0 && $popup.data('successCount') > 0) {
+                            //show warning that some failed
+                            MAToastMessages.showSuccess({message:MASystem.Labels.MAActionFramework_Log_a_Call,subMessage:finalMessage});
+                        }
+                        else {
+                            MAToastMessages.showError({message:MASystem.Labels.MAActionFramework_Log_a_Call,subMessage:finalMessage,timeOut:0,extendedTimeOut:0, closeButton:true});
+                        }
+                    }
+
+                    
+                }
+            }
+        })
+    </script>
+</apex:component>

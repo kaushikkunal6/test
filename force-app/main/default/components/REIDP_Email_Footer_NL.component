@@ -1,0 +1,55 @@
+<apex:component access="global">
+    <table align="center" width="600" cellpadding="0" cellspacing="0" style="min-height: 152px; background-color:#FFFFFF; table-layout:fixed; min-height:152px">
+        <tr>
+            <td width="30" height="19" style="font-size: 19px; line-height: 19px;">&nbsp;</td>
+            <td></td>
+            <td width="30" height="19" style="font-size: 19px; line-height: 19px;">&nbsp;</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td style="vertical-align:top;font-size:16px; color:#787878">Hulp nodig?</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td width="30" height="17" style="font-size: 17px; line-height: 17px;">&nbsp;</td>
+            <td></td>
+            <td width="30" height="17" style="font-size: 17px; line-height: 17px;">&nbsp;</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><hr style="background-color: #d1d1d1; height: 1px; border: 0"/></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td width="30" height="15" style="font-size: 15px; line-height: 15px;">&nbsp;</td>
+            <td></td>
+            <td width="30" height="15" style="font-size: 15px; line-height: 15px;">&nbsp;</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><span style="font-size:13px; font-weight:bold; color:#787878">Email: </span><span style="font-size:13px; font-weight:regular"><a href="mailto:consumentenservice@bp.com" title="Email" style="color: #787878; text-decoration: none;" target="_blank">consumentenservice@bp.com</a></span></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><span style="font-size:13px; font-weight:bold; color:#787878">Bel: </span><span style="font-size:13px; font-weight:regular"><a href="tel:08002727270" title="Bel" style="color: #787878; text-decoration: none;" target="_blank">08002727270</a></span></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td width="30" height="19" style="font-size: 19px; line-height: 19px;">&nbsp;</td>
+            <td></td>
+            <td width="30" height="19" style="font-size: 19px; line-height: 19px;">&nbsp;</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td style="line-height:normal;"><span style="font-size:8px; color:#787878"><span style="font-weight:bold">BP Europa SE - BP Nederland, </span>is geregistreerd in Nederland en heeft haar hoofdkantoor te: d'Arcyweg 76, Havennummer 6425, 3198 NA Europoort-Rotterdam.
+                <br/>Dit bericht is uitsluitend gericht aan de geadresseerde en heeft betrekking op het gebruik van de BPme app, het bericht kan vertrouwelijke informatie bevatten. Als je dit bericht per ongeluk hebt ontvangen of als je niet de geadresseerde bent van de e-mail neem dan contact op via: <a href="mailto:consumentenservice@bp.com" title="Email" style="color: #787878; text-decoration: none;" target="_blank">consumentenservice@bp.com</a> zodat wij actie kunnen ondernemen en de gegevens uit onze systemen kunnen verwijderen. Gebruik, kopieer of distribueer de informatie in dit bericht of de bijlage van dit bericht niet.</span></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td width="30" height="19" style="font-size: 19px; line-height: 19px;">&nbsp;</td>
+            <td></td>
+            <td width="30" height="19" style="font-size: 19px; line-height: 19px;">&nbsp;</td>
+        </tr>
+    </table>
+</apex:component>

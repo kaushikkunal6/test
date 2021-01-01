@@ -1,0 +1,7 @@
+<apex:component access="global" layout="none" selfClosing="true" controller="CAJBP_LineSplitter">
+    <apex:attribute name="input" type="String" description="Input text (required)" assignTo="{!myInput}" />
+    <apex:attribute name="lineLength" type="Integer" description="Line length (defaults to 70)" assignTo="{!myLineLength}"/>
+    <apex:attribute name="escape" type="Boolean" description="To escape input text." default="true"/>
+
+    <apex:outputText value="{!output}" escape="{!escape}"/>
+</apex:component>

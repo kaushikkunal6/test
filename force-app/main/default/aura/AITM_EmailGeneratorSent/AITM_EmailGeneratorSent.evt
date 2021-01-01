@@ -1,0 +1,6 @@
+<aura:event type="APPLICATION" description="Event which is fired when filters email Is Sent">
+    <aura:attribute name="emailBody" 
+                    type="Object" 
+                    description="Contains dto"
+    />
+</aura:event>

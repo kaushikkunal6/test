@@ -1,0 +1,37 @@
+<!--*****************************************************************************************
+*       Date:        7OCT2019
+*       Author:      Naglis Jonas Kazlauskas - IBM
+*       Description: Visualforce component for request email template
+*****************************************************************************************/-->
+<apex:component controller="DUP_RequestDocumentController" access="global">
+    <apex:attribute name="RecordIdValue" description="User id on the component." type="Id" required="required" assignTo="{!RecordId}"
+    />
+    <apex:attribute name="RequestIdValue" description="request id on the component." type="Id" required="required" assignTo="{!RequestId}"
+    />
+    <apex:repeat value="{!documentStoresList}" var="docStore">
+        <div>
+            <br/>
+            <b>&bull;&nbsp;&nbsp;
+                <apex:outputText value="{!docStore.DUP_Document_Name__c}" />
+            </b>
+            <apex:outputText rendered="{!NOT(IF(docStore.DUP_Description__c ='',true,false))}">
+                <div style="margin-left: 25px;">
+                    <apex:outputText value="{!docStore.DUP_Description__c}" escape="false" />
+                </div>
+            </apex:outputText>
+
+            <apex:outputText rendered="{!NOT(IF(docStore.DUP_Reject_Comments__c ='',true,false))}">
+                <div style="padding-left: 11.84px">
+
+                    <br/>
+                    <apex:outputText value="{!docStore.DUP_Reject_Comments__c}" />
+                </div>
+            </apex:outputText>
+        </div>
+    </apex:repeat>
+    <apex:outputText rendered="{!booleanValue}">
+        <p style="font-size:100%; padding-left: 10.84px">
+            <em>** Certified True Copy - {!$Label.DUP_CertifiedTrueCopyInformation}</em>
+        </p>
+    </apex:outputText>
+</apex:component>

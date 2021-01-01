@@ -1,0 +1,204 @@
+<aura:component controller="AITM_DeBriefResultsController">
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:attribute name="recordId" type="String" description="Record Id - Tender Id for locations list load" />
+    <aura:attribute name="deBriefResults" type="List" description="Contains list of result records - de brief result" />
+    <aura:attribute name="deBriefEditable" type="Boolean" default="true" description="If true - picklists are shown" />
+    <aura:attribute name="deBriefResultsOption" type="List" description="Contains list of options for deBrief options" />
+    <aura:attribute name="selectedFilter" type="Object" description="Contains info regarding selected filter" />
+    <aura:attribute name="paginationList" type="List" />
+	<aura:attribute name="pageSize" type="Integer" default="300"/>
+	<aura:attribute name="totalSize" type="Integer"/>
+	<aura:attribute name="start" type="Integer" />
+    <aura:attribute name="end" type="Integer"/>
+    <aura:attribute name="isMultipleOptionDisabled" type="boolean" default="true"/>
+    <aura:attribute name="selectedResult" type="String" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="force:refreshView" action="{!c.doInit}" />
+    <aura:handler event="c:AITM_RelatedRecordsFilterEvent" action="{!c.handleFilterEvent}" />
+    <aura:handler event="c:AITM_RelatedRecordsSearchEvent" action="{!c.handleSearchEvent}" />
+
+    <lightning:spinner aura:id="relatedDebriefSpinner"/>
+    
+    <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+        <tr> 
+            <td style="width:7%">Show</td>
+            <td style="width:17%">
+                <lightning:select aura:id="selectItem" name="selectItem" label="" onchange="{!c.selectChange}">
+                    <option value="300">300</option>
+                    <option value="600">600</option>
+                    <option value="900">900</option>
+                    <option value="1200">1200</option>
+                    <option value="1500">1500</option>
+                </lightning:select> 
+                </td>
+            <td>Entries</td>
+            <td style="width:65%">
+                <aura:if isTrue="{!v.deBriefEditable}">
+                    <div style=" float: right; right: 1em;">
+                       <lightning:select aura:id="standardTenderResult" label="Mark Multiple" onchange="{!c.onResultChange}" value="{!v.selectedResult}" disabled="{!v.isMultipleOptionDisabled}">
+                           <aura:iteration items="{!v.deBriefResultsOption}" var="option" indexVar="index">
+                               <option text="{!option}" value="{!option}" />
+                           </aura:iteration>
+                        </lightning:select>
+                    </div>
+            	</aura:if>
+            </td>
+            <td>
+                <aura:if isTrue="{!v.deBriefEditable}">
+                    <div style="float: right;  right: 1em;margin-top:20px" >
+                       <lightning:button  variant="brand" label="Save" onclick="{!c.handleSave}" />
+                    </div>
+                </aura:if>
+            </td>
+        </tr>
+    </table>
+    
+    <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+        <thead>
+            <tr class="slds-text-title_caps">
+                <th scope="col">
+                    <div class="slds-truncate" title="IATA/ICAO">IATA/ICAO</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="LOCATION">LOCATION</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="DELIVERY POINT">DELIVERY <br/> POINT</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="CUSTOMER">CUSTOMER</div>
+                </th>                        
+                <th scope="col">
+                    <div class="slds-truncate" title="GRN">GRN</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="START DATE">START <br/> DATE</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="END DATE">END <br/> DATE</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="AWARDED VOLUME">AWARDED <br/> VOLUME</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="PRICING BASIS">PRICING <br/> BASIS</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="BP DIFFERENTIAL">BP <br/> DIFFERENTIAL</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="CURRENCY">CURRENCY</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="MEASURE">MEASURE</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="LAST TENDER RESULT">LAST <br/> TENDER <br/> RESULT</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="RESULT">RESULT</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="RESULT">Select All</div>
+                    <lightning:input type="checkbox" checked="false" onchange="{!c.handleSelectAll}" aura:id="selectAll" disabled="{!!v.deBriefEditable}" />
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <aura:if isTrue="{!!empty(v.paginationList)}">
+                <aura:iteration items="{!v.paginationList}" var="deBriefResult">
+                    <aura:if isTrue="{!!empty(deBriefResult.recordId)}">
+                        <tr>
+                            <td data-label="IATA/ICAO">
+                                <div class="slds-truncate slds-cell-wrap" title="{!deBriefResult.locationIdentificator}">
+                                    <a class="slds-truncate outputLookupLink slds-truncate slds-cell-wrap forceOutputLookup" data-refid="recordId" data-recordid="{!deBriefResult.locationId}" data-special-link="true" href="{!'#/sObject/' + deBriefResult.locationId + '/view/'}" rel="noreferrer" title="{!deBriefResult.locationIdentificator}" data-aura-class="forceOutputLookup"  onclick="{!c.navigateToSObject}">{!deBriefResult.locationIdentificator}</a>
+                                </div>
+                            </td>
+                            <td data-label="LOCATION">
+                                <div class="slds-truncate slds-cell-wrap" title="{!deBriefResult.locationName}">
+                                    <a class="slds-truncate outputLookupLink slds-truncate slds-cell-wrap forceOutputLookup" data-refid="recordId" data-recordid="{!deBriefResult.locationId}" data-special-link="true" href="{!'#/sObject/' + deBriefResult.locationId + '/view/'}" rel="noreferrer" title="{!deBriefResult.locationName}" data-aura-class="forceOutputLookup"  onclick="{!c.navigateToSObject}">{!deBriefResult.locationName}</a>
+                                </div>
+                            </td>
+                            <td data-label="DELIVERY POINT">
+                                <div class="slds-truncate slds-cell-wrap" title="{!deBriefResult.deliveryPoint}">
+                                    <a class="outputLookupLink slds-truncate slds-cell-wrap forceOutputLookup" data-refid="recordId" data-recordid="{!deBriefResult.deliveryPointIdentifier}" data-special-link="true" href="{!'#/sObject/' + deBriefResult.deliveryPointIdentifier +'/view/'}" rel="noreferrer" title="{!deBriefResult.deliveryPoint}" data-aura-class="forceOutputLookup" onclick="{!c.navigateToSObject}">{!deBriefResult.deliveryPoint}</a>
+                                </div>
+                            </td>
+                            <td data-label="CUSTOMER">
+                                <div class="slds-truncate slds-cell-wrap" title="{!deBriefResult.customer}">
+                                    <a class="outputLookupLink slds-truncate slds-cell-wrap forceOutputLookup" data-refid="recordId" data-recordid="{!deBriefResult.recordId}" data-special-link="true" href="{!'#/sObject/'+deBriefResult.recordId+'/view/'}" rel="noreferrer" title="{!deBriefResult.customer}" data-aura-class="forceOutputLookup" onclick="{!c.navigateToSObject}">{!deBriefResult.customer}</a>
+                                </div>
+                            </td>
+                            <th scope="row" data-label="GRN">
+                                <div class="slds-truncate" title="{!deBriefResult.GRN}">
+                                    <a class="outputLookupLink slds-truncate forceOutputLookup" data-refid="recordId" data-recordid="{!deBriefResult.recordId}" data-special-link="true" href="{!'#/sObject/'+deBriefResult.recordId+'/view/'}" rel="noreferrer" title="{!deBriefResult.GRN}" data-aura-class="forceOutputLookup" onclick="{!c.navigateToSObject}">{!deBriefResult.GRN}</a>
+                                </div>
+                            </th>
+                            <td data-label="START DATE">
+                                <lightning:formattedDateTime value="{!deBriefResult.startDate}" year="numeric" day="2-digit" month="2-digit" timeZone="{!$Locale.timezone}" />
+                            </td>
+                            <td data-label="END DATE">
+                                <lightning:formattedDateTime value="{!deBriefResult.endDate}" year="numeric" day="2-digit" month="2-digit" timeZone="{!$Locale.timezone}" />
+                            </td>
+                            <td data-label="AWARDED VOLUME">
+                                <lightning:formattedNumber value="{!deBriefResult.awardedVolume}" />
+                            </td>
+                            <td data-label="PRICING BASIS">
+                                <div class="slds-truncate" title="{!deBriefResult.pricingBasis}">{!deBriefResult.pricingBasis}</div>
+                            </td>
+                            <td data-label="BP DIFFERENTIAL">
+                                <lightning:formattedNumber value="{!deBriefResult.differential}" />
+                            </td>
+                            <td data-label="CURRENCY">
+                                <div class="slds-truncate" title="{!deBriefResult.locationCurrency}">{!deBriefResult.locationCurrency}</div>
+                            </td>
+                            <td data-label="MEASURE">
+                                <div class="slds-truncate" title="{!deBriefResult.measure}">{!deBriefResult.measure}</div>
+                            </td>
+                            <td data-label="LAST TENDER RESULT">
+                                <div class="slds-truncate" title="{!deBriefResult.lastTenderResult}">{!deBriefResult.lastTenderResult}</div>
+                            </td>
+                            <aura:if isTrue="{!!v.deBriefEditable}">
+                                <td data-label="RESULT">
+                                    <div class="slds-truncate" title="{!deBriefResult.result}">{!deBriefResult.result}</div>
+                                </td>
+                            </aura:if>
+                            <aura:if isTrue="{!v.deBriefEditable}">
+                                <td data-label="RESULT">
+                                    <lightning:select aura:id="tenderResult" 
+                                        name="tenderResult" 
+                                        label=""
+                                        value="{!deBriefResult.result}" class="slds-m-top_none">
+                                        <aura:iteration items="{!v.deBriefResultsOption}" var="option" indexVar="index">
+                                        <option text="{!option}" value="{!option}" />
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </td>
+                            </aura:if>  
+                            <td data-label="Select All">
+                                <lightning:input aura:id="checkResult" type="checkbox" checked="{!deBriefResult.isSelected}" value="{!deBriefResult.isSelected}" onchange="{!c.handleSelectAllCheckbox}" disabled="{!!v.deBriefEditable}" />
+                            </td>
+                        </tr>
+                    </aura:if>
+                </aura:iteration>
+                <tr class="slds-text-title_caps">
+                    <th scope="col">
+                        <lightning:button label="First" disabled="{!v.start == 0}" onclick="{!c.first}" />
+                    </th>
+                    <th scope="col">
+                        <lightning:button label="Previous" disabled="{!v.start == 0}"  onclick="{!c.previous}" />
+                    </th>
+                    <th scope="col" colspan="10">
+                    </th>
+                    <th scope="col">
+                        <lightning:button label="Next" disabled="{!v.end >= v.totalSize}" onclick="{!c.next}" />
+                    </th>
+                    <th scope="col">
+                        <lightning:button label="Last" disabled="{!v.end >= v.totalSize}" onclick="{!c.last}" />
+                    </th>                      
+                </tr>
+            </aura:if>
+        </tbody>
+    </table>
+</aura:component>

@@ -1,0 +1,10 @@
+<apex:component id="CAJBP_PDF_Section">
+    <apex:attribute name="title" type="String" description="The title for this section."/>
+
+    <div>
+        <div style="padding: 10px; font-size: 1.3em; font-weight: bold;">
+            {!title}
+        </div>
+    </div>
+    <br/>
+</apex:component>

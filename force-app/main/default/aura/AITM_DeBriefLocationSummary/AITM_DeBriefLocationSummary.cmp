@@ -1,0 +1,97 @@
+<aura:component controller="AITM_DeBriefLocSummaryController" >
+	<aura:attribute name="locationSummaryValues" type="SObject" description="Object which contains all table values" />
+	<aura:attribute name="tender" type="AITM_Tender__c" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="force:refreshView" action="{!c.doInit}"/>
+    
+	<lightning:spinner aura:id="keyPerformanceMetricsSpinner" class="slds-hide" />
+
+	<div class="slds-page-header noborderbottom" role="banner">
+		<div class="slds-grid">
+			<div class="slds-col slds-has-flexi-truncate">
+				<div class="slds-grid">
+					<div class="slds-grid slds-type-focus slds-no-space">
+						<h1 class="slds-page-header__title slds-truncate" title="My Items" style="font-family: 'Salesforce Sans',Arial,sans-serif; font-weight: 300; padding-bottom: 5px;">Location Summary</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<table class="slds-table slds-table_bordered slds-table_cell-buffer">
+		<thead>
+			<tr class="slds-text-title_caps">
+				<th scope="col">
+					<div class="slds-truncate" title="RESULT">RESULT</div>
+				</th>
+				<th scope="col">
+					<div class="slds-truncate" title="VOLUME">VOLUME</div>
+				</th>
+				<th scope="col">
+					<div class="slds-truncate" title="MEASURE">MEASURE</div>
+				</th>
+				<th scope="col">
+					<div class="slds-truncate" title="LOCATIONS">LOCATIONS</div>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="text-green">
+				<th scope="row" data-label="RESULT">
+					Gained
+				</th>
+				<td data-label="VOLUME">
+					<ui:outputText value="{!v.locationSummaryValues.gainedVolume}" />
+				</td>
+				<td data-label="MEASURE">
+					USG/PA
+				</td>
+				<td data-label="LOCATIONS">
+					{!v.locationSummaryValues.gainedLocations}
+				</td>
+			</tr>
+			<tr class="text-blue">
+				<th scope="row" data-label="RESULT">
+					Retained
+				</th>
+				<td data-label="VOLUME">
+					<ui:outputText value="{!v.locationSummaryValues.retainedVolume}" />
+				</td>
+				<td data-label="MEASURE">
+					USG/PA
+				</td>
+				<td data-label="LOCATIONS">
+					{!v.locationSummaryValues.retainedLocations}
+				</td>
+			</tr>
+			<tr class="text-red">
+				<th scope="row" data-label="RESULT">
+					Lost
+				</th>
+				<td data-label="VOLUME">
+					<ui:outputText value="{!v.locationSummaryValues.lostVolume}" />
+				</td>
+				<td data-label="MEASURE">
+					USG/PA
+				</td>
+				<td data-label="LOCATIONS">
+					{!v.locationSummaryValues.lostLocations}
+				</td>
+			</tr>
+			<tr>
+				<th scope="row" data-label="RESULT">
+					Market Information
+				</th>
+				<td data-label="VOLUME">
+					<ui:outputText value="{!v.locationSummaryValues.marketInformationVolume}" />
+				</td>
+				<td data-label="MEASURE">
+					USG/PA
+				</td>
+				<td data-label="LOCATIONS">
+					{!v.locationSummaryValues.marketInformationLocations}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+</aura:component>

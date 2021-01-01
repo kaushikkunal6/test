@@ -1,0 +1,16 @@
+.THIS .left{
+    width: 50%;
+}
+
+.THIS .right {
+    width: 30%;
+}
+
+.THIS .grid-container {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.THIS .grid-item {
+    float: left;
+}

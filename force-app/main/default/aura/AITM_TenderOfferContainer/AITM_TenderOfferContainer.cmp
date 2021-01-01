@@ -1,0 +1,59 @@
+<aura:component controller="AITM_TenderOfferContainerController" implements="force:LightningQuickActionWithoutHeader,force:hasRecordId">
+    <aura:attribute name="includePriced" type="Boolean" description="Should we include only pricied locations?" default="false"/>
+    <aura:attribute name="filterOptions" type="List" description="Filter Options stored as a inner class - List of FilterOption" />
+    <aura:attribute name="selectedFilter" type="String" description="Selected filter name" />
+    <aura:attribute name="mapLocations" type="Map" description="Contains Flag set for Polish and NonPolish keys based on tender location added" />
+    <aura:attribute name="isReportButton" type="Boolean" />
+    <aura:attribute name="excelDownloadUrl" type="Boolean" default="false" />
+    <aura:attribute name="reportID" type="String" />
+    <aura:attribute name="taxAndFeeReportID" type="String" />
+    <aura:attribute name="targetFields" type="Object"/>
+    <aura:attribute name="isTenderOld" type="Boolean" />
+	<aura:attribute name="additionalNotesReportID" type="String" />
+
+    <force:recordData aura:id="recordLoaderId"
+                    layoutType="FULL"
+                    recordId="{!v.recordId}"
+                    targetFields="{!v.targetFields}"
+                    />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+
+    <div class="slds-modal__header">
+        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.close}"><lightning:icon iconName="utility:close" variant="inverse" size="small"/></button>
+        <h2 class="slds-text-heading--medium">Generate Offer For:</h2>
+    </div>
+    
+    <aura:if isTrue = "{!!v.isReportButton}"> <!--Kunal-->
+        <div class="slds-modal__content slds-p-around--medium">
+            <header class="filters slds-m-bottom_small">
+                <lightning:spinner aura:id="loaderSpinner" class="slds-hide"/>
+                <ui:inputSelect aura:id="filter" class="filtersSelect" change="{!c.onFilterChange}" value="{!v.selectedFilter}">
+                    <aura:iteration items="{!v.filterOptions}" var="filter">
+                        <ui:inputSelectOption text="{!filter.name}" label="{!filter.name}" disabled="{!filter.disabled}"/>
+                    </aura:iteration>
+                </ui:inputSelect>
+            </header>
+        </div>
+    </aura:if><!--Kunal-->
+    
+    <!--Kunal-->
+    <aura:if isTrue="{!and(v.isReportButton, !v.isTenderOld)}">
+        <div class="slds-form-element__control slds-p-around--medium">
+            <lightning:button iconName="utility:copy_to_clipboard"
+                              onclick="{!c.copyHardcoreText}"
+                              value="{!v.recordId}"
+                              label="Copy 'Tender ID' to clipboard"
+                              aura:id="copy"/>
+        
+         <p> Please copy Tender ID before generating the report, as you need to use it for filtering the report </p>
+        </div>
+    </aura:if>
+    <!--Kunal-->
+    <div class="slds-modal__footer">
+       <lightning:button variant="neutral" label="Cancel"  onclick="{!c.close}"/>
+       <lightning:button variant="brand" label="Generate" onclick="{!c.generate}"/>
+    </div>
+
+</aura:component>

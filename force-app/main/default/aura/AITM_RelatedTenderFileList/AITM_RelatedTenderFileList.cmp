@@ -1,0 +1,59 @@
+<aura:component controller="AITM_RelatedTenderFileListController" implements="force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global">
+    <aura:attribute name="recordId"
+                    type="String"
+                    description="The ID of the record to be displayed. Provided by force:hasRecordId interface."/>
+    <aura:attribute name="contentFiles"
+                    type="List"
+                    description="List of content files for tender"/>
+    <aura:attribute name="cardTitle" type="String" description="List of content files for tender" default="Files (0)" />
+    <aura:attribute name="urlPrefix" description="Community Url to show thumbnail image" type="String" default="/labptendering/sfc/servlet.shepherd/version/download/" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <lightning:card iconName="standard:file" title="{!v.cardTitle}" class="slds-p-horizontal--small  slds-p-around_x-smalldesktop slds-m-bottom_x-small forceContentVirtualRelatedListStencil forceRecordLayout">
+        <ul class="uiAbstractList">
+            <aura:iteration items="{!v.contentFiles}" var="contentFile">
+                <li class="slds-p-horizontal--small  slds-p-around_x-smalldesktop slds-m-bottom_x-small forceContentVirtualRelatedListStencil forceRecordLayout">
+                    <div class="slds-list--horizontal slds-wrap" title="{!contentFile.Title}">
+                        <div class="filerow">
+                        <div class="slds-size_12-of-12 slds-m-left_xxx-small slds-grid slds-grid--pull-padded">
+                            <div class="slds-show_inline-block slds-float_left slds-align-middle thumbnailImg medium" iconName="doctype:pdf">
+                                <div class="forceContentContentThumbnail">
+                                    <div class="thumbnailContainer">
+                                        <img class="thumbnailImg medium" src="{!v.urlPrefix + contentFile.LatestPublishedVersionId}" alt="PDF"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-show_inline-block slds-float_left slds-p-left--x-small slds-truncate slds-m-right_x-small">
+                                <a class="itemTitle slds-text-body--regulardesktop uiOutputText slds-has-blur-focus" data-refid="recordId" data-recordid="{!contentFile.Id}" data-special-link="true" href="javascript:void(0)" rel="noreferrer" title="{!contentFile.Title}" onclick="{!c.previewFile}">
+                                {!contentFile.Title}
+                                </a>
+                                <p class="slds-m-around--none secondaryFields slds-text-body--small slds-truncate">
+                                    <ul class="slds-list_horizontal slds-has-dividers_left">
+                                        <li class="slds-item">
+                                            <ui:outputDate class="uiOutputDateTime" value="{!contentFile.LastModifiedDate}"/>
+                                        </li>
+                                        <li class="slds-item">
+                                            <ui:outputNumber value="{!(contentFile.ContentSize/1000)}" format="###,###,###,###"/>
+                                            <span class="fileSizeUnits uiOutputText">KB</span>
+                                        </li>
+                                        <li class="slds-item">
+                                            <span class="itemLabel slds-truncate uiOutputText">{!contentFile.FileType}</span>
+                                        </li>
+                                    </ul>
+                                </p>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </aura:iteration>
+        </ul>
+        <!--<div class="slds-card__footer">
+            <a href="{!'#/sObject/' + v.recordId + '/related/AttachedContentDocuments/view'}">
+                <span class="view-all-label">View All
+                    <span class="assistiveText">Files</span>
+                </span>
+            </a>
+        </div> -->
+    </lightning:card>
+</aura:component>

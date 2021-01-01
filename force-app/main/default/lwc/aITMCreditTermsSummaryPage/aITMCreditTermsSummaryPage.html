@@ -1,0 +1,55 @@
+<template>        
+    <template if:true={loading}>
+        <lightning-spinner size="small" variant="brand"></lightning-spinner>
+    </template>
+    <div class="formBody">
+        <lightning-record-edit-form
+                density="comfy"
+                object-api-name={tenderLocLineItemObject}
+                onload={handleOnLoad}
+                onerror={handleError}
+                onsubmit={handleSubmit}
+                onsuccess={handleSuccess}
+                record-id={selLineId}>
+            <div class="slds-col slds-size_1-of-1 slds-float_right">
+                <lightning-button variant="success" class="slds-float_right" type="submit" label="Save" disabled={isSaveDisabled}></lightning-button>
+            </div>         
+            <div class="slds-col slds-size_1-of-1 slds-grid slds-wrap">                 
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Payment_Currency__c" onchange={onFirstKeyUp} disabled={isInDebriefStage}>
+                    </lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Security_Type__c" onchange={onFirstKeyUp} disabled={isInDebriefStage}>
+                    </lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Invoice_Frequency__c" onchange={onFirstKeyUp} disabled={isInDebriefStage}>
+                    </lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Security_Text_on_Offer__c" onchange={onFirstKeyUp} disabled={isInDebriefStage}>
+                    </lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Credit_Days__c" onchange={onFirstKeyUp} disabled={isInDebriefStage}>
+                    </lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Credit_Rating__c" onchange={onFirstKeyUp} disabled={isInDebriefStage}>
+                    </lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Overall_Credit_Days_Customer__c" onchange={onFirstKeyUp} disabled={isInDebriefStage}>
+                    </lightning-input-field>
+                </div>
+            </div>
+        </lightning-record-edit-form>
+    </div>
+</template>

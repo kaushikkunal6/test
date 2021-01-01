@@ -1,0 +1,30 @@
+<!--
+ * @author Nazim Aliyev
+ * @company Bluewolf, an IBM Company
+ * @date 7/2017
+ *
+ * A custom branded Change Password Visualforce page for BP Community
+-->
+<apex:page showHeader="false"
+           standardStylesheets="false"
+           sidebar="false"
+           applyBodyTag="false"
+           title="{!$Label.IDPErrorDownMaintenance}"
+           cache="false">
+    <apex:composition template="{!$Site.Template}">
+        <apex:define name="body">
+            <div class="slds-scope">
+                <apex:outputText escape="false" styleClass="title" value="{!$Label.IDPErrorDownMaintenance}">
+                    <apex:param value="{!$Site.BaseUrl}"/>
+                </apex:outputText>
+                <br/>
+                <br/>
+                <apex:outputText value="{!$Label.IDPErrorInconvenienceBackShortly}"/>
+                <apex:outputText escape="false" value="{!$Label.IDPGetInTouch}">
+                    <apex:param value="mailto:{!HTMLENCODE($Site.AdminEmailAddress)}"/>
+                    <apex:param value="{!$Label.IDPGetInTouch}"/>
+                </apex:outputText>          
+            </div>
+        </apex:define>
+    </apex:composition>
+</apex:page>

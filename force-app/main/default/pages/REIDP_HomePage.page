@@ -1,0 +1,37 @@
+<!--
+* @author Ragim Ragimov
+* @company Bluewolf, an IBM Company
+* @date 6/2017
+*
+* A minimal Salesforce User Console for web user.
+-->
+<apex:page showHeader="false"
+           standardStylesheets="false"
+           sidebar="false"
+           applyBodyTag="false"
+           controller="REIDP_HomePageController"
+           action="{!loginRedirect}"
+           title="Home Page"
+           id="HomePage">
+    <apex:composition template="{!$Site.Template}">\
+        <apex:define name="head">
+            <script type="text/javascript">
+            $Lightning.use("c:REIDP_homePageApplication", function() {
+                $Lightning.createComponent("c:REIDP_userConsole",
+                                           {},
+                                           "lightning",
+                                           function(cmp) {
+                                           });
+            });
+            </script> 
+        </apex:define>
+        <apex:define name="body">  
+            <apex:form id="theForm" styleClass="slds-scope slds-align_absolute-center form">
+                <c:REIDP_Logo />
+                <div id="lightning"/>
+                <apex:commandButton styleClass="button slds-m-top_small" action="{!changePassword}" value="{!$Label.IDPChangeYourPassword}"/>
+                <apex:outputLink style="font-size: 14px" styleClass="slds-align_absolute-center slds-m-top_x-small" value="{!$Site.Prefix}/secur/logout.jsp">{!$Label.IDPLogout}</apex:outputLink>
+            </apex:form> 
+        </apex:define>
+    </apex:composition>
+</apex:page>

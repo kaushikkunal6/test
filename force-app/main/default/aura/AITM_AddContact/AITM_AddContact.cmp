@@ -1,0 +1,9 @@
+<aura:component controller="AITM_AddContactController" implements="force:lightningQuickActionWithOutHeader,force:hasRecordId" description="Component used to add contacts for the account and related records">
+    <aura:attribute name="recordTypeId" type="String" />
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <c:AITM_PageLayoutForm pageLayoutName="Contact-Air_TMContact Layout" recordTypeId="{!v.recordTypeId}" 
+                           relatedRecordId="{!v.recordId}" objectName="Contact" 
+                           mode="new" 
+                           fields="Name,AITM_Middle_Name__c,AITM_Other_Phones__c,MobilePhone,Email,Job_Title__c,AccountId,AITM_Customer_Account_Number__c,AITM_Date_of_Birth__c,AITM_Preferred_Language__c,AITM_Preferred_Salutation__c,AITM_Preferred_Translation_Title__c,AITM_ISIM_ID__c,AITM_Translated_Languages_Salutation__c,AITM_Marketing_Consent__c,AITM_Comments__c,AITM_Customer_Address__c,AITM_Customer_City__c,AITM_Customer_Country__c,AITM_Account_State__c,AITM_Account_Street__c,AITM_Customer_PostCode__c,AITM_Communication_Content__c,AITM_Source_of_Marketing_Consent__c,AITM_Exhibition_Fair__c,AITM_Channel__c,AITM_Optional_Title__c,AITM_Alternate_Card_Address__c,"
+                           labels ="Contact Information,Marketing communication consent,Consent history,Delete contact request,Address Information"/>
+</aura:component>

@@ -1,0 +1,5 @@
+<apex:page >
+    <script type="text/javascript">
+        window.open('https://www.bp.com/en/global/bp-air/privacy-statement.html', '_blank');
+    </script>
+</apex:page>

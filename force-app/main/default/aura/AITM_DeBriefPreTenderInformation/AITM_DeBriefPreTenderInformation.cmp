@@ -1,0 +1,42 @@
+<aura:component >
+	<aura:attribute name="tender" type="AITM_Tender__c" />
+	<aura:registerEvent name="updateTenderEvent" type="c:AITM_UpdateTenderEvent" />
+    
+    <div class="slds-page-header noborderbottom slds-m-bottom_small" role="banner">
+		<div class="slds-grid">
+			<div class="slds-col slds-has-flexi-truncate">
+				<div class="slds-grid">
+					<div class="slds-grid slds-type-focus slds-no-space">
+						<h1 class="slds-page-header__title slds-truncate" title="My Items" style="font-family: 'Salesforce Sans',Arial,sans-serif; font-weight: 300; padding-bottom: 5px;">Pre-tender Information</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="slds-grid slds-wrap slds-p-left_small">
+
+		<div class="slds-size_1-of-3 slds-m-bottom_small">
+			<ui:inputCheckbox value="{!v.tender.AITM_Is_Pro_Active_Package_Offered__c}" class="pre-info-checkbox" label="Pro-active package offered" click="{!c.updateTender}" />
+		</div>
+		<div class="slds-size_2-of-3 slds-m-bottom_small">
+			<ui:inputText value="{!v.tender.AITM_Pro_Active_Package_Offered_Comment__c}" placeholder="Comment" focus="{!c.updateTender}" />
+		</div>
+
+		<div class="slds-size_1-of-3 slds-m-bottom_small">
+			<ui:inputCheckbox value="{!v.tender.AITM_Is_Multi_Year_Int_Scheme_Offered__c}" class="pre-info-checkbox" label="Multi-year incentive scheme offered" click="{!c.updateTender}" />
+		</div>
+		<div class="slds-size_2-of-3 slds-m-bottom_small">
+			<ui:inputText value="{!v.tender.AITM_Multi_Year_Int_Offered_Comment__c}" placeholder="Comment" focus="{!c.updateTender}" />
+		</div>
+
+		<div class="slds-size_1-of-3 slds-m-bottom_small">
+			<ui:inputCheckbox value="{!v.tender.AITM_Is_Customer_Talk_Infl_Req_Conducted__c}" class="pre-info-checkbox" label="Customer talk to influence requirements conducted" click="{!c.updateTender}" />
+		</div>
+		<div class="slds-size_2-of-3 slds-m-bottom_small">
+			<ui:inputText value="{!v.tender.AITM_Cust_Talk_Influence_Req_Conducted__c}" placeholder="Comment" focus="{!c.updateTender}" />
+		</div>
+
+	</div>
+
+</aura:component>

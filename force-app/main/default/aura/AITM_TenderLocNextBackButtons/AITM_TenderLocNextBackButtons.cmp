@@ -1,0 +1,25 @@
+<aura:component controller="AITM_TenderLocNextBackButtonsCntlr" implements="forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,force:hasRecordId">
+
+		<aura:attribute name="tenderLocations" type="List" description="Contains list of locations records"/>
+		<aura:attribute name="tenderId" type="String" description="Contains tenderId of related tender location recordId" />
+		<aura:attribute name="isFirst" type="Boolean" description="Checks is current location first in the list" default="false" />
+		<aura:attribute name="isLast" type="Boolean" description="Checks is current location last in the list" default="false" />
+		<aura:attribute name="next" type="String" description="Next Location Id" />
+		<aura:attribute name="back" type="String" description="Previous Location Id" />
+		<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+		<lightning:layout class="slds-m-bottom_small" horizontalAlign="spread" multipleRows="true">
+		    <lightning:layoutItem flexibility="grow" size="1" mediumDeviceSize="1" largeDeviceSize="1" padding="around-small">
+		    <lightning:button disabled="{!v.isFirst}" variant="brand" label="&lt;&lt; Back" onclick="{!c.goBack}" />
+		    </lightning:layoutItem>
+            <lightning:layoutItem flexibility="grow" size="2" mediumDeviceSize="2" largeDeviceSize="2" padding="around-small">
+            	<c:aITM_ToggleTenderLocationViewPage></c:aITM_ToggleTenderLocationViewPage>
+            </lightning:layoutItem>
+            <lightning:layoutItem flexibility="grow" size="8" mediumDeviceSize="8" largeDeviceSize="8" padding="around-small"></lightning:layoutItem>
+		    <!--<lightning:layoutItem flexibility="grow" size="10" mediumDeviceSize="10" largeDeviceSize="10" padding="around-small"></lightning:layoutItem>-->
+		    <lightning:layoutItem flexibility="grow" size="1" mediumDeviceSize="1" largeDeviceSize="1" padding="around-small">
+		    <lightning:button disabled="{!v.isLast}" variant="brand" label="Next &gt;&gt;" onclick="{!c.goNext}"  />
+		    </lightning:layoutItem>
+		</lightning:layout>
+
+</aura:component>

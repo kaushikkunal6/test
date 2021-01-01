@@ -1,0 +1,3 @@
+<aura:event type="APPLICATION" description="Used for LABP Login Form event">
+    <aura:attribute name="startURL" type="Map"/>  
+</aura:event>

@@ -1,0 +1,1 @@
+<aura:event type="APPLICATION" description="Thrown on closing of quick action in custom tender path component" />

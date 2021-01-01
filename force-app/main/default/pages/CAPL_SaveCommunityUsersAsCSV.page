@@ -1,0 +1,6 @@
+<apex:page controller="CAPL_SaveCommunityUsersAsCSVClass" readOnly="true" contentType="text/csv#Users.csv">sep=,
+	{!header},
+	<apex:repeat value="{!dataForCSV}" var="item">
+	&quot;{!item.Name}&quot;,&quot;{!item.Username}&quot;,&quot;{!item.Email}&quot;,&quot;{!item.LanguageLocaleKey}&quot;,<apex:outputText value="{0,date,MM/dd/yyyy}"><apex:param value="{!item.LastLoginDate}"/></apex:outputText>
+	</apex:repeat>
+</apex:page>

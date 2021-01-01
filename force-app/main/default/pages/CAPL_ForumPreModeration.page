@@ -1,0 +1,222 @@
+<apex:page showHeader="true" sidebar="true" controller="CAPL_ForumPreModerationClass">
+	
+	<apex:slds /> 
+
+	<style>
+		.disabledLink {
+			pointer-events: none;
+			color: #cccccc !important;
+		}
+
+		.slds-spinner_container {
+			position: fixed !important;
+		}
+
+		.slds-table_bordered {
+			border: 1px solid #d8dde6;
+		}
+		
+		.bodyDiv {
+			background-color: #f2f2f2;
+		}
+
+		.greenOval {
+			width: 8px;
+			height: 8px;
+			background-color: #018b46;
+			display: inline-block;
+    		border-radius: 10px;
+		}
+
+		.yellowOval {
+			width: 8px;
+			height: 8px;
+			background-color: #f5a623;
+			display: inline-block;
+    		border-radius: 10px;
+		}
+
+		.feeds th, .feeds td, .feeds td a {
+			color: #525759;
+		}
+
+		.feeds th .slds-truncate {
+			font-weight: bold;
+		}
+
+		.slds-scope .slds-truncate {
+		    white-space: normal !important;
+		}
+	</style>
+
+	<div class="slds-scope">
+
+    <apex:actionStatus id="status">
+        <apex:facet name="start">
+            <div class="demo-only demo--inverse">
+			  <div class="slds-spinner_container">
+			    <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+			      <span class="slds-assistive-text">Loading</span>
+			      <div class="slds-spinner__dot-a"></div>
+			      <div class="slds-spinner__dot-b"></div>
+			    </div>
+			  </div>
+			</div>
+        </apex:facet>
+    </apex:actionStatus> 
+
+    <apex:form >
+    	<apex:outputPanel id="form">
+		<div class="slds-grid_align-center slds-grid slds-wrap" style="margin-top: 2rem;">
+	    	<div class="slds-size_12-of-12">
+				<div class="slds-box_x-small slds-text-align_center slds-m-around_x-small">
+					<table class="feeds slds-table slds-table_striped slds-table_bordered slds-table_cell-buffer slds-table_col-bordered">
+					    <thead>
+					        <tr class="slds-text-title_caps">
+					            <th scope="col">
+					                <div class="slds-truncate" title="Title">Title</div>
+					            </th>
+					            <th scope="col">
+					                <div class="slds-truncate" title="Body">Body</div>
+					            </th>
+					            <th scope="col">
+					            	<div class="slds-truncate" title="CommentBody">Comment Body</div>
+					            </th>
+					            <th scope="col">
+					            	<div class="slds-truncate" title="CreatedBy">Created By</div>
+					            </th>
+					            <th scope="col">
+					            	<div class="slds-truncate" title="CreatedDate">Created Date</div>
+					            </th>
+					            <th scope="col">
+					                <div class="slds-truncate" title="Status">Status</div>
+					            </th>
+					            <th scope="col">
+					                <div class="slds-truncate" title="Action">Action</div>
+					            </th>
+					        </tr>
+					    </thead>
+					    <tbody>
+					    	<apex:repeat var="feed" value="{!feedList}">
+						        <tr>
+						            <td>
+						                <div class="slds-truncate" title="{!feed.Title}">
+						                	{!feed.Title}
+						                </div>
+						            </td>
+						            <td style="max-width: 25%; width: 25%;">
+						                <div class="slds-truncate" title="{!feed.Body}">
+						                	<apex:outputText value="{!feed.Body}" escape="false" />
+						                </div>
+						            </td>
+						            <td>
+						                <div class="slds-truncate">
+						                	-
+						                </div>
+						            </td>
+						            <td>
+						                <div class="slds-truncate" title="{!feed.CreatedBy.Name}">
+						                	<apex:outputText value="{!feed.CreatedBy.Name}" escape="false" />
+						                </div>
+						            </td>
+						            <td>
+						                <div class="slds-truncate" title="{!feed.CreatedDate}">
+						                	<apex:outputText value="{!feed.CreatedDate}" escape="false" />
+						                </div>
+						            </td>
+						            <td style="width: 11%;">
+						                <div class="slds-truncate" title="{!feed.Status}">
+						                	<div class="{!IF(feed.Status != 'PendingReview', 'greenOval', 'yellowOval')}" />
+						                	&nbsp;
+						                	{!feed.Status}
+						                </div>
+						            </td>
+						            <td  style="width: 15%;">
+						                <div class="slds-truncate">
+						                	<apex:outputPanel >
+							                	<a href="" onclick="approveFeed(this.id);" id="{!feed.Id}" class="{!IF(feed.Status != 'PendingReview', 'disabledLink', '')}">
+							                		Approve
+							                	</a>
+							                	|
+						                	</apex:outputPanel>
+						                	<a href="" onclick="deleteFeed(this.id);" id="{!feed.Id}">
+						                		Delete
+						                	</a>
+						                </div>
+						            </td>
+						        </tr>
+						        <apex:outputPanel id="feedCommentPanel" layout="none" rendered="{!feed.FeedComments.size > 0}">
+							    	<apex:repeat var="feedComment" value="{!feed.FeedComments}">
+							    		<tr>
+							    			<td>
+								                <div class="slds-truncate">
+								                	-
+								                </div>
+								            </td>
+								            <td>
+								                <div class="slds-truncate">
+								                	-
+								                </div>
+								            </td>
+			            					<td style="max-width: 25%; width: 25%;">
+								                <div class="slds-truncate" title="{!feedComment.CommentBody}">
+								                	<apex:outputText value="{!feedComment.CommentBody}" escape="false" />
+								                </div>
+								            </td>
+								            <td>
+								                <div class="slds-truncate" title="{!feedComment.CreatedBy.Name}">
+								                	<apex:outputText value="{!feedComment.CreatedBy.Name}" escape="false" />
+								                </div>
+								            </td>
+								            <td>
+								                <div class="slds-truncate" title="{!feedComment.CreatedDate}">
+								                	<apex:outputText value="{!feedComment.CreatedDate}" escape="false" />
+								                </div>
+								            </td>
+								            <td style="width: 11%;">
+								            	<div class="slds-truncate" title="{!feedComment.Status}">
+								            		<div class="{!IF(feedComment.Status != 'PendingReview', 'greenOval', 'yellowOval')}" />
+								            		&nbsp;
+								                	{!feedComment.Status}
+								                </div>
+								            </td>
+								            <td style="width: 15%;">
+								                <div class="slds-truncate">
+								                	<a href="" onclick="approveFeedComment(this.id);" id="{!feedComment.Id}" class="{!IF(feedComment.Status != 'PendingReview', 'disabledLink', '')}">
+								                		Approve
+								                	</a>
+								                	|
+								                	<a href="" onclick="deleteFeedComment(this.id);" id="{!feedComment.Id}">
+								                		Delete
+								                	</a>
+								                </div>
+								            </td>
+								        </tr>
+							        </apex:repeat>
+								</apex:outputPanel>
+					        </apex:repeat>
+					    </tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</apex:outputPanel>
+
+		<apex:actionFunction action="{!approveFeed}" name="approveFeed" reRender="form" status="status">
+	        <apex:param name="feedId" value="" />
+	    </apex:actionFunction>
+	    <apex:actionFunction action="{!deleteFeed}" name="deleteFeed" reRender="form" status="status">
+	        <apex:param name="feedId" value="" />
+	    </apex:actionFunction>
+	    <apex:actionFunction action="{!approveFeedComment}" name="approveFeedComment" reRender="form" status="status">
+	        <apex:param name="feedCommentId" value="" />
+	    </apex:actionFunction>
+	    <apex:actionFunction action="{!deleteFeedComment}" name="deleteFeedComment" reRender="form" status="status">
+	        <apex:param name="feedCommentId" value="" />
+	    </apex:actionFunction>
+
+	</apex:form>
+
+	</div>
+
+</apex:page>

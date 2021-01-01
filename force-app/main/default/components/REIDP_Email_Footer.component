@@ -1,0 +1,25 @@
+<apex:component controller="REIDP_CommunityEmailController" access="global">
+    <apex:attribute name="country" type="String" description="User's country" default="NULL"/>
+    <apex:attribute name="contactId" type="String" description="User's contact id" assignTo="{!cId}"/>
+    
+    <apex:variable var="supported_footer_countries" value="AU,UK,NL,US"/>
+    <apex:variable var="default_footer_country" value="NULL"/>
+    <apex:variable var="footer_country" value="{!IF(CONTAINS(supported_footer_countries, country), country, 
+                                               		IF(CONTAINS(supported_footer_countries, userCountry), userCountry, default_footer_country))}"/>
+    <tr>
+        <td>
+            <table cellpadding="0" width="600" cellspacing="0" align="center" style="background-color:#FFFFFF; table-layout:fixed; border-collapse: collapse; border-spacing: 0;">
+                <tr>
+                    <td style="font-size:0;">
+                        <apex:variable var="resourceUrl" value="{!URLFOR($Resource.REIDP_Email_Template, IF(footer_country == 'AU', $Label.IDPLanguagePrefix + '/Main_Footer_AU.jpg', $Label.IDPLanguagePrefix + '/Main_Footer.jpg'))}" />
+                        <img src="{!communityBaseUrl + MID(resourceUrl, FIND('/resource/', resourceUrl), LEN(resourceUrl))}" alt="Thank you for choosing BP" border="0"  width="600" height="130" style="display: block;"/>
+                    </td>
+                </tr>
+            </table>
+            <c:REIDP_Email_Footer_UK rendered="{!IF(footer_country == 'UK', true, false)}"/>
+            <c:REIDP_Email_Footer_AU rendered="{!IF(footer_country == 'AU', true, false)}"/>
+            <c:REIDP_Email_Footer_NL rendered="{!IF(footer_country == 'NL', true, false)}"/>
+            <c:REIDP_Email_Footer_US rendered="{!IF(footer_country == 'US', true, false)}"/>
+        </td>
+    </tr>
+</apex:component>

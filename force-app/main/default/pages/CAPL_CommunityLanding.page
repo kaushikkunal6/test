@@ -1,0 +1,329 @@
+<apex:page id="communitiesLandingPage" showHeader="false" sidebar="false" controller="CAPL_CommunityLandingController" action="{!navigateToHomePage}" title="{!$Label.site.site_login}">
+
+	<apex:slds /> 
+
+	<style>
+		hr {
+			margin-top: 0rem !important;
+			margin-bottom: 2rem !important;
+		}
+		.slds-spinner_container {
+			position: fixed !important;
+		}
+		/*.terms {
+			white-space: pre-line;
+		}*/
+	</style>
+
+    <apex:actionStatus id="status">
+        <apex:facet name="start">
+            <div class="demo-only demo--inverse">
+			  <div class="slds-spinner_container">
+			    <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+			      <span class="slds-assistive-text">Loading</span>
+			      <div class="slds-spinner__dot-a"></div>
+			      <div class="slds-spinner__dot-b"></div>
+			    </div>
+			  </div>
+			</div>
+        </apex:facet>
+    </apex:actionStatus> 
+
+	<apex:form id="form">
+		<div class="slds-grid_align-center slds-grid slds-wrap" style="margin-top: 2rem;">
+	    	<div class="slds-size_8-of-12">
+				<div class="slds-box_x-small slds-m-around_x-small">
+					<p style="font-size: 2rem;" class="slds-text-align_center">Terms and Conditions</p>
+					<p class="slds-text-align_right">
+		    			<b>{!communityUser.Email}</b> &nbsp; <a style="float: right;" href="/capl/secur/logout.jsp">Logout</a>
+		    		</p>
+		    		<hr/>
+		    		<div class="terms">
+		    			<apex:outputPanel rendered="{!IF(termsAndConditions != 'en_US', true, false)}">
+		    				<!-- <iframe style="box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12); width: 100%;  
+							height: 500px" src="{!URLFOR($Resource.CAPL_Resources, '/CAPL_Resources/documents/TermsAndConditions-en_US.pdf')}"/> -->
+							<p style="text-decoration: underline; text-align: center; font-weight: bold;"> 
+								Castrol Professional Lig’nın Kullanım Şartları ve Koşulları
+							</p>
+							<br/>
+							<br/>
+							<p style="font-weight: bold;"> 
+								Feragat
+							</p>
+							<br/>
+							<p>
+								Castrol Professional Lig’nın tüm katılımcıları yürürlükteki herhangi bir rekabet yasasını kendileri veya diğer üyeler bakımından ihlal edebilecek hiçbir müzakere, faaliyet veya davranış içerisinde olmayacakları hususunu kabul eder. Örnek vermek gerekirse (münhasır bir örnek olmamak kaydıyla), ağ katılımcıları satın alma stratejisi, tedarik şartları, ticaret programları veya dağıtım stratejisini de kapsayan üçüncü kişilerle yapılan alım-satım hüküm ve şartları, fiyatlar, pazarlama ve reklam stratejisi ile maliyetler ve gelirlere ilişkin bilgiler de dâhil olmak üzere ticari açıdan hassas hiçbir bilgiyi müzakere edemez, paylaşamaz veya bu konularda bilgi alışverişi yapamaz.
+							</p>
+							<br/>
+							<p style="font-weight: bold;">
+								Yasal bildirim
+							</p>
+							<br/>
+							<p>
+							Castrol Professional Lig internet sitesine hoş geldiniz. Bu internet sitesi BP PLC’e ait olup, kayıtlı ticari merkezi Değirmen yolu Cad. No:28, Asia OfisPark K:3 İçerenköy-Ataşehir, İstanbul, 34752, Türkiye adresinde bulunan BP Petrolleri Anonim Şirketi (“kısaca BP veya Castrol olarak anılacaktır.) tarafından yönetilmektedir 
+							</p>
+							<br/>
+							<p>
+							Aksi belirtilmedikçe, bu anlaşmada “Castrol” ve/veya “Castrol Grup” ve/veya “BP” ve/veya “BP Petrolleri”’ne yapılan atıflar BP Petrolleri Anonim Şirketi ile iştiraklerini ifade eder. 
+							</p>
+							<br/>
+							<p>
+							Bu internet sitesini ziyaret edenler aşağıda düzenlenen hüküm ve şartlarla bağlıdır. Bu internet sitesini kullanmakla bu koşulları kabul etmiş sayılırsınız. Gizlilik beyanımız bu internet sitesi vasıtasıyla bize sunduğunuz her türlü kişisel verinin kullanımını kapsar. Gizlilik beyanımızı okumak için bu sayfanın dipnot kısmında yer alan linke tıklayabilirsiniz. 
+							</p>
+							<br/>
+							<p>
+							Diğer Castrol internet siteleri bu hüküm ve şartlardan farklı hüküm ve şartlar içerebilir. Lütfen ziyaret ettiğiniz her bir internet sitesinin hüküm ve şartlarını kontrol edin. 
+							</p>
+							<br/>
+							<p>
+							Aksi belirtilmedikçe, bu internet sitesinde “Castrol” veya “Castrol Grup”a yapılan atıflar ya da “Biz”, “Bizi”, “Bize”, “Bizim”, vs. anlamına gelen kelimeler Castrol ile onun bağlı ortaklıkları ve iştiraklerini ifade eder. “Siz” veya “Sizin” anlamlarını ifade eden kelimeler ise bu internet sitesinin ziyaretçileri anlamına gelir.
+							</p>
+							<br/>
+							<p style="font-weight: bold;">
+							Size karşı sorumluluğumuz
+							</p>
+							<br/>
+							<p>
+							Castrol bu internet sitesini “olduğu gibi” veya “mevcutsa” temeline dayanarak sunar ve bu internet sitesi ile içeriğine ilişkin olarak hiçbir türden beyan veya taahhütte bulunmaz. Bu internet sitesinde yer alan bilgiler kapsamlı değildir. Gösterdiğimiz tüm çabalara rağmen bu bilgiler doğru, güncel veya belirli bir olayın koşullarına uygulanabilir türde olmayabilir. Bu internet sitesindeki eksiklik veya hatalar açısından herhangi bir sorumluluk kabul etmemekteyiz; bu doğrultuda bu internet sitesinde yer alan bilgilere dayanarak almış olduğunuz tüm kararlar yalnızca Sizin sorumluluğunuzdadır. Gerek Castrol gerekse Castrol Grup bu internet sitesine veya bu internet sitesinde yer alan herhangi bir bilgiye erişim veya bunların kullanımından doğan, doğrudan, dolaylı, özel, bağlı (netice hasarları) veya diğer türden hiçbir kayıp ve zarar için sorumluluk kabul etmez. Ancak yukarıdaki beyanlara bakılmaksızın, Castrol ve Castrol Grup’un bu internet sitesi kapsamındaki her türlü dolandırıcılık ve yalan beyan ile ihmalimizden kaynaklanan tüm ölüm veya bedensel yaralanma olaylarından kaynaklanan sorumluluğu bakidir. 
+							</p>
+							<br/>
+							<p>
+							Bu internet sitesinden yüklenen belgelere ilişkin riskler Size aittir. Castrol bu materyallerin virüs, solucan, truva atı veya diğer zararlı kodları içermediği hususunda herhangi bir beyan veya taahhütte bulunmaz. Bilgisayar sisteminizi ve verilerinizi korumak için emniyet tedbirleri uygulamak yalnızca Sizin sorumluluğunuzda olup; bu internet sitesinin kullanımı sonucunda gereken herhangi bir hizmet, tamir veya düzeltmeye ilişkin tüm masraflardan yine Siz sorumlusunuz.
+							</p>
+							<br/>
+							<p> 
+							Bu internet sitesinde düzenlenen kısıtlamalar ile kapsam dışı bırakma hâlleri kanunların izin verdiği azami ölçüde uygulanır.
+							</p>
+							<br/>
+							<p style="font-weight: bold;">
+							Ürün bilgisi
+							</p>
+							<br/>
+							<p>
+							Ürün veri sayfaları, materyal güvenliği veri sayfaları ile teknik veri sayfaları da dâhil olmak ancak bunlarla sınırlı olmamak üzere bu internet sitesinde Castrol ürünleri hakkında bilgi sunduğumuz her yerde, bu bilgilerin ilgili belgelerin yayınlandığı tarih itibariyle doğru olmasını sağlamak amacıyla tüm makul dikkat ve özen gösterilmiştir. Buna rağmen, bu bilgiler yayınlanma tarihinden sonra karma formülde, atıf yapılan ürünlerden herhangi birini uygulama yöntemlerinde veya bu ürünlerden herhangi birine ilişkin herhangi bir spesifikasyon onayının gerekliliklerinde yapılan değişikliklerden etkilenmiş olabilir. Castrol ürünlerinin özellikleri ve spesifikasyonları ülkeden ülkeye değişiklik gösterebilir. Lütfen herhangi bir ürünü belirtildiğinden farklı bir şekilde kullanmadan önce kendi yerel Castrol ofisinizle irtibata geçin. Şüpheye mahal vermemek adına belirtilmelidir ki, bu internet sitesinde yer alan ürün bilgilerine ilişkin sorumluluk yukarıdaki “Size karşı sorumluluğumuz” bölümündeki hükümlere tabidir. 
+							</p>
+							<br/>
+							<p style="font-weight: bold;">
+							Köprü (hiperlink) kullanımı
+							</p>
+							<br/>
+							<p>
+							Gerek Castrol gerekse Castrol Grup, o site vasıtasıyla internet sitemize erişim sağlamış olduğunuz herhangi bir internet sitesi ya da internet sitemiz vasıtasıyla erişim sağladığınız herhangi bir internet sitesi de dâhil olmak üzere diğer hiçbir internet sitesinin içeriğinden sorumlu değildir. Bu türden site veya linkler ile bağlantılı hiçbir sorumluluğu kabul etmemekteyiz. 
+							</p>
+							<br/>
+							<p>
+							Üçüncü bir kişinin internet sitesine köprü sunduğumuz durumlarda bunu yapmamızın nedeni, iyi niyet kuralı çerçevesinde, bu türde bir internet sitesinin bizim internet sitemizde yer verilen bilgilerle ilgili materyaller içerebileceğini düşünmemizdir. Böyle bir köprü Castrol veya Castrol Grup’un bağlantılı üçüncü kişinin internet sitesini veya bunun içeriğini incelediği veya onayladığını göstermez – aslında belirli durumlarda bir köprü Sizi bizim internet sitemizde yer verilen ya da Castrol veya Castrol Grup tarafından savunulan bilgilerle çelişen birtakım görüşler içeren üçüncü kişi internet sitelerine de bağlayabilir. Bu üçüncü taraf internet sitesini kullanmanız veya paylaşılan araç gereçler farklı hüküm ve koşullara tabi olabilir; dolayısıyla kullanmadan önce bu hüküm ve şartları incelemeniz tavsiye edilir. Ayrıca bu üçüncü taraf internet siteleri ile paylaşılan araç gereçlerin sunucuları bizim Gizlilik Beyanımızdan farklı gizlilik politikalarına veya uygulamalarına sahip olabilir. Dolayısıyla bu sunucuların gizlilik politikaları ve uygulamalarını kontrol etmeniz ve herhangi bir sorunuz ya da endişeniz olması hâlinde operatörle irtibata geçmeniz önerilir.
+							</p>
+							<br/>
+							<p style="font-weight: bold;">
+							Ticari Markalar
+							</p>
+							<br/>
+							<p>
+							Castrol adı veya Castrol logosu Castrol’ün tescilli ticari markaları olup, lisanslı olarak kullanılır. Bu internet sitesinde kullanılan diğer tüm markalar, ürün isimleri ve şirket isim ve logolarının mülkiyeti Castrol’e veya bunların kendi kişisel sahiplerine aittir. Bu site aracılığıyla bu türden herhangi bir marka, ticari takdim şekli, ürün adı, logosu veya başlığının kullanımına ilişkin herhangi bir izin veya lisans (açık veya gizli) verilmiş olunmaz ve böyle bir kullanım hak sahibinin hakkının ihlal edilmesine neden olur.
+							</p>
+							<br/>
+							<p>
+							Bu internet sitesinden indirilen tüm materyaller ile site içeriğine ilişkin telif hakkı Castrol, Castrol Grup veya üçüncü kişilere aittir. Tüm haklar saklıdır. Castrol Ltd, Castrol Technology Centre, Whitchurch Hill, Pangbourne, Berkshire, RG8 7QR Birleşik Krallık.
+							</p>
+							<br/>
+							<p style="font-weight: bold;">
+							Telif Hakkı
+							</p>
+							<br/>
+							<p>
+							Mevcut tüm telif haklarına uymak Sizin sorumluluğunuzdadır. Yazılı iznimiz olmadan bu internet sitesini veya site linkini ana sayfa haricindeki bir sayfaya yerleştiremeyebilirsiniz. 
+							</p>
+							<br/>
+							<p style="font-weight: bold;">
+							Kişisel olmayan bilgiler
+							</p>
+							<br/>
+							<p>
+							Bu internet sitesinde yayınlanan Gizlilik Beyanına uygun olarak ele alınacak kişisel bilgilerin yanı sıra, (Siz ve Sizin adınıza hareket eden herhangi biri) bize herhangi bir bilgi, konsept, teknik bilgi veya fikirler sunmanız hâlinde Size veya diğer kişilere ödeme yapmaksızın bu bilgiler üzerinde sınırsız hakka sahip olacağımızı ve bu bilgileri dilediğimiz herhangi bir şekilde kullanabileceğimizi kabul etmiş olursunuz. Bu türden bilgilerin gizli ve tescilli olmadığı kabul edilir.
+							</p>
+							<br/>
+							<p>
+							İnternet sitesi vasıtasıyla ilettiğiniz veya internet sitesine koyduğunuz her türlü materyalin (veri, metin, yazılım, müzik, ses, fotoğraflar, grafikler, video, mesajlar veya diğer herhangi bir materyal de dâhil ancak bunlarla sınırlı olmamak kaydıyla) gerçekliğini, doğruluğunu, yanıltıcı olmadığını, iyi niyetle sunulduğunu ve Sizin bu bilgiyi sunma veya iletme hakkınızın bulunduğu hususlarını temin etme sorumluluğu Size aittir.
+							</p>
+							<br/>
+							<p>
+							Takdir hakkı tarafımıza ait olmak üzere internet sitesi hüküm ve şartlarının ihlal edilmesi veya ihlal etme teşebbüsü üzerine bildirimde bulunmaksızın, Size ait herhangi bir içeriği silme veya reddetme, bununla birlikte internet sitesine olan erişiminizi askıya alma veya tamamen sonlandırma hakkımızı (ancak bu bir yükümlülük olmamak üzere) saklı tutarız. Daha detaylı ek kuralları aşağıdaki “Kullanıcı tarafından oluşturulmuş içeriğe ilişkin kurallar” bölümünde bulabilirsiniz.
+							</p>
+							<br/>
+							<p style="font-weight: bold;">
+							Yasaklı Eylemler
+							</p>
+							<br/>
+							<p>
+							İnternet sitesini kullanırken kaçınmanız gerekenler durum ve fiiller aşağıda belirtilmiştir:
+								<ul>
+									<li>
+										Virüs, truva atı, solucan, yazılım bombası veya teknolojik olarak zararlı ya da kötü niyetli diğer materyalleri kasıtlı olarak siteye sokmamalısınız;
+									</li>
+									<li>
+										İnternet sitemize, internet sitemizin muhafaza edildiği ya da internet sitemiz ile bağlantılı başka bir sunucuya, bilgisayara veya veritabanına izinsiz erişim sağlama girişiminde bulunmamalısınız;
+									</li>
+									<li>
+										Herhangi bir sistem, veri veya bilgiye müdahale etmemeli, bunlara engel olmamalı ya da el koymamalısınız;
+									</li>
+									<li>
+										Hukuka aykırı, zararlı, taciz edici nitelikte, iftira niteliği taşıyan ya da diğer bir şekilde itiraz edilebilir türde herhangi bir materyal veya Castrol’ün tamamen kendi takdirine bağlı olarak internet sitesine sunulmasını istemediği bir materyali sunmamalı, elektronik posta yoluyla göndermemeli, bunlar ile bağlantı oluşturmamalı, diğer bir şekilde iletmemeli ya da internet sitesini diğer bir şekilde kullanmamalısınız;
+									</li>
+									<li>
+										Telif hakkı veya ticari marka kanunları ile gizlilik kuralları da dâhil olmak ancak bunlarla sınırlı olmamak kaydıyla fikri mülkiyet kanunlarınca korunan şekil, görüntü, yazılım, metin veya diğer materyalleri, anılan haklar Size ait ya da Sizin yönetiminiz altında olmadıkça veya bunlara ilişkin gerekli tüm izin ve yetkiler alınmadıkça yayınlamamalı, elektronik posta yoluyla göndermemeli ya da başka bir şekilde iletmemelisiniz;
+									</li>
+									<li>
+										Yürürlükteki herhangi bir kanun veya yönetmeliği ihlal eden bir hareketi teşvik etmemeli ve/veya bu türden bir harekette bulunmamalısınız;
+									</li>
+									<li>
+										İnternet sitesinin amaçlanan işletilebilirliğine zarar verebilecek veya bunu bozabilecek herhangi bir harekette bulunmamalısınız; 
+									</li>
+									<li>
+										Herhangi bir gerçek kişinin veya tüzel kişiliğin kimliğine bürünmemeli, kimliğinizi sahte, yanlış veya olduğundan farklı şekilde beyan etmemelisiniz;
+									</li>
+									<li>
+										Mallar veya hizmetlerin pazarlaması veya tanıtılması ile iştigal etmemeli veya 
+									</li>
+									<li>
+										Yukarıda anılan faaliyetleri gerçekleştiren kişilere izin vermemeli ya da yardım etmemelisiniz.
+									</li>
+								</ul>
+							</p>
+							<br/>
+							<p style="font-weight: bold;">
+							Kullanıcı İletişim Alanları
+							</p>
+							<br/>
+							<p>
+							Bu internet sitesi blog, ilan panoları, takvimler, sohbet alanları ya da kişisel internet sayfaları da dâhil olmak ancak bunlarla sınırlı olmamak kaydıyla kullanıcıların birbirleri ile iletişim kurdukları alanlar içerebilir.
+							</p>
+							<br/>
+							<p>
+							Castrol kullanıcı iletişim alanları da dâhil olmak üzere internet sitesinin herhangi bir bölümünü inceleme veya izleme (ancak bu bir yükümlülük olmamak üzere) sahiptir. Castrol paylaşılan herhangi bir gönderiyi tamamen kendi takdir yetkisine bağlı olarak, herhangi bir bildirimde bulunmadan ve herhangi bir zamanda kaldırabilir ya da diğer bir şekilde bloke edebilir. Bu hüküm ve şartların “Size karşı sorumluluğumuz” isimli bölümünde de belirtildiği üzere Castrol’ün bu alanlarda yapılan iletişimlerin içeriği ile ilgili hiçbir sorumluluğu bulunmamaktadır.
+							</p>
+							<br/>
+							<p>
+							İnternet sitesine herhangi bir içerik sunmakla, sunduğunuz bu içeriği veya bu içeriğin herhangi bir kısmı ile adınız, resminiz, portreniz, sesiniz, performansınız ve biyografik bilgileriniz ile birlikte Castrol’e sunmuş olduğunuz diğer bilgileri dünyanın herhangi bir yerinde, herhangi bir zamanda, herhangi bir şekilde, ortamda veya mekânda (şu anda bilinen veya ileride kurulacak olan), reklam, tanıtım veya Castrol’ün ya da Castrol ürün ve hizmetlerinin tanıtımı veya reklamının ticareti de dâhil olmak ancak bunlarla sınırlı olmamak kaydıyla hukuka uygun herhangi bir amaç için kullanmak üzere Castrol’e sınırsız hak ve izin vermiş olduğunuzu kabul etmiş olursunuz.
+							</p>
+							<br/>
+							<p style="font-weight: bold;">
+							Kullanıcı tarafından oluşturulmuş içeriğe ilişkin kurallar
+							</p>
+							<br/>
+							<p>
+							İnternet sitesine veya sitesinde görüşler, sorular, yorumlar, fotoğraflar veya videolar, mesajlar, öneriler, fikirler, veriler, bilgiler, metin içerikleri, müzik, ses, grafikler, kodlar veya diğer herhangi bir materyal ya da site içeriği veya gönderilerdekine benzer materyal ve içerikler de dâhil olmak ancak bunlarla sınırlı olmamak kaydıyla (hepsi birlikte “Gönderiler”) herhangi bir içerik sunmakla/paylaşmakla, Castrol, onun iştirakleri ve grup şirketlerine ayrı ayrı her bir durum için münhasır olmayan, telif ücreti gerektirmeyen, devredilebilir, geri alınamaz ve tamamen alt lisansa bağlanabilir nitelikteki aşağıda belirtilen hakları vermiş olduğunuz kabul edilir: (a) Bu Gönderiler’i kullanma, yeniden üretme, değiştirme, uyarlama, başka bir dile çevirme, dağıtma, bunlardan türev başka işler meydana getirme ve bunları dünya genelinde herhangi bir ortamda (şu anda bilinen veya ileride kurulacak olan) halka açık olarak teşhir ve icra etme ve (b) ilgili Gönderi ile bağlantılı olarak sunmuş olduğunuz ismi kullanma. Böylelikle, yorumlarınız ve görüşlerinize kendi takdirimize bağlı olarak katkıda bulunmayı seçebileceğimizi de kabul etmektesiniz. Bunlara ek olarak bize bu hüküm ve şartları ihlal ederek Siz veya Castrol, onun iştirakleri veya grup şirketlerinden herhangi birinin bu Gönderiye ilişkin haklarına tecavüz eden herhangi bir gerçek veya tüzel kişi hakkında yasal takip başlatmak hakkını da vermiş olursunuz. Gönderiler’in gizli ve tescilli olmadığını da kabul ve beyan etmektesiniz.
+							Tarafınızdan sunulmuş ya da yayınlanmış olan Gönderiler’e (diğer gönderiler veya yayınlanan diğer içerikle değiştirilenler de dâhil olmak üzere) ilişkin herhangi bir sorumluluk veya mesuliyetimiz bulunmamaktadır. Gönderiler’i inceleme, değiştirme veya takip etme yükümlülüğümüz bulunmamasına rağmen herhangi bir sohbet odası, ilan panosu ya da diğer iletişim forumu da dâhil olmak üzere bu internet sitesi üzerinden dağıtılan veya bu internet sitesinde paylaşılan Gönderiler’den herhangi birini, tamamen kendi takdirimize bağlı olarak, herhangi bir bildirimde bulunmaksızın, herhangi bir nedenle kaldırma, inceleme veya değiştirme hakkını saklı tutarız.
+							</p>
+							<br/>
+							<p>
+							Bu internet sitesi tartışma forumları, ilan panoları, görüş hizmetleri ile Sizin veya üçüncü kişilerin deneyimlerine ilişkin görüşlerini veya farklı içerikler, mesajlar, materyaller veya farklı kalemler sundukları diğer forumlar (hepsi birlikte “İnteraktif Alanlar”) da dâhil olmak ancak bunlarla olmamak kaydıyla grup forumları içerebilir. Bu internet sitesinde bu türden İnteraktif Alanlar’ın olması hâlinde, bu alanların tarafınızca kullanılması veya herhangi bir hususta bu alanlara güvenerek hareket etmeniz konusunda tüm sorumluluk Size aitti. Bu nedenle riskin tamamen size ait olduğunu bilerek bu İnteraktif Alanlar’ı kullanın veya İnteraktif Alanlar’a dayalı kararlar alın.
+							</p>
+							<br/>
+							<p>
+							İnteraktif Alanlar’dan herhangi birini kullanmakla ya da internet sitesinde Gönderiler paylaşmakla, bu internet sitesi aracılığıyla aşağıdakilerden herhangi birini paylaşmayacağınızı, yüklemeyeceğinizi, iletmeyeceğinizi, dağıtmayacağınızı, depolamayacağınızı, meydana getirmeyeceğinizi ya da diğer bir şekilde yayınlamayacağınızı açık bir şekilde kabul etmiş olursunuz:
+								<ul>
+									<li>
+										Yanlış, sahte, hukuka aykırı, yanıltıcı, iftira niteliğinde, onur kırıcı, müstehcen, pornografik, uygunsuz, ahlaka aykırı, açık saçık, taciz edici veya diğer bir kimsenin taciz edilmesini savunur nitelikte, tehdit edici, gizliliği veya reklam haklarını çiğneyen, küfürlü, tahrik edici, hileli veya diğer bir şekilde itiraz edilebilir nitelikte olan Gönderiler;
+									</li>
+									<li>
+										İlgili herhangi bir rekabet yasası veya tekelcilik karşıtı kanunun kurallarını ihlal eden veya edebilecek Gönderiler;
+									</li>
+									<li>
+										Herhangi bir birey ya da gruba karşı ırkçılık, fanatiklik, nefret ve herhangi türden bir fiziksel zararı destekleyen içerikler gibi sanal topluluğa saldırı niteliğinde olan Gönderiler;
+									</li>
+									<li>
+										Hukuka aykırı faaliyet, cezai yaptırımı olan bir suç, kanuni mesuliyet doğurabilecek bir eyleme ilişkin davranışa yönelik talimatlar oluşturabilecek, sunabilecek veya bu türden talimatları teşvik edebilecek veya destekleyebilecek, dünyanın herhangi bir ülkesinde herhangi bir kişinin haklarını ihlal eden ya da diğer bir şekilde mesuliyet doğurabilecek ya da menkul kıymetler borsası kurallarını da içermek ancak bunlarla sınırlı olmamak üzere yerel, eyalet bazındaki, milli, uluslararası kanun veya düzenlemeleri ihlal edebilecek Gönderiler;
+									</li>
+									<li>
+										Hukuka aykırı silahlar yapma veya satın alma, başka bir kişinin gizliliğini ihlal etme veya bilgisayar virüsleri sunma ya da oluşturma gibi kanunlara aykırı faaliyetlere ilişkin eğitici/öğretici bilgiler veren Gönderiler;
+									</li>
+									<li>
+										Herhangi bir kişinin patent, marka, ticari sır, telif veya diğer türden bir fikri mülkiyet ya da mülkiyet hakkını ihlal eden Gönderiler. Özellikle de, korsan bilgisayar programları ya da bunlar için linkler sunmak, imal edilirken kopya korumalı olarak oluşturulmuş cihazları devre dışı bırakmaya ilişkin bilgiler sunmak veya korsan müzik ya da korsan müzikler için linkler sunmak gibi telif hakkı başka bir kişiye ait olan bir eserin izinsiz veya hukuka aykırı şekilde kopyalanması veya çoğaltılmasını destekleyen Gönderiler;
+									</li>
+									<li>
+										Herhangi bir gerçek veya tüzel kişinin kimliğine bürünen ya da farklı bir yolla, herhangi bir gerçek veya tüzel kişi (Castrol, onun iştirakleri veya grup şirketleri de dâhil olmak üzere) ile olan bağlantınızı yanlış bir şekilde tanıtan Gönderiler;
+									</li>
+									<li>
+										Talep edilmemiş olan tanıtımlar, toplu mailler veya “spam mailler”, “gereksiz e-posta”ların iletimi, “zincirleme yazılar”, siyasi kampanyalar, reklam faaliyetleri, yarışmalar, çekilişler veya ricalar;
+									</li>
+									<li>
+										Önceden alınmış yazılı iznimiz olmaksızın ticari faaliyetler ve/veya satışlar içeren (yarışmalar, çekilişler, takas, reklam ve saadet zincirleri gibi) Gönderiler;
+									</li>
+									<li>
+										Herhangi bir üçüncü kişiye ait soyadı (aile adı), adresler, telefon numaraları, e-posta adresleri, ulusal kimlik numaraları ve kredi kartı numaraları da dâhil ancak bunlarla sınırlı olmayan özel bilgiler;
+									</li>
+									<li>
+										Kısıtlı veya sadece şifre ile giriş yapılabilen ya da saklı sayfalar veya resimler (diğer bir sayfaya bağlantılı olmayan ya da erişilebilir diğer bir sayfadan olmayan) içeren Gönderiler;
+									</li>
+									<li>
+										Virüsler, bozuk veriler veya diğer zararlı, karışıklık yaratan ya da tahrip edici dosyalar;
+									</li>
+									<li>
+										İnteraktif Alan(lar)’daki başlıkla alakasız olarak bu İnteraktif Alan(lar)’da paylaşılmış olan Gönderiler veya
+									</li>
+									<li>
+										Bizim takdirimize göre şu niteliklerde olan link (bağlantı) veya Gönderiler: (i) yukarıda belirtilen alt başlıklardan herhangi birini ihlal eden, (ii) itiraz edilebilir nitelikte olan, (iii) diğer bir kişinin İnteraktif Alanlar’ını ya da bu internet sitesinin diğer herhangi bir bileşenini kullanma veya bunlardan yararlanma hakkını kısıtlayan ya da engelleyen ya da (iv) Castrol, onun iştirakleri, grup şirketleri veya internet sitesi kullanıcılarından herhangi birini herhangi türde bir zarar veya mesuliyete maruz bırakan.
+									</li>
+								</ul>				
+							</p>
+							<br/>
+							<p>
+							Castrol, onun iştirakleri veya grup şirketlerinden hiçbiri tarafınızdan veya diğer üçüncü bir şahıs tarafından paylaşılan, depolanan veya yüklenen herhangi bir Gönderi ya da bunlara ilişkin kayıp ve zararlar (şüpheye yer vermemek adına belirtmek gerekir ki; bu zarar ve kayıplar bedensel zararlar ve yaralanmaları, ölüm veya duyu kaybına, hasara veya acı çekmeye neden olunan durumları veya dolaylı zarar ve kayıpları veya kâr, gelir, veri, kişisel bilgi ya da itibar kayıplarını da kapsar) için herhangi bir sorumluluk almamakta veya üstlenmemektedir; bunun yanı sıra Castrol, onun iştirakleri veya grup şirketleri karşılaşabileceğiniz herhangi bir yanlışlık, hata, hakaret, karalama, iftira, onur kırıcı davranış, eksiklik, sahtecilik, müstehcenlik, pornografik içerik veya küfürden sorumlu değildir. Bir etkileşim hizmetleri sunucusu olarak, Castrol, iştirakleri veya grup şirketleri bu internet sitesi kullanıcıları tarafından halka açık herhangi bir forum, kişisel ana sayfa veya diğer bir İnteraktif Alan’da sunulmuş olan beyanlar, garantiler veya Gönderiler’den sorumlu değildir. Gönderiler’i inceleme, değiştirme veya takip etme yükümlülüğümüz bulunmamasına rağmen, bu internet sayfasında paylaşılan veya depolanan Gönderiler’i takdir yetkisi tamamen bize ait olarak, herhangi bir bildirimde bulunmaksızın, herhangi bir zamanda, herhangi bir nedenle kaldırma, inceleme veya değiştirme hakkını saklı tutarız; bununla birlikte bu internet sitesinde paylaştığınız veya depoladığınız Gönderiler’den yedek kopyalar alma veya bu Gönderiler’i yenileri ile değiştirme sorumluğu, ilgili tüm masrafları ile birlikte, yalnızca ve tamamen Size aittir.
+							</p>
+							<br/>
+							<p>
+							Eğer Gönderiler’de telif haklarınızın (katkı veya bütünlüğe ilişkin haklar da dâhil olmak üzere) olduğu tespit edilirse, işbu belge ile belirtilen hususları beyan etmiş olursunuz: (a) Gönderiler veya bunlardan türetilmiş diğer eserler veya bunların üst versiyonları ya da güncellemeleri ile bağlantılı olarak herhangi bir kişisel kimlik bilgisinin kullanılmasını talep etmemektesiniz; (b) Gönderiler’in Castrol, onun iştirakleri veya grup şirketlerinden ya da bunların lisans verdikleri kişiler, varisleri ya da atadıkları kişilerden herhangi biri tarafından yayınlanmasına, kullanılmasına, değiştirilmesine, silinmesine veya imha edilmesine herhangi bir itirazınız bulunmamaktadır; (c) Gönderiler’den hiçbirinde eser sahibinin sahip olacağı telif haklarına ya da bu haklardan herhangi birine ilişkin olarak herhangi bir iddia veya talepte bulunmayacağınızı kabul eder ve buna ilişkin haklarınızdan süresiz olarak feragat edersiniz ve (d) Castrol, onun iştirakleri, grup şirketleri ya da bunların lisans verdikleri kişiler, varisleri ya da atadıkları kişilerinden her birini bunlara karşı anılan türden telif hakları gereğince diğer bir şekilde ileri sürebilecek olduğunuz tüm iddia ve taleplere karşı süresiz olarak ibra edersiniz.
+							</p>
+							<br/>
+							<p>
+							İnteraktif Alanlar ya da internet sitesinin diğer kısımlarının yukarıda belirtilen kurallar ihlal edilmek suretiyle kullanılması hâlinde, anlaşmanız bu hüküm ve şartlar gereğince ve diğer seçeneklerin yanı sıra feshedilebilir ya da İnteraktif Alanlar ve/veya bu internet sitesine erişiminiz askıya alınabilir. Meşru idari talepler, mahkeme celpleri veya kararlarına uygun hareket etmek, sistemlerimizi ve müşterilerimizi korumak ve sistemlerimiz ve işimizin bütünlüğü ve işleyişini sağlamak amacıyla, kullanıcı profili bilgileri (örn. isim, e-posta adresi, vb.), IP adresi ve trafik bilgisi, kullanım geçmişi ve paylaşılan Gönderiler de dâhil olmak ancak bunlarla sınırlı olmamak kaydıyla uygun veya gerekli gördüğümüz her türlü bilgiye erişim sağlayabilir veya bunları açıklayabiliriz. Bu türden bilgileri açıklama hakkımız bu internet sitesinin gizlilik politikasına ilişkin her türlü hükmü ilga eder.
+							</p>
+							<br/>
+							<p style="font-weight: bold;">
+							Bu internet sitesinde yapılacak değişiklikler
+							</p>
+							<br/>
+							<p>
+							Bu internet sitesinin sayfalarında sunulmuş olan bilgi, içerik ve materyaller herhangi bir zamanda, herhangi bir bildirim yapılmadan değiştirilebilir. Bunun yanı sıra, bu internet sayfasının hüküm ve şartlarında da herhangi bir zamanda değişikliler yapılabilir. Dolayısıyla, bu hüküm ve şartları düzenli aralıklarla incelemeyi ve bu internet sitesine ilişkin devamlı erişim ve kullanımınızın ilgili değişiklikleri kabul ettiğiniz anlamına geleceği hususunu kabul etmektesiniz. Bu hüküm ve şartlar içerisinde yer alan bazı maddeler bu internet sitesinin diğer bir bölümünde yayınlanan maddeler veya bildirimler vasıtasıyla ilga edilebilir. 
+							</p>
+							<br/>
+							<p style="font-weight: bold;">
+							Bu internet sitesi hangi hukuka tabidir?
+							</p>
+							<br/>
+							<p>
+							Bu siteye ilişkin kullanımınız veya bu siteden herhangi bir şekilde yapacağınız yükleme işlemleri ile birlikte bu hüküm ve şartların işleyişi Türk kanunlarına tabidir. Bu internet sitesini kullanmanıza ilişkin olarak doğabilecek her türlü anlaşmazlık münhasıran İstanbul mahkemelerinin yargı yetkisi kapsamındadır.
+							</p>
+							<br/>
+							<p>
+							Bu hüküm ve şartlarda yer alan maddelerin veya bu maddelerden bir kısmının herhangi bir yetkili merci tarafından herhangi bir ölçüde geçersiz, kanunlara aykırı veya ileri sürülemez nitelikte olduğu tespit edilirse, ilgili maddeler anılan ölçüde kalan maddelerden ayrılır ve kalan bu maddeler yürürlükteki kanunların izin verdiği azami ölçüde geçerliliğini ve ileri sürülebilir niteliğini korumaya devam eder.
+							</p>
+							<br/>
+							<p>
+							Telif Hakkı © Castrol 2016
+							</p>
+		    			</apex:outputPanel>
+		    			<apex:outputPanel rendered="{!IF(termsAndConditions == 'tr', true, false)}">
+		    				<!-- <iframe style="box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12); width: 100%;  
+							height: 500px" src="{!URLFOR($Resource.CAPL_Resources, '/CAPL_Resources/documents/TermsAndConditions-tr.pdf')}"/> -->
+		    			</apex:outputPanel>
+					</div>
+					<br/> <br/>
+					<div class="slds-form-element__row">
+				        <div class="slds-form-element">
+				            <label class="slds-checkbox">
+				                <apex:inputcheckbox id="isinstance" styleclass="slds-input" onchange="forwardToStartPage()" value="{!isAgreed}" />
+				                   <span class="slds-checkbox--faux"></span>
+				                   <span class="slds-form-element__label">I agree</span>
+				            </label>
+				        </div>
+				    </div>
+				</div>
+			</div>
+		</div>
+
+		<apex:actionFunction action="{!forwardToStartPage}" name="forwardToStartPage" reRender="" status="status" />
+
+	</apex:form>
+</apex:page>

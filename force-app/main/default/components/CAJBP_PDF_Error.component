@@ -1,0 +1,21 @@
+<apex:component id="CAJBP_PDF_Error">
+    <apex:attribute name="messages" type="String[]" description="The context error messages to render." required="true"/>
+
+    <div class="slds-illustration">
+        <div style="position: fixed; width: 100%;">
+            <apex:repeat var="message" value="{!messages}">
+                <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
+                    <span class="slds-assistive-text">error</span>
+                    <span class="slds-icon_container slds-icon-utility-error slds-m-right_x-small" title="Error">
+                        <svg class="slds-icon slds-icon_x-small" aria-hidden="true">
+                            <use href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#error"></use>
+                        </svg>
+                    </span>
+                    <h2>
+                        {!message}
+                    </h2>
+                </div><br/><br/>
+            </apex:repeat>
+        </div>
+    </div>
+</apex:component>

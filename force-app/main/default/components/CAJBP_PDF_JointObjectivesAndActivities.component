@@ -1,0 +1,99 @@
+<apex:component id="CAJBP_PDF_JointObjectivesAndActivities">
+    <apex:attribute name="currencyIsoCode" description="The currency iso code." required="true" type="String"/>
+    <apex:attribute name="objectives" description="The context objective records." required="true" type="Object[]"/>
+
+    <apex:variable var="" value="" rendered="{!OR(ISBLANK(objectives), objectives.size > 0)}">
+        <div class="cajbp-table-break cajbp-objectives">
+            <apex:repeat value="{!objectives}" var="objective">
+                <apex:variable value="{!objective['activities']}" var="activities"/>
+
+                <apex:variable var="" value="" rendered="{!OR(ISBLANK(activities), activities.size = 0)}">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div style="text-align: left; padding-top: 8px; padding-bottom: 8px; padding-left: 5px;">
+                                        {!$Label.CAJBP_PDF_Objective_Field_Title}:&nbsp;<apex:outputText value="{!objective['title']}"/>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </apex:variable>
+
+                <apex:variable var="" value="" rendered="{!AND(NOT(ISBLANK(activities)), activities.size > 0)}">
+                    <table>
+                        <colgroup>
+                            <col style="width: 100px;"></col>
+                            <col style="width: 70px;"></col>
+                            <col style="width: 60px;"></col>
+                            <col></col>
+                            <col></col>
+                            <col></col>
+                            <col></col>
+                            <col></col>
+                            <col></col>
+                            <col style="width: 60px;"></col>
+                            <col style="width: 60px;"></col>
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th colspan="11">
+                                    <div style="text-align: left; padding-top: 8px; padding-bottom: 8px; padding-left: 5px;">
+                                        {!$Label.CAJBP_PDF_Objective_Field_Title}:&nbsp;<apex:outputText value="{!objective['title']} ({!objective['totalActivities']})"/>
+                                    </div>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>{!$ObjectType.CAJBP_JBP_Activity__c.Fields.Name.Label}</th>
+                                <th>{!$ObjectType.CAJBP_JBP_Activity__c.Fields.CAJBP_Status__c.Label}</th>
+                                <th>{!$ObjectType.CAJBP_JBP_Activity__c.Fields.CAJBP_Paid_for_by__c.Label}</th>
+                                <th>{!$ObjectType.CAJBP_JBP_Activity__c.Fields.CAJBP_Estimated_Value__c.Label} ({!currencyIsoCode})</th>
+                                <th>{!$ObjectType.CAJBP_JBP_Activity__c.Fields.CAJBP_Estimated_Volume__c.Label}</th>
+                                <th>{!$ObjectType.CAJBP_JBP_Activity__c.Fields.CAJBP_Estimated_Cost__c.Label} ({!currencyIsoCode})</th>
+                                <th>{!$ObjectType.CAJBP_JBP_Activity__c.Fields.CAJBP_Actual_Value__c.Label} ({!currencyIsoCode})</th>
+                                <th>{!$ObjectType.CAJBP_JBP_Activity__c.Fields.CAJBP_Actual_Volume__c.Label}</th>
+                                <th>{!$ObjectType.CAJBP_JBP_Activity__c.Fields.CAJBP_Actual_Cost__c.Label} ({!currencyIsoCode})</th>
+                                <th>{!$ObjectType.CAJBP_JBP_Activity__c.Fields.CAJBP_Start_Date__c.Label}</th>
+                                <th>{!$ObjectType.CAJBP_JBP_Activity__c.Fields.CAJBP_End_Date__c.Label}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <apex:repeat value="{!activities}" var="activity">
+                                <tr>
+                                    <td><span><c:CAJBP_LineSplitter input="{!activity['title']}" lineLength="15" escape="false"/></span></td>
+                                    <td><span><apex:outputField value="{!activity['record']['CAJBP_Status__c']}"/></span></td>
+                                    <td><span><apex:outputText value="{!activity['paidBy']}"/></span></td>
+                                    <td><span><apex:outputText value="{!activity['estimatedValue']}"/></span></td>
+                                    <td><span><apex:outputText value="{!activity['estimatedVolume']}"/></span></td>
+                                    <td><span><apex:outputText value="{!activity['estimatedCost']}"/></span></td>
+                                    <td><span><apex:outputText value="{!activity['actualValue']}"/></span></td>
+                                    <td><span><apex:outputText value="{!activity['actualVolume']}"/></span></td>
+                                    <td><span><apex:outputText value="{!activity['actualCost']}"/></span></td>
+                                    <td><span><apex:outputText value="{!activity['startDate']}"/></span></td>
+                                    <td><span><apex:outputText value="{!activity['endDate']}"/></span></td>
+                                </tr>
+                            </apex:repeat>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td style="text-align: center;">Sub Total ({!currencyIsoCode})</td>
+                                <td></td>
+                                <td></td>
+                                <td><span><apex:outputText value="{!objective['estimatedValue']}"/></span></td>
+                                <td><span><apex:outputText value="{!objective['estimatedVolume']}"/></span></td>
+                                <td><span><apex:outputText value="{!objective['estimatedCost']}"/></span></td>
+                                <td><span><apex:outputText value="{!objective['actualValue']}"/></span></td>
+                                <td><span><apex:outputText value="{!objective['actualVolume']}"/></span></td>
+                                <td><span><apex:outputText value="{!objective['actualCost']}"/></span></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </apex:variable>
+                <br/>
+            </apex:repeat>
+        </div>
+    </apex:variable>
+</apex:component>

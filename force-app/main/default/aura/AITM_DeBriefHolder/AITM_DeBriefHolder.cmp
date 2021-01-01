@@ -1,0 +1,45 @@
+<aura:component controller="AITM_DeBriefHolderController" implements="forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,force:hasRecordId" extends="c:AITM_RelatedRecordsHolder">
+    <aura:attribute name="showResults" type="Boolean" description="Show Results section on this page?" default="true"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="force:refreshView" action="{!c.resetFilterOption}"/>
+    <header class="filters slds-m-bottom_small">
+        <ui:inputSelect aura:id="filter" class="filtersSelect" change="{!c.onFilterChange}" value="{!v.selectedFilter}">
+            <aura:iteration items="{!v.filterOptions}" var="filter">
+                <ui:inputSelectOption text="{!filter.name}" label="{!filter.name}" disabled="{!filter.disabled}"/>
+            </aura:iteration>
+        </ui:inputSelect>
+        <ui:inputText aura:id="searchLocationInput" class="searchLocationInput" updateOn="keyup" change="{!c.search}" placeholder="Search" value="{!v.searchTerm}" keyup="{!c.search}"/>
+    
+        <div class="slds-no-flex buttonsBlock">
+            <div class="actionsContainer">
+                <ul class="slds-button-group slds-m-left--xx-small small oneActionsRibbon forceActionsContainer" data-aura-class="oneActionsRibbon forceActionsContainer">
+                    <li class="slds-button slds-button--neutral slds-truncate">
+                        <a href="javascript:void(0)" title="Mark Multiple" class="disabledButton">
+                            <div title="Mark Multiple">Mark Multiple</div>
+                        </a>
+                    </li>
+                    <li class="slds-button slds-button--neutral slds-truncate">
+                        <a href="javascript:void(0)" title="Upload Results" class="disabledButton">
+                            <div title="Upload Results">Upload Results</div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <lightning:tabset class="uiTabBar">
+        <lightning:tab >
+            <aura:set attribute="label"><span class="tabHeader">RESULTS</span></aura:set>
+            <aura:if isTrue="{!v.showResults}">
+                <c:AITM_DeBriefResults recordId="{!v.recordId}"/>   
+            </aura:if>
+        </lightning:tab>
+        <lightning:tab >
+            <aura:set attribute="label"><span class="tabHeader">DEBRIEF EXECUTIVE SUMMARY</span></aura:set>
+            <c:AITM_DeBriefSummaryHolder recordId="{!v.recordId}"/>
+        </lightning:tab>
+    </lightning:tabset>
+
+</aura:component>

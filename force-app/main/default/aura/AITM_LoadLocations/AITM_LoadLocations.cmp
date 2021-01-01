@@ -1,0 +1,37 @@
+<aura:component access="GLOBAL"
+                controller="AITM_LoadLocationsController"
+                implements="force:LightningQuickActionWithoutHeader,force:hasRecordId">
+    
+    <aura:attribute name="errorMessage" type="String" description="Error message to show when GRN Codes are not available"/>
+    <aura:attribute name="infoMessage" type="String" description="Info message to show on a page load"/>
+    <aura:attribute name="recordsProcessed" type="Integer" description="Number of records loaded to process from the upload file" default="0" />
+    
+    <div class="slds-modal__header">
+        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.close}"><lightning:icon iconName="utility:close" variant="inverse" size="small"/></button>
+    </div>
+
+    <div class="slds-form-element">
+        <div class="slds-form-element__control">
+            <lightning:spinner aura:id="loaderSpinner" class="slds-hide"/>
+        
+            <aura:if isTrue="{!empty(v.errorMessage)}"><ui:message title="Locations Upload" severity="info">Drop File Below</ui:message></aura:if>
+            <aura:if isTrue="{!!empty(v.errorMessage)}"><ui:message title="Error" severity="error">{!v.errorMessage}</ui:message></aura:if>
+ 
+            <div class="slds-file-selector slds-file-selector_files width-100">
+                <div ondragover="{!c.preventDefault}" ondrop="{!c.loadFiles}" class="slds-file-selector__dropzone width-100 height-200 flex-centered">
+                    <div class="upload-content">
+                        <input type="file" class="slds-file-selector__input slds-assistive-text" accept="text" aura:id="file-upload" id="file-upload-input" aria-describedby="file-selector-id" onchange="{!c.save}"/>
+                        <label class="slds-file-selector__body" for="file-upload-input">
+                            <span class="slds-file-selector__button slds-button slds-button_neutral padding-2">
+                                <lightning:icon iconName="utility:upload" size="small"/>
+                                Upload File
+                            </span>
+                            <span class="slds-file-selector__text slds-medium-show">or Drop File</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</aura:component>

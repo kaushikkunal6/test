@@ -1,0 +1,32 @@
+<apex:page showHeader="false"> 
+    <html>
+      <head>
+        <title>reCAPTCHA : Explicit render after an onload callback</title>
+        <script type="text/javascript">
+          var verifyCallback = function(response) {
+              parent.postMessage("Unlock", "{!$Site.BaseUrl}");
+          };
+          var expiredCallback = function(response) {
+              parent.postMessage("Expired", "{!$Site.BaseUrl}");
+          };          
+          var onloadCallback = function() {
+              grecaptcha.render('html_element', {
+                  'sitekey' : '{!$Setup.TKT_Google_reCaptchaKey__c.value__c}',
+                  'callback' : verifyCallback,
+                  'expired-callback' : expiredCallback
+              });
+          };
+
+        </script>
+      </head>
+      <body>
+        <form action="?" method="POST">
+          <div id="html_element"  align="center"></div>
+          <br/>
+          <input type="submit" value="Submit" style="display:none"/>
+        </form>
+        <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async="" defer="">
+        </script>
+      </body>
+    </html>
+</apex:page>

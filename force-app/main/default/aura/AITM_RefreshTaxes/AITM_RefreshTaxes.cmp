@@ -1,0 +1,128 @@
+<aura:component controller="AITM_RefreshTaxes" implements="force:LightningQuickActionWithoutHeader,force:hasRecordId">
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="filterOptions" type="List" default=""/>
+    <aura:attribute name="isModalOpen" type="Boolean" default="false" />
+    <aura:attribute name="selectionError" type="String" default="Please make your selections before refreshing" />
+    <aura:attribute name="selectedFilter" type="String" default= "" />
+    <aura:attribute name="OperationSelection" type="String" description ="Selected option of offer" />
+    <aura:attribute name="isButtonValue" type="Boolean" description="Indicates display of buttons"/>
+    <aura:attribute name="LocationNames" type="List" />
+    <aura:attribute name="LocationManagerNames" type="String[]" />
+    <aura:attribute name="LocationCountryNames" type="String[]" />
+    <aura:attribute name="msoptions" type="List"  />
+    <aura:attribute name="selectedOptions" type="List" default ="" />
+    <aura:attribute name="selectedLabel" type="String" default="Select a value.." />
+    <aura:attribute name="progress" type="Integer" default="0"/>
+    <aura:attribute name="apexJob" type="AsyncApexJob"/>
+    <aura:attribute name="validationError" type="Boolean" description="Indicates if error message beign show" default="false"/>
+    
+    
+    
+    <aura:if isTrue="{!v.isModalOpen}" >
+
+        <!--<aura:if isTrue="{!v.apexJob != null}">
+            <aura:if isTrue="{!v.apexJob.JobItemsProcessed != v.apexJob.TotalJobItems}">
+                Processing {!v.apexJob.JobItemsProcessed} of {!v.apexJob.TotalJobItems}
+            </aura:if>
+            <aura:if isTrue="{!v.apexJob.Status == 'Completed'}">
+                Completed with {!v.apexJob.NumberOfErrors} errors.
+            </aura:if>
+            <lightning:progressBar value="{!v.progress}" size="large" variant="circular"/>
+        </aura:if>-->
+       
+
+    <div class="slds-modal__header">
+        
+        <h2 class="slds-text-heading--medium">Refresh</h2>
+    </div>
+    <aura:if isTrue="{!v.validationError}">
+        <ui:message title="Error" severity="error" closable="true">
+            {!v.selectionError}
+        </ui:message>
+    </aura:if>
+
+    <div class="slds-form-element" style="height:30px; margin-top:15px;">
+        <div class="slds-form-element__control slds-p-around_x-small">
+            <div class="slds-radio grid-item left">
+              <lightning:input aura:id="taxfee" type="radio" value="Taxes"
+                               label="Taxes &amp; Fees (Only)" checked="" name="options" id="radio-306" onchange="{!c.taxesonly}"/>
+              
+            </div>
+            <div class="grid-item right" style="margin-left:-150px">
+                    <lightning:helptext content="This will update only the taxes &amp; fees and not additional notes"/>              
+                  
+                </div>
+        </div>
+    </div>   
+    <div class="slds-form-element" style="height:30px">
+        <div class="slds-form-element__control slds-p-around_x-small">
+            <div class="slds-radio grid-item left">
+              <lightning:input aura:id="notes" type="radio" value="Notes"
+                               label="Additional Notes (Only)" checked="" name="options" id="radio-306" onchange="{!c.additionalnotesonly}"/>
+            </div>
+            <div class="grid-item right" style="margin-left:-125px">
+                    <lightning:helptext content="This will update only the additional notes and not taxes &amp; fees levels"/>              
+                  
+                </div>
+      </div>
+    </div>
+    <div class="slds-form-element" style="height:30px">
+        <div class="slds-form-element__control slds-p-around_x-small">
+            <div class="slds-radio grid-item left">
+              <lightning:input aura:id="feenotes" type="radio" value="TaxesWithNotes"
+                               label="Taxes &amp; Fees + Additional Notes" checked="" name="options" id="radio-306" onchange="{!c.taxesandnotes}"/>
+              
+            </div>
+            <div class="grid-item right" style="margin-left:-75px">
+                    <lightning:helptext content="This will update both the taxes &amp; fees and additional notes"/>              
+                  
+                </div>
+      </div>
+    </div>
+
+    <div class="slds-form-element">
+        <div class="slds-form-element__control slds-p-around--medium">
+            <div class="slds-checkbox">
+                <lightning:input aura:id="ignoreManualAdjusted" type="checkbox" label="Ignore manually adjusted records" checked="true" name="options" id="checkbox-44" value="checkbox-44" />
+            </div>
+            <div class="slds-text" style="margin-bottom:5px;font-size:12px;">By selecting this, any records that has manually edited data will not be refreshed</div>
+            
+        </div>
+    </div>
+    <div class="slds-form-element__control slds-p-around--medium" style="margin-top:-20px">
+        <header class="filters slds-m-bottom_small">
+            <lightning:spinner aura:id="loaderSpinner" class="slds-hide"/>
+            <lightning:select aura:id="filter" label="" class="filtersSelect" onchange="{!c.onFilterChange}" value="{!v.selectedFilter}">
+                <aura:iteration items="{!v.filterOptions}" var="filter" indexVar="index">
+                    <option label="{!filter}" text="{!filter}"/>
+                </aura:iteration>
+            </lightning:select> 
+            <div class="slds-text">&nbsp;</div> 
+            
+                <aura:if isTrue="{!v.selectedFilter != 'All Locations'}">
+                    <c:AITM_MultiSelect aura:id="child" recordId="{!v.recordId}" msoptions="{!v.msoptions}" selectedOptions="{!v.selectedOptions}" selectedFilter="{!v.selectedFilter}" />
+                </aura:if>
+            <div class="slds-text">&nbsp;</div> 
+            <div class="slds-text">&nbsp;</div> 
+        </header>
+    </div>
+        
+        
+
+    <div class="slds-text-color_error" style="margin-bottom:15px;margin-left:15px;">Refreshing T&amp;F will overwrite previous values. Please note if this is a large tender refresh may take some time.</div>
+
+    <div class="slds-modal__footer">
+        <aura:if isTrue = "{!v.isButtonValue}"> 
+            <lightning:button variant="neutral" label="Cancel"  onclick="{!c.close}"/>
+            <lightning:button variant="brand" label="Refresh" onclick="{!c.Refresh}"/>
+        </aura:if>
+        <aura:if isTrue = "{!!v.isButtonValue}"> 
+            <lightning:button variant="neutral" disabled="true" label="Cancel"/>
+            <lightning:button variant="neutral" disabled="true" label="Refresh"/> 
+        </aura:if>
+        
+    </div>
+        
+</aura:if>
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+</aura:component>

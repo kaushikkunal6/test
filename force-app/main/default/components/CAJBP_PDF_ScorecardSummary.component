@@ -1,0 +1,44 @@
+<apex:component id="CAJBP_PDF_ScorecardSummary">
+    <apex:attribute name="scorecard" description="The context scorecard record." required="true" type="Object"/>
+
+    <apex:variable var="" value="" rendered="{!NOT(ISBLANK(scorecard))}">
+        <div class="cajbp-table-break cajbp-summary">
+            <c:CAJBP_PDF_Section title="{!UPPER($Label.CAJBP_PDF_Heading_Summary)}"/>
+
+            <div style="margin-top: -60px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="label">{!$ObjectType.CAJBP_Scorecard__c.Fields.CAJBP_Sell_In_Volume_Plan__c.Label}:</span><br/><apex:outputText value="{!scorecard['sellInVolumePlan']}"/>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><span style="font-size: 1.3em; font-weight: bold;">{!UPPER($Label.CAJBP_PDF_Heading_In_Year_Actuals)}</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="label">{!$ObjectType.CAJBP_Scorecard__c.Fields.CAJBP_Sell_In_YTD_Volume_Actuals__c.Label}:</span><br/><apex:outputText value="{!scorecard['sellInActualVolume']}"/>&nbsp;</td>
+                            <td><span class="label">{!$ObjectType.CAJBP_Scorecard__c.Fields.CAJBP_Sell_In_YTD_Turnover_Actuals__c.Label}:</span><br/>{!scorecard['currencyIsoCode']}&nbsp;<apex:outputText value="{!scorecard['sellInActualTurnover']}"/>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label">{!$ObjectType.CAJBP_Scorecard__c.Fields.CAJBP_Sell_In_Current_Year_MAT_Volume__c.Label}:</span><br/><apex:outputText value="{!scorecard['sellInMatVolume']}"/>&nbsp;</td>
+                            <td><span class="label">{!$ObjectType.CAJBP_Scorecard__c.Fields.CAJBP_Sell_In_Current_Year_MAT_Turnover__c.Label}:</span><br/>{!scorecard['currencyIsoCode']}&nbsp;<apex:outputText value="{!scorecard['sellInMatTurnover']}"/>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label">{!$ObjectType.CAJBP_Scorecard__c.Fields.CAJBP_Sell_Out_YTD_Volume_Actuals__c.Label}:</span><br/><apex:outputText value="{!scorecard['sellOutActualVolume']}"/>&nbsp;</td>
+                            <td><span class="label">{!$ObjectType.CAJBP_Scorecard__c.Fields.CAJBP_Sell_Out_YTD_Turnover_Actuals__c.Label}:</span><br/>{!scorecard['currencyIsoCode']}&nbsp;<apex:outputText value="{!scorecard['sellOutActualTurnover']}"/>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label">{!$ObjectType.CAJBP_Scorecard__c.Fields.CAJBP_Sell_Out_Current_Year_MAT_Volume__c.Label}:</span><br/><apex:outputText value="{!scorecard['sellOutMatVolume']}"/>&nbsp;</td>
+                            <td><span class="label">{!$ObjectType.CAJBP_Scorecard__c.Fields.CAJBP_Sell_Out_Current_Year_MAT_Turnover__c.Label}:</span><br/>{!scorecard['currencyIsoCode']}&nbsp;<apex:outputText value="{!scorecard['sellOutMatTurnover']}"/>&nbsp;</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </apex:variable>
+</apex:component>

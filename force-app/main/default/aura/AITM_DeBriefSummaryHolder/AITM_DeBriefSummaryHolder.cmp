@@ -1,0 +1,42 @@
+<aura:component controller="AITM_DeBriefSummaryHolderController" >
+	
+	<aura:attribute name="recordId" type="String" description="Record Id - Tender Id for locations list load" />
+	<aura:attribute name="tender" type="AITM_Tender__c" />
+	<aura:attribute name="tenderOrigin" type="AITM_Tender__c" />
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+	<aura:handler name="updateTenderEvent" event="c:AITM_UpdateTenderEvent" action="{!c.handleUpdateTenderEvent}"/>
+
+	<div class="slds slds-m-bottom_small">
+		<c:AITM_DeBriefTenderContext tender="{!v.tender}"/>
+	</div>
+	
+	<div class="slds slds-m-bottom_small">
+		<c:AITM_DeBriefLocationSummary tender="{!v.tender}"/>
+	</div>
+
+	<div class="slds slds-m-bottom_small">
+		<c:AITM_DeBriefKeyPerformanceMetrics tender="{!v.tender}"/>
+	</div>
+	
+	<div class="slds slds-m-bottom_small">
+		<c:AITM_DeBriefDetailedSummaryAndLearnings tender="{!v.tender}"/>
+	</div>
+
+   	<div class="slds slds-m-bottom_small">
+		<c:AITM_DeBriefPreTenderInformation tender="{!v.tender}"/>
+	</div>
+
+	<div class="slds slds-m-bottom_small">
+		<c:AITM_DeBriefNotesForTender tender="{!v.tender}"/>
+	</div>
+
+    <div class="slds slds-m-bottom_small">
+		<c:AITM_DeBriefRecognitionAndShoutOuts tender="{!v.tender}"/>
+	</div>
+
+	<div aura:id="de-brief-form-controls" class="slds-docked-form-footer">
+		<button type="button" class="slds-button slds-button_neutral" onclick="{!c.cancelEditForm}">Cancel</button>
+		<button type="button" class="slds-button slds-button_brand"  onclick="{!c.saveFormValues}">Save</button>
+	</div>
+
+</aura:component>

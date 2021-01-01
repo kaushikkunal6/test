@@ -1,0 +1,142 @@
+<!--
+    This page generates the pdf from a stored cache [CAJBP PDF Generated Cache], to render specific jbp images upload them as attachments
+    and then using an apex:image tag use the download url below:
+
+    <apex:image url="/sfc/servlet.shepherd/document/download/06925000000px5CAAQ"/>
+-->
+<apex:page id="CAJBP_PDF_SummaryViewer" standardController="CAJBP_Joint_Business_Plan__c" extensions="CAJBP_PDF_SummaryViewer"
+           applyBodyTag="false" applyHtmlTag="false" showHeader="false" sideBar="false" readOnly="true" renderAs="pdf"
+           language="{!payload['jbp']['locale']}">
+
+    <html>
+        <head>
+            <style>
+                @page {
+                    size: A4 landscape;
+
+                    @top-center {
+                        content: element(header);
+                    }
+
+                    @bottom-center {
+                        font-size: 0.7em;
+                        font-family: 'Arial Unicode MS';
+                        letter-spacing: 1px;
+                        content: "{!$Label.CAJBP_PDF_Footer_Summary}\a {!$Label.CAJBP_PDF_Page} " counter(page) " {!$Label.CAJBP_PDF_Page_Of} " counter(pages);
+                        white-space: pre;
+                    }
+
+                    margin-top: 100px;
+                    margin-bottom: 80px;
+                    margin-left: 5px;
+                    margin-right: 5px;
+                }
+            </style>
+
+            <apex:stylesheet value="{!URLFOR($Resource.CAJBP_PDF_Assets, '/css/main.css')}"/>
+        </head>
+
+        <body>
+            <div class="content">
+                <div class="header">
+                    <apex:image value="{!URLFOR($Resource.CAJBP_PDF_Assets, payload["assets"]["pageHeaderImageName"])}" width="100%"/>
+                </div>
+
+                <div>
+                    <div style="text-align: right; margin-right: 8px;">
+                        {!SUBSTITUTE(SUBSTITUTE($Label.CAJBP_PDF_Field_Date_Generated, '{{DATE}}', payload['generatedDate']), '{{USER}}', payload['generatedBy'])}
+                    </div>
+                    <br/>
+
+                    <div>
+                        <c:CAJBP_PDF_Heading title="{!$ObjectType.CAJBP_Joint_Business_Plan__c.Label}"
+                                subTitle="{!payload['jbp']['name']}" imagePath="/images/plan.png" style="margin-left: 60px;"/>
+
+                        <c:CAJBP_PDF_JbpSummary jbp="{!payload['jbp']}"/>
+                    </div>
+
+                    <br/><br/>
+                    <div>
+                        <div class="new-page"/>
+                        <c:CAJBP_PDF_Heading subTitle="{!$Label.CAJBP_PDF_Heading_Insights}" imagePath="/images/insights.png" style="margin-left: 60px;"/>
+
+                        <c:CAJBP_PDF_SwotMatrix strengths="{!payload['swotStrengths']}"
+                                weaknesses="{!payload['swotWeaknesses']}"
+                                opportunities="{!payload['swotOpportunities']}"
+                                threats="{!payload['swotThreats']}"/>
+                    </div>
+                    <br/>
+
+                    <div class="objectives-activities">
+                        <div class="new-page"/>
+                        <c:CAJBP_PDF_Heading subTitle="{!$Label.CAJBP_PDF_Heading_Objectives_Activities}"
+                                imagePath="/images/objectives.png" style="margin-left: 60px;"/>
+
+                        <c:CAJBP_PDF_JointObjectivesAndActivities currencyIsoCode="{!payload['jbp']['currencyIsoCode']}"
+                                objectives="{!payload['objectives']}"/>
+
+                        <c:CAJBP_PDF_ActivityYear data="{!payload['activityYear']}"/>
+                    </div>
+
+                    <apex:variable var="" value="" rendered="{!NOT(payload['jbp']['accountStatus'] == 'Prospect')}">
+                        <div class="scorecard">
+                            <div class="rebates">
+                                <div class="new-page"/>
+                                <c:CAJBP_PDF_Heading subTitle="{!$ObjectType.CAJBP_Scorecard__c.Label}"
+                                        imagePath="/images/scorecard.png" style="margin-left: 60px;"/>
+
+                                <c:CAJBP_PDF_Section title="{!UPPER($ObjectType.CAJBP_Rebate__c.labelPlural)}"/>
+
+                                <c:CAJBP_PDF_SingleRebateVolume currencyIsoCode="{!payload['jbp']['currencyIsoCode']}"
+                                        rebates="{!payload['singleRebatePPL']}"/>
+                                <c:CAJBP_PDF_MultipleRebateVolume currencyIsoCode="{!payload['jbp']['currencyIsoCode']}"
+                                        rebates="{!payload['multiRebatePPL']}"/>
+                                <c:CAJBP_PDF_SingleRebateTurnover currencyIsoCode="{!payload['jbp']['currencyIsoCode']}"
+                                        rebates="{!payload['singleRebatePercentage']}"/>
+                                <c:CAJBP_PDF_MultipleRebateTurnover currencyIsoCode="{!payload['jbp']['currencyIsoCode']}"
+                                        rebates="{!payload['multiRebatePercentage']}"/>
+                                <c:CAJBP_PDF_SingleRebateVolumePercentage currencyIsoCode="{!payload['jbp']['currencyIsoCode']}"
+                                        rebates="{!payload['singleRebateVolumePercentage']}"/>
+                                <c:CAJBP_PDF_MultipleRebateVolumePercentage currencyIsoCode="{!payload['jbp']['currencyIsoCode']}"
+                                        rebates="{!payload['multiRebateVolumePercentage']}"/>
+                            </div>
+
+                            <div class="product-mix-targets">
+                                <c:CAJBP_PDF_Section title="{!UPPER($ObjectType.CAJBP_Product_Mix_Target__c.labelPlural)}"/>
+
+                                <c:CAJBP_PDF_ProductMixVolume rebates="{!payload['mixAnnualPPL']}"
+                                        currencyIsoCode="{!payload['jbp']['currencyIsoCode']}"/>
+                                <c:CAJBP_PDF_ProductMixVolumeQuarterly rebates="{!payload['mixQuarterlyPPL']}"
+                                        currencyIsoCode="{!payload['jbp']['currencyIsoCode']}"/>
+                                <c:CAJBP_PDF_ProductMixPercentage rebates="{!payload['mixAnnualPercentage']}"
+                                        currencyIsoCode="{!payload['jbp']['currencyIsoCode']}"/>
+                                <c:CAJBP_PDF_ProductMixPercentageQuarterly rebates="{!payload['mixQuarterlyPercentage']}"
+                                        currencyIsoCode="{!payload['jbp']['currencyIsoCode']}"/>
+                            </div>
+
+                            <div class="ways-of-working-targets">
+                                <c:CAJBP_PDF_WaysOfWorkingTargets targets="{!payload['waysOfWorkingTargets']}"/>
+                            </div>
+
+                            <div class="scorecard-summary">
+                                <c:CAJBP_PDF_ScorecardSummary scorecard="{!payload['scorecard']}"/>
+                            </div>
+                        </div>
+
+                        <apex:variable var="" value="" rendered="{!NOT(ISBLANK(payload['jaf']))}">
+                            <div class="jaf">
+                                <div class="jaf-summary">
+                                    <div class="new-page"/>
+                                    <c:CAJBP_PDF_Heading title="{!$ObjectType.CAJBP_Distributor_Joint_Activity_Fund__c.Label}"
+                                            subTitle="{!payload['jaf']['name']}" imagePath="/images/jaf.png" style="margin-left: 60px;"/>
+
+                                    <c:CAJBP_PDF_JafSummary jaf="{!payload['jaf']}"/>
+                                </div>
+                            </div>
+                        </apex:variable>
+                    </apex:variable>
+                </div>
+            </div>
+        </body>
+    </html>
+</apex:page>

@@ -1,0 +1,16 @@
+<!--*****************************************************************************************
+*       Date:        9DEC2019
+*       Author:      Naglis Jonas Kazlauskas - IBM
+*       Description: Visualforce component to get first name
+*****************************************************************************************/-->
+<apex:component controller="DUP_RequestDocumentController" access="global">
+    <apex:attribute name="RecordIdValue" description="User id on the component."
+                    type="Id" required="required" assignTo="{!RecordId}"/>
+    <apex:attribute name="RequestIdValue" description="request id on the component."
+                    type="Id" required="required" assignTo="{!RequestId}"/>
+    <apex:outputText >
+        <div>
+			Dear {!documentStoresList[0].DUP_Counterparty_Contact_Name__r.DUP_First_Name__c},
+        </div>
+    </apex:outputText>
+</apex:component>

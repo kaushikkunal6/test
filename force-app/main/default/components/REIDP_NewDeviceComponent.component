@@ -1,0 +1,18 @@
+<!--
+ * @author Ragim Ragimov
+ * @company Bluewolf, an IBM Company
+ * @date 7/2017
+ *
+ * A Visualforce Component included in New Device Visualforce Email Template for BP Community
+-->
+<apex:component controller="REIDP_NewDeviceComponentController" access="global">
+    <apex:attribute name="uid" description="Current User's ID" type="id" assignTo="{!userId}"/>
+    <apex:repeat value="{!DeviceInfo}" var="device">
+        <tr style="{!device[2]}">
+                <td width="11" height="40">&nbsp;</td>
+                <td width="259" style="color:#787878; font-size: 13px;">{!device[0]}</td>
+                <td  width="259" style="text-align:right; color: #787878; font-size: 13px;">{!device[1]}</td>
+                <td width="11">&nbsp;</td>
+       </tr>
+    </apex:repeat>
+</apex:component>

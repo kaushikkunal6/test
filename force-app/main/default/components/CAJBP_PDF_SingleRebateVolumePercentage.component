@@ -1,0 +1,42 @@
+<apex:component id="CAJBP_PDF_SingleRebateVolumePercentage">
+    <apex:attribute name="currencyIsoCode" description="The currency for the rebates." type="String"/>
+    <apex:attribute name="rebates" description="The context rebates to render." type="Object[]"/>
+
+    <apex:variable var="" value="" rendered="{!AND(NOT(ISBLANK(rebates)), rebates.size > 0)}">
+        <div class="cajbp-table-break cajbp-rebates">
+            <table>
+                <thead>
+                    <colgroup>
+                        <col style="width: 150px;"></col>
+                        <col></col>
+                        <col></col>
+                        <col></col>
+                        <col></col>
+                        <col></col>
+                    </colgroup>
+                    <tr>
+                        <th rowspan="2" style="background-color: #FFFFFF; border: 0px solid  #FFFFFF;"></th>
+                        <th style="background-color: #3F87A6; text-align: left; color: #FFFFFF; text-align: center;">{!$Label.CAJBP_PDF_Target_Volume}</th>
+                        <th style="background-color: #3F87A6; text-align: left; color: #FFFFFF; text-align: center;">{!$Label.CAJBP_PDF_Target_PPL} ({!currencyIsoCode})</th>
+                        <th style="background-color: #3F87A6; text-align: left; color: #FFFFFF; text-align: center;">{!$Label.CAJBP_PDF_Target_Turnover} ({!currencyIsoCode})</th>
+                        <th style="background-color: #3F87A6; text-align: left; color: #FFFFFF; text-align: center;">{!$Label.CAJBP_PDF_Target_Percentage} (%)</th>
+                        <th style="background-color: #3F87A6; text-align: left; color: #FFFFFF; text-align: center;">{!$Label.CAJBP_PDF_Target_Rebate_Amount} ({!currencyIsoCode})</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <apex:repeat value="{!rebates}" var="rebate">
+                        <tr>
+                            <th scope="row" style="background-color: #3F87A6; text-align: left; color: #FFFFFF;">{!rebate['name']}</th>
+                            <td><span><apex:outputText value="{!rebate['targetVolume']}"/></span></td>
+                            <td><span><apex:outputText value="{!rebate['targetPPL']}"/></span></td>
+                            <td><span><apex:outputText value="{!rebate['targetTurnover']}"/></span></td>
+                            <td><span><apex:outputText value="{!rebate['targetPercentage']}"/></span></td>
+                            <td><span><apex:outputText value="{!rebate['targetRebate']}"/></span></td>
+                        </tr>
+                    </apex:repeat>
+                </tbody>
+            </table>
+            <br/>
+        </div>
+    </apex:variable>
+</apex:component>

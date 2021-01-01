@@ -1,0 +1,26 @@
+/*adjusting help text position*/
+.THIS .customIcon div{
+    vertical-align: top !important;
+}
+ 
+.THIS.customIcon div{
+    vertical-align: top !important;
+}
+.THIS select {
+    border: 1px solid #111;
+    background: transparent;
+    width: 100%;
+    padding: 5px 35px 5px 5px;
+    border: 1px solid rgb(216, 221, 230);
+    height: 34px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    background-repeat: no-repeat;
+    background-position: 97.5% 50%;
+    background-size: .875rem .875rem, 100% 100%;
+}
+.THIS .label-hidden > label {
+    display: none;
+}

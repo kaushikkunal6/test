@@ -1,0 +1,19 @@
+.customTableHeaderCSS{
+    font-size: .65rem !important;
+    color: black;
+    font-weight: 790;
+    cursor: pointer;
+    font-family: WhitneySSm,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+
+.customerHeaderCSS{
+    font-size: .75rem !important;
+    color: black;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: WhitneySSm,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+
+.modalHeightCSS{
+    height: 25rem;
+}

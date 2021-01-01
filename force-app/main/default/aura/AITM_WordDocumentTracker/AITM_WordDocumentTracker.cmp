@@ -1,0 +1,50 @@
+<aura:component
+  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+  controller="AITM_WordDocumentTracker">
+    <aura:attribute name="StartDate" type="Date"/>
+  <aura:attribute name="ListOfDoc" type="sObject[]" />
+
+
+  <div class="slds-card">
+    <div class="slds-text" style="margin-top:6px;font-size:16px;font-weight: bold;">&nbsp;&nbsp;&nbsp;Tender with word
+      documents</div>
+    <br />
+    <p>&nbsp;&nbsp;&nbsp;Select the dates and Download File to get the list of all tenders with word</p>
+    <p>&nbsp;&nbsp;&nbsp;documents and their details.</p>
+    <br />
+    <div class="slds-grid slds-grid--pull-padded-medium">
+      <div class="slds-col slds-p-horizontal_medium">
+        <div class="slds-p-left_small">
+          <div style="width:120px">
+            <lightning:input aura:id="startDateInput" name="input1" label="From date" type="date" dateStyle="short"  />
+          </div>
+        </div>
+      </div>
+
+
+      <div class="slds-col slds-p-horizontal--xx-small">
+
+        <div style="width:120px;">
+          <lightning:input aura:id="endDateInput" name="input2" label="To date" type="date" dateStyle="short" />
+
+        </div>
+      </div>
+
+
+
+    </div>
+    <br />
+    <div style="position: relative; right: -10em; top: 0em;">
+
+      <lightning:button variant="neutral" label="Download File" onclick="{!c.download}" />
+      <br />
+      <br />
+    </div>
+  </div>
+
+
+
+
+
+
+</aura:component>

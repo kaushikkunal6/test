@@ -1,0 +1,123 @@
+<apex:page id="CAJBP_PDF_SummaryExecutor" standardController="CAJBP_Joint_Business_Plan__c"
+        extensions="CAJBP_PDF_SummaryExecutor" showHeader="false" sideBar="false" readOnly="true"
+        language="{!currentUser.LocaleSidKey}">
+
+    <apex:slds />
+    <apex:includeScript value="{!URLFOR($Resource.CAJBP_PDF_Assets, '/js/main.js')}"/>
+
+    <script>
+        function hideSpinner(timeout) {
+            window.setTimeout(() => {
+                document.querySelector('.spinner').classList.add('slds-hide');
+            }, timeout);
+        }
+
+        function init() {
+            if ({!messages.size > 0}) {
+                hideSpinner(300);
+                return ;
+            }
+
+            Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.CAJBP_PDF_SummaryExecutor.getPayload}',
+                '{!recordId}',
+                function (payload, event) {
+                    parsePayload(payload);
+                },
+                {escape: false}
+            );
+        }
+
+        function parsePayload(payload) {
+            if (!payload.jbp.CAJBP_Account_Locale__c
+                || payload.jbp.CAJBP_Account_Locale__c == '') {
+
+                return ;
+            }
+
+            const locale = payload.jbp.CAJBP_Account_Locale__c.replace(/_/g, '-');
+            const currencyIsoCode = payload.jbp.CurrencyIsoCode;
+            const parser = new DataParser(locale, currencyIsoCode);
+
+            const response = {
+                assets: payload.assets,
+                generatedDate: parser.getConfig().dateTimeFormat.format(payload.generatedDate),
+                generatedBy: payload.generatedBy,
+                jbp: {},
+                objectives: [],
+                activityYear: {},
+                swotStrengths: [],
+                swotWeaknesses: [],
+                swotOpportunities: [],
+                swotThreats: [],
+                scorecard: {},
+                singleRebatePPL: [],
+                singleRebatePercentage: [],
+                multiRebatePPL: [],
+                multiRebatePercentage: [],
+                singleRebateVolumePercentage: [],
+                multiRebateVolumePercentage: [],
+                mixAnnualPPL: [],
+                mixAnnualPercentage: [],
+                mixQuarterlyPPL: [],
+                mixQuarterlyPercentage: [],
+                waysOfWorkingTargets: [],
+                jaf: {}
+            };
+
+            response.jbp = parser.createJbp(payload.jbp);
+            response.swotStrengths = parser.createSwots(payload.swotStrengths);
+            response.swotWeaknesses = parser.createSwots(payload.swotWeaknesses);
+            response.swotOpportunities = parser.createSwots(payload.swotOpportunities);
+            response.swotThreats = parser.createSwots(payload.swotThreats);
+            response.objectives = parser.createObjectives(payload.objectives);
+            response.activityYear = payload.activityYear;
+            response.scorecard = parser.createScorecard(payload.scorecard);
+            response.singleRebatePPL = parser.createRebate(payload.singleRebatePPL);
+            response.singleRebatePercentage =  parser.createRebate(payload.singleRebatePercentage);
+            response.multiRebatePPL = parser.createRebate(payload.multiRebatePPL);
+            response.multiRebatePercentage = parser.createRebate(payload.multiRebatePercentage);
+            response.singleRebateVolumePercentage = parser.createRebate(payload.singleRebateVolumePercentage);
+            response.multiRebateVolumePercentage = parser.createRebate(payload.multiRebateVolumePercentage);
+            response.mixAnnualPPL = parser.createProductMix(payload.mixAnnualPPL);
+            response.mixAnnualPercentage = parser.createProductMix(payload.mixAnnualPercentage);
+            response.mixQuarterlyPPL = parser.createProductMix(payload.mixQuarterlyPPL);
+            response.mixQuarterlyPercentage = parser.createProductMix(payload.mixQuarterlyPercentage);
+            response.waysOfWorkingTargets = parser.createWaysOfWorkingTargets(payload.waysOfWorkingTargets);
+            response.jaf = parser.createJaf(payload.jaf);
+
+            createCache(JSON.stringify(response));
+        }
+
+        function createCache(data) {
+            Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.CAJBP_PDF_SummaryExecutor.generateCache}',
+                '{!recordId}',
+                data,
+                function (cache, event) {
+                    console.log('Generated cache.......');
+                    window.location.href = '/apex/CAJBP_PDF_SummaryViewer?id={!recordId}&cacheId=' + cache;
+                },
+                {escape: false}
+            );
+        }
+
+        window.addEventListener('DOMContentLoaded', (event) => {
+            init();
+        });
+    </script>
+
+    <apex:form >
+        <div>
+            <c:CAJBP_PDF_Error messages="{!messages}"/>
+
+            <div class="spinner slds-spinner_container">
+                <div role="status" class="slds-spinner slds-spinner_medium slds-is-fixed">
+                    <span class="slds-assistive-text">{!$Label.CAJBP_PDF_Loading}</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>
+        </div>
+    </apex:form>
+</apex:page>

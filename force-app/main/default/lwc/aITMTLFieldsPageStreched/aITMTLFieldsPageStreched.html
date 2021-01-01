@@ -1,0 +1,196 @@
+<template>
+    <template if:true={loading}>
+        <lightning-spinner size="small" variant="brand"></lightning-spinner>
+    </template>
+    <lightning-record-edit-form density="compact" object-api-name={tenderLocObject} onload={handleOnLoad}
+        onerror={handleError} onsubmit={handleSubmit} onsuccess={handleSuccess} record-id={recordId}>
+        <lightning-messages></lightning-messages>
+        <div class="slds-box">
+            <lightning-layout>
+                <lightning-layout-item size="1">
+                    <div>
+                        <div class="col slds-size_2-of-2 boldCSS">
+                            {labels.AITM_Level_Of_Interest_Label}
+                        </div>
+                        <div class="col">
+                            <lightning-input-field data-field="AITM_Level_Of_Interest__c"
+                                field-name="AITM_Level_Of_Interest__c" class="inputValueCSS levelOfInterestWidth"
+                                variant="label-hidden">
+                            </lightning-input-field>
+                        </div>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="1" class="slds-m-left_xx-small">
+                    <div>
+                        <div class="col slds-size_2-of-2 slds-m-left_small boldCSS">
+                            {labels.AITM_Bid_Expiry_Date_Label}
+                        </div>
+                        <div class="col">
+                            <lightning-input-field field-name="AITM_Bid_Expiry_Date__c"
+                                class="inputValueCSS levelOfInterestWidth" variant="label-hidden">
+                            </lightning-input-field>
+                        </div>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="5">
+                    <div class="slds-m-left_large">
+                        <div class="col boldCSS">
+                            {labels.AITM_LM_Comments_Label}
+                        </div>
+                        <div class="col">
+                            <lightning-input-field field-name="AITM_LM_Comments__c" class="inputValueCSS"
+                                variant="label-hidden">
+                            </lightning-input-field>
+                        </div>
+                    </div>
+
+                </lightning-layout-item>
+                <lightning-layout-item size="5">
+                    <div class="slds-m-left_large">
+                        <div class="col boldCSS">
+                            {labels.AITM_AM_Comments_Label}
+                        </div>
+                        <div class="col">
+                            <lightning-input-field field-name="AITM_AM_Comments__c" class="inputValueCSS"
+                                variant="label-hidden">
+                            </lightning-input-field>
+                        </div>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-layout class="slds-m-top_small">
+                <lightning-layout-item size="3">
+                    <div class="slds-grid">
+                        <div class="boldCSS">
+                            {labels.AITM_Gross_Profit_USD_Label}
+                        </div>
+                        <lightning-input-field class="slds-m-left_small inputValueCSS marginGrossCSS defaultWidthCSS"
+                            field-name="AITM_Gross_Profit__c" variant="label-hidden">
+                        </lightning-input-field>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="3">
+                    <div class="slds-m-left_large slds-grid">
+                        <div class="boldCSS">
+                            {labels.AITM_Volume_USG_Label}
+                        </div>
+                        <lightning-input-field class="slds-m-left_small inputValueCSS defaultWidthCSS marginVolUSGCSS"
+                            field-name="AITM_Volume_USG__c" variant="label-hidden">
+                        </lightning-input-field>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="3">
+                    <div class="slds-m-left_large slds-grid">
+                        <div class="boldCSS">
+                            {labels.AITM_Working_Cap_USD_Label}
+                        </div>
+                        <lightning-input-field class="slds-m-left_small inputValueCSS"
+                            field-name="AITM_Working_Capital__c" variant="label-hidden">
+                        </lightning-input-field>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="3">
+                    <div class="slds-m-left_large slds-grid">
+                        <div class="boldCSS">
+                            {labels.AITM_ROWC_Label}
+                        </div>
+                        <lightning-input-field class="slds-m-left_small inputValueCSS marginROWCSS"
+                            field-name="AITM_Return_On_WC__c" variant="label-hidden">
+                        </lightning-input-field>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+
+            <lightning-layout class="slds-m-top_small">
+                <lightning-layout-item size="3">
+                    <div class="slds-grid">
+                        <div class="boldCSS">
+                            {labels.AITM_Bidders_Label}
+                        </div>
+                        <lightning-input-field class="slds-m-left_small inputValueCSS marginBiddersCSS defaultWidthCSS"
+                            field-name="AITM_Number_Of_Bidders__c" variant="label-hidden">
+                        </lightning-input-field>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="3">
+                    <div class="slds-m-left_large slds-grid">
+                        <div class="boldCSS">
+                            {labels.AITM_Position_Label}
+                        </div>
+                        <lightning-input-field class="slds-m-left_small inputValueCSS marginPositionCSS defaultWidthCSS"
+                            field-name="AITM_Position__c" variant="label-hidden">
+                        </lightning-input-field>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="3">
+                    <div class="slds-m-left_large slds-grid">
+                        <div class="boldCSS">
+                            {labels.AITM_Estimated_Leading_Diff_Label}
+                        </div>
+                        <lightning-input-field class="slds-m-left_small inputValueCSS" field-name="AITM_Leading_Bid__c"
+                            variant="label-hidden">
+                        </lightning-input-field>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="3">
+                    <div class="slds-m-left_large slds-grid">
+                        <div class="boldCSS">
+                            {labels.AITM_Currency_UOM_Label}
+                        </div>
+                        <lightning-input-field class="slds-m-left_small inputValueCSS currencyUOMCSS"
+                            field-name="AITM_Leading_Bid_Currency__c" variant="label-hidden">
+                        </lightning-input-field>
+                        <lightning-input-field class="slds-m-left_xx-small currencyUOMCSS"
+                            field-name="AITM_Unit_Of_Measure__c" variant="label-hidden">
+                        </lightning-input-field>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+
+            <lightning-layout class="slds-m-top_small">
+                <lightning-layout-item size="3">
+                    <div class="slds-grid">
+                        <div class="boldCSS">
+                            {labels.AITM_LocDefaultSerLev_Label}
+                        </div>
+                        <lightning-input-field class="slds-m-left_small defaultWidthCSS inputValueCSS"
+                            field-name="AITM_Location_Default_Service_Level__c" variant="label-hidden" disabled="true">
+                        </lightning-input-field>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="3">
+                    <div class="slds-m-left_large slds-grid">
+                        <div class="boldCSS">
+                            {labels.AITM_Customer_Service_Level_Label}
+                        </div>
+                        <lightning-input-field class="slds-m-left_small inputValueCSS defaultWidthCSS"
+                            field-name="AITM_Service_Level__c" variant="label-hidden">
+                        </lightning-input-field>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="3">
+                    <div class="slds-m-left_large slds-grid">
+                        <div class="boldCSS">
+                            {labels.AITM_Aircraft_Type_Label}
+                        </div>
+                        <lightning-input-field class="slds-m-left_small inputValueCSS marginAircraftCSS"
+                            field-name="AITM_Aircraft_Type__c" variant="label-hidden">
+                        </lightning-input-field>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="3">
+                    <div class="slds-m-left_large slds-grid">
+                        <div class="boldCSS">
+                            {labels.AITM_Service_Level_Approval_Label}
+                        </div>
+                        <lightning-input-field class="slds-m-left_small inputValueCSS"
+                            field-name="AITM_Approve_the_Service_Level__c" variant="label-hidden" disabled="false">
+                        </lightning-input-field>
+                        <lightning-button variant="brand" class="slds-m-left_large slds-float_right marginSaveCSS"
+                            type="submit" label="Save"></lightning-button>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+    </lightning-record-edit-form>
+</template>

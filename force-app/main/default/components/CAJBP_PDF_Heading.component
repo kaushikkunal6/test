@@ -1,0 +1,22 @@
+<apex:component id="CAJBP_PDF_Heading">
+    <apex:attribute name="title" type="String" description="The title for this heading."/>
+    <apex:attribute name="subTitle" type="String" description="The sub title for this heading."/>
+    <apex:attribute name="imagePath" type="String" description="The image icon for this heading."/>
+    <apex:attribute name="imageStyle" type="String" description="The image styling for this heading." default="width: 40px; height: 40px; position: absolute; margin-left: 20px; margin-top: 10px;"/>
+    <apex:attribute name="style" type="String" description="The style for this heading."/>
+
+    <div class="cajbp-heading-section">
+        <apex:image value="{!URLFOR($Resource.CAJBP_PDF_Assets, imagePath)}" style="{!imageStyle}" rendered="{!NOT(ISBLANK(imagePath))}"/>
+        <div style="{!style}">
+            <div class="{!IF(ISBLANK(title), 'panel-body-single', 'panel-body-multi')}">
+                <apex:variable value="" var="" rendered="{!NOT(ISBLANK(title))}">
+                    <span>{!title}</span><br/>
+                </apex:variable>
+                <apex:variable value="" var="" rendered="{!NOT(ISBLANK(subTitle))}">
+                    <span class="panel-heading">{!subTitle}</span>
+                </apex:variable>
+            </div>
+        </div>
+    </div>
+    <br/>
+</apex:component>

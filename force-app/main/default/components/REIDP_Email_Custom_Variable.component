@@ -1,0 +1,4 @@
+<apex:component controller="REIDP_CommunityEmailController" access="global">
+    <apex:attribute name="varName" type="String" description="Name of variable in Custom Merge Field Map" />
+    {!customMergeFields[varName]}
+</apex:component>

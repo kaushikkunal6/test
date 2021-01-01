@@ -1,0 +1,112 @@
+.boldCSS {
+  font-weight: bold;
+  color: black;
+  text-transform: capitalize;
+  color: var(--lwc-colorTextLabel, rgb(62, 62, 60));
+  font-family: WhitneySSm, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+  font-size: 0.75rem;
+  /*padding-right: var(--lwc-spacingXSmall,0.5rem);*/
+  padding-top: var(--lwc-spacingXxSmall, 0.25rem);
+}
+
+.customBoxCSS {
+  border: 1px #d4d4d4;
+  /*box-shadow: 0 4px 12px 4px rgba(0,0,0,.05);*/
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  -webkit-font-smoothing: antialiased;
+}
+
+.inputValueCSS {
+  font-family: WhitneySSm, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+}
+
+.marginLargeWidthCSS {
+  margin-left: 110px;
+}
+
+.marginSmallWidthCSS {
+  margin-left: 60px;
+}
+
+.marginROWWidthCSS {
+  margin-left: 64px;
+}
+
+.marginMediumWidthCSS {
+  margin-left: 70px;
+}
+
+.marginXMediumWidthCSS {
+  margin-left: 64px;
+}
+
+.marginXXMediumWidthCSS {
+  margin-left: 105px;
+}
+
+.marginXXXMediumWidthCSS {
+  margin-left: 102px;
+}
+
+.marginXSmallWidthCSS {
+  margin-left: 40px;
+}
+
+.marginXXSmallWidthCSS {
+  margin-left: 35px;
+}
+
+.marginXXXSmallWidthCSS {
+  margin-left: 20px;
+}
+
+.widthCSS {
+  width: 4rem;
+}
+
+.marginVolWidthCSS {
+  margin-left: 43px;
+}
+
+.defaultWidthCSS {
+  width: 11rem;
+}
+
+.marginGrossCSS {
+  margin-left: 78px;
+}
+
+.marginVolUSGCSS {
+  margin-left: 62px;
+}
+
+.marginBiddersCSS {
+  margin-left: 138px;
+}
+
+.marginPositionCSS {
+  margin-left: 95px;
+}
+
+.marginROWCSS {
+  margin-left: 35px;
+  width: 11.2rem;
+}
+
+.marginAircraftCSS {
+  margin-left: 68px;
+}
+
+.marginSaveCSS {
+  margin-left: 120px;
+}
+
+.levelOfInterestWidth {
+  width: 5rem;
+}
+
+.currencyUOMCSS {
+  width: 5.5rem;
+}

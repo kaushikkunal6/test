@@ -1,0 +1,44 @@
+.THIS .disabledLink {
+    pointer-events: none;
+    cursor: default;
+}
+
+.THIS .disabledButton {
+    pointer-events: none;
+    cursor: default; 
+    color: rgb(84, 105, 141);
+    background-color: rgb(255, 255, 255);  
+}
+
+.THIS .disabledButton:hover {
+    color: rgb(84, 105, 141);
+    background-color: rgb(255, 255, 255);
+}
+
+.THIS .disabledLink:hover {
+    border: none;
+}
+
+.THIS .filtersSelect {
+    width: 15rem;
+}
+
+.THIS h1.bidsInBy {
+    margin-top: 2rem;
+}
+
+.THIS .searchLocationInput {
+    text-align: center;
+    width: 20rem;
+    margin-left: 2rem;
+}
+
+.THIS .buttonsBlock {
+    display: inline-block;
+    float: right;
+    margin-right: 1rem;
+}
+
+.THIS.uiTabBar .tabHeader {
+    font-size: .875rem;
+}

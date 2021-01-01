@@ -1,0 +1,50 @@
+<apex:component controller="REIDP_CommunityEmailController" access="global">
+
+    <apex:attribute name="buttonText" type="String" description="Button text"/>
+    <apex:attribute name="language" type="String" description="Contact language"/>
+    <apex:attribute name="email" type="String" description="Contact email"/>
+    
+    <tr>
+        <td><table align="center" width="600" cellpadding="0" cellspacing="0" style="background-color:#ffffff; table-layout:fixed; color:#525759; font-size:13px;">
+            <tr>
+                <td width="30" height="23" style="font-size: 23px; line-height: 23px;">&nbsp;</td>
+                <td>&nbsp;</td>
+                <td width="10">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="3" align="center" style="font-size: 23px;">                    
+                    <table border="0" cellspacing="0" cellpadding="0" width="343" height="48">
+                        <tr>
+                            <td width="343" alight="center" bgcolor="#018b46" style="padding: 12px 18px 12px 18px; -webkit-border-radius:3px; border-radius:3px;" align="center">
+                                <a href="{!selfRegisterUrl + '?language=' + language + '&email=' + email}" target="_blank" style="font-size: 16px; font-weight: normal; color: #ffffff; text-decoration: none;">{!buttonText}</a>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td height="10" colspan="3" style="font-size: 10px; line-height: 10px;">&nbsp;</td>
+            </tr>
+            <tr>
+                <td width="30" style="text-align:left">&nbsp;</td>
+                <td width="540" style="vertical-align:top; font-size: 13px; font-weight: normal;color: #525759;"><table align="left" cellpadding="0" cellspacing="0" width="540" style="table-layout:fixed; border-collapse: collapse;">
+                    <tr style="background-color: #ffffff">
+                        <td  width="540px" align="center" style="word-wrap: break-word;font-size:13px; color:#525759">{!$Label.CastrolNotWorking}
+                            <a style="color: #018b46;" href="{!selfRegisterUrl + '?language=' + language + '&email=' + email}">{!$Label.CastrolClickHere}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td height="23" colspan="3" style="font-size: 23px; line-height: 23px;">&nbsp;</td>
+                    </tr>
+                    <tr style="background-color: #ffffff">
+                        <td align="left" style="word-wrap: break-word;font-size:13px; color:#525759">{!$Label.CastrolThanks}</td>
+                    </tr>
+                    </table></td>
+                <td width="30px">&nbsp;</td>
+            </tr>
+            <tr>
+                <td height="23" colspan="3" style="font-size: 23px; line-height: 23px;">&nbsp;</td>
+            </tr>
+            </table></td>
+    </tr>
+</apex:component>

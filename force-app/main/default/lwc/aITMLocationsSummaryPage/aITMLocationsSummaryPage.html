@@ -1,0 +1,311 @@
+<template>
+    <template if:true={loading}>
+        <lightning-spinner size="small" class="spins" variant="brand"></lightning-spinner>
+    </template>
+    <c-a-i-t-m-location-status-change-modal onyes={makeStausChange}></c-a-i-t-m-location-status-change-modal>
+    <template if:true={filteredLocationWithLines}>
+        <template for:each={filteredLocationWithLines} for:item="location">
+            <div class="slds-m-top_small" key={location.Id}>
+                <div class="slds-col slds-col slds-size_1-of-1 absoluteCSS">
+                    <div class="slds-float_left">
+                        <div>
+                            <div class="locationNameCSS">
+                                <strong>{location.AITM_IATA_ICAO__c}</strong>
+                            </div>
+                            <div class="slds-m-bottom_xx-small locationDynamicNameCSS">
+                                <strong>
+                                    {location.Name}
+                                </strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-float_right slds-m-top_large floatStatusCSS">
+                        <div class="slds-grid">
+                            <div style="margin-top:-.5rem;" class="slds-col-5">
+                                <div class="statusCSS">
+                                    <strong>
+                                        Status
+                                    </strong>
+                                </div>
+                            </div>
+                            <div class="slds-col-5 slds-m-left_xx-small toggle-edit-block">
+                                <template if:true={statusOptions}>
+                                    <lightning-combobox class="editedTopCSS cursorCSS customerHeaderCSS"
+                                        name="AITM_Status__c" data-location={location.AITM_Tender_Location__c}
+                                        options={statusOptions} value={location.AITM_Status__c}
+                                        onchange={handleSaveStatus}>
+                                    </lightning-combobox>
+                                </template>
+                            </div>
+                            <div style="margin-top:-.5rem; margin-left:.5rem" class="slds-col-5">
+                                <div class="statusCSS">
+                                    <strong>
+                                        ADS
+                                    </strong>
+                                    <div class="slds-col-5 slds-m-left_large">
+                                        <div class="adsCheckboxCSS">
+                                            <lightning-input type="checkbox" class="master-checkbox paddingRemovalCSS"
+                                                label="" name="ADS" data-value={location.AITM_Tender_Location__c}
+                                                access-key={location.AITM_Tender_Location__c}
+                                                onchange={handleAdsChange}></lightning-input>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-m-top_small slds-col slds-size_1-of-1 relativeCSS">
+                    <c-a-i-t-m-_-t-l-_-highest-volume-summary-page record-id={location.AITM_Tender_Location__c}
+                        last-element={lastElement}>
+                    </c-a-i-t-m-_-t-l-_-highest-volume-summary-page>
+                </div>
+                <table
+                    class="slds-table slds-no-row-hover slds-border_left slds-border_top slds-border_right slds-border_bottom topCSS backgroundTableCSS">
+                    <tr
+                        class="slds-text-title_caps slds-line-height_reset customTableHeaderCSS headColorCSS borderBottomCSS">
+                        <th scope="col" class="customTableHeaderCSS startDateWidthCSS slds-table--header">
+                            <div class="slds-text-align--center" title="START DATE">
+                                START<br />DATE
+                            </div>
+                        </th>
+                        <th scope="col" class="customTableHeaderCSS dateWidthCSS">
+                            <div class="slds-text-align--center" title="END DATE">
+                                END<br />DATE
+                            </div>
+                        </th>
+                        <th scope="col" class="customTableHeaderCSS customerNameClass customerWidthCSS">
+                            <div class="slds-text-align--center" title="CUSTOMER NAME">
+                                CUSTOMER <br /> NAME
+                            </div>
+                        </th>
+                        <th scope="col" class="customTableHeaderCSS priceWidthCSS">
+                            <div class="slds-text-align--center" title="PRICING BASIS">
+                                PRICING <br /> BASIS
+                            </div>
+                        </th>
+                        <th scope="col" class="customTableHeaderCSS priceWidthCSS">
+                            <div class="slds-text-align--center" title="DELIVERY POINT">
+                                DELIVERY <br /> POINT
+                            </div>
+                        </th>
+                        <th scope="col" class="customTableHeaderCSS reqVolCSS">
+                            <div class="slds-text-align--center" title="OFF/REQ.">
+                                REQ. <br /> VOLUME <br /> (USG)
+                            </div>
+                        </th>
+                        <th scope="col" class="customTableHeaderCSS percentWidthCSS">
+                            <div class="slds-text-align--center" title="% OFF">
+                                % <br /> OFF
+                            </div>
+                        </th>
+                        <th scope="col" class="customTableHeaderCSS preRoundCSS">
+                            <div class="slds-text-align--center" title="PREV. ROUND DIFF.">
+                                PREV. <br /> ROUND <br /> DIFF.
+                            </div>
+                        </th>
+                        <th scope="col" class="customTableHeaderCSS currWidthCSS">
+                            <div class="slds-text-align--center" title="CURR.">
+                                CURR.
+                            </div>
+                        </th>
+                        <th scope="col" class="customTableHeaderCSS currWidthCSS">
+                            <div class="slds-text-align--center" title="UOM.">
+                                UOM.
+                            </div>
+                        </th>
+                        <th scope="col" class="customTableHeaderCSS diffWidthCSS">
+                            <div class="slds-text-align--center" title="DIFF.">
+                                DIFF.
+                            </div>
+                        </th>
+                        <th scope="col" class="customTableHeaderCSS currentWidthCSS">
+                            <div class="slds-text-align--left" title="CURRENT VALUE">
+                                CURRENT <br /> VALUE
+                            </div>
+                        </th>
+                    </tr>
+                    <template for:each={location.lines} for:item="line" for:index="index">
+                        <tr key={line.recordId} class="trWidthCSS rowHighlightedCSS pointerCSS customerCellCSS"
+                            data-key={line.recordId}>
+                            <td scope="row" class="slds-text-align--left pointerCSS">
+                                <div class="slds-grid">
+                                    <lightning-input key={line.recordId} style="cursor:pointer;"
+                                        data-line={line.recordId} data-location={location.AITM_Tender_Location__c}
+                                        data-country={location.country} checked={line.selectedChecked}
+                                        value={line.selectedChecked} data-id="checkbox"
+                                        class="master-checkbox pointerCSS slds-m-top_xx-small checkedCSS paddingRemovalCSS"
+                                        onchange={handleMarkedCheckboxes} type="checkbox">
+                                    </lightning-input>
+                                    <lightning-input autocomplete="off" style="cursor:pointer;" key={line.recordId}
+                                        class="slds-m-left_xx-small pointerCSS paddingRemovalCSS" date-style="short"
+                                        value={line.AITM_Start_Date__c} name="AITM_Start_Date__c"
+                                        onchange={handleLineChange} data-line={line.recordId}
+                                        data-unique={line.uniqueLocIdentifier}
+                                        data-location={location.AITM_Tender_Location__c} type="date" year="2-digit"
+                                        format="dd-MMM-yy" variant="label-hidden">
+                                    </lightning-input>
+                                </div>
+                            </td>
+                            <td scope="row" class="slds-text-align--left pointerCSS">
+                                <lightning-input style="cursor:pointer;" autocomplete="off" key={line.recordId}
+                                    date-style="short" class="paddingRemovalCSS" value={line.AITM_End_Date__c}
+                                    name="AITM_End_Date__c" onchange={handleLineChange} data-line={line.recordId}
+                                    data-unique={line.uniqueLocIdentifier}
+                                    data-location={location.AITM_Tender_Location__c} type="date" year="2-digit"
+                                    format="dd-MMM-yy" variant="label-hidden">
+                                </lightning-input>
+                            </td>
+                            <td scope="row" class="slds-text-align--left pointerCSS">
+                                <div class="customerNameCSS customerWidthCSS" style="overflow:hidden;">
+                                    <lightning-formatted-text class="pointerCSS" key={line.recordId} name="CustomerName"
+                                        data-idx={line.recordId} value={line.Customer}
+                                        data-unique={line.uniqueLocIdentifier} onmouseover={handleMouseOverToolTip}
+                                        onmouseout={handleMouseOutToolTip}>
+                                    </lightning-formatted-text>
+                                </div>
+                                <template if:true={line.tooTipForCustomer}>
+                                    <c-a-i-t-m-_-tool-tip tool-tip-content={line.Customer}
+                                        tool-tip-content-second={line.GRN}>
+                                    </c-a-i-t-m-_-tool-tip>
+                                </template>
+                            </td>
+                            <td scope="row" class="slds-text-align--left pointerCSS">
+                                <div class="slds-grid">
+                                    <div class="priceWidthCSS">
+                                        <lightning-formatted-text key={line.recordId} class="pointerCSS overflowCSS"
+                                            name="AITM_Pricing_Basis__c" data-idx={line.recordId}
+                                            data-unique={line.uniqueLocIdentifier} value={line.PricingBasisName}
+                                            onmouseover={handleMouseOverToolTip} onmouseout={handleMouseOutToolTip}
+                                            style="overflow: hidden;">
+                                        </lightning-formatted-text>
+                                    </div>
+                                    <div>
+                                        <template if:false={line.Debrief}>
+                                            <lightning-button-icon size="small" access-key={line.recordId} id={index}
+                                                name={location.country} value={line.recordId}
+                                                data-location={location.Id} variant="bare" onclick={handlePricing}
+                                                icon-name="utility:search"
+                                                class="slds-button_icon-container slds-button_icon-no-border removeBorderCSS">
+                                            </lightning-button-icon>
+                                        </template>
+                                    </div>
+                                </div>
+                                <template if:true={line.tooTipForPricing}>
+                                    <c-a-i-t-m-_-tool-tip tool-tip-content={line.PricingBasisName}>
+                                    </c-a-i-t-m-_-tool-tip>
+                                </template>
+                            </td>
+                            <td scope="row" class="slds-text-align--left pointerCSS">
+                                <div class="slds-grid">
+                                    <div class="priceWidthCSS">
+                                        <lightning-formatted-text class="pointerCSS overflowCSS"
+                                            value={line.DeliveryPointName} name="AITM_Location_Delivery_Point__c"
+                                            data-idx={line.recordId} data-unique={line.uniqueLocIdentifier}
+                                            onmouseover={handleMouseOverToolTip} onmouseout={handleMouseOutToolTip}>
+                                        </lightning-formatted-text>
+                                    </div>
+                                    <div>
+                                        <template if:false={line.Debrief}>
+                                            <lightning-button-icon size="small" access-key={line.recordId} id={index}
+                                                name={location.country} value={line.recordId}
+                                                data-location={location.Id} onclick={handleDelivery} variant="bare"
+                                                icon-name="utility:search"
+                                                class="slds-button_icon-container slds-button_icon-no-border removeBorderCSS">
+                                            </lightning-button-icon>
+                                        </template>
+                                    </div>
+                                </div>
+                                <template if:true={line.tooTipForDelivery}>
+                                    <c-a-i-t-m-_-tool-tip tool-tip-content={line.DeliveryPointName}>
+                                    </c-a-i-t-m-_-tool-tip>
+                                </template>
+                            </td>
+                            <td scope="row" class="slds-text-align--left pointerCSS">
+                                <lightning-formatted-number class="customerNameClass pointerCSS"
+                                    value={line.AITM_Requested_Volume_USG__c} name="AITM_Requested_Volume_USG__c"
+                                    data-idx={line.recordId} data-unique={line.uniqueLocIdentifier}
+                                    onmouseover={handleMouseOverToolTip} onmouseout={handleMouseOutToolTip}>
+                                </lightning-formatted-number>
+                            </td>
+                            <td scope="row" class="slds-text-align--left pointerCSS">
+                                <lightning-input type="number" autocomplete="off" onchange={handleLineChange}
+                                    data-line={line.recordId} data-location={location.AITM_Tender_Location__c}
+                                    access-key={line.recordId} access-id={line.recordId}
+                                    value={line.AITM_Percentage_Volume_Offered__c}
+                                    class="editedTopCSS pointerCSS paddingRemovalCSS" data-idx={line.recordId}
+                                    data-unique={line.uniqueLocIdentifier} name="AITM_Percentage_Volume_Offered__c"
+                                    onmouseover={handleMouseOverToolTip} onmouseout={handleMouseOutToolTip}>
+                                </lightning-input>
+                                <template if:true={line.tooTipForPercentage}>
+                                    <c-a-i-t-m-_-tool-tip tool-tip-content={line.OfferedVolume}></c-a-i-t-m-_-tool-tip>
+                                </template>
+                            </td>
+                            <td scope="row" class="slds-text-align--left pointerCSS">
+                                <div>
+                                    {line.AITM_Previous_Round_Differential__c}
+                                </div>
+                            </td>
+                            <td scope="row" class="slds-text-align--left pointerCSS">
+                                <template if:true={currencyOptions}>
+                                    <lightning-combobox class="editedTopCSS pointerCSS" name="AITM_Currency__c"
+                                        onchange={handleLineChange} data-line={line.recordId}
+                                        data-unique={line.uniqueLocIdentifier}
+                                        data-location={location.AITM_Tender_Location__c} access-key={line.recordId}
+                                        access-id={line.recordId} options={currencyOptions}
+                                        value={line.AITM_Currency__c} style="cursor:pointer;">
+                                    </lightning-combobox>
+                                </template>
+                            </td>
+                            <td scope="row" class="slds-text-align--left pointerCSS">
+                                <template if:true={uomOptions}>
+                                    <lightning-combobox class="editedTopCSS pointerCSS" name="AITM_Unit_Of_Measure__c"
+                                        onchange={handleLineChange} data-line={line.recordId}
+                                        data-unique={line.uniqueLocIdentifier}
+                                        data-location={location.AITM_Tender_Location__c} access-key={index}
+                                        options={uomOptions} value={line.AITM_Unit_Of_Measure__c}
+                                        style="cursor:pointer;">
+                                    </lightning-combobox>
+                                </template>
+                            </td>
+                            <td scope="row" class="slds-text-align--left pointerCSS">
+                                <lightning-input type="number" autocomplete="off" step=".01"
+                                    value={line.AITM_Offered_Differential__c} name="AITM_Offered_Differential__c"
+                                    onchange={handleLineChange} data-line={line.recordId}
+                                    data-unique={line.uniqueLocIdentifier}
+                                    data-location={location.AITM_Tender_Location__c}
+                                    class="editedTopCSS pointerCSS paddingRemovalCSS" style="cursor:pointer;">
+                                </lightning-input>
+                            </td>
+                            <td scope="row" class="slds-text-align--left pointerCSS">
+                                <div class="slds-grid">
+                                    <lightning-input type="number" autocomplete="off" step=".01"
+                                        value={line.AITM_Current_Value__c} name="AITM_Current_Value__c"
+                                        onchange={handleLineChange} data-line={line.recordId}
+                                        data-unique={line.uniqueLocIdentifier}
+                                        data-location={location.AITM_Tender_Location__c}
+                                        class="editedTopCSS pointerCSS paddingRemovalCSS" disabled={line.Debrief}
+                                        style="cursor:pointer;">
+                                    </lightning-input>
+                                    <lightning-button-icon size="x-small" icon-name="utility:jump_to_right"
+                                        data-tl={line.AITM_Tender_Location__c} access-key={line.recordId} id={index}
+                                        name={location.country} onclick={handleRowHighlight} value={line.recordId}
+                                        class="slds-button__icon--right slds-m-left_xx-small slds-m-top_medium">
+                                    </lightning-button-icon>
+                                </div>
+                            </td>
+                        </tr>
+                    </template>
+                </table>
+                <div class="slds-m-top_small"></div>
+            </div>
+        </template>
+    </template>
+    <template if:true={openPricingModal}>
+        <c-a-i-t-m-_-pricing-modal line-id={selSearchedLineId}></c-a-i-t-m-_-pricing-modal>
+    </template>
+    <template if:true={openDeliveryModal}>
+        <c-a-i-t-m-_-delivery-modal line-id={selSearchedLineId} location-id={selSearchedLoc}>
+        </c-a-i-t-m-_-delivery-modal>
+    </template>
+</template>

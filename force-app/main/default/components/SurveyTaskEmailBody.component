@@ -1,0 +1,44 @@
+<apex:component controller="clsSendSurveyTaskAsEmailController" access="global">
+<apex:attribute name="recordId" type="String" description="Id of related task" assignTo="{!taskId}"/>
+
+<br/><td>Account Details : </td><br/>
+<td>----------</td>
+<apex:repeat value="{!accountData}" var="a">
+        <tr>
+        <br/>
+            <td>Account Name : {!a.Name}</td><br/>
+            <td>ERP ID : {!a.Account_ERP_ID__c}</td><br/>     
+            <td>Alias : {!a.Alias__c}</td><br/>
+            <td>Business Unit : {!a.Business_Unit__c}</td><br/>    
+            <td>Type : {!a.Type}</td><br/>    
+            <td>Phone : {!a.Phone}</td><br/>    
+            <td>Address Street : {!a.BillingStreet}</td><br/>    
+            <td>Address City : {!a.BillingCity}</td><br/>    
+            <td>State / Province : {!a.BillingState}</td><br/>    
+            <td>Zip / Postal Code : {!a.BillingPostalCode}</td><br/>
+            <td>Country : {!a.BillingCountry}</td><br/> 
+            <td>Siebel Account Row Id : {!a.Account_Siebel_ID__c}</td><br/>                                      
+        </tr>
+</apex:repeat>
+
+<br/><td>Survey Details : </td><br/>
+<td>----------</td>
+<apex:repeat value="{!surveyData}" var="s">
+        <tr>
+        <br/>            
+            <td>Survey Type : {!s.Record_Type_Name__c}</td><br/>
+            <td>Reference Number : {!s.Reference_Number__c}</td><br/> 
+            <td>Contact Name : {!s.Contact__r.Name}</td><br/> 
+            <td>Siebel contact ID : {!s.Contact__r.Contact_Siebel_Id__c}</td><br/>                                       
+        </tr>
+</apex:repeat>
+
+<br/><td>Survey Questions Rresponses : </td><br/>
+<td>----------</td>
+<apex:repeat value="{!responsesData}" var="r">
+        <tr>
+        <br/>
+            <td>Question : {!r.lcf_Survey_Question__c} Score/Answer : {!r.Response__c}</td><br/>                                      
+        </tr>
+</apex:repeat>      
+</apex:component>

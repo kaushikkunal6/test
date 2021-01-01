@@ -1,0 +1,10 @@
+<!-- * Class Name :AITM_ShowWarnMessageforDelPointAirContacts
+ * Created Date : 15-Dec-2020
+ * Author : Denis Karpenko
+ * Description : This component is created to display error message on the Delivery Point Airport Contacts related list
+ -->
+
+<aura:component implements="forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,force:appHostable" access="global" >
+    <lightning:formattedText value="*IMPORTANT NOTICE*" class="textClass"/> <br/>
+    <lightning:formattedText value = "Please note: Location contacts are mastered in Semarchy – any changes there will reflect here in (however frequent the update is).  Only marketing consent details can be updated here." class="textClassPara" />
+</aura:component>

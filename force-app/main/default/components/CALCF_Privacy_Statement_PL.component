@@ -1,0 +1,107 @@
+<apex:component >
+<style type="text/css">
+
+.contect-container {
+	position:fixed;
+	left: 25%;
+	right: 25%;
+	height: 100%;
+    overflow:hidden;
+}
+.scroll-wraper{
+	width: 100%;
+    height: 90%;
+    overflow-y: scroll;
+    padding-right: 17px; 
+}
+.privacy-header{
+	font-size: 42px;
+	margin-top: 50px;
+}
+.privacy-paragraph-header{
+	font-size: 16px;
+	margin-top: 40px;
+}
+.privacy-paragraph-content{
+	font-size: 14px;
+	margin-top: 20px;
+}
+.bold-text{
+	 font-weight: bold;
+}
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
+
+</style>
+<div class="contect-container">
+	<div class="scroll-wraper">
+	<div class="privacy-header">Oświadczenie o ochronie danych</div>
+	<div class="privacy-paragraph-header bold-text">Informacje dotyczące ankiety i organizacji</div>
+	<div class="privacy-paragraph-content">
+		<p>Firma CASTROL wprowadziła narzędzie Customer Feedback Tool, które inicjuje wysłanie ankiety do obecnych klientów. Ankiety wysyłane są w sytuacji gdy:</p>
+		<p>(1) zamknięta została zarejestrowana reklamacja;</p>
+		<p>(2) zostało złożone zamówienie, a dany klient nie wypełniał ankiety od 30 dni.</p>
+		<p>Te krótkie ankiety zostały utworzone, abyśmy mogli lepiej zrozumieć poziom świadczonych przez nas usług oraz obsługi, jakie zapewniamy naszym klientom.</p>
+		<p>Informacje związane z tą ankietą są gromadzone przez firmę BP International Limited, Chertsey Road, Sunbury on Thames, Middlesex, TW16 7LN, zarejestrowaną w Wielkiej Brytanii.</p>
+		<p>Firma BP powierzyła świadczenie niektórych usług innym zatwierdzonym podmiotom. Są to:</p>
+		<p>Salesforce.com, będący dostawcą aplikacji i magazynu w chmurze; Infosys, świadczący usługę pomocy technicznej i IBM UK Ltd, zapewniający zespół, który opracował system Live Customer Feedback.</p>
+	</div>
+
+	<div class="privacy-paragraph-header bold-text">Gromadzenie, wykorzystywanie i ochrona danych osobowych</div>
+	<div class="privacy-paragraph-content">
+		<p>Uczestnictwo w ankietach jest całkowicie dobrowolne. Pozwalają one firmie BP/Castrol zwiększyć zadowolenie swoich klientów.</p>
+		<p>Zespoły BP Customer Operations mogą mieć dostęp do danych osobowych i przetwarzać je, aby lepiej zrozumieć wysyłane opinie. Kontaktujemy się z klientem w sprawie jego opinii tylko wtedy, gdy wyrazi na to zgodę.</p>
+		<p>Nasz zespół ds. obsługi klienta może się również kontaktować w związku z innymi sprawami dotyczącymi opinii zwrotnej, np. w odniesieniu do usprawnienia obsługi klienta w innych obszarach kontaktowych.</p>
+		<p class="bold-text">Poprzez uczestnictwo i kliknięcie przycisku „wypełnij ankietę” klient decyduje się na przekazanie firmie Castrol pewnych ograniczonych danych osobowych oraz wyraża zgodę na przetwarzanie danych uzyskanych za pośrednictwem ankiety przez firmę Castrol zgodnie z niniejszą Polityką prywatności.</p>
+	</div>
+
+	<div class="privacy-paragraph-header bold-text">Przechowywanie danych</div>
+	<div class="privacy-paragraph-content">
+		<p>Informacje pozyskane za pośrednictwem ankiety będą przechowywane co najmniej przez okres 3 lat od przesłania ankiety (lub dłużej, jeśli lokalne przepisy prawa stanowią inaczej), chyba że klient zażąda usunięcia tych informacji z naszej bazy danych. Można tego dokonać, kontaktując się ze swoim opiekunem klienta w firmie Castrol lub dzwoniąc do krajowego zespołu ds. zapytań. Szczegóły można znaleźć na stronie internetowej pod adresem <a href="http://www.Castrol.com/">http://www.BP/Castrol.com/</a>.</p>
+	</div>
+
+	<div class="privacy-paragraph-header bold-text">Ujawnianie, przekazywanie i bezpieczeństwo danych osobowych</div>
+	<div class="privacy-paragraph-content">
+		<p>Wszelkie dane osobowe i odpowiedzi przesłane za pośrednictwem ankiety będą hostowane przez zatwierdzonego dostawcę usług firmy CASTROL, Salesforce.com</p>
+		<p>Niemcy Salesforce.com Germany GmbH. Erika-Mann-Strasse 31-37 80636 München Main: DE. Ich platforma i oprogramowanie są zlokalizowane w Niemczech. Kopie zapasowe i środowisko odzyskiwania danych znajdują się w Wielkiej Brytanii.</p>
+		<p>Firma Salesforce ma dostęp do danych osobowych zawartych w systemie. Z firmą Salesforce została zawarta umowa, która zawiera standardowe klauzule umowne, dotyczące ochrony danych osobowych, w tym odpowiednie zapisy dotyczące podwykonawstwa.</p>
+		<p>Zawarto również umowę na świadczenie usług, aby zapewnić, że dane są odpowiednio zabezpieczone, a postępowanie z nimi jest zgodne z obowiązującymi przepisami.</p>
+		<p>Wprowadzono odpowiednie techniczne i organizacyjne środki bezpieczeństwa w celu zapobieżenia nieautoryzowanemu dostępowi, nieprawidłowemu użyciu lub ujawnieniu, nieupoważnionej modyfikacji lub bezprawnemu niszczeniu, lub przypadkowej utracie danych osobowych klienta.</p>
+		<p>Jako że firma CASTROL prowadzi globalną działalność, może przesyłać dane klienta do innych krajów niż ten, w którym funkcjonuje placówka gromadząca dane. Wewnętrzne transfery danych osobowych w obrębie grupy BP są regulowane i odbywają się na podstawie zatwierdzonych Wiążących reguł korporacyjnych</p>
+		<p>Zastrzegamy sobie prawo do ujawnienia danych osobowych klienta zgodnie z przepisami prawa lub w sytuacji, gdy uważamy, że ujawnienie takie jest niezbędne do ochrony naszych praw i/lub do spełnienia wymagań postępowania sądowego, nakazu sądowego, zapytania od organu regulacyjnego lub jakiegokolwiek innego procesu prawnego, który został uruchomiony wobec firmy CASTROL. Jeśli firma CASTROL stanie się przedmiotem przejęcia, zbycia lub nabycia, możemy ujawnić dane osobowe klienta nowemu właścicielowi firmy.</p>
+	</div>
+
+	<div class="privacy-paragraph-header bold-text">Pliki „cookie” i informacje gromadzone automatycznie</div>
+	<div class="privacy-paragraph-content">
+		<p>Gdy klient uczestniczy w ankiecie, może otrzymać jeden lub więcej plików cookie, małych plików tekstowych zawierających ciąg znaków alfanumerycznych, które zostaną zapisane na jego komputerze. Aplikacja LCF może wykorzystywać zarówno pliki cookie sesji, jak i trwałe pliki cookie. Pliki cookie sesji znikają zaraz po zamknięciu przeglądarki. Trwały plik cookie pozostaje po zamknięciu przeglądarki i może być używany przez przeglądarkę podczas kolejnych wizyt w serwisie. Trwałe pliki cookie można usunąć. Przejrzyj plik „Pomoc” w przeglądarce internetowej, aby dowiedzieć się, jak zmodyfikować ustawienia plików cookie. Jeśli klient usunie pliki cookie lub zdecyduje się nie akceptować ich, musi mieć na uwadze, że może nie być w stanie korzystać ze wszystkich funkcji serwisu. </p>		
+	</div>
+
+	<div class="privacy-paragraph-header bold-text">Prawa osób fizycznych</div>
+	<div class="privacy-paragraph-content">
+		<p>Jako obywatel UE, w odniesieniu do danych osobowych, które firma CASTROL zbiera i przetwarza w ramach ankiet, klient ma prawo do:</p>
+		<p>•	dostępu do swoich danych osobowych i wglądu w nie;</p>
+		<p>•	poprawienia niekompletnych lub niepoprawnych danych osobowych związanych z klientem;</p>
+		<p>•	żądania usunięcia danych osobowych, jeśli były one przetwarzane w bezprawny sposób;</p>	
+		<p>•	zgłoszenia sprzeciwu (np. do żądania, aby firma CASTROL przestała przetwarzać dane osobowe klienta w celu jego profilowania lub przesyłania materiałów związanych z marketingiem bezpośrednim).</p>
+		<p>Korzystanie z tych praw może podlegać pewnym wyłączeniom.</p>
+		<p>W celu złożenia wniosku o usunięcie danych osobowych lub w razie jakichkolwiek pytań dotyczących ankiet i przetwarzania danych osobowych prosimy o kontakt na adres e-mail: <a href="mailto:customerservices@castrol.com">customerservices@castrol.com</a></p>
+		<p>Klient ma również prawo do</p>
+		<p>•	cofnięcia każdej uprzednio wyrażonej zgody w dowolnym czasie, jeśli firma Castrol wykorzystuje tę zgodę do prawnego uzasadnienia wszelkich czynności związanych z przetwarzaniem danych.</p>
+		<p>•	Jako obywatel UE klient ma prawo do złożenia skargi u krajowego organu nadzorującego ochronę danych. Należy jednak najpierw spróbować skorzystać z mechanizmu rozstrzygania skarg zatwierdzonego przez UE w ramach postanowień Wiążących zasad korporacyjnych, klikając tutaj.</p>
+	</div>
+
+	<div class="privacy-paragraph-header bold-text">Zmiany w polityce prywatności</div>
+	<div class="privacy-paragraph-content">
+		<p>Niniejsza polityka prywatności jest regularnie aktualizowana i firma BP/CASTROL może wprowadzać do niej zmiany. Ostatnio była ona aktualizowana 17 lipca 2017 r.</p>
+	</div>
+
+	<div class="privacy-paragraph-header bold-text">Skontaktuj się z nami:</div>
+	<div class="privacy-paragraph-content">
+		<p>Prywatność: Wszelkie pytania dotyczące postępowania z danymi osobowymi klienta prosimy kierować na adres e-mail: <a href="mailto:customerservices@castrol.com">customerservices@castrol.com</a>.</p>
+	</div>
+
+	</div>
+</div>
+</apex:component>

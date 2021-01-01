@@ -1,0 +1,11 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global">
+    <aura:attribute name="pageHeaderText" type="String" access="private" required="false" default="{! $Label.c.LABP_Login_Page_Header_Text }"/>
+    <div class="header">
+		<div class="roundel">
+			<div class="logo-container">
+                <img class="logo" src="{!$Resource.AITM_LABP_HeaderLogo}"/>
+			</div>
+            <div class="overflow-right"><ui:outputText value="{!v.pageHeaderText}"/></div>
+		</div>
+	</div>
+</aura:component>

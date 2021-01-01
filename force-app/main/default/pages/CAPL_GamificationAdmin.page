@@ -1,0 +1,154 @@
+<apex:page showHeader="true" sidebar="true" controller="CAPL_GamificationAdminClass">
+	
+	<apex:slds /> 
+
+	<style>
+		.disabledLink {
+			pointer-events: none;
+			color: #cccccc !important;
+		}
+
+		.slds-spinner_container {
+			position: fixed !important;
+		}
+
+		.slds-table_bordered {
+			border: 1px solid #d8dde6;
+		}
+		
+		.bodyDiv {
+			background-color: #f2f2f2;
+		}
+
+		.greenOval {
+			width: 8px;
+			height: 8px;
+			background-color: #018b46;
+			display: inline-block;
+    		border-radius: 10px;
+		}
+
+		.yellowOval {
+			width: 8px;
+			height: 8px;
+			background-color: #f5a623;
+			display: inline-block;
+    		border-radius: 10px;
+		}
+
+		.feeds th, .feeds td, .feeds td a {
+			color: #525759;
+		}
+
+		.feeds th .slds-truncate {
+			font-weight: bold;
+		}
+	</style>
+
+	<div class="slds-scope">
+
+    <apex:actionStatus id="status">
+        <apex:facet name="start">
+            <div class="demo-only demo--inverse">
+			  <div class="slds-spinner_container">
+			    <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+			      <span class="slds-assistive-text">Loading</span>
+			      <div class="slds-spinner__dot-a"></div>
+			      <div class="slds-spinner__dot-b"></div>
+			    </div>
+			  </div>
+			</div>
+        </apex:facet>
+    </apex:actionStatus> 
+
+    <apex:form >
+    	<apex:outputPanel id="form">
+		<div class="slds-grid_align-center slds-grid slds-wrap">
+	    	<div class="slds-size_12-of-12">
+				<div class="slds-box_x-small slds-text-align_center slds-m-around_x-small">
+
+					<button type="button" style="float: right; margin-bottom: 1rem;" onclick="downloadUsers();" class="slds-button slds-button_brand">Download community users</button>
+
+					<table class="feeds slds-table slds-table_striped slds-table_bordered slds-table_cell-buffer slds-table_col-bordered">
+					    <thead>
+					        <tr class="slds-text-title_caps">
+					            <th scope="col">
+					                <div class="slds-truncate" title="Name">Name</div>
+					            </th>
+					            <th scope="col">
+					                <div class="slds-truncate" title="Email">Email</div>
+					            </th>
+					            <th scope="col">
+					            	<div class="slds-truncate" title="Last Login Date">Last Login Date</div>
+					            </th>
+					            <th scope="col">
+					                <div class="slds-truncate" title="ReputationPoints">ReputationPoints</div>
+					            </th>
+					            <th scope="col">
+					                <div class="slds-truncate" title="Action">Action</div>
+					            </th>
+					        </tr>
+					    </thead>
+					    <tbody>
+					    	<apex:repeat var="user" value="{!communityUserList}">
+						        <tr>
+						            <td>
+						                <div class="slds-truncate" title="{!user.communityUser.Name}">
+						                	{!user.communityUser.Name}
+						                </div>
+						            </td>
+						            <td>
+						                <div class="slds-truncate" title="{!user.communityUser.Email}">
+						                	<apex:outputText value="{!user.communityUser.Email}" escape="false" />
+						                </div>
+						            </td>
+						            <td>
+						                <div class="slds-truncate">
+						                	<div class="slds-truncate" title="{!user.communityUser.LastLoginDate}">
+							                	<apex:outputText value="{!user.communityUser.LastLoginDate}" escape="false" />
+							                </div>
+						                </div>
+						            </td>
+						            <td class="reputation"> 
+						                <div class="slds-truncate" title="{!user.ReputationPoints}">
+						                	<apex:inputText styleClass="reputationInput slds-input" value="{!user.ReputationPoints}"/> 
+						                </div>
+						            </td>
+						            <td>
+						                <div class="slds-truncate">
+						                	<a href="" class="slds-button slds-button_neutral" onclick="addPoints(this);" id="{!user.communityUser.Id}">
+						                		Change
+						                	</a>
+						                </div>
+						            </td>
+						        </tr>
+					        </apex:repeat>
+					    </tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</apex:outputPanel>
+
+	<apex:actionFunction action="{!downloadUsers}" name="downloadUsers" reRender="" />
+
+	<apex:actionFunction action="{!addReputationPoints}" name="addReputationPoints" reRender="form" status="status" >
+		<apex:param name="userId" value="" />
+		<apex:param name="points" value="" />
+	</apex:actionFunction>
+
+	</apex:form>
+
+	</div>
+
+	<script>
+		function addPoints(el) {
+			var points = el.parentNode.parentNode.parentNode.querySelector(".reputationInput").value;
+
+			console.log(points);
+
+			addReputationPoints(el.id, points);
+		}
+	</script>
+
+</apex:page>

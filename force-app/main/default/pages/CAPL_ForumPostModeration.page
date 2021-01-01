@@ -1,0 +1,281 @@
+<apex:page showHeader="true" sidebar="true" controller="CAPL_ForumPostModerationClass">
+
+	<apex:slds />
+
+	<style>
+		.disabledLink {
+			pointer-events: none;
+			color: #cccccc !important;
+		}
+
+		.slds-spinner_container {
+			position: fixed !important;
+		}
+
+		.slds-table_bordered {
+			border: 1px solid #d8dde6;
+		}
+
+		.bodyDiv {
+			background-color: #f2f2f2;
+		}
+
+		.greenOval {
+			width: 8px;
+			height: 8px;
+			background-color: #018b46;
+			display: inline-block;
+    		border-radius: 10px;
+		}
+
+		.yellowOval {
+			width: 8px;
+			height: 8px;
+			background-color: #f5a623;
+			display: inline-block;
+    		border-radius: 10px;
+		}
+
+		.feeds th, .feeds td, .feeds td a {
+			color: #525759;
+		}
+
+		.feeds th .slds-truncate {
+			font-weight: bold;
+		}
+
+		.slds-scope .slds-truncate {
+		    white-space: normal !important;
+		}
+
+		.labelfilter {
+			font-weight: bold;
+			color: #525759 !important;
+			text-transform: uppercase;
+		}
+	</style>
+
+	<div class="slds-scope">
+
+    <apex:actionStatus id="status">
+        <apex:facet name="start">
+            <div class="demo-only demo--inverse">
+			  <div class="slds-spinner_container">
+			    <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+			      <span class="slds-assistive-text">Loading</span>
+			      <div class="slds-spinner__dot-a"></div>
+			      <div class="slds-spinner__dot-b"></div>
+			    </div>
+			  </div>
+			</div>
+        </apex:facet>
+    </apex:actionStatus>
+
+    <apex:form >
+		<div class="slds-grid_align-center slds-grid slds-wrap">
+			<div class="slds-size_12-of-12">
+				<div class="slds-box_x-small slds-m-around_x-small">
+	                <label title="Filter" class="slds-form-element__label labelfilter">Choose filter: </label>
+	                <apex:selectList styleClass="slds-select slds-input" onchange="filterPosts();"  size="1" value="{!selectedFilter}"
+	                    id="filterId">
+	                    <apex:selectOptions value="{!filterOptions}"/>
+	                </apex:selectList>
+                </div>
+            </div>
+        </div>
+        <div class="slds-grid_align-center slds-grid slds-wrap">
+			<div class="slds-size_12-of-12">
+				<div class="slds-box_x-small slds-m-around_x-small">
+	                <label title="Filter" class="slds-form-element__label labelfilter">Choose filter: </label>
+	                <apex:selectList styleClass="slds-select slds-input" onchange="filterPostsByTime();"  size="1" value="{!selectedTimeFilter}"
+	                    id="filterTimeId">
+	                    <apex:selectOptions value="{!filterTimeOptions}"/>
+	                </apex:selectList>
+                </div>
+            </div>
+        </div>
+    	<apex:outputPanel id="form">
+		<div class="slds-grid_align-center slds-grid slds-wrap">
+	    	<div class="slds-size_12-of-12">
+				<div class="slds-box_x-small slds-text-align_center slds-m-around_x-small">
+					<table class="feeds slds-table slds-table_striped slds-table_bordered slds-table_cell-buffer slds-table_col-bordered">
+					    <thead>
+					        <tr class="slds-text-title_caps">
+					            <th scope="col">
+					                <div class="slds-truncate" title="Title">Title</div>
+					            </th>
+					            <th scope="col">
+					                <div class="slds-truncate" title="Body">Body</div>
+					            </th>
+					            <th scope="col">
+					            	<div class="slds-truncate" title="CommentBody">Comment Body</div>
+					            </th>
+					            <th scope="col">
+					            	<div class="slds-truncate" title="CreatedBy">Created By</div>
+					            </th>
+					            <th scope="col">
+					            	<div class="slds-truncate" title="CreatedDate">Created Date</div>
+					            </th>
+					            <th scope="col">
+					                <div class="slds-truncate" title="Status">Status</div>
+					            </th>
+					            <th scope="col">
+					                <div class="slds-truncate" title="Action">Action</div>
+					            </th>
+					        </tr>
+					    </thead>
+					    <tbody>
+					    	<apex:repeat var="feed" value="{!feedList}">
+						        <tr style="{!IF(feed.isFlagged == true, 'font-weight: bold;', '')}">
+						            <td>
+						                <div class="slds-truncate" title="{!feed.feed.Title}">
+						                	{!feed.feed.Title}
+						                </div>
+						            </td>
+						            <td style="max-width: 25%; width: 25%;">
+						                <div class="slds-truncate" title="{!feed.feed.Body}">
+						                	<apex:outputText value="{!feed.feed.Body}" escape="false" />
+						                </div>
+						            </td>
+						            <td>
+						                <div class="slds-truncate">
+						                	-
+						                </div>
+						            </td>
+						            <td>
+						                <div class="slds-truncate" title="{!feed.feed.CreatedBy.Name}">
+						                	<apex:outputText value="{!feed.feed.CreatedBy.Name}" escape="false" />
+						                </div>
+						            </td>
+						            <td>
+						                <div class="slds-truncate" title="{!feed.feed.CreatedDate}">
+						                	<apex:outputText value="{!feed.feed.CreatedDate}" escape="false" />
+						                </div>
+						            </td>
+						            <td style="width: 9%;">
+						                <div class="slds-truncate" title="{!feed.feed.Status}">
+						                	<div class="{!IF(feed.isFlagged != true, 'greenOval', 'yellowOval')}" />
+						                	&nbsp;
+						                	{!feed.feed.Status}
+						                	<apex:outputPanel rendered="{!feed.isFlagged}">
+						                		- FLAGGED
+						                	</apex:outputPanel>
+						                </div>
+						            </td>
+						            <td  style="width: 15%;">
+						                <div class="slds-truncate">
+						                	<apex:outputPanel >
+							                	<a href="" onclick="removeFlag(this.id);" id="{!feed.feed.Id}" class="{!IF(feed.isFlagged != true, 'disabledLink', '')}">
+							                		Remove flag
+							                	</a>
+							                	|
+						                	</apex:outputPanel>
+						                	<a href="" onclick="deleteFeed(this.id);" id="{!feed.feed.Id}">
+						                		Delete
+						                	</a>
+						                </div>
+						            </td>
+						        </tr>
+						        <apex:outputPanel id="feedCommentPanel" layout="none" rendered="{!feed.feedComments != null}">
+							    	<apex:repeat var="feedComment" value="{!feed.feedComments}">
+							    		<tr style="{!IF(feedComment.isFlagged == true, 'font-weight: bold;', '')}">
+							    			<td>
+								                <div class="slds-truncate">
+								                	-
+								                </div>
+								            </td>
+								            <td>
+								                <div class="slds-truncate">
+								                	-
+								                </div>
+								            </td>
+			            					<td style="max-width: 25%; width: 25%;">
+								                <div class="slds-truncate" title="{!feedComment.comment.CommentBody}">
+								                	<apex:outputText value="{!feedComment.comment.CommentBody}" escape="false" />
+								                </div>
+								            </td>
+								            <td>
+								                <div class="slds-truncate" title="{!feedComment.comment.CreatedBy.Name}">
+								                	<apex:outputText value="{!feedComment.comment.CreatedBy.Name}" escape="false" />
+								                </div>
+								            </td>
+								            <td>
+								                <div class="slds-truncate" title="{!feedComment.comment.CreatedDate}">
+								                	<apex:outputText value="{!feedComment.comment.CreatedDate}" escape="false" />
+								                </div>
+								            </td>
+								            <td style="width: 9%;">
+								            	<div class="slds-truncate" title="{!feedComment.comment.Status}">
+								            		<div class="{!IF(feedComment.isFlagged != true, 'greenOval', 'yellowOval')}" />
+								            		&nbsp;
+								                	{!feedComment.comment.Status}
+								                	<apex:outputPanel rendered="{!feedComment.isFlagged}">
+								                		- FLAGGED
+								                	</apex:outputPanel>
+								                </div>
+								            </td>
+								            <td style="width: 15%;">
+								                <div class="slds-truncate">
+								                	<a href="" onclick="removeFlag(this.id);" id="{!feedComment.comment.Id}" class="{!IF(feedComment.isFlagged != true, 'disabledLink', '')}">
+								                		Remove flag
+								                	</a>
+								                	|
+								                	<a href="" onclick="deleteFeedComment(this.id);" id="{!feedComment.comment.Id}">
+								                		Delete
+								                	</a>
+								                </div>
+								            </td>
+								        </tr>
+							        </apex:repeat>
+								</apex:outputPanel>
+					        </apex:repeat>
+					    </tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+            <apex:outputPanel rendered="{! totalPages > 1}">
+            <div class="slds-grid">
+
+                <div class="slds-size_1-of-3">
+                </div>
+                <div class="slds-size_1-of-3 slds-align_absolute-center">
+                    <div>
+                        {!page + 1} of {!totalPages} pages
+                    </div>
+                </div>
+                <div class="slds-size_1-of-3">
+                    <div class="slds-box_x-small slds-m-around_x-small slds-float_right">
+                        <apex:commandButton styleClass="slds-button slds-button_brand"
+                                            action="{!previousPage}"
+                                            value="Previous Page"
+                                            disabled="{! page == 0}"/>
+                        <apex:commandButton styleClass="slds-button slds-button_brand"
+                                            action="{!nextPage}"
+                                            value="Next Page"
+                                            disabled="{! (page + 1) >= totalPages}"/>
+                    </div>
+                </div>
+            </div>
+            </apex:outputPanel>
+
+	</apex:outputPanel>
+
+		<apex:actionFunction action="{!filterPosts}" name="filterPosts" reRender="form" status="status" />
+		<apex:actionFunction action="{!fetchFeeds}" name="filterPostsByTime" reRender="form" status="status" />
+
+		<apex:actionFunction action="{!removeFlag}" name="removeFlag" reRender="form" status="status">
+	        <apex:param name="feedId" value="" />
+	    </apex:actionFunction>
+	    <apex:actionFunction action="{!deleteFeed}" name="deleteFeed" reRender="form" status="status">
+	        <apex:param name="feedId" value="" />
+	    </apex:actionFunction>
+	    <apex:actionFunction action="{!deleteFeedComment}" name="deleteFeedComment" reRender="feedCommentPanel" status="status">
+	        <apex:param name="feedCommentId" value="" />
+	    </apex:actionFunction>
+
+	</apex:form>
+
+	</div>
+
+</apex:page>

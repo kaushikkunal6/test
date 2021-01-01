@@ -1,0 +1,19 @@
+<template>
+    <lightning-card title="Useful Links" icon-name="custom:custom63">
+        <div class="slds-m-around_medium">
+            <template if:true={sitelinks}>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <template for:each={sitelinks} for:item="link">
+                        <tr key={link.key}><th><b>{link.key}</b></th></tr>
+                        <template for:each={link.value} for:item="value">
+                            <tr key={value.Id}>
+                                <td><a key={value.Id} href={value.AITM_Site_URL__c} target={value.AITM_Target__c}>{value.Name}</a></td>
+                                <td>{value.AITM_Description__c}</td>
+                            </tr>
+                        </template>
+                    </template>
+                </table>
+            </template>
+        </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,57 @@
+<aura:component >
+	<aura:attribute name="tender" type="AITM_Tender__c" />
+	<aura:registerEvent name="updateTenderEvent" type="c:AITM_UpdateTenderEvent" />
+    
+    <div class="slds-page-header noborderbottom slds-m-bottom_small" role="banner">
+		<div class="slds-grid">
+			<div class="slds-col slds-has-flexi-truncate">
+				<div class="slds-grid">
+					<div class="slds-grid slds-type-focus slds-no-space">
+						<h1 class="slds-page-header__title slds-truncate" title="My Items" style="font-family: 'Salesforce Sans',Arial,sans-serif; font-weight: 300; padding-bottom: 5px;">Detailed Summary And Learnings</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="slds-grid slds-wrap slds-p-left_small">
+
+		<div class="slds-size_1-of-1 slds-m-bottom_small detaled-sumamry-and-learnings-input-wrapper">
+			<label class="slds-form-element__label">Tender Process</label>
+			<lightning:inputRichText value="{!v.tender.AITM_Tender_Process__c}" 
+				Arialabel="Tender Process" 
+				Onfocus="{!c.updateTender}"
+			/>
+		</div>
+		<div class="slds-size_1-of-1 slds-m-bottom_small detaled-sumamry-and-learnings-input-wrapper">
+			<label class="slds-form-element__label">Tender Preparation, Strategy &amp; Primary Objective</label>
+			<lightning:inputRichText value="{!v.tender.AITM_Tender_Preparation__c}" 
+				Arialabel="Tender Preparation, Strategy &amp; Primary Objective" 
+				Onfocus="{!c.updateTender}"
+			/>
+		</div>
+		<div class="slds-size_1-of-1 slds-m-bottom_small detaled-sumamry-and-learnings-input-wrapper">
+			<label class="slds-form-element__label">What Went Well?</label>
+			<lightning:inputRichText value="{!v.tender.AITM_What_Went_Well__c}" 
+				Arialabel="What Went Well?" 
+				Onfocus="{!c.updateTender}"
+			/>
+		</div>
+		<div class="slds-size_1-of-1 slds-m-bottom_small detaled-sumamry-and-learnings-input-wrapper">
+			<label class="slds-form-element__label">What Could have gone better?</label>
+			<lightning:inputRichText value="{!v.tender.AITM_What_Could_Have_Gone_Better__c}" 
+				Arialabel="What Could have gone better?" 
+				Onfocus="{!c.updateTender}"
+			/>
+		</div>
+		<div class="slds-size_1-of-1 slds-m-bottom_small detaled-sumamry-and-learnings-input-wrapper">
+			<label class="slds-form-element__label">What have we learnt that we can incorporate into future offers?</label>
+			<lightning:inputRichText value="{!v.tender.AITM_What_Have_We_Learnt__c}" 
+				Arialabel="What have we learnt that we can incorporate into future offers?" 
+				Onfocus="{!c.updateTender}"
+			/>
+		</div>
+
+	</div>
+
+</aura:component>

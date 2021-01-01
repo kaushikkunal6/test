@@ -1,0 +1,28 @@
+<aura:component controller="AITM_DeBriefEmailGeneratorController"
+                implements="force:LightningQuickActionWithoutHeader,force:hasRecordId">
+	<aura:attribute name="emailBody" type="Object" description="Email Body" />
+    <aura:registerEvent name="emailGeneratorSent" type="c:AITM_EmailGeneratorSent"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="c:AITM_EmailGeneratorSent" action="{!c.attach}"/>
+    <aura:attribute name="isOpen" type="Boolean"/>
+    <div aura:id="EmailGeneratorHolder"></div>
+    
+    <aura:if isTrue="{!v.isOpen}">
+        <div class="slds-modal__header">
+            <h2 class="slds-text-heading--medium">Generate Debrief Email-Polish</h2>
+        </div>
+        <div class="slds-modal__content slds-p-around--medium">
+            <div class="slds-checkbox">
+                <lightning:input aura:id="refreshTFCheckbox" type="checkbox" label="Refresh all the Taxes and Fees charges for this tender." checked="false" name="options" id="checkbox-44" value="checkbox-44" />
+                
+            </div>
+            <div class="slds-text" style="margin-top:5px;font-size:10px;">Please note that any customer specific changes made to the taxes and fees within this tender will be over-written by this refresh, please re-adjust them afterwards as required.</div>
+        </div>
+        
+        <div class="slds-modal__footer">
+            <lightning:button variant="neutral" label="Cancel"  onclick="{!c.closeModel}"/>
+            <lightning:button variant="brand" label="Generate"  onclick="{!c.Generate}"/>
+        </div>
+    </aura:if>
+</aura:component>

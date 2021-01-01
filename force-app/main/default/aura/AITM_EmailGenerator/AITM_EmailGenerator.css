@@ -1,0 +1,8 @@
+.THIS .gridItem {
+	width: 8rem;
+    margin-right: 2rem;
+}
+
+.THIS .fixedWidthTextArea textarea {
+    width: 38rem;
+}

@@ -1,0 +1,218 @@
+<apex:page cache="false" sidebar="false" showheader="false" standardStylesheets="false">
+
+<html>
+<style>
+    body {
+        background-color: #fafafa;
+    }
+        @media only screen and (max-width: 480px) {
+            .country {
+                display: none;
+            }
+        }
+
+        h2.title {
+            font-size: 18px;
+        }
+        h3.country {
+            font-size: 14px;
+        }
+
+    .wrapper {
+        margin:0 auto;
+        max-width: 780px;
+    }
+    
+    .survey-description-holder {
+        padding-top: 18px;
+    }
+    
+    .survey-container {
+        margin-top:32px;
+        margin-bottom: 64px;
+    }
+        @media only screen and (max-width: 632px) {
+            .survey-container {
+                margin:0 auto;
+                box-shadow: none;
+            }
+        }
+
+
+    h2 {
+        font-size: 22px;
+    }
+
+    h5 {
+        font-size: 14px;
+        color:#525759;
+        margin-top:8px;
+    }
+    .survey-footer-holder {
+        text-align: center;
+    }
+    .survey-submit-button {
+        float:none;
+        width:100%;
+        max-width: 300px;
+    }
+    .footer {
+        padding: 19px 0 19px 0;
+    }
+    @media screen and (max-width: 780px) {
+        .footer {
+            padding: 19px 10px 19px 10px;
+        }
+    }
+    .copyright-holder {
+        float:left;
+    }
+    .legal-holder {
+        float: right;
+
+    }
+    .copyright-holder, .legal-holder {
+        font-family: CastrolSansCon-Regular, helvetica neue, helvetica, freesans, sans-serif;
+        color: #525759;
+        font-size: 14px;
+    }
+    .copyright-holder a, .legal-holder a {
+        font-size: 14px;
+        color: #525759;
+        text-decoration: none;
+    }
+    @media screen and (max-width: 480px) {
+        .copyright-holder, .legal-holder, .copyright-holder a, .legal-holder a {
+            font-size: 12px;
+        }
+    }
+
+    .thank-you-h2, .expired-h2, .taken-h2 {
+        font-size: 18px;
+    }
+    .thank-you-h2-top, .expired-h2-top, .taken-h2-top {
+        font-size: 20px;
+    }
+
+
+    /* FOOTER FIXED TO BOTTOM */
+
+    html, body {
+      height: 100%;
+    }
+    .page-outer-wrapper {
+      min-height: 100%;
+      margin-bottom: -53px; /* equal to footer height */
+    }
+    .page-outer-wrapper:after {
+      content: "";
+      display: block;
+    }
+    .footer, .page-outer-wrapper:after {
+      height: 53px; 
+    }
+    .footer{
+        border-top: 1px #d9d9d9 solid;
+        box-sizing: border-box;
+    }
+  </style>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+    <meta name="viewport" content="width=device-width"></meta>
+    <title>{!$Label.LCF_Error_Page}</title>
+    <meta name="keywords"></meta>
+    <meta name="description"></meta>
+    <link rel="apple-touch-icon" sizes="180x180" href="http://159.122.235.197:4203/etc/designs/castrol/assets/img/favicons/apple-touch-icon.png"></link>
+    <link rel="icon" type="image/png" href="http://159.122.235.197:4203/etc/designs/castrol/assets/img/favicons/favicon-32x32.png" sizes="32x32"></link>
+    <link rel="icon" type="image/png" href="http://159.122.235.197:4203/etc/designs/castrol/assets/img/favicons/favicon-16x16.png" sizes="16x16"></link>
+    <link rel="manifest" href="http://159.122.235.197:4203/etc/designs/castrol/assets/img/favicons/manifest.json"></link>
+    <link rel="mask-icon" href="http://159.122.235.197:4203/etc/designs/castrol/assets/img/favicons/safari-pinned-tab.svg" color="#5bbad5"></link>
+    <meta name="theme-color" content="#ffffff"></meta>
+
+    <!-- jQuery library -->
+    <script src="{!URLFOR($Resource.ErrorPageResources, 'jquery.min.js')}"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="{!URLFOR($Resource.ErrorPageResources, 'bootstrap.min.js')}"></script>
+    <apex:stylesheet value="{!URLFOR($Resource.ErrorPageResources, 'clientlib-all.css')}"/> 
+    <apex:stylesheet value="{!URLFOR($Resource.CastrolFonts, 'fonts.css')}"/>  
+    <apex:stylesheet value="{!URLFOR($Resource.LCFResources, 'css/header.css')}"/>    
+    <apex:stylesheet value="{!URLFOR($Resource.LCFResources, 'css/styles.css')}"/>
+
+    <script type="text/javascript" src="chrome-extension://aadgmnobpdmgmigaicncghmmoeflnamj/ng-inspector.js"></script></head>
+    <body class="page" data-pinterest-extension-installed="cr2.0.5">
+        <div></div>
+
+        <div class="page__main page-outer-wrapper">
+
+            <div class="clearfix">
+                <div class="header">
+                    <div class="overflow-left"></div>
+                    <div class="header-middle">
+                        <div class="roundel"></div>
+                        <div class="logo-container">
+                            <div class="logo"></div>
+                            <div class="separator"></div>
+                            <h2 class="title"><apex:outputText value="{!$Label.LCF_Error_Page}"/></h2>
+                        </div>
+                        <div class="globe-container">
+                            <!-- <h3 class="country"><apex:outputText value="{!IF(AND(language='EN', countryValueEn !=''),countryValueEn,countryValue)}"/></h3>
+                            <apex:outputPanel rendered="{!refTemplate!=''}" >
+                            <apex:outputLink styleClass="languageCode selected">{!language}
+                        </apex:outputLink>
+                        <apex:outputLink styleClass="languageCode" value="/apex/Survey">
+                    </apex:outputLink>
+                </apex:outputPanel>
+                <div class="globe"></div> -->
+            </div>
+        </div>
+        <div class="overflow-right"></div>
+    </div>
+</div>
+
+                <!-- <header class="page__header">
+                    <div class="header">
+                        <div class="overflow-right"></div>
+                        <div class="roundel">
+                            <div class="logo-container">
+                                <div class="logo"></div>
+                                <h2 class="title">Error page</h2>
+                            </div>
+                        </div>
+                    </div>
+                </header> -->
+                <div class="container ordering-container">
+                    <div class="page__par">
+                        <div class="errorCard"><div class="error-card card-item clearfix">
+                            <div class="error-thumbnail hidden-xs">
+                                <img src="{!URLFOR($Resource.ErrorPageResources, 'error-illustration.png')}" alt=""></img>
+                            </div>
+                            <div class="error-content">
+                                <div class="error-message js-error-message"><h2>{!$Label.LCF_Oops}</h2>
+                                    <p>{!$Label.LCF_Error_text}</p>
+                                    <p class="error-code">
+                                        {!$Label.LCF_Error_Code}: 401
+                                    </p>
+                                </div>
+                                <!-- <div class="useful-links">Let's get you back on your way:</div> -->
+                                <div class="button-wrapper">
+                                    <!-- <a href="http://159.122.235.197:4203/content/castrol/en/castrol-toolbox.html"><button class="btn toolbox-button col-sm-6 col-md-6">Retrun to Castrol.com</button></a> -->
+                                    <a href="http://www.castrol.com/"><button class="btn back-button col-sm-6 col-md-6">{!$Label.LCF_Return_Home}</button></a>
+                                </div>
+                            </div>
+                        </div></div>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+            <script type="text/javascript" src="{!URLFOR($Resource.ErrorPageResources, 'csrf.js')}"></script>
+            <script type="text/javascript" src="{!URLFOR($Resource.ErrorPageResources, 'clientlib-all.js')}"></script>
+
+            <div class="responsive-bootstrap-toolkit"><div class="device-xs visible-xs visible-xs-block"></div><div class="device-sm visible-sm visible-sm-block"></div><div class="device-md visible-md visible-md-block"></div><div class="device-lg visible-lg visible-lg-block"></div></div></body></html>
+            <footer class="footer wrapper clearfix">
+                <div class="copyright-holder">&copy; Castrol Limited 2009-{!year(today())}</div>
+                <div class="legal-holder"><a href="{!$Label.LCF_Legal_Notice_URL}" target="_blank">{!$Label.LCF_Legal_Notice}</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="{!$Label.LCF_Privacy_Policy_URL}" target="_blank">{!$Label.LCF_Privacy_Policy}</a></div>
+          </footer>
+</apex:page>

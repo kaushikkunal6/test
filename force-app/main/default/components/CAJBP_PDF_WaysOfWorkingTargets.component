@@ -1,0 +1,31 @@
+<apex:component id="CAJBP_PDF_WaysOfWorkingTargets">
+    <apex:attribute name="targets" description="The context targets to render." type="Object[]"/>
+
+    <apex:variable var="" value="" rendered="{!AND(NOT(ISBLANK(targets)), targets.size > 0)}">
+        <div class="cajbp-table-break cajbp-rebates">
+            <c:CAJBP_PDF_Section title="{!UPPER($ObjectType.CAJBP_Ways_of_Working_Target__c.labelPlural)}"/>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th style="background-color: #3F87A6; text-align: left; color: #FFFFFF; text-align: center;">{!$ObjectType.CAJBP_Ways_of_Working_Target__c.fields.Name.Label}</th>
+                        <th style="background-color: #3F87A6; text-align: left; color: #FFFFFF; text-align: center;">{!$ObjectType.CAJBP_Ways_of_Working_Target__c.fields.CAJBP_Status__c.Label}</th>
+                        <th style="background-color: #3F87A6; text-align: left; color: #FFFFFF; text-align: center;">{!$ObjectType.CAJBP_Ways_of_Working_Target__c.fields.CAJBP_Due_Date__c.Label}</th>
+                        <th style="background-color: #3F87A6; text-align: left; color: #FFFFFF; text-align: center;">{!$ObjectType.CAJBP_Ways_of_Working_Target__c.fields.CAJBP_Rebate__c.Label}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <apex:repeat value="{!targets}" var="target">
+                        <tr>
+                            <td><span><apex:outputText value="{!target['title']}"/></span></td>
+                            <td><span><apex:outputField value="{!target['record']['CAJBP_Status__c']}"/></span></td>
+                            <td><span><apex:outputText value="{!target['dueDate']}"/></span></td>
+                            <td><span><apex:outputText value="{!target['rebatePercentage']}"/></span></td>
+                        </tr>
+                    </apex:repeat>
+                </tbody>
+            </table>
+            <br/>
+        </div>
+    </apex:variable>
+</apex:component>

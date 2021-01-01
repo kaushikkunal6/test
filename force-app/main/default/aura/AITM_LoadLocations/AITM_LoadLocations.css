@@ -1,0 +1,21 @@
+.THIS .width-100 {
+    width: 100%;
+}
+
+.THIS .height-200 {
+    height: 200px;
+}
+
+.THIS .upload-content {
+    width: 50%;
+    margin-left: 30%;
+}
+
+.THIS .flex-centered {
+    display: flex;
+    align-items: center; 
+}
+
+.THIS .padding-2 {
+    padding: 2px;
+}

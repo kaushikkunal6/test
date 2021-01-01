@@ -1,0 +1,37 @@
+<!--
+ * @author Ragim Ragimov
+ * @company Bluewolf, an IBM Company
+ * @date 7/2017
+ *
+ * A custom branded Phone Verification Visualforce page for BP Community
+-->
+
+<apex:page showHeader="false"
+           standardStylesheets="false"
+           sidebar="false"
+           applyBodyTag="false"
+           controller="REIDP_PhoneVerificationController"
+           title="Verification Code"
+           id="pVerifTwo">
+    <apex:composition template="{!$Site.Template}">
+        <apex:define name="body">  
+            <apex:form id="theForm" styleClass="slds-scope slds-align_absolute-center form">
+                <div class="slds-m-bottom_small slds-text-align_center" style="font-size:22px; font-weight=bold; ">
+                    Verification Code
+                </div>
+                
+                <div class="slds-m-bottom_small slds-text-align_center" style="font-size:14px;">
+                    Now you should receive an SMS with a code to the number you mentioned. Please insert the code below and click confirm.
+                </div>
+                
+                <apex:messages styleClass="error-message slds-m-bottom_medium"/>
+                
+                <div id="phoneContainer" class="input-container">
+                    <apex:inputText value="{!code}" id="vpsw" styleClass="slds-input slds-input_bare" required="false" html-placeholder="Code" onkeyup=""/>
+                </div>
+                <apex:commandButton id="cpwbtn" styleClass="button slds-m-top_small" action="{!openConfirmedPage}" value="Confirm"/>
+                <apex:commandLink id="cnlbtn" styleClass="slds-align_absolute-center slds-m-top_x-small" action="{!cancel}" value="{!$Label.BPCancelLabel}"/>
+            </apex:form>
+        </apex:define>
+    </apex:composition>
+</apex:page>

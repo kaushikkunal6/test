@@ -1,0 +1,10 @@
+<!--
+* @author Ragim Ragimov
+* @company Bluewolf, an IBM Company
+* @date 7/2017
+*
+* Centered BP Logo
+-->
+<apex:component >
+    <img class="slds-align_absolute-center" style="height: 200px;margin-bottom: 20px;" src="{!$Resource.REIDP_Logo_MID}"/>
+</apex:component>

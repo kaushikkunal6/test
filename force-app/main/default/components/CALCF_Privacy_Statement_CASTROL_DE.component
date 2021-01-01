@@ -1,0 +1,83 @@
+<apex:component >
+<style type="text/css">
+
+.contect-container {
+	position:fixed;
+	left: 25%;
+	right: 25%;
+	height: 100%;
+    overflow:hidden;
+}
+.scroll-wraper{
+	width: 100%;
+    height: 90%;
+    overflow-y: scroll;
+    padding-right: 17px; 
+}
+.privacy-header{
+	font-size: 42px;
+	margin-top: 50px;
+}
+.privacy-paragraph-header{
+	font-size: 16px;
+	margin-top: 40px;
+}
+.privacy-paragraph-content{
+	font-size: 14px;
+	margin-top: 20px;
+}
+.bold-text{
+	 font-weight: bold;
+}
+
+.aral-color {
+	color: #0064d0
+}
+
+.castrol-color {
+	color: #018b46
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
+
+</style>
+<div class="contect-container">
+	<div class="scroll-wraper">
+	<div class="privacy-header">Datenschutzerklärung</div>
+	<div class="privacy-paragraph-header bold-text">Informationen über die Kundenbefragung und beteiligte Unternehmen</div>
+	<div class="privacy-paragraph-content">
+		<p>BP bzw. Castrol legt großen Wert auf die Zufriedenheit ihrer Kunden und ist deshalb an Ihrem Feedback interessiert, nachdem</p>
+		<p>a) ein Beschwerdevorgang geschlossen wurde.</p>
+		<p>b) eine Bestellung abgewickelt wurde und Sie innerhalb der letzten 30 Tage nicht bereits um Feedback gebeten wurden.</p>
+		<p>Verantwortlich für diese Umfrage ist:</p>
+		<p class="castrol-color">BP Europa SE, Geschäftsbereich Schmierstoffe</p>
+		<p class="castrol-color">Überseeallee 1, 20457 Hamburg</p>
+	</div>
+
+	<div class="privacy-paragraph-header bold-text">Erfassung und Nutzung personenbezogener Daten</div>
+	<div class="privacy-paragraph-content">
+		<p>Ihre Teilnahme an diesen Befragungen ist selbstverständlich freiwillig.</p>
+		<p>Ihr Feedback wird in unserem Kundenmanagementsystem gespeichert und ausgewertet, so dass wir unseren Service und die Zufriedenheit unserer Kunden kontinuierlich verbessern können.</p>
+		<p>Hinsichtlich Ihres gegebenen Feedbacks kontaktieren wir Sie nur, wenn Sie dazu ausdrücklich Ihre Zustimmung gegeben haben.</p>
+		<p>Zugriff auf Ihre Daten erhalten nur unsere authorisierten Kundenbetreuer sowie das mit der Auswertung beauftragte Dienstleistungsunternehmen, soweit es für die Analyse des Feedbacks notwendig ist.</p>
+		<p>Wir behalten uns das Recht vor, Ihre personenbezogenen Daten im Rahmen der gesetzlichen Vorschriften weiterzugeben oder wenn wir der Meinung sind, dass durch die Weitergabe unsere Rechte geschützt werden und/oder durch die Vorgabe eines Gerichtsverfahrens, einer gerichtlichen Anordnung, einer Aufforderung durch eine Regulierungsbehörde oder durch ein anderes rechtliches Verfahren, dem BP unterliegt, erfüllt werden.</p>
+	</div>
+
+	<div class="privacy-paragraph-header bold-text">Datentransfer und -sicherheit</div>
+	<div class="privacy-paragraph-content">
+		<p>Ihr Feedback wird in Deutschland auf Servern unseres Dienstleisters gespeichert und wir haben vertraglich sichergestellt, dass Ihre Daten dort durch angemessene Sicherheitsmaßnahmen geschützt und nur wie von uns vorgegeben genutzt werden.</p>
+		<p>Ihr Feedback wird von uns drei Jahre lang aufbewahrt, es sei denn, Sie bitten uns bereits zu einem vorherigen Zeitpunkt ausdrücklich um die Löschung dieser Informationen.</p>
+	</div>
+
+	<div class="privacy-paragraph-header bold-text">Ihre Datenschutz-Rechte in der EU</div>
+	<div class="privacy-paragraph-content">
+		<p>Bezüglich Ihrer eigenen Daten, die wir mit Ihrem Feedback erfassen, haben Sie ein Recht auf Zugriff und Korrektur sowie Löschung, sofern die Verarbeitung unrechtmäßig ist. Darüber hinaus haben Sie innerhalb der EU ein generelles Recht, Datenschutz-Beschwerden direkt bei einer Datenschutz-Behörde einzureichen.</p>
+		<p>Für datenschutz-relevante Fragen stehen wir jederzeit zur Verfügung. Bitte richten Sie diese per email an <a class="castrol-color" href="mailto:customerservices@castrol.com">customerservices@castrol.com</a>.</p>
+	</div>
+
+	</div>
+</div>
+</apex:component>

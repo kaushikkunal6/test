@@ -1,0 +1,16 @@
+.THIS .detaled-sumamry-and-learnings-input-wrapper label{
+	display: inline-block;
+	width: 20%;
+	margin-left: 1%;
+}
+.THIS .detaled-sumamry-and-learnings-input-wrapper input{
+	display: inline-block;
+	width: 79%;
+}
+@media only screen and (max-width: 700px) {
+	.THIS .detaled-sumamry-and-learnings-input-wrapper label,
+	.THIS .detaled-sumamry-and-learnings-input-wrapper input{
+		width: 100%;
+		margin-left: 0;
+	}
+}

@@ -1,0 +1,8 @@
+<apex:component access="global" controller="CDM_BulkUploadEformTemplate"  >
+
+<apex:attribute type="String" name="recordId" description="Record ID" assignTo="{!recId}"/>
+
+<apex:outputText value="{!emailBody}" escape="false"/> 
+ 
+ 
+ </apex:component>

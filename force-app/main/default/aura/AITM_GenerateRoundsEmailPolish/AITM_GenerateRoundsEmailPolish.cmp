@@ -1,0 +1,48 @@
+<aura:component
+  controller="AITM_GenerateRoundsEmailPolishController"
+  implements="force:LightningQuickActionWithoutHeader,force:hasRecordId"
+  access="global"
+  description="Component used to send feedback email for polish locations."
+>
+  <aura:attribute name="emailBody" type="Object" description="Email Body" />
+  <aura:registerEvent
+    name="emailGeneratorSent"
+    type="c:AITM_EmailGeneratorSent"
+  />
+  <aura:registerEvent
+    name="forceChangeStage"
+    type="c:AITM_ForceChangeStageEvent"
+  />
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:handler event="c:AITM_EmailGeneratorSent" action="{!c.attach}" />
+  <aura:attribute name="isOpen" type="Boolean" default="false" />
+  <!--Shweta-->
+  <div aura:id="EmailGeneratorHolder"></div>
+  <aura:if isTrue="{!v.isOpen}">
+    <div class="slds-modal__header">
+      <h2 class="slds-text-heading--medium">Enter Bids In By Date</h2>
+    </div>
+    <br />
+    <div class="slds-text" style="margin-top:5px;font-size:10px;"
+      >Please specify the Bids in by date for the next round of this tender</div
+    >
+    <br />
+    <div class="slds-text" style="margin-top:5px;font-size:18px;color:red;"
+      >*<span style="color:black;"> Bids in by</span></div
+    >
+    <ui:inputDate
+      aura:id="NewBidsDateInput"
+      displayDatePicker="true"
+      format="dd/MM/yyyy"
+    />
+    <br />
+    <div class="slds-modal__footer">
+      <lightning:button
+        variant="neutral"
+        label="Cancel"
+        onclick="{!c.closeModel}"
+      />
+      <lightning:button variant="neutral" label="Confirm" onclick="{!c.save}" />
+    </div>
+  </aura:if>
+</aura:component>

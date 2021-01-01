@@ -1,0 +1,71 @@
+<apex:component controller="REIDP_CommunityEmailController" access="global">
+    <apex:attribute name="text" type="String" description="Line of text above the button" />
+    <apex:attribute name="buttonText" type="String" description="Button text"/>
+    <apex:attribute name="buttonAddBrandName" type="Boolean" default="false" description="if true adds brand name to end button text"/>
+    <apex:attribute name="brandItalicLower" default="false" type="Boolean" description="Should the branding text be lowercase italic"/>
+    <apex:attribute name="url" type="String" description="Button link"/>
+    <apex:attribute name="urlIsAbsolute" type="Boolean" default="true" description="Indicates wheter provided URL is absolute or it requires Community Base URL to be prepended"/>
+    <apex:attribute name="colorBtn" type="String" description="Button color hex code"/>
+    <tr>
+        <td><table align="center" width="600" cellpadding="0" cellspacing="0" style="background-color:white; table-layout:fixed; color:#808080; font-size:13px;">
+            <tr>
+                <td width="30" height="23" style="font-size: 23px; line-height: 23px;">&nbsp;</td>
+                <td>&nbsp;</td>
+                <td width="10">&nbsp;</td>
+            </tr>
+            <apex:outputPanel layout="none"  rendered="{!text != '' || NOT(ISNULL(text))}">
+                <tr>
+                    <td width="30" style="text-align:left">&nbsp;</td>
+                    <td width="540" style="vertical-align:top; font-size: 13px; font-weight: normal;font-family: 'SFUIDisplay', 'SegoeUI', 'Arial';color: #787878;"><table align="left" cellpadding="0" cellspacing="0" width="540" style="table-layout:fixed; border-collapse: collapse;">
+                        <tr style="background-color:white">
+                            <td style="word-wrap: break-word; font-size:15px; color:#000000">{!text}</td>
+                        </tr>
+                        </table></td>
+                    <td width="30px">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td height="23" colspan="3" style="font-size: 23px; line-height: 23px;">&nbsp;</td>
+                </tr>
+            </apex:outputPanel>
+            <tr>
+                <td colspan="3" align="center" style="font-size: 23px;">                    
+                    <table border="0" cellspacing="0" cellpadding="0" width="343" height="48">
+                        <tr>
+                            <td width="343" alight="center" bgcolor="{!colorBtn}" style="padding: 12px 18px 12px 18px; -webkit-border-radius:3px; border-radius:3px;" align="center">
+                                <a href="{!IF(urlIsAbsolute, url, communityBaseUrl + url)}" target="_blank" style="font-size: 16px; font-family: 'SFUIDisplay', 'SegoeUI', 'Arial'; font-weight: normal; color: #ffffff; text-decoration: none;">
+                                    {!buttonText}
+                                    <span style="display:{!IF(buttonAddBrandName, '', 'none')}" class="ampm-logo">
+                                        {!communityName}
+                                    </span>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td height="10" colspan="3" style="font-size: 10px; line-height: 10px;">&nbsp;</td>
+            </tr>
+            <tr>
+                <td width="30" style="text-align:left">&nbsp;</td>
+                <td width="540" style="vertical-align:top; font-size: 13px; font-weight: normal;font-family: 'SFUIDisplay', 'SegoeUI', 'Arial';color: #787878;"><table align="left" cellpadding="0" cellspacing="0" width="540" style="table-layout:fixed; border-collapse: collapse;">
+                    <tr style="background-color:white">
+                        <td  width="540px" align="center" style="word-wrap: break-word;font-size:13px; color:#000000">{!$Label.BPEmailNotWorking}
+                            <a style="color: #009900" href="{!IF(urlIsAbsolute, url, communityBaseUrl + url)}">{!$Label.BPEmailClickHere}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td height="23" colspan="3" style="font-size: 23px; line-height: 23px;">&nbsp;</td>
+                    </tr>
+                    <tr style="background-color:white">
+                        <td align="left" style="word-wrap: break-word;font-size:13px; color:#787878; display:{!IF(communityName == 'ampm', '', 'none')};">{!$Label.BPEmailThanks1} <span class="{!IF(brandItalicLower, 'ampm-logo', '')}">{! communityName }</span> {!$Label.BPEmailThanks2}</td>
+                    </tr>
+                    </table></td>
+                <td width="30px">&nbsp;</td>
+            </tr>
+            <tr>
+                <td height="23" colspan="3" style="font-size: 23px; line-height: 23px;">&nbsp;</td>
+            </tr>
+            </table></td>
+    </tr>
+</apex:component>

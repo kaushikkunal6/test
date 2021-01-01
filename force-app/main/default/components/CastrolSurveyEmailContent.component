@@ -1,0 +1,125 @@
+<apex:component access="global" language="{!lang}" >
+    <apex:attribute name="lang" type="String" description="Language string"/>
+    <apex:attribute name="url" type="String" description="Survey URL"/>
+    <apex:attribute name="contactName" type="String" description="Contact Name"/>
+    <apex:attribute name="CaseNumber" type="String" description="Case Number"/>
+    <apex:attribute name="CreatedDate" type="Date" description="Touchpoint Created Date"/>
+    <apex:attribute name="recordType" type="String" description="Survey record type"/>
+    <apex:attribute name="invoiceNumber" type="String" description="Case invoice number text"/>
+    <apex:attribute name="orderNumber" type="String" description="Case order number text"/>
+    <apex:attribute name="deliveryDetails" type="String" description="Invoice/Order number"/>
+    <apex:attribute name="bgColor" type="String" description="Background color"/>
+    <apex:attribute name="brand" type="String" description="Branding aral/castrol/bp"/>
+    <html xmlns="http://www.w3.org/1999/xhtml" style="margin: 0; padding: 0;">
+    <body style="margin: 0; padding: 0;">
+        <tr>
+            <td align="center" valign="top">
+                <table border="0" cellpadding="20" cellspacing="0" width="100%" id="emailBody"
+                       style="background-color: {!bgColor}">
+                    <tr>
+                        <td align="left" valign="top">
+
+                            <p style="margin-bottom: 5px; margin-top: 0px;"> <b> {!CaseNumber}</b></p>
+
+                            <p style="margin-bottom: 5px; margin-top: 0px;">
+                                <apex:outputText value="{0, date, dd'.'MM'.'yyyy}">
+                                    <apex:param value="{!CreatedDate}" />
+                                </apex:outputText>
+                            </p>
+
+                            <apex:outputPanel rendered="{! invoiceNumber != '' }">
+                                <span>{!$Label.LCF_Invoice_Number}: {!deliveryDetails}</span>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{! orderNumber != '' }">
+                                <span>{!$Label.LCF_Order_Number}: {!deliveryDetails}</span>
+                            </apex:outputPanel>
+
+                            <p style="margin-bottom: 5px; margin-top: 0px;">&nbsp;</p>
+
+                            <p style="margin-bottom: 10px; margin-top: 0px;">{!$Label.LCF_Hello},</p>
+
+                            <apex:outputPanel rendered="{!brand = 'bp'}">
+                                <p style="margin-bottom: 10px; margin-top: 10px;">
+                                	{!$Label.LCF_Survey_Email_1_BP}
+                            	</p>
+                            </apex:outputPanel>
+
+                            <apex:outputPanel rendered="{!brand = 'aral'}">
+                                <p style="margin-bottom: 10px; margin-top: 10px;">
+                                	{!$Label.LCF_Survey_Email_1_Aral}
+                            	</p>
+                            </apex:outputPanel>
+
+                            <apex:outputPanel rendered="{!brand = 'bpcastrol'}">
+                                <p style="margin-bottom: 10px; margin-top: 10px;">
+                                	{!$Label.LCF_Survey_Email_1_BPCastrol}
+                            	</p>
+                            </apex:outputPanel>
+                            
+                            <apex:outputPanel rendered="{!brand = 'castrol'}">
+                                <p style="margin-bottom: 10px; margin-top: 10px;">
+                                	{!$Label.LCF_Survey_Email_1}
+                            	</p>
+                            </apex:outputPanel>
+
+
+                            <apex:outputPanel rendered="{!recordType = 'Orders'}">
+                                <p style="margin-bottom: 10px; margin-top: 10px;">{!$Label.LCF_Survey_Email_2_Order}</p>
+                            </apex:outputPanel>
+
+                            <apex:outputPanel rendered="{!recordType = 'Complaints'}">
+                                <p style="margin-bottom: 10px; margin-top: 10px;">{!$Label.LCF_Survey_Email_2_Complaint}</p>
+                            </apex:outputPanel>
+
+                            <apex:outputPanel rendered="{!(recordType = 'General Enquiries' || recordType = 'Technical Enquiries') && brand == 'bpcastrol'}">
+                                <p style="margin-bottom: 10px; margin-top: 10px;">{!$Label.LCF_Survey_Email_2_Enquiries_BPCastrol}</p>
+                            </apex:outputPanel>
+                            
+                            <apex:outputPanel rendered="{!(recordType = 'General Enquiries' || recordType = 'Technical Enquiries') && brand != 'bpcastrol'}">
+                                <p style="margin-bottom: 10px; margin-top: 10px;">{!$Label.LCF_Survey_Email_2_Enquiries}</p>
+                            </apex:outputPanel>
+
+                            <apex:outputPanel rendered="{!recordType = 'Quarterly Business Review'}">
+                                <p style="margin-bottom: 10px; margin-top: 10px;">{!$Label.LCF_Survey_Email_2_QBR}
+                                    <b>
+                                        <apex:outputText value="{0, date, dd'.'MM'.'yyyy}">
+                                            <apex:param value="{!CreatedDate}" />
+                                        </apex:outputText>
+                                    </b>
+                                </p>
+                            </apex:outputPanel>
+
+                            <apex:outputPanel rendered="{!recordType != 'Quarterly Business Review'}">
+                                <p style="margin-bottom: 10px; margin-top: 10px;">{!$Label.LCF_Survey_Email_3}</p>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!recordType == 'Quarterly Business Review'}">
+                                <p style="margin-bottom: 10px; margin-top: 10px;">{!$Label.LCF_Survey_Email_3_QBR}</p>
+                            </apex:outputPanel>
+
+                            <a id="take-survey-style" style="margin: 20px 0; padding: 10px 15px; display:inline-block;
+                                                             min-width: 160px; height: 40px; line-height: 40px; border-radius: 2px;
+                                                             background-color: {!IF(brand == 'aral', '#3363cc', IF(brand == 'bp', '#009900', '#018b46'))}; text-align:center; vertical-align:middle;
+                                                             text-decoration:none; font-size: 17px; color: #ffffff; cursor: pointer;" href="{!url}">
+                                {!$Label.LCF_Take_Survey}
+                            </a>
+
+                            <p style="margin-bottom: 10px; margin-top: 10px;">{!$Label.LCF_Thanks_for_Support}</p>
+
+                            <p style="margin-bottom: 10px; margin-top: 10px;">
+                                {!IF(brand == 'aral', $Label.LCF_Aral_Customer_Team,
+                                IF(brand == 'bp', $Label.LCF_BP_Customer_Team,
+                                IF(brand == 'bpcastrol', $Label.LCF_BPCastrol_Customer_Team,
+                                $Label.LCF_Castrol_Customer_Team)))}
+                            </p>
+
+                            <br/>
+
+                            <p style="margin-bottom: 10px; margin-top: 10px;">{!$Label.LCF_Survey_Email_4}</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </body>
+    </html>
+</apex:component>

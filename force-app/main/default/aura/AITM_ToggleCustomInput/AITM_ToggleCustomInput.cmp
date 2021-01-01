@@ -1,0 +1,225 @@
+<aura:component controller="AITM_TenderLocationNewOffer">
+	<aura:attribute name="value" type="String" />
+	<aura:attribute name="dateValue" type="String" />
+	<aura:attribute name="oldValue" type="String" />
+	<aura:attribute name="targetObject" type="string" />
+	<aura:attribute name="targetId" type="String" />
+	<aura:attribute name="targetFieldName" type="string" />
+	<aura:attribute name="name" type="String" />
+	<aura:attribute name="type" type="String" default="text" />
+	<aura:attribute name="numberFormat" type="String" default="text" />
+	<aura:attribute name="action" type="String" />
+	<aura:attribute name="linkText" type="String" />
+	<aura:attribute name="linkUrl" type="String" />
+	<aura:attribute name="lineItem" type="AITM_Tender_Location_Line_Item__c" />
+	<aura:attribute name="tenderLocation" type="AITM_Tender_Location__c" />
+	<aura:attribute name="isEditable" type="Boolean" default="false" />
+	<aura:attribute name="isAfterInit" type="Boolean" default="false" />
+	<aura:attribute name="defaultValue" type="String" />
+	<aura:attribute name="isOpen" type="boolean" default="false" />
+	<aura:attribute name="isOpenPricing" type="boolean" default="false" />
+	<aura:attribute name="deliveryPoints" type="List" />
+	<aura:attribute name="pricingBasis" type="List" />
+	<aura:attribute name="deliveryId" type="String" />
+	<aura:attribute name="lineItemId" type="String" />
+	<aura:attribute name="debrieflineItemId" type="String" />
+	<aura:attribute name="currentStage" type="String" />
+	<aura:attribute name="selectedLookUpRecord" type="sObject" default="{}" />
+	<aura:attribute name="isFreezed" type="Boolean" />
+	<aura:attribute name="tooltip" type="Boolean" />
+	<aura:attribute name="offeredVolume" type="Integer" />
+	<aura:attribute name="currencyOptions" type="List" />
+	<aura:attribute name="UOMOptions" type="List" />
+	<aura:attribute name="selectedCurrency" type="String" />
+	<aura:attribute name="selectedUom" type="String" />
+    <aura:attribute name="pricingReadOnly" type="Boolean" />
+
+	<aura:registerEvent name="AITM_RefreshTableEvent" type="c:AITM_RefreshTableEvent" />
+	<aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+	<aura:handler name="change" value="{!v.dateValue}" action="{!c.editValue}" />
+	<aura:handler name="change" value="{!v.lineItem}" action="{!c.updateValue}" />
+	<aura:handler name="change" value="{!v.tenderLocation}" action="{!c.updateValue}" />
+
+	<div aura:id="toggle-text-block" style="border:none">
+		<aura:if isTrue="{!v.isFreezed}">
+			<lightning:formattedText value="{!v.value}" class="fixedMaxWidth" />
+		</aura:if>
+		<aura:if isTrue="{!!v.isFreezed}">
+			<aura:if isTrue="{!v.type == 'text'}">
+				<aura:if isTrue="{!and(and(v.isEditable, !v.isFreezed),v.targetFieldName == 'AITM_Delivery_Point_Info__c')}">
+					<!--<lightning:input type="text" class="textValueCSS" value="{!v.value}" disabled="true" />-->
+                    <lightning:formattedText value="{!v.value}" class="labelPaddingRight" />
+					<lightning:buttonIcon iconName="utility:search" size="small" variant="bare" onclick="{!c.edit}" alternativeText="search" title="Edit Delivery" />
+				</aura:if>
+				<aura:if isTrue="{!and(and(v.isEditable, !v.isFreezed),v.targetFieldName == 'AITM_Pricing_Basis__r.Name')}">
+					<!--<lightning:input type="text" class="textValueCSS" value="{!v.value}" disabled="true" />-->
+                    <lightning:formattedText value="{!v.value}" class="labelPaddingRight" />
+					<aura:if isTrue="{!(!v.pricingReadOnly)}">
+					<lightning:buttonIcon iconName="utility:search" size="small" variant="bare" onclick="{!c.editPricing}" alternativeText="search" title="Edit Pricing" />
+				</aura:if>
+				</aura:if>
+			</aura:if>
+			<aura:if isTrue="{!v.type == 'select'}">
+				<aura:if isTrue="{!v.targetFieldName == 'AITM_Currency__c'}">
+					<lightning:select aura:id="filterForCurrency" variant="label-hidden" class="selectValueCSS" onchange="{!c.onChangePickVal}"
+						value="{!v.selectedCurrency}">
+						<aura:iteration items="{!v.currencyOptions}" var="filter" indexVar="index">
+							<option value="{!filter}" text="{!filter}" selected="{!filter == v.value}" />
+						</aura:iteration>
+					</lightning:select>
+					<aura:set attribute="else">
+						<lightning:select aura:id="filter" variant="label-hidden" class="selectValueCSS" onchange="{!c.onChangeUOM}"
+						value="{!v.selectedUom}">
+							<aura:iteration items="{!v.UOMOptions}" var="filter" indexVar="index">
+								<option value="{!filter}" text="{!filter}" selected="{!filter == v.value}" />
+							</aura:iteration>
+						</lightning:select>
+					</aura:set>
+				</aura:if>
+			</aura:if>
+
+			<aura:if isTrue="{!v.type == 'number'}">
+				<aura:if isTrue="{!or(v.targetFieldName == 'AITM_Requested_Volume_USG__c', v.targetFieldName == 'AITM_Previous_Round_Differential__c')}">
+					<div class="outputValueCSS">
+                        <ui:outputNumber value="{!v.value}" format="{!v.numberFormat}"  />
+					</div>
+                        <aura:set attribute="else">
+                          <aura:if isTrue="{!and(v.pricingReadOnly,v.targetFieldName == 'AITM_Current_Value__c')}">
+                             <div class="slds-p-top_x-small">
+                              <ui:outputNumber value="{!v.value}" format="{!v.numberFormat}" />
+                              </div>
+                              <aura:set attribute="else">
+						<ui:inputNumber value="{!v.value}" aura:id="offerVol" format="{!v.numberFormat}"
+							class="{!v.targetFieldName == 'AITM_Percentage_Volume_Offered__c'? 'numberPercentValueCSS' : 'numberValueCSS'}" change="{!c.editValue}" />
+                            </aura:set></aura:if>
+                            </aura:set>
+				</aura:if>
+			</aura:if>
+			
+			<aura:if isTrue="{!v.type == 'date'}">
+				<ui:inputDate value="{!v.value}" aura:id="expdate" format="dd-MMM-yy" displayDatePicker="true" 
+					class="dateValueCSS" change="{!c.editValue}" />
+			</aura:if>
+			
+		</aura:if>
+	</div>
+	<div aura:id="change-from-default-modal" class="slds-hide">
+		<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-describedby="modal-content-id-1"
+			class="slds-modal slds-fade-in-open">
+			<div class="slds-modal__container">
+				<header class="slds-modal__header">
+					<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+						title="Close">
+						<lightning:icon iconName="utility:close" size="x-small" />
+						<span class="slds-assistive-text">Close</span>
+					</button>
+					<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">You are changing the
+						default value!</h2>
+				</header>
+				<footer class="slds-modal__footer">
+					<button class="slds-button slds-button_neutral"
+						onclick="{!c.closeChangeFromDefaultModal}">Cancel</button>
+					<button class="slds-button slds-button_brand"
+						onclick="{!c.saveChangeFromDefaultModal}">Confirm</button>
+				</footer>
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+	</div>
+
+	<aura:if isTrue="{!v.isOpen}">
+		<div>
+			<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+				aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_medium">
+				<div class="slds-modal__container">
+					<header class="slds-modal__header">
+						<h2 class="title slds-text-heading--medium">Edit Delivery Points</h2>
+					</header>
+					<table class="slds-table slds-table_cell-buffer slds-table_bordered">
+						<thead>
+							<tr class="slds-line-height_reset">
+
+								<th class="slds-text-title_caps" scope="col">
+									<div class="slds-truncate" title="Select">Select</div>
+								</th>
+
+								<th class="slds-text-title_caps" scope="col">
+									<div class="slds-truncate" title="Delivery Point Name">Delivery Point Name</div>
+								</th>
+
+								<th class="slds-text-title_caps" scope="col">
+									<div class="slds-truncate" title="Default Delivery Point">Default Delivery Point
+									</div>
+								</th>
+								<th class="slds-text-title_caps" scope="col">
+									<div class="slds-truncate" title="BP Internal Location+Delivery Point Code">BP
+										Internal Location+Delivery Point Code</div>
+								</th>
+							</tr>
+						</thead>
+
+						<tbody>
+							<aura:iteration items="{!v.deliveryPoints}" var="deliveryPoint">
+
+								<tr class="slds-hint-parent">
+									<td>
+										<ui:inputRadio text="{!deliveryPoint.Id}" name="!deliveryPoint.Id" value=""
+											aura:id="boxPack3" change="{!c.onSelect}" />
+									</td>
+
+									<td data-label="Delivery Point Name">
+										<div class="slds-truncate" title="deliveryPoint.Name">{!deliveryPoint.Name}
+										</div>
+									</td>
+
+									<td data-label="Default Delivery Point">
+										<div class="slds-truncate" title="delivery point default">
+											{!deliveryPoint.AITM_Default_Delivery_Point__c}</div>
+									</td>
+									<td data-label="BP Internal Location+Delivery Point Code">
+										<div class="slds-truncate" title="BP Internal Location+Delivery Point Code">
+											{!deliveryPoint.AITM_BPInter_Location_DeliveryPoint_Cod__c}</div>
+									</td>
+								</tr>
+							</aura:iteration>
+						</tbody>
+					</table>
+
+					<footer class="slds-modal__footer">
+						<lightning:button label="Cancel" variant="brand" class="slds-button" onclick="{!c.close}" />
+						<lightning:button label="Save" variant="brand" class="slds-button"
+							onclick="{!c.updateSelected}" />
+					</footer>
+				</div>
+			</section>
+			<div class="slds-backdrop slds-backdrop_open"></div>
+		</div>
+	</aura:if>
+
+	<aura:if isTrue="{!v.isOpenPricing}">
+		<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+			aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+			<div class="slds-modal__container">
+				<!-- Modal/Popup Box Header Starts here-->
+				<header class="slds-modal__header">
+					<lightning:buttonIcon iconName="utility:close" onclick="{! c.close}" alternativeText="close"
+						variant="bare-inverse" class="slds-modal__close" />
+					<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Pricing Basis</h2>
+				</header>
+				<!--Modal/Popup Box Body Starts here-->
+				<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+					<p>
+						<c:AITM_customLookup objectAPIName="AITM_Pricing_Basis__c" IconName="" label="Pricing"
+							selectedRecord="{!v.selectedLookUpRecord}" />
+					</p>
+				</div>
+				<!--Modal/Popup Box Footer Starts here-->
+				<footer class="slds-modal__footer">
+					<lightning:button variant="neutral" label="Cancel" title="Cancel" onclick="{! c.close }" />
+					<lightning:button variant="brand" label="Save" title="Save" onclick="{!c.savePricing}" />
+				</footer>
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+	</aura:if>
+</aura:component>

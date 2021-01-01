@@ -1,0 +1,54 @@
+<apex:component access="global">
+    <table align="center" width="600" cellpadding="0" cellspacing="0" style="min-height: 152px; background-color:#FFFFFF; table-layout:fixed; min-height:152px">
+        <tr>
+            <td width="30" height="19" style="font-size: 19px; line-height: 19px;">&nbsp;</td>
+            <td></td>
+            <td width="30" height="19" style="font-size: 19px; line-height: 19px;">&nbsp;</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td style="vertical-align:top;font-size:16px; color:#787878">Anything we can help with?</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td width="30" height="17" style="font-size: 17px; line-height: 17px;">&nbsp;</td>
+            <td></td>
+            <td width="30" height="17" style="font-size: 17px; line-height: 17px;">&nbsp;</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><hr style="background-color: #d1d1d1; height: 1px; border: 0"/></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td width="30" height="15" style="font-size: 15px; line-height: 15px;">&nbsp;</td>
+            <td></td>
+            <td width="30" height="15" style="font-size: 15px; line-height: 15px;">&nbsp;</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><span style="font-size:13px; font-weight:bold; color:#787878">Call BP Rewards Support: </span><span style="font-size:13px; font-weight:regular"><a href="tel:1300277392" title="Support Phone Number" style="color: #787878; text-decoration: none;" target="_blank">1300 277 392</a></span></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><span style="font-size:13px; font-weight:bold; color:#787878">Email BP Rewards Support: </span><span style="font-size:13px; font-weight:regular"><a href="mailto:AUrewards@bp.com" title="Support Email" style="color: #787878; text-decoration: none;" target="_blank">AUrewards@bp.com</a></span></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td width="30" height="19" style="font-size: 19px; line-height: 19px;">&nbsp;</td>
+            <td></td>
+            <td width="30" height="19" style="font-size: 19px; line-height: 19px;">&nbsp;</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td style="line-height:normal;"><span style="font-size:8px; color:#787878"><span style="font-weight:bold">BP Australia Pty Ltd, </span>ACN 004 085 616 and registered office at Level 17, 717 Bourke Street, Docklands, Victoria 3008<br/>This message is intended solely for the addressee relating to their use of the BP Rewards &amp; BPme app and may contain confidential information. If you have received it by mistake or are not the addressee please email AUrewards@bp.com to let us know and then immediately and permanently delete it from your system. Do not use, copy, forward or distribute the information in the message or any attachment or disclose its contents to anyone.</span></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td width="30" height="19" style="font-size: 19px; line-height: 19px;">&nbsp;</td>
+            <td></td>
+            <td width="30" height="19" style="font-size: 19px; line-height: 19px;">&nbsp;</td>
+        </tr>
+    </table>
+</apex:component>

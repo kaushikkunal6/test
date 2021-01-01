@@ -1,0 +1,157 @@
+<!--
+* @author Anna Mokhubova
+* @company Bluewolf, an IBM Company
+* @date 7/2019
+*
+* AMPM Community Template
+-->
+<apex:page showHeader="false"
+           standardStylesheets="false"
+           sidebar="false"
+           applyBodyTag="false"
+           id="CommunityTemplate"
+           >
+    <head>
+        
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1"/>
+        <apex:includeLightning />
+        <apex:slds />
+        <style>
+            @media all and (max-width: 499px) {
+                .container {
+                    width: 80%;
+            		border: 2px solid #cccccc !important;
+                }
+            }
+            @media all and (min-width: 500px) {
+                .container {
+                    width: 300px;
+            		border: 2px solid #cccccc !important;
+                }
+            	body {
+            		background: white !important;
+            	}
+            }
+            
+            /* FONT FAMILY */
+            @font-face {
+            	font-family: 'Knockout';
+            	src: url('{!URLFOR($Resource.REIDP_AMPM_font)}') format('otf');
+            }
+            
+            * {
+                font-family: 'Knockout';
+            }
+            
+            html {
+                height: 100vh;
+            }
+            
+            body {
+                margin: 0;
+            	background-color: #fafafa;
+            }
+            
+            .form {
+                height: 100%;
+                width: 100%;   
+                font-family: 'Knockout';
+            }
+            
+            .mainDiv {
+                /* z-index: -1; */
+                min-height: 100%;
+                width: 100%;
+                position: absolute;
+                display: -webkit-box;
+                display: -webkit-flex;
+                display: -ms-flexbox;
+                display: flex;
+
+            }
+            
+            .container {
+                max-width: 100% !important;
+                margin: 0 auto;
+                padding: 20px;
+                display: inline-block;
+                background-color: #fafafa;
+                border-radius: 4px;
+                margin: auto;
+                width: 300px;
+            }
+            
+            .button {
+                width: 100%;
+                padding: 10px 12px;
+                color: #FFFFFF !important;
+                -webkit-box-shadow: none;
+                -moz-box-shadow: none;
+                box-shadow: none;
+                text-shadow: none;
+                background-color: #272b67;
+                border-radius: 2px;
+                border: 0 solid transparent;
+                font-size: 16px !important;
+                -webkit-transition: all 0.5s ease !important;
+                transition: all 0.5s ease !important;
+	            -webkit-tap-highlight-color: #007833 !important; /* iOS :active fix */	
+            }
+            
+            input[type=submit]:disabled {
+                background-color:#D8D8D8 !important;
+                cursor:pointer !important;
+            }
+            
+            input[type=submit]:disabled .label {
+	            color: #ffffff !important;
+            }
+            
+            a {
+                color:#272b67 !important;
+                text-decoration: none !important;
+            }
+            
+            .input-container {
+                padding: 7px 0px;
+                background-color: #ffffff;
+                border: 1px;
+                border-color: #cccccc;
+                border-style: solid;
+                border-radius: 2px;
+                margin-top: 10px;
+                margin-bottom: 2px;
+            }
+            
+            input {
+            	color: #444444 !important;
+            }
+            
+            input::-webkit-input-placeholder {
+            	color: #b6b6b6 !important;
+            }
+            input::-moz-placeholder {
+	            color: #b6b6b6 !important;
+            }
+            input:-ms-input-placeholder {
+    	        color: #b6b6b6 !important;
+            }
+            input:-moz-placeholder {
+        	    color: #b6b6b6 !important;
+            }
+            
+            .error-message {
+                text-align: center;
+                color: #ff0000;
+            }
+        </style>
+        <apex:insert name="head"/>
+    </head>
+    <body>
+        <div class="mainDiv" >
+            <div class="container ">
+                <apex:insert name="body"/>
+            </div>            
+        </div>
+    </body>
+</apex:page>

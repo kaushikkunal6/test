@@ -1,0 +1,4 @@
+<apex:component controller="REIDP_CommunityEmailController" access="global">
+    <apex:attribute name="networkPath" type="String" description="Default Community Path to Use of outside of Network context" assignTo="{!NETWORK_URL_PATH_PREFIX}"/>
+    <apex:attribute name="defaultCommunityName" type="String" description="User's default Community" assignTo="{!defaultCommunity}"/>
+</apex:component>

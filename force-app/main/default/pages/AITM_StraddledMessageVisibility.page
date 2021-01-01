@@ -1,0 +1,6 @@
+<apex:page standardController="AITM_Tender_Location_Line_Item__c" >
+    
+  <apex:outputText rendered="{!AITM_Tender_Location_Line_Item__c.AITM_Is_Location_Straddled__c}">
+    <h1 style="font-size:12px; color:red;">Default Straddling of Taxes and Fees is ON. You will not be able to edit/save any of the Taxes and Fees fields below. Please uncheck default straddling checkbox in the location new offer page before editing/updating the Taxes and Fees information here.<br/></h1>
+  </apex:outputText>
+</apex:page>

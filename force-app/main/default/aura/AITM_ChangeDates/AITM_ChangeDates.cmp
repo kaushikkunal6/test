@@ -1,0 +1,52 @@
+<aura:component implements="force:LightningQuickActionWithoutHeader,force:hasRecordId" controller="AITM_ChangeDatesController">
+    <aura:attribute name="tenderLocationLineItemsStartdates" type="List" description="Contains list of locations line item Start dates"/>
+    <aura:attribute name="tenderLocationLineItemsEnddates" type="List" description="Contains list of locations line item End dates"/>
+    <aura:attribute name="oldStartDate" type="String"/>
+    <aura:attribute name="oldEndDate" type="String"/>
+    <aura:attribute name="newStartDate" type="String"/>
+    <aura:attribute name="newEndDate" type="String"/>
+    <aura:attribute name="dateValues" type="Date" access="GLOBAL"/>
+    <aura:attribute name="saveLocked" type="Boolean" description="Indicates if save button will not trigger new" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>   
+    <div class="slds-modal__header">
+        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.close}"><lightning:icon iconName="utility:close" variant="inverse" size="small"/></button>
+        <h2 class="slds-text-heading--medium">Change Dates</h2>
+    </div>   
+    
+    <div class="slds-grid slds-grid--pull-padded-medium">      
+        <div class="slds-col slds-p-horizontal_medium">
+        
+        <div class="slds-modal__content slds-p-around--medium">
+            <ui:inputSelect aura:id="existingStartDateInput" class="filtersSelect"  label="Change Start Date from" change="{!c.selectStartDate}">
+                <ui:inputSelectOption text="" label="--None--" />
+                <aura:iteration items="{!v.tenderLocationLineItemsStartdates}" var="option"> 
+                    <ui:inputSelectOption text="{!option}" label="{!option}" />
+                </aura:iteration>
+            </ui:inputSelect>
+            <br/><br/>
+            
+            <ui:inputDate aura:id="startDateInput" displayDatePicker="true" label="To" format="dd/MM/yyyy" />
+        </div>
+        </div>
+         <div class="slds-col slds-p-horizontal_medium">
+        <div class="slds-modal__content slds-p-around--medium">
+            <ui:inputSelect aura:id="existingEndDateInput" class="filtersSelect" label="Change End Date from" change="{!c.selectEndDate}">
+                <ui:inputSelectOption text="" label="--None--" />
+                <aura:iteration items="{!v.tenderLocationLineItemsEnddates}" var="option"> 
+                    <ui:inputSelectOption text="{!option}" label="{!option}" />
+                </aura:iteration>
+            </ui:inputSelect>
+            <br/><br/>
+            
+            <ui:inputDate aura:id="endDateInput" displayDatePicker="true" label="To" format="dd/MM/yyyy" />
+        </div>
+    </div>
+    </div>
+    <br/>
+     
+        <div class="slds-modal__footer">
+        <lightning:button variant="neutral" label="Cancel" onclick="{!c.close}"/>
+        <lightning:button variant="neutral" label="Save" onclick="{!c.save}"/>
+    </div>
+    
+</aura:component>

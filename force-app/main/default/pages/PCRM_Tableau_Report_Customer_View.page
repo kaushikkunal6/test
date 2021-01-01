@@ -1,0 +1,27 @@
+<!--------------------------------------------------------------------
+*   Date: 06/25/2020
+*   Author:   Pooja Deokar(TCS)
+*   Description: Tableau report for Customer Dashboard view at account level
+*   Version 1.1 
+---------------------------------------------------------------------->
+<apex:page standardController="Account" showHeader="false" sidebar="false">
+   <apex:includeScript value="{!$Resource.Tableau_2_3_0}"/>  
+    <script> 
+        var previousOnload = window.onload; 
+        window.onload = function() {       
+            initViz();
+        }
+    </script>
+    <script type="text/javascript">
+        function initViz() {
+            var containerDiv = document.getElementById("vizContainer"),
+            url = "https://tableau.bpweb.bp.com/#/site/petchems1/views/SalesforceCustomer/SalesforceCustomer?",
+            options = {
+                 hideTabs: true,                   
+                "Customer Sold To Number": "{!Account.AccountNumber}" 
+               };
+            var viz = new tableau.Viz(containerDiv, url, options);
+        }
+     </script>
+<div id="vizContainer" ></div> 
+</apex:page>

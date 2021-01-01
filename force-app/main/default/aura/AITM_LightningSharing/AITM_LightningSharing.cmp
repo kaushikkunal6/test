@@ -1,0 +1,155 @@
+<aura:component controller="AITM_LightningSharing" implements="lightning:isUrlAddressable">
+	<aura:attribute name="shares" type="object[]" />
+	<aura:attribute name="sObjectName" type="String" />
+	<aura:attribute name="recordName" type="String" />
+	<aura:attribute name="recordId" type="String" />
+
+	<aura:attribute name="searchObject" type="String" default="group"/>
+	<aura:attribute name="searchString" type="String" />
+	<aura:attribute name="selectedSharee" type="String" />
+
+	<aura:attribute name="results" type="object[]" />
+	<aura:attribute name="searchTimeout" type="object" />
+	<aura:attribute name="perm" type="string" default="Read/Write"/>
+
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+	<aura:handler name="change" value="{!v.pageReference}" action="{!c.doInit}" />
+
+	<aura:registerEvent name="AITM_HandleCallbackErrorEvent" type="c:AITM_HandleCallbackErrorEvent"/>
+	<c:AITM_LightningErrorHandler />
+	<aura:handler event="c:AITM_HandleCallbackErrorEvent" action="{!c.stopProp}" phase="bubble"  />
+
+	<lightning:navigation aura:id="navService" />
+
+	<!--icons at https://www.lightningdesignsystem.com/icons/ -->
+	<lightning:card title="{!v.sObjectName + ' : ' + v.recordName}" variant="base">
+		<aura:set attribute="actions">
+			<lightning:button onclick="{!c.navToRecord}"  label="{!$Label.c.AITM_Back}" title="{!'Return to ' + v.recordName}" />
+		</aura:set>
+		<aura:set attribute="footer">
+			<!--footer markup-->
+		</aura:set>
+		<div class="slds-p-horizontal_medium">
+			<lightning:tabset>
+				<lightning:tab>
+					<aura:set attribute="label">{!$Label.c.AITM_ViewCurrentPermissions}</aura:set>
+					<div class="sls-p-around--medium">
+						<table class="slds-table slds-table_bordered slds-no-row-hover slds-table_cell-buffer">
+							<thead>
+								<tr>
+									<th class="slds-text-heading_label" scope="col">
+										<div class="slds-truncate">{!$Label.c.AITM_UserOrGroup}</div>
+									</th>
+									<th class="slds-text-heading_label" scope="col">
+										<div class="slds-truncate">{!$Label.c.AITM_Type}</div>
+									</th>
+									<th class="slds-text-heading_label" scope="col">
+										<div class="slds-truncate">{!$Label.c.AITM_Name}</div>
+									</th>
+									<th class="slds-text-heading_label" scope="col">
+										<div class="slds-truncate">{!$Label.c.AITM_AccessLevel}</div>
+									</th>
+									<th class="slds-text-heading_label" scope="col">
+										<div class="slds-truncate">{!$Label.c.AITM_Reason}</div>
+									</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<aura:iteration items="{!v.shares}" var="share">
+									<tr class="slds-hint-parent">
+
+										<td data-label="{!$Label.c.AITM_UserOrGroup}">{!share.UserOrGroupType}</td>
+										<td data-label="{!$Label.c.AITM_Type}">{!share.SubType}</td>
+										<td data-label="{!$Label.c.AITM_Name}">
+											<a onclick="{!c.navToUser}" id="{!share.UserOrGroupID}">
+												{!share.UserOrGroupName}
+											</a>
+										</td>
+										<td data-label="Access Level">
+											{!share.AccessLevel}
+
+										</td>
+										<td data-label="{!$Label.c.AITM_Reason}">{!share.RowCause}</td>
+										<td>
+											<aura:if isTrue="{!share.RowCause=='Manual'}">
+												<a onclick="{!c.setRead}" id="{!share.UserOrGroupID}" class="slds-button slds-button_neutral">
+													{!$Label.c.AITM_Read}
+												</a>
+												<a onclick="{!c.setReadWrite}" id="{!share.UserOrGroupID}" class="slds-button slds-button_neutral">
+													{!$Label.c.AITM_ReadWrite}
+												</a>
+												<a onclick="{!c.delete}" id="{!share.UserOrGroupID}" class="slds-button slds-button_neutral">
+													{!$Label.c.AITM_Delete}
+												</a>
+											</aura:if>
+										</td>
+									</tr>
+								</aura:iteration>
+							</tbody>
+						</table>
+					</div>
+				</lightning:tab>
+				<lightning:tab>
+					<aura:set attribute="label">{!$Label.c.AITM_AddNewPermission}</aura:set>
+
+					<lightning:layout class="slds-box slds-theme_shade">
+						<lightning:layoutItem padding="around-small" flexibility="grow">
+							<lightning:select aura:id="searchPicklist" name="select1" label="{!$Label.c.AITM_Search}" value="{!v.searchObject}">
+								<option value="group">{!$Label.c.AITM_PublicGroups}</option>
+								<option value="userrole">{!$Label.c.AITM_Roles}</option>
+								<option value="user">{!$Label.c.AITM_Users}</option>
+							</lightning:select>
+						</lightning:layoutItem>
+
+						<lightning:layoutItem padding="around-small" flexibility="grow">
+							<lightning:input aura:id="search" name="for" value="{!v.searchString}" label="For" type="search" onchange="{!c.search}" placeholder="{!$Label.c.AITM_Type3}"
+							/>
+							<aura:if isTrue="{!v.results.length >= 199 }">
+								{!$Label.c.AITM_TooManyResultsMessage}
+							</aura:if>
+						</lightning:layoutItem>
+					</lightning:layout>
+
+
+					<aura:if isTrue="{!v.results.length > 0}">
+
+						<table class="slds-table slds-table_bordered slds-no-row-hover slds-table_cell-buffer slds-m-top_large">
+							<thead>
+								<tr>
+									<th class="slds-text-heading_label" scope="col">
+										<div class="slds-truncate">{!$Label.c.AITM_Name}</div>
+									</th>
+									<th class="slds-text-heading_label" scope="col">
+										<div class="slds-truncate">{!$Label.c.AITM_SetAccessLevel}</div>
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<aura:iteration items="{!v.results}" var="result">
+									<tr class="slds-hint-parent">
+
+										<td data-label="{!$Label.c.AITM_Name}">{!result.Name}
+											<aura:if isTrue="{!result.Type}">
+												({!result.Type})
+											</aura:if>
+										</td>
+										<td data-label="{!$Label.c.AITM_AccessLevel}">
+											<a onclick="{!c.setRead}" id="{!result.Id}" class="slds-button slds-button_neutral">
+												{!$Label.c.AITM_Read}
+											</a>
+											<a onclick="{!c.setReadWrite}" id="{!result.Id}" class="slds-button slds-button_neutral">
+												{!$Label.c.AITM_ReadWrite}
+											</a>
+										</td>
+									</tr>
+								</aura:iteration>
+							</tbody>
+						</table>
+					</aura:if>
+
+				</lightning:tab>
+			</lightning:tabset>
+		</div>
+	</lightning:card>
+</aura:component>

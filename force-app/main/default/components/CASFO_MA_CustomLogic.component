@@ -1,0 +1,135 @@
+<apex:component >
+        
+    <!-- ForceTK -->
+    <script type='text/javascript' src='https://cdn.rawgit.com/developerforce/Force.com-JavaScript-REST-Toolkit/4ab6f9c6f4e83f6f8db07fc545a5c01cbff8e50a/forcetk.js'></script>
+
+    <script type='text/javascript'>
+    //Wait until custom actions are loaded
+    MAActionFramework.on('ready', function () 
+    { 
+
+        //Change Action to JavaScript
+        MAActionFramework.customActions['Update Event'].Action = "Javascript";
+        
+        //Add Events Array
+        MAActionFramework.customActions['Update Event'].events = {};
+        
+        MAActionFramework.customActions['Update Event'].ActionValue = function (options) 
+        {
+            console.log(options);
+
+            if (MA.isMobile)
+            {
+                if (MARoutes.mobile.activeRoute)
+                {
+                    findWaypointRecordId(MARoutes.mobile.activeRoute, options.records[0].Id);
+                }
+                else
+                {
+                    if ($('#routename').attr('data-id'))
+                    {
+                        var routeId = $('#routename').attr('data-id');
+                        findWaypointRecordId(routeId, options.records[0].Id);
+                    }
+                    else
+                    {
+                        MAToastMessages.showError({message:'Error',subMessage:'Make sure you have your Route saved and active first.'});
+                    }                    
+                }
+            }
+            else
+            {
+                if (options.records[0].savedWaypointId)
+                {
+                    var waypointId = options.records[0].savedWaypointId;
+                    findEventRecordId(waypointId);
+                }
+                else
+                {
+                    MAToastMessages.showError({message:'Error',subMessage:'This feature only works with MA Guide Routes.'});
+                }                
+            }
+        };          
+
+    }); //End Custom MAActionFramework Ready Function 
+    
+    function findWaypointRecordId(routeId, markerId)
+    {
+        DynamicQuery = "SELECT Id FROM mamd__Multiday_Waypoint__c WHERE mamd__Multiday_Route__c ='" + routeId + "' AND mamd__Routed_Object_Id__c ='" + markerId + "'";
+        var client = new forcetk.Client();
+        client.setSessionToken(MA.SessionId);        
+        client.query(DynamicQuery, function (waypointResponse) 
+        {
+            var recordCount = 0;
+            var waypointId = '';
+            
+            $.each(waypointResponse.records, function (i, waypoint)
+            {
+                waypointId = waypoint.Id;
+                recordCount++;
+                
+                if (recordCount == waypointResponse.records.length)
+                {
+                    findEventRecordId(waypointId);
+                }
+            });                                        
+            
+            if (waypointResponse.records.length == 0)
+            {
+                MAToastMessages.showError({message:'Error',subMessage:'Cannot find MA Waypoint record.'});
+            }
+        });         
+    }
+    
+    function findEventRecordId(waypointId)
+    {
+        DynamicQuery = "SELECT Id FROM Event WHERE mamd__WA_Multiday_Waypoint__c ='" + waypointId + "'";
+        var client = new forcetk.Client();
+        client.setSessionToken(MA.SessionId);        
+        client.query(DynamicQuery, function (eventResponse) 
+        {
+            var recordCount = 0;
+            
+            $.each(eventResponse.records, function (i, event)
+            {
+                eventId = event.Id;
+                recordCount++;
+                
+                if (recordCount == eventResponse.records.length)
+                {
+                    navigateToRecord(eventId);
+                }
+            });                                        
+            
+            if (eventResponse.records.length == 0)
+            {
+                MAToastMessages.showError({message:'Error',subMessage:'There is no Event for this MA Guide Waypoint.'});
+            }
+        });          
+    }
+    
+    
+    function navigateToRecord(recordId)
+    {
+        if (MA.isMobile)
+        {
+            if(typeof sforce != 'undefined' && sforce.one) {
+                sforce.one.navigateToSObject(recordId,'detail');
+            }
+            else {
+                //not salesforce 1
+                if(!window.open('/'+recordId+'','_blank')) {
+                    window.open('/'+recordId+'','_top')
+                }
+            }            
+        }
+        else
+        {
+            var currentURL = window.location.href;
+            var currentURLSplit = currentURL.split('/apex/');
+            currentURL = currentURLSplit[0] + '/' + recordId;
+            window.open(currentURL, '_blank');               
+        }
+    }
+    </script>
+</apex:component>

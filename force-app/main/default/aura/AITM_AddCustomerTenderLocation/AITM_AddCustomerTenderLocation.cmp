@@ -1,0 +1,72 @@
+<aura:component implements="force:LightningQuickActionWithoutHeader,force:hasRecordId" controller="AITM_AddCustomerTenderLocation" description="Component used to add customer for the tender and related records">
+	<aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="tenderLocationWrapper" type="Object" />
+    <aura:attribute name="saveLocked" type="Boolean" description="Indicates if save button will not trigger new" default="false"/>
+    <aura:attribute name="tenderLocations" type="List" description="Contains list of locations records"/>
+    <aura:attribute name="validationError" type="Boolean" description="Indicates if error message beign show" default="false"/>
+    <aura:attribute name="customerToAdd" type="Id"/>
+	<aura:attribute name="customerAddFlag" type="Boolean" default="false" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div class="slds-modal__header">
+        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.close}"><lightning:icon iconName="utility:close" variant="inverse" size="small"/></button>
+        <h2 class="slds-text-heading--medium">Add Customer(s) to Current Location</h2>
+    </div>
+    <aura:if isTrue="{!v.validationError}">
+        <lightning:notificationsLibrary aura:id="notifLib" />
+        <!--<ui:message title="Error" severity="error" closable="true">
+            {!$Label.c.AITM_AddLocationValidation}
+        </ui:message>-->
+    </aura:if>
+	<aura:if isTrue="{!!v.customerAddFlag}">
+    <div>
+        Current Location: <lightning:formattedText class="slds-output" value="{!v.tenderLocationWrapper[0].locationName}" /> (IATA/ICAO: <lightning:formattedText class="slds-output" value="{!v.tenderLocationWrapper[0].locationCode}" />)
+    </div>
+    <h3 class="slds-text-heading--label-normal slds-m-top--small slds-m-bottom--x-small">Select the customer(s) to assign the volume to: </h3>
+    <div class="slds-modal__large slds-p-around--medium">        
+        <aura:iteration items="{!v.tenderLocationWrapper}" var="tenderLocation">
+            <div class="slds-box slds-theme--shade slds-m-bottom--medium">
+                <div class="slds-grid slds-wrap slds-grid--pull-padded">
+                    <div class="slds-p-horizontal--small slds-size--1-of-12">
+                        <lightning:input type="checkbox" aura:id="accountId" value="{!tenderLocation.accountId}" name="{!tenderLocation.accountId}" checked="{!tenderLocation.isSelected}" onchange="{!c.showDetails}"/>
+                    </div>
+                    
+                    <div class="slds-p-horizontal--small slds-grid slds-wrap">
+                            <h3 class="slds-text-heading--small">{!tenderLocation.accountName}</h3>
+                            <h2 class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_8-of-12"> GRN: {!tenderLocation.accountGRN}</h2>
+                            <h2 class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12"> AFFILIATES OF: {!tenderLocation.affiliates}</h2>                                 
+                    </div>
+                </div>
+                
+                <aura:if isTrue="{!tenderLocation.isSelected}">
+                    <div class="slds-grid slds-wrap slds-grid--pull-padded slds-grid_align-end">
+                        <div class="slds-p-horizontal--small slds-size--11-of-12">                                   
+                            <lightning:input type="number" label="Volume" aura:id="tenderLocationVolume" value="{!tenderLocation.volume}" disabled="{!tenderLocation.adHocVolume}" formatter="###0"/>
+                            
+                            <lightning:input type="checkbox" label="Ad-hoc Volume" aura:id="adHocVolume" value="{!tenderLocation.accountId}" checked="{!tenderLocation.adHocVolume}" name="{!tenderLocation.accountId}" onchange="{!c.resetVolume}"/>
+                            
+                            <div class="slds-grid slds-grid--pull-padded-medium">
+                                <div class="slds-p-horizontal--medium">
+                                    <lightning:input type="date" label="Start date" value="{!tenderLocation.startDate}"/>
+                                </div>
+                                <div class="slds-p-horizontal--medium">
+                                    <lightning:input type="date" label="End date" value="{!tenderLocation.endDate}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </aura:if>
+            </div>
+        </aura:iteration>
+    </div>
+    </aura:if>
+	<aura:if isTrue="{!v.customerAddFlag}">
+		<h2 class="slds-text-heading--label-normal slds-m-top--small slds-m-bottom--x-small">No Customer To Add in this Tender Location. </h2>
+    <aura:set attribute="else">
+        <div class="slds-modal__footer">
+        	<lightning:button variant="neutral" disabled="{!v.customerAddFlag}" label="Cancel" onclick="{!c.close}"/>
+        	<lightning:button variant="brand" name="Add" disabled="{!v.customerAddFlag}" label="Add" onclick="{!c.save}"/>
+    	</div>
+    </aura:set>
+	</aura:if>
+    
+</aura:component>

@@ -1,0 +1,20 @@
+<template>
+    <template if:true={isSpinnerVisible}>
+        <lightning-spinner size="small" variant="brand"></lightning-spinner>
+    </template>
+    <template if:true={loggedInUserId}>
+        <div class="slds-form-element marginCSS">
+            <label class="slds-checkbox_toggle slds-grid slds-float_right">               
+                <input type="checkbox" name="checkbox-toggle-18" value={selectedToggleValue} aria-describedby="checkbox-toggle-18" checked={selectedToggleValue} onchange={handleChange}/>
+                <span id="checkbox-toggle-18" class="slds-checkbox_faux_container" aria-live="assertive">
+                <span class="slds-checkbox_faux"></span>
+                <span class="slds-checkbox_on">Enabled</span>
+                <span class="slds-checkbox_off">Disabled</span>
+                </span>
+                <span class="slds-form-element__label slds-m-bottom_none slds-m-left_xx-small labelCSS">
+                    {labels.TOGGLE_LABEL}
+                </span>
+            </label>
+        </div>
+    </template>
+</template>

@@ -1,0 +1,303 @@
+<aura:component controller="AITM_TenderLocationNewOffer" implements="forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,force:appHostable,force:hasRecordId">
+    <aura:attribute name="lineItems" type="AITM_Tender_Location_Line_Item__c[]" />
+    <aura:attribute name="tenderLocation" type="AITM_Tender_Location__c" default="{'AITM_Status__c' : ''}" />
+    <aura:attribute name="tenderLocationStatus" type="String" />
+    <aura:attribute name="productDefault" type="String" />
+	<aura:attribute name="deliveryType" type="String" />
+    <aura:attribute name="deliveryPoint" type="String" />
+    <aura:attribute name="accountClassification" type="String" />
+    <aura:attribute name="toggleSpinner" type="boolean" default="false" />
+    <aura:attribute name="tableMetadata" type="Map" />
+    <aura:attribute name="tenderLocationStatuses" type="Map" default="{ awaitingPrice: 'Awaiting price', ready: 'Ready', priced: 'Priced'}" />
+    <aura:attribute name="fieldsAccess" type="Map" />
+    <aura:attribute name="isOpen" type="boolean" default="false" />
+    <aura:attribute name="isTaxesOpen" type="boolean" default="false" />
+    <aura:attribute name="isOpen_TnF" type="boolean" default="false" />
+    <aura:attribute name="lineItemAcc" type="List" />
+    <aura:attribute name="cloneId" type="String" />
+    <aura:attribute name="applyToAllTaxesCheck" type="boolean" default="false"/>
+    <aura:attribute name="isApplyAll" type="boolean" default="false"/>
+    <aura:attribute name="tenderFields" type="AITM_Tender__c"/>
+    <aura:attribute name="isOldTaxFeeFlag" type="boolean"/>
+    <aura:attribute name="isOldTender" type="boolean"/>
+    <aura:attribute name="isCheckedStraddle" type="boolean" default="false" />
+    <aura:attribute name="isLocationStraddled" type="boolean" default="false" />
+    <aura:attribute name="isConfirmUnStraddle" type="boolean" default="false" />
+    <aura:attribute name="isConformApprove" type="boolean" default="false"/>
+    <aura:attribute name="customerServiceLevel" type="String"/>
+    <aura:attribute name="locationServiceLevel" type="String"/>
+    
+   <force:recordData aura:id="recordLoaderAuraId"
+                    layoutType="FULL"
+                    recordId="{!v.recordId}"
+                    targetFields="{!v.tenderFields}"
+                    />
+        
+    <aura:dependency resource="markup://force:navigateToSObject" type="EVENT" />
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    <aura:handler name="AITM_RefreshTableEvent" event="c:AITM_RefreshTableEvent" action="{!c.handleRefreshTableEvent}" />
+    <aura:handler event="force:refreshView" action="{!c.handleRefreshTableEvent}" />
+    <lightning:spinner aura:id="tenderLocationNewOfferSpinner" class="slds-hide" />
+    <div class="slds">
+        <div class="slds-grid slds-m-bottom--small">
+            <div class="slds-col">
+                <div class="slds-grid slds-grid_vertical-align-center">
+                    <div class="slds-col-5">
+                        <div>Status</div>
+                    </div>
+                    <div class="slds-col-5 slds-m-left_xx-small">
+                        <div aura:id="toggle-text-block" class="slds-grid_vertical-align-bottom">
+                            <span class="slds-badge">
+                                <lightning:formattedText value="{!v.tenderLocation.AITM_Status__c}" />
+                                <aura:renderIf isTrue="{!v.fieldsAccess.aitm_status__c.isUpdateable}">
+                                    <button class="slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small hide-button"
+                                        onclick="{!c.toggleToEdit}">
+                                        <span class="slds-assistive-text">Edit {!v.name}</span>
+                                        <lightning:icon iconName="utility:edit" size="xx-small" />
+                                    </button>
+                                </aura:renderIf>
+                            </span>
+                        </div>
+                        <aura:renderIf isTrue="{!v.fieldsAccess.aitm_status__c.isUpdateable}">
+                            <div aura:id="toggle-edit-block" class="hide">
+                                <ui:inputSelect class="dynamic" aura:id="picklist-tender-location-status" value="{!v.tenderLocation.AITM_Status__c}"
+                                    change="{!c.changeTenderLocationStatus}" blur="{!c.hideEditBlock}" />
+                            </div>
+                        </aura:renderIf>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-col">
+                <ui:inputCheckbox aura:id="no-revision" class="new-offer-checkbox" label="No Revision" change="{!c.norevision}"
+                    value="{!v.tenderLocation.AITM_No_Revision__c}" />
+            </div>
+            <div class="slds-col">
+                <ui:inputCheckbox aura:id="Apply-to-all" class="new-offer-checkbox" change="{! c.openModel }" value="{!v.tenderLocation.AITM_Apply_to_all__c}" />Pricing
+                All
+                <lightning:helptext content="Are you sure you want to apply the changes to all other tender location line items in this location across all customers?" />
+            </div>
+            <!--Added for Apply to All Taxes and Fees checkbox AR-5003  
+            <div class="slds-col">
+                <ui:inputCheckbox aura:id="ApplytoallTaxesandFees" class="new-offer-checkbox" change="{! c.openTaxesModel }" value="{!v.tenderLocation.AITM_Taxes_Fees__c}" />Apply to All
+                Taxes and Fees
+                <lightning:helptext content="Are you sure you want to apply the changes to all other tender location line items in this location across all customers?" />
+            </div>  -->
+            <div class="slds-col">
+                <div class="slds-grid">
+               		<lightning:input type="checkbox" aura:id="Apply-to-all-taxes-fees" onchange="{! c.openModel_TnF }" checked="{!v.applyToAllTaxesCheck}" label="Apply to All Taxes and Fees" value="{!v.applyToAllTaxesCheck}"/>
+					<lightning:helptext content="Apply all - Taxes and Fees copies over Tax charges of the last edited Tender location line item (TLLI) to other TLLIs present in the same location." />
+                </div>
+            </div> 
+            <!--Added for to disable Straddle Taxes and Fees checkbox PBI - 253508 
+            <div class="slds-col">
+                <div class="slds-grid">
+                    <lightning:input type="checkbox" aura:id="straddle-taxes-fees" onchange="{! c.openStraddleModel }" checked="{!v.isCheckedStraddle}" label="Straddle Taxes and Fees" value="{!v.isCheckedStraddle}" />
+            
+                    <lightning:helptext class="customIcon" content="Straddling helps in consolidating taxes and fees information for multiple entities, based on &amp; displayed for the lead customer only, when generating an offer/contract. It is defaulted when tender customers have lead/affiliate relationship. IMPORTANT: If you wish to consolidate T&amp;F ensure to set up Affiliate relationships first" />
+                </div>			
+            </div> -->
+            <div class="slds-col"></div>
+        </div>
+        <aura:if isTrue="{!v.isOpen}">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1"
+                class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close" onclick="{! c.closeModel }" alternativeText="close"
+                            variant="bare-inverse" class="slds-modal__close" />
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Please confirm </h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p>
+                            <b>Are you sure you want to change the pricing basis and Offer differential for all the
+                                Customers?
+                            </b>
+                        </p>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral" label="No" title="No" onclick="{! c.closeModel }" />
+                        <lightning:button variant="brand" label="Yes" title="Yes" onclick="{!c.handleFilters}" />
+                        
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+        <!-- Added By Thanuja for New T&F changes -->
+        <aura:if isTrue="{!v.isOpen_TnF}">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1"
+                class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close" onclick="{! c.closeModel }" alternativeText="close"
+                            variant="bare-inverse" class="slds-modal__close" />
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Please confirm </h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p>
+                            <b>Are you sure you want to apply the changes to all other tender location line items in this location across all customers?
+                            </b>
+                        </p>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral" label="No" title="No" onclick="{! c.closeModel }" />
+                        <lightning:button variant="brand" label="Yes" title="Yes" onclick="{!c.handleNewTaxesAndFees}" />
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+        <!-- End Thanuja Changes --> 
+            <!--Added for to disable Straddle Taxes and Fees checkbox PBI - 253508 
+        <aura:if isTrue="{!v.isConfirmUnStraddle}">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1"
+                class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close" onclick="{!c.closeStraddleConfirmBox}" alternativeText="close"
+                            variant="bare-inverse" class="slds-modal__close" />
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Please confirm </h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p>
+                            <b>Important note:</b> Once you un-straddle Taxes and Fees, you will not be able to straddle again for this location.
+                            <p>Are you sure you want to un-straddle Taxes and Fees?</p>
+                        </p>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral" label="No" title="No" onclick="{! c.closeStraddleConfirmBox }" />
+                        <lightning:button variant="brand" label="Yes" title="Yes" onclick="{!c.updateUnStraddledLineItem}" />
+                        
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if> -->
+        <aura:if isTrue="{!v.isConformApprove}">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1"
+                class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close" onclick="{!c.closeApprovalConfirmBox}" alternativeText="close"
+                            variant="bare-inverse" class="slds-modal__close" />
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Please confirm </h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p>
+                            
+                            <p>The service level requested by the customer  "{!v.customerServiceLevel}"  is higher than the default offered for this location {!v.locationServiceLevel}. Are you happy to approve the requested service level for this customer?</p>
+                        </p>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral" label="No" title="No" onclick="{! c.closeApprovalConfirmBox }" />
+                        <lightning:button variant="brand" label="Yes" title="Yes" onclick="{!c.updateUnApproveTenderLocation}" />
+                        
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+        <div class="slds-page-header noborderbottom" role="banner">
+            <div class="slds-grid">
+                <div class="slds-col slds-has-flexi-truncate">
+                    <div class="slds-grid">
+                        <div class="slds-grid slds-type-focus slds-no-space">
+                            <h1 class="slds-page-header__title slds-truncate" title="My Items" style="font-family: 'Salesforce Sans',Arial,sans-serif; font-weight: 300; padding-bottom: 5px;">New
+                                Offer</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slds">
+        <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small">
+            <aura:iteration items="{!v.lineItemAcc}" var="lineItemAcc">
+                <div class="slds-clearfix">
+                    <div class="slds-float_left">
+                        <p>Customer Name: {!lineItemAcc.Name}({!lineItemAcc.AITM_GRN__c})</p>
+                    </div>
+                </div>
+                <br />
+                <div class="slds">
+                    <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-max-medium-table--stacked-horizontal">
+                        <thead>
+                            <tr class="slds-text-heading--label">
+                                <td scope="col">
+                                    <lightning:button label="Clone" variant="brand" class="slds-button" onclick="{!c.cloneSelected}" />
+                                </td>
+                                <td scope="col">
+                                    <lightning:button label="Delete" variant="brand" class="slds-button" onclick="{!c.deleteSelected}" />
+                                </td>
+                                <td scope="col">
+                                    Include In <br /> Revised <br /> Offer
+                                </td>
+                                <aura:iteration items="{!v.tableMetadata}" var="tableField">
+                                    <aura:if isTrue="{!tableField.AITM_Field_Name__c != 'AITM_Customer_Name__c'}">
+                                        <aura:if isTrue="{!tableField.AITM_Is_Table_Footer_Field__c == false}">
+                                            <th scope="col" class="nobordertop" title="{!tableField.AITM_Label_Text__c}">
+                                                <aura:unescapedHtml value="{!tableField.AITM_Label_Text__c}" />
+                                            </th>
+                                        </aura:if>
+                                    </aura:if>
+                                </aura:iteration>
+                            </tr>
+                            <aura:iteration items="{!v.lineItems}" var="lineItem">
+                                <aura:if isTrue="{!lineItem.AITM_Account__r.AITM_GRN__c == lineItemAcc.AITM_GRN__c}">
+                                    <tr>
+                                        <!--<div class="slds-form-element">-->
+                                        <td scope="row" class="slds-text-align--left">
+                                            <!-- style="width:3.25rem;" -->
+                                            <ui:inputRadio text="{!lineItem.Id}" name="lineItem.AITM_GRN__c" value=""
+                                                aura:id="boxPack3" change="{!c.onClone}" />
+                                        </td>
+                                        <td scope="row" class="slds-text-align--left">
+                                            <!-- style="width:6.25rem;" -->
+                                            <div class="slds-form-element">
+                                                <div class="slds-form-element__control">
+                                                    <label class="slds-checkbox">
+                                                        <ui:inputCheckbox text="{!lineItem.Id}" aura:id="boxPack" value="" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label text"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td scope="row" class="slds-text-align--left">
+                                            <!-- style="width:6.25rem;" -->
+                                            <div class="slds-form-element">
+                                                <div class="slds-form-element__control">
+                                                    <label class="slds-checkbox">
+                                                        <ui:inputCheckbox text="{!lineItem.Id}" change="{!c.newIncludeInRevisedOffer}"
+                                                            aura:id="boxPack2" value="" disabled="{!v.tenderLocation.AITM_Round__c > 1 ? 'false' : 'true'}" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label text"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <!--</div>-->
+                                        <aura:iteration items="{!v.tableMetadata}" var="tableField">
+                                            <aura:if isTrue="{!tableField.AITM_Is_Table_Footer_Field__c == false}">
+                                                <td scope="row">
+                                                    <c:AITM_ToggleInput aura:id="toggle-input-component" name="{!tableField.MasterLabel}"
+                                                        lineItem="{!lineItem}" tenderLocation="{!v.tenderLocation}"
+                                                        targetObject="{!tableField.AITM_Target_Object__c}"
+                                                        targetFieldName="{!tableField.AITM_Field_Name__c}" type="{!tableField.AITM_Field_Type__c}"
+                                                        numberFormat="{!tableField.AITM_Format__c}" isEditable="{!tableField.AITM_Is_Editable__c}"
+                                                        linkText='More...' defaultValue="{!tableField.AITM_Default_Value__c}"
+                                                        lineItemId="{!lineItem.Id}" />
+                                                </td>
+                                            </aura:if>
+                                        </aura:iteration>
+                                    </tr>
+                                </aura:if>
+                            </aura:iteration>
+                        </thead>
+                    </table>
+                </div>
+            </aura:iteration>
+        </div>
+    </div>
+</aura:component>

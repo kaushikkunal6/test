@@ -1,0 +1,115 @@
+<template>   
+    <template if:true={tfWrapperRelatedFields}>
+        <div class="page-section page-main slds-m-top_xx-small">
+            <lightning-layout horizontal-align="spread">
+                <lightning-layout-item flexibility="grow">
+                    <div class="slds-grid applyRedForLastTender">
+                        <div class="slds-col boldCSS">
+                            {labels.LASTTENDER_LABEL}
+                        </div>   
+                        <div class="slds-col slds-p-left_xx-small">
+                        </div>                    
+                        <template if:true={lastTender}>
+                            <div class="slds-col">
+                                {lastTender}
+                            </div>
+                        </template>
+                        <template if:true={tfWrapperRelatedFields.record.AITM_Offered_Differential__c}>
+                            <div class="slds-col">
+                                /
+                            </div>  
+                            <div class="slds-col">
+                                {tfWrapperRelatedFields.record.AITM_Offered_Differential__c}
+                            </div> 
+                        </template>
+                        <template if:true={currency}>
+                            <div class="slds-col">
+                                {currency}
+                            </div> 
+                        </template>
+                        <template if:true={uom}>
+                            <div class="slds-col">
+                                /
+                            </div> 
+                            <div class="slds-col">
+                                {uom}
+                            </div> 
+                        </template>                      
+                    </div>                            
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="grow">
+                    <div class="slds-grid applyRedForProductDensity">
+                        <div class="slds-col boldCSS">
+                            {labels.PRODUCT_DENSITY_LABEL}
+                        </div>
+                        <div class="slds-col slds-p-left_xx-small">
+                            {productDefault}
+                        </div>
+                        <div class="slds-col">
+                            /
+                        </div>
+                        <div class="slds-col">
+                            {density}
+                        </div>                            
+                    </div>                            
+                </lightning-layout-item>
+				<lightning-layout-item flexibility="grow">
+                    <div class="slds-grid applyRedForDeliveryMethod">
+                        <div class="slds-col boldCSS">
+                            {labels.DELIVERY_METHOD_LABEL}
+                        </div>
+                        <div class="slds-col slds-p-left_xx-small">
+                            {delPointName}
+                        </div>
+                    </div>                            
+                </lightning-layout-item> 
+				<lightning-layout-item flexibility="grow">
+                    <div class="slds-grid applyRedForMeasure">
+                        <div class="slds-col boldCSS">
+                            {labels.MEASURE_LABEL}
+                        </div>
+                        <div class="slds-col slds-p-left_xx-small">
+							{measure}
+                        </div>
+                    </div>                            
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="grow">
+                    <div class="slds-grid applyRedForCreditDaysFrequency">
+                        <div class="slds-col boldCSS">
+                            {labels.CREDIT_DAYS_INVOICE_FREQUENCY_LABEL}
+                        </div>
+                        <div class="slds-col slds-p-left_xx-small">
+							{creditDays}
+                        </div>
+                        <div class="slds-col">
+                            /    
+                        </div>
+                        <div class="slds-col">
+							{invoiceFrequency}
+                        </div>
+                    </div>                            
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="grow">
+                    <div class="slds-grid applyRedForRiskRating">
+                        <div class="slds-col boldCSS">
+                            {labels.RISK_RATING_LABEL}
+                        </div>
+                        <div class="slds-col slds-p-left_xx-small">
+							{creditRating}
+                        </div>
+                    </div>                            
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="grow">
+                    <div class="slds-grid applyRedForExchange">
+                        <div class="slds-col boldCSS">
+                            {labels.EXCHANGE_LABEL}
+                        </div>
+                        <div class="slds-col slds-p-left_xx-small">
+							{exchange}
+                        </div>
+                    </div>                            
+                </lightning-layout-item>                                             
+            </lightning-layout>
+        </div>
+    </template>
+</template>

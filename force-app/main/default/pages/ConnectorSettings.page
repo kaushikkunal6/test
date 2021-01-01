@@ -1,0 +1,225 @@
+<apex:page sidebar="true" showHeader="true" controller="ConnectorSettingsController" tabStyle="Account" id="the_page" docType="html-5.0">
+  <apex:form id="the_form">
+    <apex:pageMessages />
+    <apex:pageBlock title="Softphone Connector Settings">
+      <apex:outputPanel >
+        <apex:pageBlockSection columns="2" title="Generic Setting" collapsible="false">
+          <apex:pageBlockSectionItem >
+            <apex:outputText value="Integration Type" />
+            <apex:outputPanel >
+              <div class="requiredInput">
+                <div class="requiredBlock"></div>
+                <apex:selectList size="1" value="{!integrationType}">
+                  <apex:selectOptions value="{!integrationTypeOptions}" />
+                  <apex:actionSupport event="onchange" reRender="the_sections" />
+                </apex:selectList>
+              </div>
+            </apex:outputPanel>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem />
+          <apex:pageBlockSectionItem >
+            <apex:outputText value="Salesforce UI" />
+            <apex:outputPanel >
+              <div class="requiredInput">
+                <div class="requiredBlock"></div>
+                <apex:selectList size="1" value="{!sfExperience}">
+                  <apex:selectOptions value="{!sfExperienceOptions}" />
+                </apex:selectList>
+              </div>
+            </apex:outputPanel>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem >
+            <apex:outputText value="Log Level" />
+            <apex:outputPanel >
+              <div class="requiredInput">
+                <div class="requiredBlock"></div>
+                <apex:selectList size="1" value="{!logLevel}">
+                  <apex:selectOptions value="{!logLevelOptions}" />
+                </apex:selectList>
+              </div>
+            </apex:outputPanel>
+          </apex:pageBlockSectionItem>
+          <apex:pageBlockSectionItem >
+            <apex:outputText value="External Routing" />
+            <apex:inputCheckbox value="{!externalRouting}">
+              <apex:actionSupport event="onchange" reRender="the_sections" />
+            </apex:inputCheckbox>
+          </apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+      </apex:outputPanel>
+      <apex:outputPanel id="the_sections">
+        <apex:outputPanel rendered="{!integrationType='WDE'}">
+          <apex:pageBlockSection title="WDE Settings" collapsible="false">
+            <apex:pageBlockSectionItem >
+              <apex:outputText value="Host" />
+              <apex:outputPanel >
+                <div class="requiredInput">
+                  <div class="requiredBlock"></div>
+                  <apex:inputText value="{!host}" />
+                </div>
+              </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem />
+            <apex:pageBlockSectionItem >
+              <apex:outputText value="Port" />
+              <apex:outputPanel >
+                <div class="requiredInput">
+                  <div class="requiredBlock"></div>
+                  <apex:input value="{!port}" type="number" />
+                </div>
+              </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem />
+            <apex:pageBlockSectionItem >
+              <apex:outputText value="Protocol" />
+              <apex:outputPanel >
+                <div class="requiredInput">
+                  <div class="requiredBlock"></div>
+                  <apex:selectList size="1" value="{!protocol}">
+                    <apex:selectOptions value="{!protocolOptions}" />
+                  </apex:selectList>
+                </div>
+              </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem />
+            <apex:pageBlockSectionItem >
+              <apex:outputText value="IXN MGR URL" />
+              <apex:outputPanel >
+                <div class="requiredInput">
+                  <div class="requiredBlock"></div>
+                  <apex:inputText value="{!ixnmgrurl}" />
+                </div>
+              </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+          </apex:pageBlockSection>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!integrationType='PURECLOUD'}">
+          <apex:pageBlockSection title="Pure Cloud Settings" collapsible="false">
+            <apex:pageBlockSectionItem >
+              <apex:outputText value="Environment" />
+              <apex:outputPanel >
+                <div class="requiredInput">
+                  <div class="requiredBlock"></div>
+                  <apex:selectList size="1" value="{!environment}">
+                    <apex:selectOptions value="{!environmentOptions}" />
+                  </apex:selectList>
+                </div>
+              </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem />
+            <apex:pageBlockSectionItem >
+              <apex:outputText value="Not Ready Presence ID" />
+              <apex:inputText value="{!notReadyPresenceId}" />
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem />
+            <apex:pageBlockSectionItem >
+              <apex:outputText value="On Queue Presence ID" />
+              <apex:inputText value="{!queuePresenceId}" />
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem />
+            <apex:pageBlockSectionItem />
+            <apex:pageBlockSectionItem />
+
+            <apex:pageBlockSectionItem >
+              <apex:outputText value="Hide Web RT PopUp Option" />
+              <apex:inputCheckbox value="{!hideWebRTCPopUpOption}" />
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+              <apex:outputText value="Enable Call Logs" />
+              <apex:inputCheckbox value="{!enableCallLogs}" />
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+              <apex:outputText value="Hide Call Log Subject" />
+              <apex:inputCheckbox value="{!hideCallLogSubject}" />
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+              <apex:outputText value="Hide Call Log Contact" />
+              <apex:inputCheckbox value="{!hideCallLogContact}" />
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+              <apex:outputText value="Hide Call Log Relation" />
+              <apex:inputCheckbox value="{!hideCallLogRelation}" />
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+              <apex:outputText value="Dedicated Login Window" />
+              <apex:inputCheckbox value="{!dedicatedLoginWindow}" />
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+              <apex:outputText value="Embed WebRTC by default" />
+              <apex:inputCheckbox value="{!embedWebRTCByDefault}" />
+            </apex:pageBlockSectionItem>
+
+          </apex:pageBlockSection>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!integrationType='WWE'}">
+          <apex:pageBlockSection title="WWE Settings" collapsible="false">
+            <apex:pageBlockSectionItem >
+              <apex:outputText value="WWE URL" />
+              <apex:outputPanel >
+                <div class="requiredInput">
+                  <div class="requiredBlock"></div>
+                  <apex:inputText value="{!wweURL}" />
+                </div>
+              </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem />
+            <apex:pageBlockSectionItem >
+              <apex:outputText value="IXN MGR URL" />
+              <apex:outputPanel >
+                <div class="requiredInput">
+                  <div class="requiredBlock"></div>
+                  <apex:inputText value="{!ixnmgrurl}" />
+                </div>
+              </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem />
+          </apex:pageBlockSection>
+        </apex:outputPanel>
+
+
+        <apex:outputPanel rendered="{!externalRouting==true}">
+          <apex:pageBlockSection title="Presence Synchronization Settings" collapsible="false">
+            <apex:pageBlockSectionItem >
+              <apex:outputText value="Omni Ready Presence Status ID" />
+              <apex:outputPanel >
+                <div class="requiredInput">
+                  <div class="requiredBlock"></div>
+                  <apex:inputText value="{!omniReadyId}" />
+                </div>
+              </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+              
+              <apex:pageBlockSectionItem >
+              <apex:outputText value="Omni Not Ready Presence Status ID" />
+              <apex:outputPanel >
+                <apex:inputText value="{!omniNotReadyId}" />
+              </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+              
+            <apex:pageBlockSectionItem rendered="{!integrationType='WDE'}">
+              <apex:outputText value="WDE channels to synch" />
+              <apex:outputPanel >
+                <div class="requiredInput">
+                  <div class="requiredBlock"></div>
+                  <apex:inputText value="{!wdeChannelsToSynch}" />
+                </div>
+              </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+
+            <apex:pageBlockSectionItem />
+          </apex:pageBlockSection>
+        </apex:outputPanel>
+
+      </apex:outputPanel>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <apex:pageBlockButtons >
+        <apex:commandButton value="Save" action="{!saveSettings}" reRender="the_form" />
+      </apex:pageBlockButtons>
+    </apex:pageBlock>
+  </apex:form>
+</apex:page>

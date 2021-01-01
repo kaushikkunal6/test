@@ -1,0 +1,4 @@
+<apex:component controller="REIDP_CommunityEmailController" access="global">
+    <apex:variable var="resourceUrl" value="{!URLFOR($Resource.REIDP_AMPM_logo, '')}" />
+    <img src="{!communityBaseUrl + MID(resourceUrl, FIND('/resource/', resourceUrl), LEN(resourceUrl))}" alt="ampm logo" border="0" height="70" width="150" style="margin-top: 2%;"/>
+</apex:component>

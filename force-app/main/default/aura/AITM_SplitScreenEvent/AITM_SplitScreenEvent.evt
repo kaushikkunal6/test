@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT" description="For calling split screen">
+    <aura:attribute name="selectedLineId" type="string"/>
+    <aura:attribute name="hasPartialRefresh" type="string"/>
+</aura:event>

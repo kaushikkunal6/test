@@ -1,0 +1,16 @@
+<apex:page standardController="Account" lightningStylesheets="true" showChat="false" showHeader="false" showQuickActionVfHeader="false" sidebar="false" standardStylesheets="false" applyHtmlTag="false">
+    <apex:includeLightning />
+    <apex:slds />
+    
+    <script type="text/javascript">
+    $Lightning.use("c:REIDP_PAapplication", function() {
+        $Lightning.createComponent("c:REIDP_PApaydiantUserDetails",
+                                   {recordId: "{!account.Id}"},
+                                   "lightning",
+                                   function(cmp) {
+                                   });
+    });
+    </script> 
+    
+    <div id="lightning"/>
+</apex:page>

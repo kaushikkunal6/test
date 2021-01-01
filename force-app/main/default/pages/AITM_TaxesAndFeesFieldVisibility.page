@@ -1,0 +1,5 @@
+<apex:page standardController="AITM_Tender_Location_Line_Item__c" >
+  <apex:outputText rendered="{!!AITM_Tender_Location_Line_Item__c.AITM_Old_Taxes_Fees_Flag__c}">
+    <h1 style="font-size:12px; color:red;">Taxes and Fees are shown in the ‘Related’ tab above<br/></h1>
+  </apex:outputText>
+</apex:page>

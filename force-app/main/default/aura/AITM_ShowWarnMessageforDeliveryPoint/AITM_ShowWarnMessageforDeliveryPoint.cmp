@@ -1,0 +1,10 @@
+<!-- * Class Name :AITM_ShowWarnMessageforDeliveryPoint
+ * Created Date : 12-Dec-2019
+ * Author : Thanuja Undralla
+ * Description : This component is created to display error message on the Delivery Point related list
+ -->
+
+<aura:component implements="forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,force:appHostable" access="global" >
+    <lightning:formattedText value="*IMPORTANT NOTICE*" class="textClass"/> <br/>
+    <lightning:formattedText value = "For any amendments/updates to Taxes and Fees, please contact the GBS Sterling Card team (“G OAV Airport Fees and Taxes” distribution list) who manage the Taxes and Fees source data." class="textClassPara" />
+</aura:component>

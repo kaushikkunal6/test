@@ -1,0 +1,15 @@
+.priceMarginAroundCSS{ 
+    margin: 50px !important;
+}
+
+.boldCSS{
+    font-weight: 900;
+    font-size:15px;
+    color: black;
+    text-transform: capitalize;
+}
+
+.customLabelCSS{ 
+    color: var(--lwc-colorTextLabel,rgb(62, 62, 60));
+    font-size: 0.75rem;
+}

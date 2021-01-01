@@ -1,0 +1,68 @@
+<apex:page standardController="AITM_Tender__c" extensions="AITM_TenderOfferPDFController" applyhtmltag="false" showheader="false" sidebar="false" action="{!addAttachment}" renderAs="PDF">
+    <div>
+        <center>
+        <b>{!$Label.AITM_OfferAppendix4Title} between {!offer.legalName} and {!offer.customerName} dated <apex:outputText value="{0, date, dd MMMM yyyy}">
+                <apex:param value="{!offer.contractDate}" /> 
+            </apex:outputText></b><br/><br/> 
+        <h2><b>Appendix 4</b></h2>
+        </center>
+        <p>&nbsp;</p>
+        <p>To :</p>
+        <br/>{!offer.legalName}
+        <br/>{!offer.legalAddress}
+        <br/>Date: <apex:outputText value="{0, date, dd MMMM yyyy}">
+                <apex:param value="{!offer.contractDate}" /> 
+            </apex:outputText>
+
+
+        Dear Sirs
+        <br/>
+        <p><b>Re : Delivery of Aviation Fuel to our aircraft by Air BP as subcontractor of {!offer.customerName}</b></p>
+        <br/>
+        <p>In consideration of you and/or your Affiliated Companies or subcontractors agreeing with {!offer.customerName} to deliver fuel into our aircraft, we agree that such deliveries will take place on the terms set out below.</p>
+
+        <p>
+        For the purpose of this Letter, the term Affiliated Companies means BP p.l.c. and any company other than you directly or indirectly controlled by BP p.l.c. (<b>'Affiliated Companies'</b>). For the purpose of this definition, direct control is exercised through holding ordinary shares which carry a majority of votes at a general meeting (or its equivalent) and indirect control is exercised through a series of companies each being directly controlled by one or more of the previous companies in the series.</p>
+
+        <p>
+        We shall have sole responsibility for operating all appropriate aircraft fuelling switches, valves and pre-set quantities gauges. In the event that you operate any aircraft refuelling switches, valves and pre-set quantities gauges at our request, we agree to indemnify, defend and hold harmless you from and against all claims, demands, proceedings, damages and liabilities for loss of or damage to property or for death of or injury to any person and against all associated direct costs (including reasonable attorneys' fees), losses and expenses, arising out of or related to your actions in performing or omission to perform the requested services, including without limitation if caused or contributed to by your negligence. We agree that the foregoing indemnity extends to your directors, officers, employees, agents and sub-contractors and that you are acting as the agent and trustee of such persons in accepting this indemnity.</p>
+
+        <p>
+        If we request that aviation fuel is delivered or removed from our aircraft when there are passengers or other persons on board the aircraft or embarking or disembarking, we agree to be solely responsible for ensuring that :(i) the provisions of the local airport regulations relating to such delivery or removal are carried out; (ii) that appropriate instructions are issued by our employees for the safety of said persons during such delivery or removal and that our employees are properly trained to carry out those instructions; and (iii) that such instructions are strictly observed by our employees and said persons. Together (i), (ii) and (iii) above will be referred to as the “Requirements”.</p>
+
+        <p>
+        If you deliver or remove aviation fuel from our aircraft when there are passengers or other persons on board the aircraft or embarking or disembarking, we agree to indemnify, defend and hold harmless you from and against any and all claims, demands, proceedings and damages and liabilities for death of or injury to any passengers or other persons on board or embarking or disembarking and against all associated  direct costs (including reasonable attorneys' fees), losses and expenses, caused by or arising out of into-plane delivery or removal of aviation fuel from our aircraft, whatever the cause of such injury or death including your negligence, gross negligence or wilful misconduct, except only in relation to deliveries or removal of aviation fuel where the Requirements have been met to the extent caused by your gross negligence or wilful misconduct. We agree that the foregoing indemnity extends to your directors, officers, employees, agents and sub-contractors and that you are acting as the agent and trustee of such persons in accepting this indemnity.</p>
+
+        <p>
+        We agree that we will have no direct recourse against you in respect of any loss, damage, claim or other expenditure arising out of or in connection with your supply of aviation fuel into our aircraft, whether arising as a result of (without limitation) any negligence, gross negligence, wilful misconduct, or breach of statutory duty, on your part or on the part of your Affiliated Companies or agents or sub-contractors or their respective directors, officers and employees.</p>
+
+        <p>
+        We agree to comply with all relevant health, safety and environmental laws, regulations or recommendations operating in any jurisdiction whatsoever in or to which you supply, deliver or carry aviation fuel to us or into our aircraft. You shall not be responsible for any loss, damage or injury resulting from any hazards inherent in the nature of the aviation fuel delivered into our aircraft. We agree to co-operate with you and anyone providing aviation fuel delivery services on your behalf in respect of all safety measures.  We shall further ensure that no maintenance work or operation or equipment which may create a source of ignition is carried out in the vicinity of any delivery or removal of aviation fuel.  If we fail to co-operate, you may in your absolute discretion cease or suspend delivery or removal and any exercise or forbearance in exercising such discretion shall be without prejudice to any of your other rights. We agree to indemnify and keep indemnified you and anyone providing aviation fuel delivery services on your behalf against all and any liabilities, claims, damages, losses and/or proceedings directly or indirectly arising out of or in any way connected with the failure by us to comply with all or any of foregoing provisions of this paragraph.</p>
+
+        <p>
+        No failure or delay on your part (including your employees and agents) to exercise any right or power under this Letter or at law shall operate as a waiver thereof, nor shall any single or partial exercise of any such right or power preclude any other or further exercise thereof or the exercise of any other right or power under this Letter, and no waiver by you of any provision or part of any provision of this Letter shall be binding unless expressly confirmed in writing.</p>
+
+        <p>
+        The construction, validity and performance of this Letter shall be governed by English Law.</p>
+
+
+        <table width="600" border="0" cellspacing="0" cellpadding="2">
+        <tr><td width="50%">Signed for and on behalf of</td><td>&nbsp;</td><td>Signed for and on behalf of</td></tr>
+        <tr><td width="50%">&nbsp;</td>         <td>&nbsp;</td><td>{!offer.legalName}</td></tr>
+
+        <tr><td colspan="3">&nbsp;</td></tr>
+        <tr><td colspan="3">&nbsp;</td></tr>
+        <tr><td width="50%">Signature.................................................</td><td>&nbsp;</td>
+        <td>Signature.................................................</td></tr>
+
+        <tr><td colspan="3">&nbsp;</td></tr>
+        <tr><td colspan="3">&nbsp;</td></tr>
+        <tr><td width="50%">Name</td><td>&nbsp;</td><td>Name</td></tr>
+
+        <tr><td colspan="3">&nbsp;</td></tr>
+        <tr><td width="50%">Position</td><td>&nbsp;</td><td>Date</td></tr>
+        <tr height="80px"><td colspan="3">&nbsp;</td></tr>
+        </table>
+    </div>
+
+</apex:page>

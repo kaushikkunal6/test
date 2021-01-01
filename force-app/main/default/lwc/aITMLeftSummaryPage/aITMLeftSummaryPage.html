@@ -1,0 +1,165 @@
+<template>
+    <div class="slds-grid stickyCSS">
+        <div class="slds-col customerHeaderCSS slds-m-left_small">
+            <lightning-input type="checkbox" data-id="revision-checkbox" class="master-checkbox revision-checkbox" disabled={isRightSideDisabled} label="No Revision" onchange={handleNoRevision}></lightning-input>
+        </div>
+        <div class="slds-col customerHeaderCSS">
+            <div class="slds-grid">
+                <lightning-input type="checkbox" class="master-checkbox pricing-checkbox" disabled={isRightSideDisabled} label="Pricing All" value={pricingEnabled} checked={pricingEnabled} name="Pricing_All" onchange={handleCheckboxesSelection}></lightning-input>
+                <lightning-helptext content="Are you sure you want to apply the changes to all other tender location line items in this location across all customers?">
+                </lightning-helptext>
+            </div>
+        </div>
+        <div class="slds-col customerHeaderCSS">
+            <div class="slds-grid">
+                <lightning-input type="checkbox" class="master-checkbox apply-checkbox" disabled={isApplyAllTFDisabled} label="Apply to All Taxes and Fees" value={applyAllEnabled} checked={applyAllEnabled} name="Apply_All" onchange={handleCheckboxesSelection}></lightning-input>
+                <lightning-helptext content="Are you sure you want to apply the changes to all other tender location line items in this location across all customers?">
+                </lightning-helptext>
+            </div>
+        </div>
+        <div class="slds-col customerHeaderCSS">
+            <lightning-input type="checkbox" label="Expand All" data-id="expand-checkbox" class="master-checkbox expand-checkbox" value={expandAllEnabled} checked={expandAllEnabled} name="Expand_All" onchange={handleExpandAllSelection}></lightning-input>
+        </div>
+        <div class="slds-col customerHeaderCSS marginLeftCSS">
+            <div class="slds-grid">
+                <button class="slds-button slds-button--brand buttonBoxCSS" onclick={handleSavedLines}>
+                    Save
+                </button>
+                <button class="slds-button slds-button--brand buttonBoxCSS" disabled={noLineSelected} onclick={handleCloning}>
+                    Clone
+                </button>
+                <div class="slds-m-left_xx-small customerHeaderCSS">
+                    <button class="slds-button slds-button--neutral buttonBoxCSS" disabled={noLineSelected} onclick={handleDeletion}>
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <template if:true={loading}>
+        <lightning-spinner size="small" variant="brand"></lightning-spinner>
+    </template>
+    <div class="topTableCSS">
+        <div class="slds-scrollable_y scrollable" style="padding-top:.5rem;height:50rem;">
+            <template if:true={locations}>
+                <table class="slds-table slds-table_bordered slds-table_header-hidden slds-scrollable_y backgroundTableCSS slds-no-row-hover">
+                    <thead class="headColorCSS">
+                        <tr class="slds-text-title_caps customTableHeaderCSS headColorCSS"> 
+                            <th scope="col" class="headColorCSS">
+                                <div class="slds-truncate" title="COUNTRY">
+                                    COUNTRY
+                                </div>
+                            </th>
+                            <th scope="col" class="headColorCSS">
+                                <div class="slds-truncate" title="TOTAL NO. LOCATIONS">
+                                    TOTAL NO. LOCATIONS
+                                </div>
+                            </th>
+                            <th scope="col" class="headColorCSS">
+                                <div class="slds-truncate" title="TOTAL REQUESTED VOLUME USG">
+                                    TOTAL REQUESTED <br/> VOLUME (USG)
+                                </div>
+                            </th>
+                            <th scope="col" class="headColorCSS">
+                                <div class="slds-truncate" title="TOTAL OFFERED VOLUME USG">
+                                    TOTAL OFFERED <br/> VOLUME (USG)
+                                </div>
+                            </th>
+                            <th scope="col" class="headColorCSS">
+                                <div class="slds-truncate" title="STATUS">
+                                    STATUS
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={locations} for:item="location">
+                            <tr key={location.Id} class="customerCellCSS hidden-table">
+                                <td data-label="COUNTRY">
+                                    <a class="slds-truncate collapsed" href="javascript:void(0);" title={location.country} onclick={handleCountryClicks} data-idx={location.country} access-key={location.Id}>{location.country}</a>
+                                </td>
+                                <td data-label="TOTAL NO. LOCATIONS">
+                                    <div class="slds-truncate" title={location.totalNumberOfLocations}>{location.totalNumberOfLocations}</div>
+                                </td>
+                                <td data-label="TOTAL REQUESTED VOLUME USG">
+                                    <lightning-formatted-number value={location.totalVolumeUSG}></lightning-formatted-number>
+                                </td>
+                                <td data-label="TOTAL OFFERED VOLUME USG">
+                                    <lightning-formatted-number value={location.totalOfferedVolumeUSG}></lightning-formatted-number>
+                                </td>
+                                <td data-label="STATUS">
+                                    <div class="slds-truncate" title={location.status}>{location.status}</div>
+                                </td>
+                            </tr>                         
+                                <tr key={location.Id}>                                 
+                                    <template if:true={location.hasExpandedEnabled}>  
+                                        <th colspan="6"> 
+                                            <c-a-i-t-m-locations-summary-page
+                                                selected-country={location.country}
+                                                expand-all={hasExpandAll}
+                                                tender-id={tenderId}
+                                                selected-round={selectedRound}
+                                                clicked-country={clickedCountry}
+                                                toggle-view={toggleView}
+                                                last-element={location.isLastCountry}
+                                                highlight={location.hasHighlightedColor}>                          
+                                            </c-a-i-t-m-locations-summary-page>
+                                        </th>
+                                    </template>                                
+                                </tr> 
+                        </template>                    
+                    </tbody>
+                </table>
+            </template>
+        </div>
+    </div>
+    <template if:true={hasPricingModalEnabled}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small"></lightning-icon>
+                    </button>
+                    <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Please confirm</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                    <p class="modalCSS">
+                        <b>
+                            Are you sure you want to change the pricing basis and Offer differential for all the
+                            Customers?
+                        </b>
+                    </p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="neutral" label="No" title="No" onclick={closeModal}></lightning-button>
+                    <lightning-button variant="brand" class="slds-m-left_small" label="Yes" title="Yes" onclick={handleFilters}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <template if:true={hasApplyAllModalEnabled}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small"></lightning-icon>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Please confirm</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-02">
+                    <p class="modalCSS">
+                        <b>Are you sure you want to apply the changes to all other tender location line items in this
+                            location across all customers?
+                        </b>
+                    </p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="neutral" label="No" title="No" onclick={closeModal}></lightning-button>
+                    <lightning-button variant="brand" class="slds-m-left_small" label="Yes" title="Yes" onclick={handleApplyTF}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

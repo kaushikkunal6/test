@@ -1,0 +1,14 @@
+.THIS .hide {
+    display: none;
+}
+
+.THIS .new-offer-checkbox {
+	display: inline-block;
+	float: left;
+	margin-right: 10px;
+} 
+
+.THIS .new-offer-checkbox:checked[disabled] {
+	box-shadow: none;
+	border-color: #d8dde4;
+}

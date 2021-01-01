@@ -1,0 +1,65 @@
+<aura:component controller="AITM_LABPLightningLoginFormController" implements="forceCommunity:availableForAllPageTypes" access="global" >
+	<aura:attribute name="showError" type="Boolean" required="true" description="" default="false" access="private"/>
+    <aura:attribute name="errorMessage" type="String" required="false" description="" access="private"/>
+    <aura:attribute name="startUrl" type="String" required="false" description="The url you go to after a successful login" />
+    <aura:attribute name="usernameLabel" type="String" access="private" required="false" default="{!$Label.c.LABP_UserName}"/>
+    <aura:attribute name="passwordLabel" type="String" access="private" required="false" default="{! $Label.c.LABP_Password }"/>
+    <aura:attribute name="loginButtonLabel" type="String" access="private" required="false" default="{! $Label.c.LABP_Login }"/>
+    <aura:attribute name="forgotPasswordLabel" type="String" access="private" required="false" default="{! $Label.c.LABP_ForgotPassword }"/>
+    <aura:attribute name="forgotPasswordUrl" type="String" required="false" default="/ForgotPassword"/>
+    <aura:attribute name="loginHeaderText" type="String" required="false" default="{! $Label.c.LABP_Login_Header_Text }" />
+    
+    <aura:attribute name="isUsernamePasswordEnabled" type="Boolean" access="private"/>
+    <aura:attribute name="isRememberMeEnabled" type="Boolean" access="private"/>
+    <aura:attribute name="communityForgotPasswordUrl" type="String" access="private"/>
+    
+    <aura:registerevent name="sitePropagatedStartUrl" type="c:AITM_setStartUrl"/>
+    <aura:handler name="init" value="{!this}" action="{!c.initialize}"/>
+    <aura:dependency resource="c:AITM_setStartUrl" type="EVENT"/>
+    <aura:handler event="c:AITM_setStartUrl" action="{!c.setStartUrl}"/>
+    
+    <div class="content-right">
+        <aura:if isTrue="{!v.isUsernamePasswordEnabled}">
+            <span class="headerText">
+                <ui:outputText value="{!v.loginHeaderText}"/>
+            </span><br/><br/>
+            <span>
+            	<aura:if isTrue="{!v.showError}">
+                    <div id="error">
+                        <ui:outputRichText value="{!v.errorMessage}"/>
+                    </div>
+                </aura:if>
+            </span>
+			<div id="sfdc_username_label" class="sfdc">
+                <ui:outputText aura:id="usernamelabel" class="input sfdc" value="{!v.usernameLabel}" />*
+            </div>            
+            <div id="sfdc_username_container" class="sfdc">
+                <ui:inputEmail value="" aura:id="username" required="true" keyup="{!c.onKeyUp}" updateOn="change" class="input sfdc_usernameinput sfdc" label="{!v.usernameLabel}" onError="{!c.handleError}" onClearErrors="{!c.handleClearError}" labelClass="assistiveText"/>
+            </div>
+    		<div id="sfdc_password_label" class="sfdc">
+                <ui:outputText aura:id="passwordlabel" class="input sfdc" value="{!v.passwordLabel}" />*
+            </div>            
+            <div id="sfdc_password_container" class="sfdc">
+                <ui:inputSecret value="" aura:id="password" required="true" onError="{!c.handleError}" onClearErrors="{!c.handleClearError}" keyup="{!c.onKeyUp}" updateOn="change" class="input sfdc_passwordinput sfdc" label="{!v.passwordLabel}" labelClass="assistiveText"/>
+            </div>
+    
+            <div class="sfdc">
+                <ui:button aura:id="submitButton" label="{!v.loginButtonLabel}" press="{!c.handleLogin}" class="sfdc_button" />
+            </div>
+            <div class="white-background">
+                <div class="" style="cursor: pointer;" onclick="{!c.panelOne}">
+                    <section class="slds-clearfix">
+                        <div class="slds-float--left">
+                            <lightning:icon class="slds-show" aura:id="panelOne" iconName="utility:add" size="x-small" alternativeText="Indicates add"/>
+                            <lightning:icon class="slds-hide" aura:id="panelOne" iconName="utility:dash" size="x-small" alternativeText="Indicates dash"/>
+                        </div>
+                        <div class="">{!v.forgotPasswordLabel}</div>
+                    </section>
+                </div>
+                <div class="slds-hide" aura:id="panelOne">
+                    <c:AITM_LABPForgotPassword />
+                </div>
+			</div>
+        </aura:if>
+    </div>
+</aura:component>

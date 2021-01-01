@@ -1,0 +1,30 @@
+<!--
+* @author Nazim Aliyev
+* @company Bluewolf, an IBM Company
+* @date 7/2017
+*
+* Email change confirmation page.
+-->
+<apex:page showHeader="false"
+           standardStylesheets="false"
+           sidebar="false"
+           applyBodyTag="false"
+           controller="REIDP_EmailVerificationController"
+           action="{!checkCode}"
+           title="Email Verification">
+    <apex:composition template="{!$Site.Template}">
+        <apex:define name="body">  
+            <apex:form id="theForm" styleClass="slds-scope slds-align_absolute-center form">
+                <div class="slds-m-bottom_small slds-text-align_center" style="font-size:22px; font-weight=bold; ">
+                    {!$Label.BP_Change_Email}
+                </div>
+                <br/>
+                <div class="slds-m-bottom_small slds-text-align_center" style="font-size:14px;">
+                    {!$Label.BP_Email_Change_Success_Text}
+                </div>
+                <br/>
+                <apex:outputLink style="color: black; text-decoration:none; font-size: 14px" styleClass="slds-align_absolute-center slds-m-top_small" value="/">Back</apex:outputLink>
+            </apex:form>
+        </apex:define>
+    </apex:composition>
+</apex:page>

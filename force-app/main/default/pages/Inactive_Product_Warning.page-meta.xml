@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>37.0</apiVersion>
+    <availableInTouch>true</availableInTouch>
+    <confirmationTokenRequired>false</confirmationTokenRequired>
+    <description>This page is used as Mobile Card in Opportunity page layout to show warning and all inactive products associated with opportunity.</description>
+    <label>Inactive Product Warning</label>
+</ApexPage>

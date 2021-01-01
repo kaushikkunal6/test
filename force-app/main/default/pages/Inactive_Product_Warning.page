@@ -1,0 +1,13 @@
+<apex:page standardController="Opportunity" extensions="CASFO_InactiveProductWarningController" sidebar="false" showheader="false">
+  
+  <apex:image url="{!$Resource.WarningIcon}" width="20" height="20" rendered="{!show}"/>
+  
+  {!IF(show, $Label.Opportunity_Inactive_Product_War, $Label.Opportunity_No_Inactive_Products)}
+  
+  <br/>
+  <br/>
+  
+  <apex:repeat value="{!inactiveProducts}" var="product">
+        <apex:outputText value="{!product}"/><br/>
+  </apex:repeat>
+</apex:page>

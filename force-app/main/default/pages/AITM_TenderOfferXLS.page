@@ -1,0 +1,8 @@
+<apex:page controller="AITM_TenderOfferExcelController" contentType="application/vnd.openxmlformats-officedocument.spreadsheetml.‌​sheet#Air BP Offer.xls" standardStylesheets="false" showHeader="false" cache="true" readOnly="true">
+    <apex:outputText value="{!xls.header}" escape="false"/>
+    <apex:outputText value="{!xls.headerContent}" escape="false"/>
+    <apex:outputText value="{!xls.headerAppendixContent}" escape="false"/>
+    <apex:outputText value="{!xls.headerRow}" escape="false"/> 
+    <apex:outputText value="{!xls.data}" escape="false"/>
+    <apex:outputText value="{!xls.footer}" escape="false"/> 
+</apex:page>

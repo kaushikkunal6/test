@@ -1,0 +1,108 @@
+<apex:component >
+<style type="text/css">
+
+.contect-container {
+	position:fixed;
+	left: 25%;
+	right: 25%;
+	height: 100%;
+    overflow:hidden;
+}
+.scroll-wraper{
+	width: 100%;
+    height: 90%;
+    overflow-y: scroll;
+    padding-right: 17px; 
+}
+.privacy-header{
+	font-size: 42px;
+	margin-top: 50px;
+}
+.privacy-paragraph-header{
+	font-size: 16px;
+	margin-top: 40px;
+}
+.privacy-paragraph-content{
+	font-size: 14px;
+	margin-top: 20px;
+}
+.bold-text{
+	 font-weight: bold;
+}
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
+
+</style>
+<div class="contect-container">
+	<div class="scroll-wraper">
+	<div class="privacy-header">Datenschutzerklärung</div>
+	<div class="privacy-paragraph-header bold-text">Informationen über die Kundenbefragung und beteiligte Unternehmen</div>
+	<div class="privacy-paragraph-content">
+		<p>CASTROL verwendet ein Kundenfeedback-Tool, das Bestandskunden eine Befragung zusendet, wenn diese Auslöser aktiviert werden:</p>
+		<p>(1) Ein Beschwerdevorgang wird geschlossen.</p>
+		<p>(2) Es wird eine Bestellung aufgegeben, und der Kunde wurde innerhalb der letzten 30 Tage nicht befragt.</p>
+		<p>Diese kurzen Befragungen helfen uns dabei, unser Serviceniveau und die Kundenzufriedenheit besser zu verstehen.</p>
+		<p>Die mit diesen Befragungen in Zusammenhang stehenden Informationen werden von BP International Limited, Chertsey Road, Sunbury on Thames, Middlesex, TW16 7LN, eingetragen im Vereinigten Königreich, gesammelt.</p>
+		<p>Einige Dienstleistungen wurden von BP an diese anerkannten Drittanbieter ausgelagert:</p>
+		<p>Salesforce.com ist der Anwendungs- und Cloud-Speicherplatzanbieter. Infosys ist der Support-Anbieter und IBM UK Ltd stellt das Entwicklungsteam für Live Customer Feedback.</p>
+	</div>
+
+	<div class="privacy-paragraph-header bold-text">Erfassung und Nutzung personenbezogener Daten</div>
+	<div class="privacy-paragraph-content">
+		<p>Die Teilnahme an diesen Befragungen ist freiwillig. Sie ermöglicht BP/Castrol, die Kundenzufriedenheit der Bestandskunden zu optimieren.</p>
+		<p>Die BP Customer Operations Teams können auf personenbezogene Daten zugreifen und diese nutzen, um das von Ihnen gegebene Feedback besser zu verstehen. Hinsichtlich Ihrer Erfahrungen mit BP/Castrol kontaktieren wir Sie nur, wenn Sie dazu Ihre Zustimmung gegeben haben.</p>
+		<p>Unser Customer Operations Team kann Sie auch in Verbindung mit anderen Aktivitäten kontaktieren, die mit Ihrem Feedback in Zusammenhang stehen, wie z. B. bezüglich Verbesserungen für Kunden an anderen Kontaktpunkten.</p>
+		<p class="bold-text">Indem Sie an dieser Befragung teilnehmen und auf den Button „An Befragung teilnehmen“ klicken, entscheiden Sie sich dazu, Castrol einige begrenzte personenbezogene Daten bereitzustellen, und erklären sich damit einverstanden, dass Castrol die Befragungsdaten gemäß dieser Datenschutzerklärung verarbeitet.</p>
+	</div>
+
+	<div class="privacy-paragraph-header bold-text">Datenspeicherung</div>
+	<div class="privacy-paragraph-content">
+		<p>Die Informationen aus einer Befragung werden mindestens drei Jahre ab dem Einsenden einer Befragung (oder länger, falls in Ihrem Land gesetzlich vorgeschrieben) aufbewahrt, es sei denn, Sie bitten um die Löschung der Informationen aus unserer Datenbank. Dies können Sie tun, indem Sie Ihren Castrol-Kundenbetreuer kontaktieren oder den Absender der Befragung in Ihrem Land anrufen. Weitere Details erhalten Sie unter <a href="http://www.Castrol.com/">http://www.BP/Castrol.com/</a>.</p>
+	</div>
+
+	<div class="privacy-paragraph-header bold-text">Weitergabe, Übertragung und Sicherheit personenbezogener Daten</div>
+	<div class="privacy-paragraph-content">
+		<p>Alle personenbezogenen Daten und Antworten, die Sie mit der Befragung abgeben, werden über den von CASTROL ausgewählten Dienstleister Salesforce.com gespeichert.</p>
+		<p>Deutschland gehostet: salesforce.com Germany GmbH. Erika-Mann-Straße 31–37 80636 München Hauptsitz: DE. Plattform und Software werden in Deutschland gehostet. Datensicherung und Datenwiederherstellung erfolgen im Vereinigten Königreich.</p>
+		<p>Salesforce hat Zugriff auf die in diesem System enthaltenen personenbezogenen Daten. Schriftliche Verträge, die entsprechende Standardvertragsklauseln für den Datenschutz enthalten, einschließlich Bedingungen für die Unterauftragsvergabe, sind vorhanden.</p>
+		<p>Es wurde ein tragfähiger Dienstleistungsvertrag abgeschlossen, um sicherzustellen, dass Ihre Daten ausreichend geschützt und entsprechend den erforderlichen Rechtsvorschriften behandelt werden.</p>
+		<p>Es werden geeignete technische und organisatorische Sicherheitsmaßnahmen umgesetzt, um den unbefugten Zugriff auf Ihre personenbezogenen Daten sowie deren unsachgemäße Verwendung oder Weitergabe, unbefugte Änderung, unrechtmäßige Zerstörung oder zufälligen Verlust zu verhindern.</p>
+		<p>Da CASTROL weltweit tätig ist, können Ihre Daten in andere Länder als dem Land, in dem diese Website betrieben wird, übertragen werden. Die interne Übertragung Ihrer personenbezogenen Daten innerhalb der CASTROL Gruppe wird durch CASTROLS Binding Corporate Rules geregelt und legitimiert.</p>
+		<p>Die interne Übertragung Ihrer personenbezogenen Daten innerhalb der CASTROL Gruppe wird durch CASTROLS <a href="http://www.bp.com/content/dam/bp/pdf/about-bp/privacy-statement/bp-data-privacy-rules-public-document-16-april-2010.pdf">Binding Corporate Rules</a> geregelt und legitimiert.</p>
+		<p>Wir behalten uns das Recht vor, Ihre personenbezogenen Daten gemäß gesetzlichen Vorgaben weiterzugeben oder wenn wir der Meinung sind, dass durch die Weitergabe unsere Rechte geschützt werden und/oder durch die Vorgabe eines Gerichtsverfahrens, einer gerichtlichen Anordnung, einer Aufforderung durch eine Regulierungsbehörde oder durch ein anderes rechtliches Verfahren, dem CASTROL unterliegt, erfüllt werden. Falls CASTROL übernommen, verkauft oder gekauft wird, können wir Ihre personenbezogenen Daten an den neuen Geschäftseigentümer weitergeben.</p>
+	</div>
+
+	<div class="privacy-paragraph-header bold-text">„Cookies“ und automatisch erfasste Informationen</div>
+	<div class="privacy-paragraph-content">
+		<p>Wenn Sie an einer Kundenbefragung teilnehmen, können ein oder mehrere Cookies – kleine Textdateien mit einer alphanumerischen Zeichenkette – an Ihren Computer gesendet werden. Die LCF-Anwendung kann sowohl Sitzungscookies als auch persistente Cookies verwenden. Ein Sitzungscookie verschwindet, nachdem Sie Ihren Browser schließen. Ein persistenter Cookie bleibt nach dem Schließen Ihres Browsers und kann von Ihrem Browser bei späteren Besuchen des Services genutzt werden. Persistente Cookies können entfernt werden. Informationen zur korrekten Änderung Ihrer Cookie-Einstellungen erhalten Sie in der „Hilfedatei“ Ihres Webbrowsers. Bitte beachten Sie, dass Sie eventuell nicht alle Funktionen des Prozesses nutzen können, wenn Sie Cookies löschen oder nicht akzeptieren. </p>
+	</div>
+
+	<div class="privacy-paragraph-header bold-text">Rechte natürlicher Personen</div>
+	<div class="privacy-paragraph-content">
+		<p>Als EU-Bürger haben Sie in Bezug auf die personenbezogenen Daten, die CASTROL bei den Befragungen sammelt, Anspruch auf:</p>
+		<p>•	Zugriff auf und Einsicht in eine Kopie Ihrer personenbezogenen Daten;</p>
+		<p>•	die Korrektur unvollständiger oder fehlerhafter Daten, die sich auf Sie beziehen;</p>
+		<p>•	die Löschung Ihrer personenbezogenen Daten im Falle einer widerrechtlichen Verarbeitung;</p>
+		<p>•	Widerspruch (d. h. Sie können CASTROL darum bitten, die Verarbeitung Ihrer personenbezogenen Daten für Profiling- oder Direktmarketing-Zwecke einzustellen).</p>
+		<p>Bei Ihrer Ausübung dieser Rechte können bestimmte Ausnahmen gelten.</p>
+		<p>Um Ihre personenbezogenen Daten zu ändern oder deren Löschung zu beantragen, senden Sie bitte eine E-Mail an <a href="mailto:customerservices@castrol.com">customerservices@castrol.com</a></p>
+		<p>Sie können auch:</p>
+		<p>•	Jederzeit eine vorherige Zustimmung zurückziehen, wenn Castrol als legitimer Grund zur Rechtfertigung von Verarbeitungstätigkeiten um eine Zustimmung bittet</p>
+		<p>•	Als EU-Bürger sind Sie dazu berechtigt, bei Ihrer nationalen Datenschutzbehörde Beschwerde einzureichen. Sie sollten jedoch vor einem solchen Schritt in Erwägung ziehen, auf das von der EU anerkannte und in den Binding Corporate Rules definierte Beschwerdeverfahren von Castrol zurückzugreifen. Dazu bitte klicken Sie bitte hier.</p>
+	</div>
+
+	<div class="privacy-paragraph-header bold-text">Änderungen an dieser Datenschutzerklärung</div>
+	<div class="privacy-paragraph-content">
+		<p>Diese Datenschutzerklärung wird regelmäßig überprüft und kann von BP/CASTROL bei Bedarf geändert werden. Zuletzt wurde sie am 17. Juli 2017 aktualisiert.</p>
+	</div>
+
+	<div class="privacy-paragraph-header bold-text">Kontakt:</div>
+	<div class="privacy-paragraph-content">
+		<p>Datenschutz: Sollten Sie Fragen oder Bedenken bezüglich der Behandlung Ihrer personenbezogenen Daten haben, senden Sie diese bitte per E-Mail an <a href="mailto:customerservices@castrol.com">customerservices@castrol.com</a>.</p>
+	</div>
+
+	</div>
+</div>
+</apex:component>

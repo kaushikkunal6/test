@@ -1,0 +1,115 @@
+<aura:component access="GLOBAL"
+                controller="AITM_AddLocationsController"
+                implements="force:LightningQuickActionWithoutHeader,force:hasRecordId">
+    
+    <aura:attribute name="tenderLocations" type="List" description="Contains list of locations records"/>
+    <aura:attribute name="selectedLocationId" type="Id" description="Selected Location Id" />
+    <aura:attribute name="searchTerm" type="String" description="String to search locations started with" />
+    <aura:attribute name="searchLocked" type="Boolean" description="Indicates if search is locked " />
+    <aura:attribute name="validationError" type="Boolean" description="Indicates if error message beign show" default="false"/>
+    <aura:attribute name="locations" type="List" description="Locations available for user defined by a search term" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:if isTrue="{! !empty(v.tenderLocations)}">
+
+    <div class="slds-modal__header">
+        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.close}"><lightning:icon iconName="utility:close" variant="inverse" size="small"/></button>
+        <h2 class="slds-text-heading--medium">Add Location</h2>
+    </div>
+
+    <aura:if isTrue="{!v.validationError}">
+        <ui:message title="Error" severity="error" closable="true">
+            {!$Label.c.AITM_AddLocationValidation}
+        </ui:message>
+    </aura:if>
+
+        <div class="slds-modal__content slds-p-around--medium">
+            <lightning:input aura:id="locationsInput" label="Location Name" onchange="{!c.search}" placeholder="Location, IATA, ICAO or Country" value="{!v.searchTerm}" oncommit="{!c.search}"/>
+
+            <aura:if isTrue="{! !empty(v.locations) &amp;&amp; !v.searchLocked}">
+
+                <div class="slds-lookup__menu">
+                    <ul class="slds-lookup__list">
+                        <aura:iteration items="{!v.locations}" var="location">
+                            <li>
+                                <span class="slds-lookup__item-action slds-media" id="{!location.Id}" onclick="{!c.selectLocation}" data-label="{!location.Name}">
+                                    <lightning:icon iconName="custom:custom68" size="small" class="slds-media__figure"/>
+                                    <div class="slds-media__body">
+                                        <div class="slds-lookup__result-text">{!location.Name}</div>
+                                    </div>
+                                    <span class="slds-lookup__result-meta slds-text-body--small slds-lookup-text-margin">IATA: {!location.AITM_IATA__c}</span>
+                                    <span class="slds-lookup__result-meta slds-text-body--small slds-lookup-text-margin">ICAO: {!location.AITM_ICAO__c}</span>
+                                    <span class="slds-lookup__result-meta slds-text-body--small slds-lookup-text-margin">Country: {!location.AITM_Country__c}</span>
+                                </span>
+                            </li>
+                        </aura:iteration>
+                    </ul>
+                </div>
+            </aura:if>
+            
+            <aura:if isTrue="{!v.selectedLocationId.length > 0}">
+                <h3 class="slds-text-heading--label-normal slds-m-top--small slds-m-bottom--x-small">Select the customers you want to add volume for</h3>
+
+                <aura:iteration items="{!v.tenderLocations}" var="tenderLocation">
+                    <div class="slds-box slds-theme--shade slds-m-bottom--medium">
+                        <div class="slds-grid slds-wrap slds-grid--pull-padded">
+                            <div class="slds-p-horizontal--small slds-size--1-of-12">
+                                <lightning:input type="checkbox" aura:id="checkbox{!tenderLocation.accountId}" name="{!tenderLocation.accountId}" value="{!tenderLocation.isSelected}" checked="{!tenderLocation.isSelected}" onchange="{!c.showDetails}"/>
+							</div>
+                            
+                            <div class="slds-p-horizontal--small slds-size--11-of-12">
+                                <h4 class="slds-text-heading--small">{!tenderLocation.accountName} (GRN: {!tenderLocation.accountGRN})</h4>
+                            </div>
+                        </div>
+                        
+                        <aura:if isTrue="{!tenderLocation.isSelected}">
+                            <div class="slds-grid slds-wrap slds-grid--pull-padded slds-grid_align-end">
+                                
+                                <div class="slds-p-horizontal--small slds-size--11-of-12">                                   
+                                    <label>Volume</label>
+                                    <label class="text-red"> (Note: this is volume for total contract duration)</label>
+                                    <lightning:input type="number" aura:id="tenderLocationVolume" value="{!tenderLocation.volume}" disabled="{!tenderLocation.adHocVolume}" format="###0"/>
+                                    
+                                    <lightning:input type="checkbox" label="Ad-hoc Volume" aura:id="adHocVolume" value="{!tenderLocation.adHocVolume}" checked="{!tenderLocation.adHocVolume}" name="{!'adHocVolume'+tenderLocation.accountId}" onchange="{!c.resetVolume}"/>
+                                        
+                                    <div class="slds-grid slds-grid--pull-padded-medium">
+                                        <div class="slds-p-horizontal--medium">
+                                            <lightning:input type="date" label="Start date" value="{!tenderLocation.startDate}"/>
+                                        </div>
+                                        <div class="slds-p-horizontal--medium">
+                                            <lightning:input type="date" label="End date" value="{!tenderLocation.endDate}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                    </div>
+                </aura:iteration>
+            </aura:if>
+        </div>
+        
+        <aura:if isTrue="{!v.selectedLocationId.length > 0}">
+            <div class="slds-modal__footer">
+                <lightning:button variant="neutral" label="Cancel"  onclick="{!c.close}"/>
+                <lightning:button variant="neutral" label="Save"  onclick="{!c.save}"/>
+                <lightning:button variant="brand" label="Save &amp; New" onclick="{!c.saveAndNew}"/>
+            </div>
+        </aura:if>
+
+    </aura:if>
+    <aura:if isTrue="{! empty(v.tenderLocations)}">
+        <div class="no-tender-accounts-modal" role="dialog" tabindex="-1" aria-labelledby="noTenderAccountsHeader">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <h2 id="noTenderAccountsHeader" class="slds-text-heading--medium">Customers Not Found</h2>
+                </div>
+                <div class="slds-modal__content slds-p-around--medium">
+                    <p>You need to add customers to the tender first</p>
+                </div>
+                <div class="slds-modal__footer">
+                    <lightning:button variant="neutral" label="Close" onclick="{!c.close}"/>
+                </div>
+            </div>
+        </div>
+    </aura:if>
+</aura:component>

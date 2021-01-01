@@ -1,0 +1,410 @@
+<apex:page standardController="AITM_Tender__c" extensions="AITM_TenderOfferPDFController" applyhtmltag="false" showheader="false" sidebar="false" action="{!addAttachment}" renderAs="PDF">
+<head>    
+    <apex:stylesheet value="{!URLFOR($Resource.AITM_TenderOfferPDFResources, '/style.css')}"  />
+</head>
+<div class="header">
+    <img id="logo" src="{!URLFOR($Resource.AITM_TenderOfferPDFResources, '/logo.png')}" />
+</div>
+<div class="footer-text">
+    <div>Terms are subject to the notes at the end of Appendix 1)</div>
+</div>
+<div class="footer">
+    <div>Page <span class="pagenumber"/> of <span class="pagecount"/></div>
+</div>
+<div id="pageHolder">
+    <div id="terms">
+        <center>
+        <h2 class="onepagerH2">Offer from {!offer.legalName} for {!offer.customerName} dated
+        <apex:outputText value="{0, date, dd MMMM yyyy}">
+            <apex:param value="{!offer.contractDate}" /> 
+        </apex:outputText>
+        </h2>
+        </center>
+        <h2>Offer Dated
+            <apex:outputText value="{0, date, dd MMMM yyyy}">
+                <apex:param value="{!offer.contractDate}" /> 
+            </apex:outputText>
+             between &nbsp;</h2>
+        <p>
+            (1) {!offer.legalName} (&quot;<b>BP</b>&quot;) a company incorporated in {!offer.legalCountry} having its registered office at {!offer.legalAddress}; and
+        </p>
+        <p>
+            (2) Air SERBIA ad Beograd ("Buyer") a company incorporated in Serbia having its registered office at Jurija Gagarina 12, 11070  Beograd, Serbia,
+                represented by  Duncan Naysmith, in his capacity as
+                CEO,  VAT number: 100001765, Registration number: 07044275 ;   (hereinafter the &quot;<b>Buyer</b>&quot;) ;  
+        </p>
+        <P>each a &quot;<b>Party</b>&quot; and collectively the &quot;<b>Parties</b>&quot;.</p>
+        <p>
+            THE PARTIES AGREE :
+        </p>
+        <h2>1. Location Details</h2> 
+        <p>
+            BP agrees to sell and deliver (either through itself or through an Affiliate or third party) and Buyer agrees to purchase, receive and pay or procure the purchase, receipt and payment for Fuel in accordance with the details set out in Appendix 1.
+            Appendix 1 may be amended and updated from time to time pursuant to the terms of the Agreement.
+        </p>
+        <h2>2. Duration</h2>
+        <p>
+            This Agreement is effective from the start date until the end date identified in Appendix 1 unless terminated earlier
+            under the terms of the Agreement.
+        </p>
+        <h2>3. General Terms and Conditions</h2>
+        <p>
+            All sales and supplies of Fuel and all provision of services pursuant to the Agreement are made subject to the General Terms and Conditions.  
+            Buyer confirms it has received, reviewed, and accepted the General Terms and Conditions.
+        </p>
+        <h2>4. Payment Terms</h2>
+        <p>
+           BP shall invoice and Buyer shall pay for Fuel delivered under the Agreement in <b>{!offer.offerCurrency}</b>, as further described in Appendix 1 and Section 11 of General Terms and Conditions.
+        </p>
+        <p>
+            Payments shall be made to BP&#39;s bank account:
+            <br/>Number: {!offer.bankNumber}
+            <br/>ABA number: {!offer.bankIBAN}
+            <br/>Held at: {!offer.bankName}, {!offer.bankAddress} in {!offer.bankCity}, &quot;<b>BP&#39;s Bank Account</b>&quot;.
+        </p>
+        <p>
+            {!offer.creditTerms}
+        </p>
+        <h2>5. Affiliated Companies of Buyer</h2>
+        <p>
+            The following companies are Affiliates of Buyer:
+        </p>
+        <p>
+            <apex:repeat value="{!offer.affiliates}" var="affiliate">
+                {!affiliate}<br/>
+            </apex:repeat>
+            <apex:outputText value="None" rendered="{!offer.isAffiliates}"/>
+        </p>
+        <div style="page-break-before:always">
+        </div>
+        <h2>6. Notices</h2>
+        <p>Addresses for notices :</p>
+         
+            <table style="border:0" cellspacing="0" cellpadding="0">
+                <tr><td width="60">BP:</td><td>&nbsp;{!offer.legalName}</td></tr>
+                <tr><td>Address:</td><td>&nbsp;{!offer.legalAddress}</td></tr>
+                <tr><td>Email:</td><td>&nbsp;{!offer.legalEmail}</td></tr>
+                <tr><td colspan="2">&nbsp;</td></tr>
+                <tr><td width="60px">Buyer:</td><td>&nbsp;{!offer.customerName}</td></tr>
+                <tr><td>Address:</td><td>&nbsp;{!offer.customerAddress}</td></tr>
+                <tr><td>Email:</td><td>&nbsp;{!offer.customerEmail}</td></tr>
+            </table>
+     
+        <h2>7. Governing Law and Disputes</h2>
+        <p>
+           The construction, validity and performance of the Agreement shall be governed by {!offer.tenderGovenror} Law without regard to any choice of law rules. 
+           All disputes between the Parties arising out of or in connection with the Agreement shall be finally settled through arbitration pursuant to Section 27 of the Seller&#39;s General Terms and Conditions.
+           The place of arbitration shall be {!offer.tenderArbitration}.
+        </p>
+        <p>
+            {!offer.resellers}
+        </p>
+        <h2>8. Counterparts</h2>
+        <p>
+            This Agreement may be executed in any number of counterparts which together shall constitute one agreement.
+            Any Party may enter into this Agreement by executing a counterpart and this Agreement shall not take effect until it has been executed by all Parties.
+        </p>
+        <p>Delivery of an executed signature page of a counterpart by facsimile transmission or in Adobe<SUPER>TM</SUPER> Portable Document Format (PDF) sent by electronic mail shall take effect as delivery of an executed counterpart of this Agreement. Each Party shall provide the other with the original of such page as soon as reasonably possible after signature.
+        </p>
+        <p>The Parties agree that this Agreement may be executed by electronic signature.   
+        </p>
+        <br/>&nbsp;
+        <br/>&nbsp;
+        <br/>&nbsp;
+        <br/>&nbsp;
+        <br/>&nbsp;
+        <br/>&nbsp;
+        <br/>&nbsp;
+        <br/>&nbsp;
+        <br/>&nbsp;
+        <table width="600" border="0" cellspacing="0" cellpadding="2"  style="page-break-before:auto">
+            <tr><td colspan="2" width="50%">Signed for and on behalf of</td><td>&nbsp;</td><td colspan="2" >Signed for and on behalf of</td></tr>
+            <tr><td colspan="2" width="50%">{!offer.legalName}</td>                <td>&nbsp;</td><td colspan="2" >{!offer.customerName}</td></tr>
+            <tr><td colspan="3">&nbsp;</td></tr>
+            <tr><td colspan="3">&nbsp;</td></tr>
+            <tr><td colspan="3">&nbsp;</td></tr>
+
+            <tr><td valign="top">Name</td><td valign="top">{!offer.signersName}</td>        <td>&nbsp;</td><td valign="top">Name</td><td>&nbsp;</td></tr>
+            <tr><td valign="top">Designation</td><td valign="top">{!offer.signersDesignation}</td><td>&nbsp;</td><td valign="top">Designation</td><td>&nbsp;</td></tr>
+            <tr><td valign="top">Date</td><td valign="top">{!offer.signingDate}</td>       <td>&nbsp;</td><td valign="top">Date</td><td>&nbsp;</td></tr>
+        </table>
+    </div>
+    <div class="rotated">
+        <h2 class="onepagerH2">Offer from {!offer.legalName} for {!offer.customerName} dated
+        <apex:outputText value="{0, date, dd MMMM yyyy}">
+            <apex:param value="{!offer.contractDate}" /> 
+        </apex:outputText>
+        </h2>
+        <h2 class="onepagerH2">Appendix 1</h2>
+        <apex:repeat value="{!locations}" var="location">
+            <div class="tableHolder">
+                <table cellpadding="0" cellspacing="0" class="generalTable">
+                    <colgroup>
+                        <col span="1" style="width: 20%;" />
+                        <col span="1" style="width: 15%;" />
+                        <col span="1" style="width: 15%;" />
+                        <col span="1" style="width: 13%;" />
+                        <col span="1" style="width: 13%;" />
+                        <col span="1" style="width: 13%;" />
+                        <col span="1" style="width: 11%;" />
+                    </colgroup>
+                    <tbody>
+                        <apex:repeat value="{!location.lineItemsMap}" var="dlpointKey">
+                        <tr>
+                            <td valign="top" class="headerInfo" colspan="2">
+                                <h1 class="fontsize12">{!location.IATA}, {!location.locationName} <sup>(1)</sup></h1>
+                                <h2 class="fontsize12">{!location.locationGroup}  <apex:outputText style="display: inline-block;" rendered="{!!ISBLANK(location.locationGroup)}"><sup>(2)</sup></apex:outputText></h2>
+                                <h2 class="fontsize12">{!location.locationGroup}  <apex:outputText style="display: inline-block;" rendered="{!!ISBLANK(location.locationGroup)}"><sup>(2)</sup></apex:outputText></h2>
+                            </td>
+                            <td valign="top" class="headerInfo">
+                                <h1 class="fontsize12"><b><apex:outputText value="{0, number, ###,###,###,###}"><apex:param value="{!location.totalVolume}"/></apex:outputText></b>&nbsp;<apex:outputText style="display: inline-block;" rendered="{!(location.totalVolume !=0)}"> {!location.tenderUom} </apex:outputText> 
+                                <apex:outputText style="display: inline-block;" rendered="{!!ISBLANK(location.product)}"> <span class="jetHolder">{!location.product}</span></apex:outputText></h1>
+                            </td>
+                            <td><p>&nbsp;</p></td>
+                            <td><p>&nbsp;</p></td>
+                            <td><p>&nbsp;</p></td>
+                        </tr>
+                        <tr class="headerRow">
+                            <td>
+                                <p>Customer</p>
+                            </td>
+                            <td>
+                                <p>Contract Period</p>
+                            </td>
+                            <td>
+                                <p>Volume &amp; Product <sup>(3,4)</sup></p>
+                            </td>
+                            <td>
+                                <p>Net / Gross</p>
+                            </td>
+                            <td>
+                                <p>Price <sup>(5)</sup></p>
+                            </td>
+                            <td>
+                                <p>Invoice Freq. &amp; Credit Days <sup>(6)</sup></p>
+                            </td>
+                            <td>
+                                <p>Delivery<sup>(7,8)</sup></p>
+                            </td>
+                            <td>
+                                <p>Diff / Price</p>
+                            </td>
+                        </tr>
+                        <apex:repeat value="{!location.lineItemsMap[dlpointKey]}" var="lineItem">
+                            <tr>
+                                <td valign="top" class="headerInfo">
+                                    <h1 class="fontsize12">{!lineItem.customerName}</h1>
+                                </td>
+                                <td valign="top" class="headerInfo">
+                                    <apex:outputText style="display: inline-block;" rendered="{!lineItem.startDate != ''}"><h3>{!lineItem.startDate} to {!lineItem.endDate}</h3></apex:outputText>
+                                    <h4>{!lineItem.duration}</h4>
+                                </td>
+                                <td valign="top" class="headerInfo">
+                                    <b>{!IF(lineItem.adHocVolume,'ADHOC', IF(lineItem.volume != '', lineItem.volume + " " + lineItem.requestedUom,''))}</b>  
+                                    <apex:outputText style="display: inline-block;" rendered="{!!ISBLANK(lineItem.product)}"> <span class="jetHolder">{!lineItem.product} </span></apex:outputText>
+                                </td>
+                                <td valign="top" class="headerInfo">
+                                    <p>{!lineItem.netGross}</p>
+                                </td>
+                                <td valign="top" class="headerInfo">
+                                    <h4 class="paddingTop10">{!lineItem.pricingBasisDesc}</h4>
+                                </td> 
+                                <td valign="top" class="headerInfo">
+                                    <h4 class="paddingTop10">{!lineItem.invoiceFrequency}</h4>
+                                    <apex:outputText style="display: inline-block;" rendered="{!lineItem.creditDays !=''}"><h4 class="paddingTop10">{!lineItem.creditDays}</h4></apex:outputText>
+                                </td>
+                                <td valign="top" class="headerInfo">
+                                    <h4 class="paddingTop10">Point: {!lineItem.deliveryMethod}</h4>
+                                    <h4 class="paddingTop10">Service: {!location.serviceLevel}</h4>
+                                </td>
+                                <td valign="top" class="headerInfo">
+                                    <apex:outputText style="display: inline-block;" rendered="{!!ISBLANK(lineItem.differential)}"><h1 class="fontsize12">{!lineItem.differential}</h1></apex:outputText>
+                                    <apex:outputText style="display: inline-block;" rendered="{!!ISBLANK(lineItem.differential)}"><h4>{!lineItem.lineItemCurrency}/{!lineItem.unitOfMeasure}</h4></apex:outputText>
+                                </td>
+                            </tr>
+                             <tr class="taxesAndFees">
+                                <td colspan="15">
+                                       <apex:outputText rendered="{!IF(AND(NOT(ISBLANK(lineItem.taxesAndFees)),(lineItem.selectToApplyOldTaxFees == true),NOT(lineItem.isNonRepresentedLocation)), true , false)}">
+                                         <!-- <apex:outputText rendered="{!lineItem.selectToApplyOldTaxFees}"> -->
+                                                <h2>Locations Taxes And Fees</h2>
+                                                    <apex:outputText escape="false" value="{!SUBSTITUTE(JSENCODE(HTMLENCODE(lineItem.taxesAndFees)),'\\n','<br/>')}">
+                                                    </apex:outputText> <br/>
+                                                 <apex:outputText rendered="{!IF(NOT(ISBLANK(lineItem.additionalNotes)), true , false)}">
+                                                    <br/><h2>Additional notes</h2>
+                                                        <p>
+                                                        {!lineItem.additionalNotes}
+                                                        </p>
+                                                </apex:outputText>
+                                     <!--   </apex:outputText> -->
+                                     </apex:outputText>
+                                </td>
+                            </tr> 
+                            
+                            <tr>
+                           <td colspan="8">
+                           <apex:outputText rendered="{!IF(AND(NOT(ISBLANK(lineItem.tendLocTaxFees)),NOT(lineItem.selectToApplyOldTaxFees),NOT(lineItem.isNonRepresentedLocation)), true , false)}">
+                              <!-- <apex:outputText rendered="{!!lineItem.selectToApplyOldTaxFees}"> -->
+                                    <div class="taxesAndFees">
+                                        <h2 align="left">Locations Taxes And Fees</h2>
+                                        <p> <h2>You will incur the Compulsory Taxes, Duties and Fees, as follows:</h2>
+                                        <table width="60%">
+                                       
+                                        <apex:repeat value="{!lineItem.tendLocTaxFees}" var="taxItem">
+                                            <tr>
+                                                <td width="55%">{!taxItem.name}</td>
+                                                <td width="15%">{!taxItem.AITM_Value__c}</td>
+                                                <td>{!taxItem.AITM_Display_Currency__c}/ {!taxItem.AITM_Unit_of_measure__c}</td>
+                                            </tr>
+                                        </apex:repeat>
+                                        </table><br/>
+                                        <h2>Other Conditional Taxes, Duties and Fees that may be applicable:</h2>
+                                         <table width="60%">
+                                        <apex:repeat value="{!lineItem.tendLocTaxFeesOptional}" var="taxItem">
+                                            <tr>
+                                                <td width="55%">{!taxItem.name}</td>
+                                                <td width="15%">{!taxItem.AITM_Value__c}</td>
+                                                <td>{!taxItem.AITM_Display_Currency__c}/{!taxItem.AITM_Unit_of_measure__c}</td>
+                                            </tr>
+                                        </apex:repeat>
+                                        </table><br/>
+                                        </p>
+                                            <apex:outputText rendered="{!IF(NOT(ISBLANK(lineItem.additionalNotes)), true , false)}">
+                                                <h2>Additional notes</h2>
+                                                <p>
+                                                    {!lineItem.additionalNotes}
+                                                </p>
+                                            </apex:outputText>
+                                        </div>
+                                  <!--   </apex:outputText> -->
+                                   </apex:outputText>   
+                                </td>
+                            </tr>
+                        </apex:repeat>
+                        </apex:repeat>
+                    </tbody>
+                </table>
+            </div>
+        </apex:repeat>
+    </div>
+
+    <div class="onePager">
+            <h2 class="smallH2">Notes applicable to Appendix 1</h2>
+            <apex:outputPanel rendered="{!!offer.selectToApplyOldTaxFees}">
+                <ol Class="smallText">
+                    <li>The Buyer may only request Fuel to be delivered or removed with passengers on board or embarking or disembarking,
+                        subject to the conditions set out in Section 5.5.11 and 5.5.12 of the General Terms and Conditions,
+                        at Locations marked with # in the table above.</li>
+                    <li>Relevant for Fixed, Maximum and/or Minimum Prices.</li>
+                    <li>The standard Jet A-1 Conversion Factors are as follows : 1 Cubic Metre = 0.8 Metric Tonnes, 1 US Gallon
+                        = 3.78541 Litres (USG = US Gallons, BRL = Barrels, PDS = Pounds, MT = Metric Tonnes, KG = Kilos,
+                        CM = Cubic Metres, HL = Hectolitre, LT = Litres).</li>
+                    <li>Subject to Section 4. Refer to any Additives. </li>
+                    <li>Price Reference plus Differential, per US gallon or other unit. Subject to Sections 10 and 12. Prices
+                        expressed to be Market Prices are subject to mutual review.</li>
+                    <li>Subject to Section 11. M = Monthly, F = Fortnightly, W = Weekly, BW = Bi-Weekly, D = Daily.</li>
+                    <li>Ex-Works, Into-Pipeline, Into-Storage, Into-Wing or In-Tank (as defined in the General Terms and Conditions).</li>
+                    <li>Into-Plane Services if delivery is Into-Wing (none, Level I Delivery Services, Level II Delivery Services
+                        or Level III Delivery Services, as those terms are defined in the General Terms and Conditions).
+                        Level II Delivery Services, Level III Delivery Services or any other delivery services are subject
+                        to delivery being made to one of the aircraft types set out in Appendix 2. </li>
+                    <li value="9">Prices, duties, taxes and fees cited in this message are valid on the day of issuance and therefore subject
+                        to change without notice. The duties, taxes and fees information contained in this message is purely
+                        for information purposes and provided as a guide only. This price is quoted using the IATA exchange
+                        rate on the month of pricing to calculate duties, taxes and fees information, and invoicing may be
+                        based on a different exchange rate (i.e. ECB), and or the rate on the day the invoice is generated.
+                        For further information on duties, taxes and fees, please refer to the Air BP Duties, Taxes and Fees
+                        available on www.airbp.com , alternatively please contact your Account Manager. Air BP makes no representation
+                        or warranty in respect of any of the information on duties, taxes and fees contained in this message,
+                        nor as to the availability or specification of fuel at any location on any given date. The information
+                        contained in this quotation is confidential to Air BP. You must not distribute any such information.</li>
+                    <li>Please visit&nbsp;
+                        <apex:outputLink value=" https://customers.airbp.com/airport-fees-taxes" id="theLink">https://customers.airbp.com/airport-fees-taxes</apex:outputLink> for more information on Taxes and
+                        Fees. (you will be prompted for a password to access the site)</li>
+                </ol>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!offer.selectToApplyOldTaxFees}">
+                <ol Class="smallText">
+                    <li>The Buyer may only request Fuel to be delivered or removed with passengers on board or embarking or disembarking,
+                        subject to the conditions set out in Section 5.5.11 and 5.5.12 of the General Terms and Conditions,
+                        at Locations marked with # in the table above.</li>
+                    <li>Relevant for Fixed, Maximum and/or Minimum Prices.</li>
+                    <li>The standard Jet A-1 Conversion Factors are as follows : 1 Cubic Metre = 0.8 Metric Tonnes, 1 US Gallon
+                        = 3.78541 Litres (USG = US Gallons, BRL = Barrels, PDS = Pounds, MT = Metric Tonnes, KG = Kilos,
+                        CM = Cubic Metres, HL = Hectolitre, LT = Litres).</li>
+                    <li>Subject to Section 4. Refer to any Additives. </li>
+                    <li>Price Reference plus Differential, per US gallon or other unit. Subject to Sections 10 and 12. Prices
+                        expressed to be Market Prices are subject to mutual review.</li>
+                    <li>Subject to Section 11. M = Monthly, F = Fortnightly, W = Weekly, BW = Bi-Weekly, D = Daily.</li>
+                    <li>Ex-Works, Into-Pipeline, Into-Storage, Into-Wing or In-Tank (as defined in the General Terms and Conditions).</li>
+                    <li>Into-Plane Services if delivery is Into-Wing (none, Level I Delivery Services, Level II Delivery Services
+                        or Level III Delivery Services, as those terms are defined in the General Terms and Conditions).
+                        Level II Delivery Services, Level III Delivery Services or any other delivery services are subject
+                        to delivery being made to one of the aircraft types set out in Appendix 2. </li>
+                </ol>
+            </apex:outputPanel>
+            <!-- Modified by Thanuja for New T&F 648831 -->
+            <!-- END Thanuja changes for T&F -->
+        </div>
+    <div class="onePager">
+        <h2 class="onepagerH2">Offer between {!offer.legalName} and {!offer.customerName} dated
+            <apex:outputText value="{0, date, dd MMMM yyyy}">
+                <apex:param value="{!offer.contractDate}" /> 
+            </apex:outputText>
+        </h2>
+        <h2 class="onepagerH2">Appendix 2</h2>
+        <p>Additional Delivery Services will be provided <u>only</u> at the following Locations and for the following types of Aircraft:</p>
+        <table cellpadding="0" cellspacing="0" class="deliveryTable">
+            <tbody>
+                <tr class="header">
+                    <td colspan="2">
+                        <p>Location</p>
+                    </td>
+                    <td>
+                        <p>Aircraft Type</p>
+                    </td>
+                    <td>
+                        <p>Level of ADS</p>
+                    </td>
+                    <td>
+                        <p>Start &amp; end date</p>
+                    </td>
+                </tr>
+                <apex:repeat value="{!locations}" var="location" rendered="{!AdditionalServicesAvailable}">
+                    <apex:outputPanel layout="none" rendered="{!location.AdditionalServicesAvailable}">
+                        <tr>
+                            <td>
+                                <p>{!location.IATA}</p>
+                            </td>
+                            <td>
+                                <p>{!location.locationName}</p>
+                            </td>
+                            <td>
+                                <p>{!location.aircraftType}</p>
+                            </td>
+                            <td>
+                                <p>{!location.deliveryServices}</p>
+                            </td>
+                            <td>
+                                <p>{!location.locationDuration}</p>
+                            </td>
+                        </tr>
+                    </apex:outputPanel>
+                </apex:repeat>
+            </tbody>
+        </table>
+        <p><apex:outputText rendered="{!!AdditionalServicesAvailable}">No Additional Delivery Services.</apex:outputText></p>  
+    </div> 
+    <div class="onePager">
+        <h2 class="onepagerH2">Offer Document between {!offer.legalName} and {!offer.customerName} dated 
+        <apex:outputText value="{0, date, dd MMMM yyyy}">
+        <apex:param value="{!offer.contractDate}"/> 
+        </apex:outputText>
+        </h2>
+        <h2 class="onepagerH2">Appendix 3</h2>
+        <h2 class="onepagerH2">Material Safety Data Sheet</h2>
+        <p>Jet A-1                 SAV2101</p>
+        <p>Jet A-1                 SAV2102</p>
+        <p>Jet A-1                 SAV2105</p>
+    </div>
+</div>
+</apex:page>

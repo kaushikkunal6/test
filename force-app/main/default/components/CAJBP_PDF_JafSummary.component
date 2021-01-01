@@ -1,0 +1,33 @@
+<apex:component id="CAJBP_PDF_JafSummary">
+    <apex:attribute name="jaf" description="The context jaf payload." required="true" type="Object"/>
+
+    <apex:variable var="" value="" rendered="{!NOT(ISBLANK(jaf))}">
+        <div class="cajbp-table-break cajbp-summary">
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="label">{!$ObjectType.CAJBP_Distributor_Joint_Activity_Fund__c.Fields.CAJBP_Castrol_Contribution_Amount__c.Label}:</span><br/>{!jaf['currencyIsoCode']}&nbsp;<apex:outputText value="{!jaf['castrolContribution']}"/>&nbsp;</td>
+                        <td><span class="label">{!$ObjectType.CAJBP_Distributor_Joint_Activity_Fund__c.Fields.CAJBP_Partner_Contribution_Amount__c.Label}:</span><br/>{!jaf['currencyIsoCode']}&nbsp;<apex:outputText value="{!jaf['partnerContribution']}"/>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td><span class="label">{!$ObjectType.CAJBP_Distributor_Joint_Activity_Fund__c.Fields.CAJBP_Total_Joint_Activity_Fund__c.Label}:</span><br/>{!jaf['currencyIsoCode']}&nbsp;<apex:outputText value="{!jaf['totalFund']}"/>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td><span class="label">{!$ObjectType.CAJBP_Distributor_Joint_Activity_Fund__c.Fields.CAJBP_Estimated_Spend__c.Label}:</span><br/>{!jaf['currencyIsoCode']}&nbsp;<apex:outputText value="{!jaf['estimatedSpend']}"/>&nbsp;</td>
+                        <td><span class="label">{!$ObjectType.CAJBP_Distributor_Joint_Activity_Fund__c.Fields.CAJBP_Actual_Spend__c.Label}:</span><br/>{!jaf['currencyIsoCode']}&nbsp;<apex:outputText value="{!jaf['actualSpend']}"/>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td><span class="label">{!$ObjectType.CAJBP_Distributor_Joint_Activity_Fund__c.Fields.CAJBP_Estimated_Balance_Remaining__c.Label}:</span><br/>{!jaf['currencyIsoCode']}&nbsp;<apex:outputText value="{!jaf['estimatedRemaining']}"/>&nbsp;</td>
+                        <td><span class="label">{!$ObjectType.CAJBP_Distributor_Joint_Activity_Fund__c.Fields.CAJBP_Actual_Balance_Remaining__c.Label}:</span><br/>{!jaf['currencyIsoCode']}&nbsp;<apex:outputText value="{!jaf['actualRemaining']}"/>&nbsp;</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </apex:variable>
+</apex:component>

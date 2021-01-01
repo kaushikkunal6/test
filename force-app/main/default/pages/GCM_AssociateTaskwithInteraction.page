@@ -1,0 +1,64 @@
+<apex:page standardController="Task" extensions="GCM_LinkInteractionDetails" showHeader="false" docType="html-5.0" lightningStylesheets="true">
+    <apex:includeScript value="/support/console/47.0/integration.js"/>
+    <apex:slds />
+    
+    <script type="text/javascript">
+    function reloadWin(){
+        console.log('Reload window');
+        location.reload();
+    }
+    
+    var callbackTask = function(result) { 
+        if (result.success) { 
+            reloadWin();
+            console.log('The custom event fired successfully!');
+        } else { 
+            console.log('The custom event could not be fired!');
+        } 
+    };
+    
+    
+    function reloadComponent() { 
+        refreshPage();
+    }
+    
+    window.onload=function()      
+    {        
+        console.log('on load vf');
+    };
+    </script>
+    <body>
+        <apex:outputPanel id="selectedScript">
+            <script>
+                function fireCustomEvent() { 
+                    //Fire an event of type 'AssociateTask'
+                    var caseId = '{!taskRec.WhatId}';
+                    console.log('case Id' + caseId);
+                    var e = document.getElementsByClassName("chartBlock")[0];
+                    var interactionId = e.options[e.selectedIndex].value;
+                    console.log('interactionId' + interactionId);
+                    var casId = caseId.startsWith("500",0)? '{!taskCaseRec.Id}' : '';
+                    console.log('casId' + casId);
+                    var casNumber = caseId.startsWith("500",0)? '{!taskCaseRec.CaseNumber}' : '';
+                    console.log('casNumber' + casNumber);
+                    sforce.console.fireEvent('AssociateTask', JSON.stringify({taskId:'{!taskRec.Id}',accName:'{!taskRec.GCM_Account__r.Name}',conName:'{!taskRec.Who.Name}' ,caseId:casId ,caseNumber:casNumber ,interactionId : interactionId }), callbackTask);
+                }
+            </script>
+        </apex:outputPanel>
+        <apex:form id="interactionForm">  
+            <apex:actionFunction name="refreshPage" oncomplete="reloadWin();" rerender="selected"/>
+            <apex:selectList value="{!interactionId}" size="1" styleclass="chartBlock">
+                <apex:selectOptions value="{!interactionDisplayList}"></apex:selectOptions>
+                <apex:actionSupport event="onchange" action="{!pageLoad}" rerender="interactionForm,cmdButton"/> 
+            </apex:selectList>
+            <apex:outputPanel id="selected"/>
+            <br/><br/>
+            <apex:commandbutton id="cmdButton" disabled="{!If(disableButton,true, false)}" action="{!associateCaseToTask}" oncomplete="fireCustomEvent();" value="Link Interaction" rerender="selectedScript"/>
+            <apex:commandbutton id="rfshButton" action="{!pageLoad}" oncomplete="reloadComponent();"  value="Refresh"/>
+            
+            <apex:outputPanel id="pageMsgs">
+                <apex:pageMessages ></apex:pageMessages>
+            </apex:outputPanel>
+        </apex:form> 
+    </body>
+</apex:page>

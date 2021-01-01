@@ -1,0 +1,56 @@
+<apex:component id="CAJBP_PDF_ProductMixPercentageQuarterly">
+    <apex:attribute name="currencyIsoCode" description="The currency for the rebates." type="String"/>
+    <apex:attribute name="rebates" description="The context rebates to render." type="Object[]"/>
+
+    <apex:variable var="" value="" rendered="{!AND(NOT(ISBLANK(rebates)), rebates.size > 0)}">
+        <div class="cajbp-table-break cajbp-rebates">
+            <apex:repeat value="{!rebates}" var="rebate">
+                <table>
+                    <thead>
+                        <colgroup>
+                            <col style="width: 150px;"></col>
+                            <col></col>
+                            <col></col>
+                        </colgroup>
+                        <tr>
+                            <td rowspan="1" style="background-color: #FFFFFF; border: 0px solid  #FFFFFF;"></td>
+                            <th colspan="2" style="background-color: #3F87A6; text-align: left; color: #FFFFFF; text-align: center;">{!rebate['recordTypeName']}</th>
+                        </tr>
+                        <tr>
+                            <td rowspan="1" style="background-color: #FFFFFF; border: 0px solid  #FFFFFF;"></td>
+                            <th colspan="2" style="background-color: #3F87A6; text-align: left; color: #FFFFFF; text-align: center;">{!rebate['product']}</th>
+                        </tr>
+                        <tr>
+                            <td rowspan="1" style="background-color: #FFFFFF; border: 0px solid  #FFFFFF;"></td>
+                            <th style="background-color: #3F87A6; text-align: left; color: #FFFFFF; text-align: center;">{!$Label.CAJBP_PDF_Target_Volume}</th>
+                            <th style="background-color: #3F87A6; text-align: left; color: #FFFFFF; text-align: center;">{!$Label.CAJBP_PDF_Target_Percentage} (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th style="background-color: #3F87A6; text-align: left; color: #FFFFFF;"><span>{!$Label.CAJBP_PDF_Q1}</span></th>
+                            <td><span><apex:outputText value="{!rebate['q1Volume']}"/></span></td>
+                            <td><span><apex:outputText value="{!rebate['q1Percentage']}"/></span></td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #3F87A6; text-align: left; color: #FFFFFF;"><span>{!$Label.CAJBP_PDF_Q2}</span></th>
+                            <td><span><apex:outputText value="{!rebate['q2Volume']}"/></span></td>
+                            <td><span><apex:outputText value="{!rebate['q2Percentage']}"/></span></td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #3F87A6; text-align: left; color: #FFFFFF;"><span>{!$Label.CAJBP_PDF_Q3}</span></th>
+                            <td><span><apex:outputText value="{!rebate['q3Volume']}"/></span></td>
+                            <td><span><apex:outputText value="{!rebate['q3Percentage']}"/></span></td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #3F87A6; text-align: left; color: #FFFFFF;"><span>{!$Label.CAJBP_PDF_Q4}</span></th>
+                            <td><span><apex:outputText value="{!rebate['q4Volume']}"/></span></td>
+                            <td><span><apex:outputText value="{!rebate['q4Percentage']}"/></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br/>
+            </apex:repeat>
+        </div>
+    </apex:variable>
+</apex:component>

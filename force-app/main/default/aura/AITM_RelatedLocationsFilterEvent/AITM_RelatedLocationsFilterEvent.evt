@@ -1,0 +1,14 @@
+<aura:event type="APPLICATION" description="Event which is fired when filters applied on relatedlocationsholder component">
+    <aura:attribute name="filter" 
+                    type="Object" 
+                    description="Contains filter information"
+    />
+    <aura:attribute name="tenderId" 
+                    type="String" 
+                    description="Id of the tender for which tender location is required to be shown"
+    />
+	<aura:attribute name="roundNumber" 
+                    type="Integer" 
+                    description="Contains round number"
+    />
+</aura:event>

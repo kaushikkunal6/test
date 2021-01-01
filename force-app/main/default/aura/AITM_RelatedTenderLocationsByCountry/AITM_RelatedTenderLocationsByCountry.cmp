@@ -1,0 +1,70 @@
+<aura:component controller="AITM_RelatedTenderLocationsSummaryCtrl" access="global">
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:attribute name="recordId" type="String" description="Record Id - Tender Id for locations list load" />
+    <aura:attribute name="locations" type="List" description="Contains list of location records - tender locations" />
+    <aura:attribute name="location" type="Object" description="Contains selected location record - tender location" />
+    <aura:attribute name="selectedRound" type="String" description="Contains info regarding selected round" />
+    <aura:attribute name="showTLLI" type="Boolean" description="Show Tender Location Line Items section on this page?" default="false"/>
+    <aura:attribute name="showSpinner" type="Boolean" default="true"/>
+    <aura:attribute name="selectedCountry" type="String" description="Contains info regarding selected country" />   
+    <aura:dependency resource="markup://c:AITM_RelatedTenderLocationLineItems"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="force:refreshView" action="{!c.doInit}" />
+    <aura:handler event="c:AITM_RelatedRecordsFilterEvent" action="{!c.handleFilterEvent}" />
+    <aura:handler event="c:AITM_CustomTenderPathStageCompleted" action="{!c.handleChangeStageEvent}" />
+	
+    <aura:if isTrue="{!v.showSpinner}">
+    	<lightning:spinner aura:id="relatedLocationSpinner" id="{!GlobalId + '-spinner'}"/>
+    </aura:if>
+    
+    <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+        <thead>
+            <tr class="slds-text-title_caps"> 
+                <th scope="col">
+                    <div class="slds-truncate" title="COUNTRY">COUNTRY</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="TOTAL NO. LOCATIONS">TOTAL NO. LOCATIONS</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="TOTAL REQUESTED VOLUME USG">TOTAL REQUESTED
+                        <br/> VOLUME (USG)</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="TOTAL OFFERED VOLUME USG">TOTAL OFFERED <br/> VOLUME (USG)</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="STATUS">STATUS</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <aura:iteration items="{!v.locations}" var="location">
+                <tr>
+                    <td data-label="COUNTRY">
+                        <a class="slds-truncate" title="{!location.country}" href="javascript:void(0)" onclick="{!c.showCountryWiseLineItems}" data-country="{!location.country}" data-location="{!location}">{!location.country}</a>
+                    </td>
+                    <td data-label="TOTAL NO. LOCATIONS">
+                        <div class="slds-truncate" title="{!location.totalNumberOfLocations}">{!location.totalNumberOfLocations}</div>
+                    </td>
+                    <td data-label="TOTAL REQUESTED VOLUME USG">
+                        <ui:outputNumber value="{!location.totalVolumeUSG}"/>
+                    </td>
+                    <td data-label="TOTAL OFFERED VOLUME USG">
+                        <ui:outputNumber value="{!location.totalOfferedVolumeUSG}"/>
+                    </td>
+                    <td data-label="STATUS">
+                        <div class="slds-truncate" title="{!location.status}">{!location.status}</div>
+                    </td>
+                </tr>
+                <aura:if isTrue="{!v.location != null &amp;&amp;v.selectedCountry == location.country}">
+                    <tr>
+                        <th colspan="6">    
+                           <c:AITM_RelatedTenderLocationLineItems recordId="{!v.recordId}" selectedCountry="{!v.selectedCountry}" selectedRound="{!v.selectedRound}" showTLLI="{!v.location != null &amp;&amp;v.selectedCountry == location.country?true:false}" />
+                        </th>
+                    </tr>
+                </aura:if>
+            </aura:iteration>
+        </tbody>
+    </table>
+</aura:component>

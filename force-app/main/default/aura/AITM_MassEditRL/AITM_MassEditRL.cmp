@@ -1,0 +1,173 @@
+<aura:component controller="AITM_MassEditRLCtrl">
+
+    <aura:attribute name="relatedList" type="Map" description="a single RL"/>
+    <aura:attribute name="records" type="Map" description="records pulled from apex"/>
+    <aura:attribute name="recordId" type="Id"/>
+    <aura:attribute name="sObjectName" type="string"/>
+    <aura:attribute type="String" name="myDomain" />
+    <aura:attribute name="maxRowCount" type="String" default="30"/>
+    <aura:attribute name="hideNonUpdateable" type="Boolean" default="false"/>
+    <aura:attribute name="displayPicklistAsText" type="Boolean" default="false"/>
+    <aura:attribute name="displaySaveStatus" type="Boolean" default="false"/>
+    <aura:attribute name="isUnsavedRecords" type="Boolean" default="false"/>
+    <aura:attribute name="displayCreateRowButton" type="Boolean" default="true"/>
+    <aura:attribute name="isComponentDisable" type="Boolean" default="false"/>
+    <aura:attribute name="searchAndReplace" type="Map" description="contains search and replace parameters" default="{searchFor:'',replaceBy:'',isCaseSensitive:false,colValue:'All columns',columns:[{value:'All columns',label:'All columns'}]}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    <aura:attribute name="taxesList" type="AITM_Tender_Location_Taxes_and_Fees__c[]"/>
+    <aura:attribute name="comcon" type="List" default="[ 'Compulsory', 'Conditional' ]"/>
+    <aura:attribute name="fueltype" type="List" default="[ 'Jet', 'Avgas','Jet A1/Biojet','UL91' ]"/>
+    <aura:attribute name="isAddRowOpen" type="Boolean" default="false"/>
+    <aura:attribute name="selected" type="boolean" default=""/>
+    <aura:attribute name="currencyList" type="String[]" default=""/>
+    <aura:attribute name="alreadyInsertedTaxesNames" type="String[]" default=""/>
+    <aura:method name="refreshData" action="{!c.doInit}" description="reload rows in related list"> 
+    </aura:method>
+    
+    
+    
+      <lightning:card class="slds-card_boundary">
+        <aura:set attribute="title">
+            <lightning:spinner aura:id="loadingSpinner" size="medium" alternativeText="loading" />
+            {!v.relatedList.label}
+        </aura:set>
+        
+       	<aura:set attribute="actions">
+            <div class="{!v.isComponentDisable ? 'slds-hide' : 'slds-p-around_medium'}" >
+                <lightning:button iconName="utility:add" variant="{!v.isUnsavedRecords ? 'neutral':'neutral'}" label="Add New" onclick="{! c.addRow }" class="slds-m-bottom_xx-small sld-hide" />
+                <lightning:button iconName="utility:save" variant="{!v.isUnsavedRecords ? 'destructive':'neutral'}" label="Save" onclick="{! c.save }" class="slds-m-bottom_xx-small sld-hide" />
+            </div>  
+        </aura:set>  
+
+        <aura:if isTrue="{!v.isAddRowOpen}">
+          <div class="container-fluid" styleclass="100%">
+            <table class="slds-table slds-table_bordered slds-table_cell-buffer"> 
+               <thead>
+                    <tr class="slds-text-title_caps">
+                        <!--<th scope="col">
+                            <div class="slds-truncate">#</div>
+                        </th>-->
+                        <th scope="col">
+                            <div class="slds-truncate" title="TENDER LOCATION TAXES AND FEES NAME">TENDER LOCATION TAXES AND FEES NAME</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="COMPULSORY/CONDITIONAL">COMPULSORY/CONDITIONAL</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="FUEL TYPE">FUEL TYPE</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="VALUE">VALUE</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="CURRENCY">CURRENCY</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="UNIT OF MEASURE">UNIT OF MEASURE</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="SELECT TO APPLY IN OFFER AND CONTRACT">APPLY IN OFFER AND CONTRACT</div>
+                        </th>
+                    </tr>
+                </thead>  
+                <tbody>      
+                    <aura:iteration items="{!v.taxesList}" var="tax" indexVar="index">
+                        <tr>
+                           <!-- <td> 
+                                {!index + 1}
+                            </td>-->
+                            <td style="width:280px">
+                                <lightning:input aura:id="feename" style="width:280px;" name="taxname" type="text" maxlength="80" placeholder="Enter fee name" value="{!tax.Name}" />
+                            </td>
+                            <td style="width:212px">
+                                <div style="width:190px">
+                                    <lightning:select aura:id="comcon" name="{!index}" onchange="{!c.onSelectComCon}" value="{!tax.AITM_Compulsory_Conditional__c}">
+                                        <option value="-None-">-None-</option>
+                                        <aura:iteration items="{!v.comcon}" var="value">
+                                            <option value="{!value}">{!value}</option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </div>
+                            </td>
+                            <td style="width:160px">
+                                <div style="width:140px">
+                                    <lightning:select aura:id="fueltype" name="{!index}" onchange="{!c.onSelectFuelType}" value="{!tax.AITM_Fuel_Type__c}">
+                                        <option value="-None-">-None-</option>
+                                        <aura:iteration items="{!v.fueltype}" var="value">
+                                            <option value="{!value}">{!value}</option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </div>
+                            </td>
+                            <td style="width:160px">
+                                <lightning:input style="width:142px" name="value" type="number" step="0.00001" placeholder="Enter value" value="{!tax.AITM_Value__c}" />
+                            </td>
+                            <td style="width:150px">
+                                <div style="width:145px">
+                                    <lightning:select aura:id="currency" name="{!index}" onchange="{!c.onSelectCurrency}" value="{!tax.AITM_Display_Currency__c}">
+                                        <option value="">-None-</option>
+                                        <aura:iteration items="{!v.currencyList}" var="value">
+                                            <option value="{!value}">{!value}</option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </div>
+                                <!--<lightning:input name="currency" type="text" maxlength="5" placeholder="Enter currency" value="{!tax.AITM_Display_Currency__c}" />-->
+                            </td>
+                            <td style="width:170px">
+                                <lightning:input style="width:153px" name="measure" type="text" maxlength="50" placeholder="Enter unit measure" value="{!tax.AITM_Unit_of_measure__c}" />
+                            </td>
+                            <td>
+                                <lightning:input aura:id="addIn" name="{!index}" type="checkbox" onchange="{!c.onSelectAddInCheckbox}" checked="true" value="{!v.AITM_Select_to_Apply_in_Contract__c}" />
+                            </td>
+                            <td>
+                                <a onclick="{!c.removeRow}" data-record="{!index}">
+                                    <lightning:icon iconName="utility:delete" size="small" alternativeText="Delete"/>
+                                    <span class="slds-assistive-text">Delete</span>
+                                </a>
+                            </td> 
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+              </table>
+          </div>
+        </aura:if>
+          
+         <div class="slds-p-horizontal_small" styleclass="100%">
+            <table class="slds-table slds-table_bordered relatedlist" >
+             <thead>   
+                 <tr class="slds-text-title_caps">
+                 <aura:iteration items="{!v.relatedList.columns}" var="col">
+                   <th style="min-width:90px;" scope="col" class="{!col.isVisible==false || col.fieldType == 'CALCULATED' || and(col.isUpdateable==false, v.hideNonUpdateable) ? 'slds-hide' : 'cellPadding'}" >
+                       <div>{!col.label}</div>
+                    </th>
+                 </aura:iteration>
+                 <th scope="col"></th>
+                 <th scope="col" class="{!v.displaySaveStatus ? 'shrink' : 'slds-hide'}"></th>     
+                 </tr>
+             </thead>
+                <tbody>   
+                    <aura:iteration items="{!v.records}" var="row" indexVar="indexRow">
+                        <tr class="{!row.isVisible ? ' ' : 'slds-hide'}">
+                            <aura:iteration items="{!row.cells}" var="cell">   
+                                <td class="{!cell.isVisible==false || cell.fieldType == 'CALCULATED' || and(cell.isUpdateable==false, v.hideNonUpdateable) ? 'slds-hide' : 'cellPadding'}">
+                                    <c:AITM_MassEditInput type="{!v.displayPicklistAsText ? 'standard' : cell.inputMainType}" subType="{!cell.inputSubType}" isComponentDisable="{!v.isComponentDisable}" value="{!cell.value}" selectOptions="{!cell.picklistOptions}" isLocked="{!!cell.isEditable}" objectsForLookupField="{!cell.relationship.objects}" isEditable="false" change="{!c.onFieldChange}"/>
+                                </td>
+                            </aura:iteration>
+                          <!--  <td> 
+                                <lightning:buttonIcon iconName="utility:copy" value="{!indexRow}" variant="standard" alternativeText="Clone row" iconClass="dark" onclick="{!c.cloneRow}" class="{!v.relatedList.isRowCreateable ? ' ' : 'slds-hide'}"/>
+                                <lightning:buttonIcon iconName="utility:delete" value="{!indexRow}" variant="standard" alternativeText="Delete row" iconClass="dark" onclick="{!c.deleteRow}" class="{!v.relatedList.isRowDeleteable ? ' ' : 'slds-hide'}"/>
+                            </td>-->
+                            <td class="{!v.displaySaveStatus ? 'shrink' : 'slds-hide'}">
+                                <c:AITM_MassEditToolTip message="{!row.DMLMessage}" iconName="utility:error" tipSide="left" iconVariant="error" iconSize="x-small" class="{!row.DMLError ? 'slds-show_inline' : 'slds-hide'}" tipBGColor="rgb(194, 57, 52);"/>
+                                <lightning:icon iconName="utility:success" size="x-small" class="{!row.DMLError ? 'slds-hide' : 'successIconColor'}"/> 
+                            </td>
+                        </tr>    
+                    </aura:iteration>   
+            </tbody>
+            </table>
+            
+        </div>
+      </lightning:card>
+    
+    
+</aura:component>

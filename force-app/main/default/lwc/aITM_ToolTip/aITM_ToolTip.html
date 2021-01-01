@@ -1,0 +1,16 @@
+<template>
+    <div style="position:absolute; word-wrap:break-word;" class="slds-glutters">
+        <div class="slds-popover slds-popover_tooltip slds-nubbin_top-left toolTipCSS" role="tooltip" id="help">
+            <div class="slds-popover__body">
+                <lightning-formatted-text value = {toolTipContent}>
+                </lightning-formatted-text>
+                <template if:true={toolTipContentSecond}>
+                    <div>
+                        <lightning-formatted-text value = {toolTipContentSecond}>
+                        </lightning-formatted-text>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+</template>

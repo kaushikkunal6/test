@@ -1,0 +1,57 @@
+<apex:component >
+
+    <apex:attribute name="titleValue" description="This is the value for the component." type="String" required="true"/>
+    <apex:attribute name="countryValue" description="This is the value for the component." type="String" required="true"/>  
+    <apex:attribute name="countryValueEn" description="This is the value for the component." type="String" required="true"/> 
+    <apex:attribute name="caseId" description="This is the value for the component." type="String" required="false"/>
+    <apex:attribute name="contactId" description="This is the value for the component." type="String" required="false"/>
+    <apex:attribute name="orderRef" description="This is the value for the component." type="String" required="false"/>
+    <apex:attribute name="templateId" description="This is the value for the component." type="String" required="false"/>
+    <apex:attribute name="refTemplate" description="This is the value for the component." type="String" required="false"/>
+    <apex:attribute name="surveyId" description="This is the value for the component." type="String" required="false"/>
+    <apex:attribute name="preview" description="This is the value for the component." type="String" required="false"/>
+    <apex:attribute name="language" description="This is the value for the component." type="String" required="false"/>
+    <apex:attribute name="secondLng" description="This is the value for the component." type="String" required="false"/>
+    <apex:attribute name="salesOrg" description="This is the value for the component." type="String" required="false"/>
+    <apex:attribute name="thankYouRendered" description="This is the value for the component." type="Boolean" required="false"/>
+    <apex:attribute name="lowScoreRendered" description="This is the value for the component." type="Boolean" required="false"/>
+        <!--[if lt IE 9]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <div class="clearfix">
+    <div class="header">
+        <div class="overflow-left"></div>
+        <div class="header-middle">
+            <div class="roundel"></div>
+            <div class="logo-container">
+                <div class="logo"></div>
+                <div class="separator"></div>
+                <h2 class="title"><apex:outputText value="{!titleValue}"/></h2>
+            </div>
+            <div class="globe-container">
+                <h3 class="country"><apex:outputText value="{!IF(AND(language='EN', countryValueEn !=''),countryValueEn,countryValue)}"/></h3>
+                <apex:outputPanel rendered="{!refTemplate!=''}" >
+                    <p class="languageCode selected">{!language}
+                    </p>
+                    <apex:outputLink styleClass="languageCode" value="/apex/Survey">{!secondLng}
+                        <apex:param name="tId" value="{!refTemplate}"/>
+                        <apex:param name="lng" value="{!language}"/>
+                        <apex:param name="caId" value="{!caseId}"/>
+                        <apex:param name="cId" value="{!contactId}"/>
+                        <apex:param name="oRef" value="{!orderRef}"/>
+                        <apex:param name="Id" value="{!surveyId}"/>
+                        <apex:param name="preview" value="{!preview}"/>
+                        <apex:param name="rtId" value="{!templateId}"/>
+                        <apex:param name="sOrg" value="{!salesOrg}"/>
+                        <apex:param name="thanks" value="{!IF((thankYouRendered), 'true', 'false')}"/>
+                        <apex:param name="sry" value="{!IF((lowScoreRendered), 'true', 'false')}"/>
+                    </apex:outputLink>
+                </apex:outputPanel>
+                <div class="globe" ng-click='toggleLang()'></div>
+            </div>
+        </div>
+        <div class="overflow-right"></div>
+    </div>
+    </div>
+
+</apex:component>

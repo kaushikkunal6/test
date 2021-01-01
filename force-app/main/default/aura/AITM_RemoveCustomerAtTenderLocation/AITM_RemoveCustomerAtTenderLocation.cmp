@@ -1,0 +1,69 @@
+<aura:component implements="force:LightningQuickActionWithoutHeader,force:hasRecordId" controller="AITM_RemoveCustomerAtTenderLocation" description="Component used to remove customer for the tender and related records">
+	<aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="tenderLocationWrapper" type="Object" />
+    <aura:attribute name="saveLocked" type="Boolean" description="Indicates if save button will not trigger new" default="false"/>
+    <aura:attribute name="tenderLocations" type="List" description="Contains list of locations records"/>
+    <aura:attribute name="validationMessage" type="Boolean" description="Fires when the data doesn't exist in Account"/>
+    <aura:attribute name="customerToRemove" type="Id"/>
+    <aura:attribute name="customerRemove" type="Boolean" default="false" />
+    <aura:attribute name="isWarningMsg" type="boolean" default="false" />
+    <aura:attribute name="ispopupWindow" type="boolean" default="false" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div class="slds-modal__header">
+        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.close}"><lightning:icon iconName="utility:close" variant="inverse" size="small"/></button>
+        <h2 class="slds-text-heading--medium">Remove Customer(s) from Current Location</h2>
+    </div>
+	<aura:if isTrue="{!!v.customerRemove}">
+    <div>
+        Current Location: <lightning:formattedText class="slds-output" value="{!v.tenderLocationWrapper[0].locationName}" /> (IATA/ICAO: <lightning:formattedText class="slds-output" value="{!v.tenderLocationWrapper[0].locationCode}" />)
+    </div>    
+    <h3 class="slds-text-heading--label-normal slds-m-top--small slds-m-bottom--x-small">Select the customer(s) to remove from the Tender Location: </h3>
+        <div class="slds-modal__content slds-p-around--medium">        
+            <aura:iteration items="{!v.tenderLocationWrapper}" var="tenderLocation">
+                <div class="slds-box slds-theme--shade slds-m-bottom--medium">
+                    <div class="slds-grid slds-wrap slds-grid--pull-padded">
+                        <div class="slds-p-horizontal--small slds-size--1-of-12 slds-grid slds-wrap">
+                            <lightning:input type="checkbox" aura:id="accountId" value="{!tenderLocation.accountId}" name="{!tenderLocation.accountId}" checked="{!tenderLocation.isSelected}" onchange="{!c.showDetails}"/>
+                        </div>
+                        <div class="slds-p-horizontal--small slds-grid slds-wrap">
+                            <h3 class="slds-text-heading--small">{!tenderLocation.accountName}</h3>
+                            <h2 class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_8-of-12"> GRN: {!tenderLocation.accountGRN}</h2>
+                            <h2 class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12"> AFFILIATES OF: {!tenderLocation.affiliates}</h2>                                 
+                        </div>
+                    </div>
+                 </div>
+            </aura:iteration>
+        </div>
+    </aura:if>
+    <aura:if isTrue="{!v.customerRemove}">
+        <h2 class="slds-text-heading--label-normal slds-m-top--small slds-m-bottom--x-small">No Customers To Remove in this Tender Location. </h2>
+    	<aura:set attribute="else">
+            <div class="slds-modal__footer" aura:id="Modalbox">
+                <lightning:button variant="neutral" disabled="{!v.customerRemove}" label="Cancel"  onclick="{!c.close}"/>
+                <lightning:button variant="brand" name="Remove" disabled="{!v.customerRemove}" label="Remove"  onclick="{!c.delete}"/>
+            </div>
+        </aura:set>
+    </aura:if>
+    <aura:if isTrue="{!v.ispopupWindow}">
+        <div class="slds-backdrop " aura:id="Modalbackdrop"></div>
+        <div class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__header">
+                <!--<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.close}"><lightning:icon iconName="utility:close" variant="inverse" size="small"/></button> -->
+                <lightning:buttonIcon iconName="utility:close"
+                                      onclick="{!c.closeModel}"
+                                      alternativeText="close"
+                                      variant="bare-inverse"
+                                      class="slds-modal__close"/>
+                <h2 class="slds-text-heading--medium">Remove Customer(s) from Current Location</h2>
+                <div>
+                    Are you sure you want to remove the Customer(s) from  <b><lightning:formattedText class="slds-output" value="{!v.tenderLocationWrapper[0].locationName}" /> (IATA/ICAO: <lightning:formattedText class="slds-output" value="{!v.tenderLocationWrapper[0].locationCode}" />) </b>
+                </div> 
+                
+            </div> 
+            <div class="slds-modal__footer">
+                <lightning:button variant="brand" disabled="{!v.customerRemove}" label="No"  onclick="{!c.closeModal}"/>
+                <lightning:button variant="neutral" name="Yes" disabled="{!v.customerRemove}" label="Yes"  onclick="{!c.handleOK}"/>
+            </div>
+        </div>
+    </aura:if>
+</aura:component>

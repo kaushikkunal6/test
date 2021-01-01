@@ -1,0 +1,138 @@
+.THIS #sfdc_username_container{
+    padding: 5px;
+    background-color:white;
+    border: 1px solid #009900;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+
+.THIS .error{
+    border: 1px solid red !important;
+}
+.THIS #sfdc_username_container .error{
+    border: 1px solid red !important;
+}
+
+.THIS .content-right {
+	padding-left:5px;    
+    padding-right:5px;
+    padding-bottom:5px;
+    height:500px;
+}
+.THIS .white-background {
+    background-color:#ffffff;
+}
+
+.THIS .headerText {
+    text-align: left;
+    color:#4A4A4A;
+	font-size:18px;    
+}
+
+.THIS .sfdc_user{
+    float:left;
+    width:13px;
+    height:15px;
+    padding-top:1px;
+    /*padding-left:2px;*/
+    margin:0px;
+}
+
+.THIS .sfdc_lock{
+    float:left;
+    width:13px;
+    height:15px;
+    padding-top:1px;
+    /*padding-left:2px;*/
+    margin:0px;
+}
+
+.THIS  #error {
+    text-align: left;
+    color:#FF0000;
+}
+
+.THIS  .login-icon {
+    color:#ccc;
+    font-size:22px;
+}
+
+.THIS #sfdc_password_container{
+    padding: 5px;
+    background-color:white;
+    border: 1px solid #009900;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+
+.THIS #sfdc_password_container.error{
+    padding: 5px;
+    background-color:white;
+    border: 1px solid red;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+
+
+.THIS  button.sfdc_button {
+    width:30%;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    color: #FFFFFF;
+    background-color: #009900;
+    border-color: #004f22;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    background-image: none;
+    border: 0px solid transparent;
+    white-space: nowrap;
+    padding: 10px 12px;
+    font-size: 12px;
+    /*font-family: 'Open Sans', sans-serif;*/
+    font-weight: 500;
+    line-height: 1.42857143;
+    border-radius: 2px;
+    text-shadow: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.THIS  button:hover {
+    background-color:#99cc00;
+    border-color:#000000;
+    cursor:pointer;
+}
+
+.THIS button .label {
+    color: #fff;	
+}
+
+.THIS  input {
+    margin-top: 3px;
+    border: 0px solid transparent;
+    width: 100%;
+    -webkit-appearance: none;
+    font-size: 12px;
+}
+
+.THIS input:focus {
+    outline: none;
+}
+
+.THIS  a {
+    color:white;
+    text-decoration: none;
+}
+.THIS  a:hover {
+    color:white;
+    text-decoration: none;
+}
+
+.THIS label.uiLabel-hidden {
+    display:none;
+}

@@ -1,0 +1,60 @@
+.THIS .header {
+    width: 100%;
+    position: relative;
+    border-bottom-style:double;
+    border-color: #009900;
+    padding-bottom:5px;
+}
+
+.THIS .overflow-right {
+    position: absolute;
+    top: 15px;
+    margin-right:15px;
+    width: 100%;
+    color:#009900;
+	font-size:24px;
+    text-align:right;
+}
+
+.THIS .roundel {
+    position: relative;
+    height: 60px;
+    background-size: auto 60px;
+    background-repeat: no-repeat;
+}
+
+.THIS .logo-container {
+    position: absolute;
+    z-index: 2;
+    margin-left: 1px;
+    top: 0;
+}
+
+.THIS .logo {
+    background-repeat: no-repeat;
+    /*background-size:60px 20px;*/
+    float: left;
+    margin: 0px 0;
+    padding-left:10px;
+    padding-right:5px;
+    height:50px;
+    width:20%;
+}
+
+.THIS .separator {
+	float: left;
+    height: 30px;
+    margin: 14px 0;
+    width: 0;
+    border-right: 1px solid white;
+    opacity: 0.3;
+}
+
+.THIS .title {
+	-webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #009900;
+    float: left;
+    margin: 18px 0 14px 10px;
+    line-height: 24px;
+}

@@ -1,0 +1,24 @@
+<aura:component >
+	<aura:attribute name="tender" type="AITM_Tender__c" />
+	<aura:registerEvent name="updateTenderEvent" type="c:AITM_UpdateTenderEvent" />
+	
+	<div class="slds-page-header noborderbottom" role="banner">
+		<div class="slds-grid">
+			<div class="slds-col slds-has-flexi-truncate">
+				<div class="slds-grid">
+					<div class="slds-grid slds-type-focus slds-no-space">
+						<h1 class="slds-page-header__title slds-truncate" title="My Items" style="font-family: 'Salesforce Sans',Arial,sans-serif; font-weight: 300; padding-bottom: 5px;">Notes For Tender</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="slds-grid">
+		<div class="slds-col slds-has-flexi-truncate slds-p-around_xx-small">
+			<label class="slds-form-element__label">Notes For Tender</label>
+			<lightning:inputRichText value="{!v.tender.AITM_Notes_For_Tender__c}" placeholder="Insert any notes applicable to the back office, set up and pricing teams (E.g Changes to terms, start/end dates of the contracts, grn changes, unique pricing etc)" Arialabel="Notes For Tender" Onfocus="{!c.updateTender}" />
+		</div>
+	</div>
+
+</aura:component>

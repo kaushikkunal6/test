@@ -1,0 +1,11 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction" >
+
+	<aura:attribute name="recordId" type="Id" />
+	<aura:attribute name="overlayPanel" type="Aura.Component[]" />
+
+	<aura:handler event="c:AITM_CustomTenderPathStageCompleted" action="{!c.handleChangeStage}"/>
+	<aura:handler event="c:AITM_ClosePathQuickAction" action="{!c.closePopup}"/>
+
+    <lightning:overlayLibrary aura:id="componentHolder"/>
+
+</aura:component>

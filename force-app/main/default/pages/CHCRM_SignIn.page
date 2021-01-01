@@ -1,0 +1,65 @@
+<apex:page showQuickActionVfHeader="false" sidebar="false" standardController="Event" extensions="CHCRM_SignIn_Controller" lightningStylesheets="true" id="myPage">
+    <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=EoTnfSqpFo253dBa7P4NyQWfInWQzFYw"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="/canvas/sdk/js/publisher.js"></script>
+    <apex:includeScript value="{!$Resource.CHCRM_SignIn_JS}"/>
+
+    <apex:form id="myForm">
+        <!-- Import the Design System style sheet -->
+        <apex:slds />
+        
+        <!-- REQUIRED SLDS WRAPPER -->
+        <body class="slds-scope" id="myBody">
+            <div>
+                <div style="position:relative;">
+                    <!-- Loading -->
+                    <div id="loading" style="display:none;position:absolute;top:0;left:0;height:100%; width:100%; z-index:1005; background:#fff url({!URLFOR($Resource.CHCRM_Loading)}) no-repeat center;opacity:0.6;filter:alpha(opacity=60);"/>
+                    
+                    <!-- Modal/Popup Box Header Starts here-->
+                    <header class="slds-modal__header" style="background-color: #FBFBFB !important;">
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">门店签到</h2>
+                    </header>
+                    <!--Modal/Popup Box Body Starts here-->
+                    <div class="slds-modal__content slds-p-around_large slds-clearfix">
+                        <div style="text-align: center">
+                            <h1 id="time">签到时间:</h1>
+                            <h1 id="location">当前位置:</h1>
+                            <h1 id="message"></h1>
+                        </div>
+                    </div>
+                </div>
+                <!--Modal/Popup Box Footer Starts here-->
+                <footer class="slds-modal__footer" style="background-color: #FBFBFB !important;">
+                    <apex:commandButton id="saveBtn" onkeypress="return false;" styleClass="slds-button slds-button_success" onclick="SaveBtn();return false;" value="保存" />
+                    <apex:commandButton id="refreshBtn" onkeypress="return false;" styleClass="slds-button slds-button_outline-brand" onclick="refreshBtn();return false;" value="刷新" />
+                    <apex:commandButton id="cancelBtn" onkeypress="return false;" styleClass="slds-button slds-button--brand" onclick="CancelBtn()" value="取消" />
+                </footer>
+            </div>
+        </body>
+    </apex:form>
+    <script type="text/javascript">
+        var eId = '{!$CurrentPage.Parameters.id}';
+        window.onload = function(){
+            Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.CHCRM_SignIn_Controller.getOperationPlatform}',function(result,event){
+                    if (event.statusCode == '200') {
+                        if (result == "PC") {displayModle("","","请在Salesforce1中使用此功能","none",true,true);
+                        }else{getLocationInfo();}
+                    }else{displayModle("","","系统错误，请与系统管理员联系","none",true,true);}
+                },{escape:true});
+        }
+        function SaveBtn(){
+            if(lng == undefined || lat == undefined){displayModle("","","获取地址信息失败，请刷新页面","none",true,true);
+            }else{
+                $('#loading').css('display','block');
+                Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.CHCRM_SignIn_Controller.updateRecord}',eId,lng,lat,address,signInTime.getTime().toString(),
+                    function(result,event){
+                        if (event.statusCode == '200') {Sfdc.canvas.publisher.publish({ name: "publisher.close", payload:{ refresh: "true" }});
+                        }else{displayModle("","","系统错误，请与系统管理员联系","none",true,true);}
+                    },{escape:true});
+            }
+        }
+        function CancelBtn(){Sfdc.canvas.publisher.publish({ name: "publisher.close", payload:{ refresh: "true" }});}
+    </script>
+</apex:page>

@@ -1,0 +1,47 @@
+.THIS .header {
+    width: 100%;
+    position: relative;
+    border-color: #009900;
+}
+
+.THIS .roundel {
+    position: relative;
+    height: 440px;
+    background-size: auto 60px;
+    background-repeat: no-repeat;
+}
+
+.THIS .logo-container {
+    position: absolute;
+    z-index: 2;
+    height: 440px;
+    margin-left: 1px;
+    top: 0;
+}
+
+.THIS .logo {
+    background-repeat: no-repeat;
+    width: 100%;
+    float: left;
+    margin: 1px 0;
+    padding-right: 1px;
+    height:440px;
+}
+
+.THIS .separator {
+	float: left;
+    height: 30px;
+    margin: 14px 0;
+    width: 0;
+    border-right: 1px solid white;
+    opacity: 0.3;
+}
+
+.THIS .title {
+	-webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #ffffff;
+    float: left;
+    margin: 18px 0 14px 10px;
+    line-height: 24px;
+}

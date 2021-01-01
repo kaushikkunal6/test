@@ -1,0 +1,1200 @@
+.THIS .slds-modal__content {
+    height: 50%;
+}
+
+.THIS .cAITM_CustomPathComponent .hide_text_when_mouse_not_hover {
+    display: none
+}
+.THIS .cAITM_CustomPathComponent .hide_text_when_mouse_not_hover_parent:hover .hide_text_when_mouse_not_hover {
+    display: block;
+    -webkit-animation-name: example;
+    animation-name: example;
+    -webkit-animation-duration: 300ms;
+    animation-duration: 300ms;
+    -webkit-animation-direction: alternate;
+    animation-direction: alternate
+}
+
+.THIS .cAITM_CustomPathComponent .hide_text_when_mouse_not_hover_parent:hover .mark_disappearing {
+    display: none
+}
+.THIS .cAITM_CustomPathComponent .actiiveAction .hide_text_when_mouse_not_hover {
+    display: block;
+    -webkit-animation-name: example;
+    animation-name: example;
+    -webkit-animation-duration: 300ms;
+    animation-duration: 300ms;
+    -webkit-animation-direction: alternate;
+    animation-direction: alternate
+}
+.THIS .cAITM_CustomPathComponent .actiiveAction .mark_disappearing {
+    display: none
+}
+
+.THIS .cAITM_EmailGenerator table {
+    max-width: 35rem;
+}
+@-webkit-keyframes example {
+    from {
+        padding-top: 20px
+    }
+    to {
+        padding-top: 0
+    }
+}
+@keyframes example {
+    from {
+        padding-top: 20px
+    }
+    to {
+        padding-top: 0
+    }
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop {
+    height: 32px
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .pa-tabBar ul {
+    border-radius: 16px
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .scroller-wrapper {
+    -webkit-order: 1;
+    -ms-flex-order: 1;
+    order: 1
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .scroller {
+    background-color: rgb(253, 253, 253);
+    border-radius: 16px;
+    overflow: hidden
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .next,
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .next:active,
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .previous,
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .previous:active {
+    -webkit-order: 2;
+    -ms-flex-order: 2;
+    order: 2;
+    padding: 0;
+    height: 32px;
+    width: 32px;
+    background: rgb(238, 241, 246);
+    margin-left: .5rem
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .next .forceIcon,
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .previous .forceIcon {
+    font-size: .625rem
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab {
+    width: 80px
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab+.cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTab {
+    margin-left: 4px!important
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab .tabHeader {
+    margin-right: .5rem;
+    padding: 5px .5rem 5px 1rem
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab .tabHeader span {
+    font-size: .8125rem
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab:first-child,
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab:last-child {
+    padding-left: 0;
+    padding-right: 0;
+    border-radius: 16px
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab:first-child:before,
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab:first-child:after {
+    width: 200%;
+    right: 0;
+    left: auto
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab:last-child:active {
+    border-color: rgb(6, 28, 63)
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab:after,
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab:before {
+    height: 16px;
+    background-color: rgb(238, 241, 246);
+    left: 0
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantProcessAssistantTab:before {
+    border-bottom-color: rgb(238, 241, 246)
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantProcessAssistantTab:after {
+    border-top-color: rgb(238, 241, 246)
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab:before {
+    border-bottom-color: rgb(238, 241, 246)
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab:after {
+    border-top-color: rgb(238, 241, 246)
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab:before {
+    -webkit-transform: skew(45deg);
+    -ms-transform: skew(45deg);
+    transform: skew(45deg)
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab:after {
+    top: 16px;
+    -webkit-transform: skew(-45deg);
+    -ms-transform: skew(-45deg);
+    transform: skew(-45deg)
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab.current:before,
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab.current:after {
+    background-color: white
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantProcessAssistantTab.current:before {
+    border-bottom-color: white
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantProcessAssistantTab.current:after {
+    border-top-color: white
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab.complete .tabHeader:hover>span:nth-child(1) span,
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab.complete .tabHeader:focus>span:nth-child(1) span {
+    display: none;
+    padding-top: 3px
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab.complete .tabHeader:hover>span:nth-child(2),
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab.complete .tabHeader:focus>span:nth-child(2) {
+    -webkit-transition-timing-function: cubic-bezier(1, 0, 0.5, 0);
+    transition-timing-function: cubic-bezier(1, 0, 0.5, 0);
+    -webkit-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    transform: scale(1, 1)
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab.current:hover:before,
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab.current:hover:after {
+    background-color: rgb(240, 248, 252);
+    border-color: rgb(0, 95, 178)
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab.current.active:hover:before,
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab.current.active:hover:after {
+    background-color: rgb(0, 95, 178);
+    border-color: rgb(0, 95, 178)
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab.complete:hover:before,
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab.complete:hover:after {
+    background-color: rgb(4, 132, 75);
+    border-color: rgb(4, 132, 75)
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab.active:hover:before,
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab.active:hover:after {
+    background-color: rgb(22, 50, 92);
+    border-color: rgb(22, 50, 92)
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab:hover:before,
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab:hover:after {
+    background-color: rgb(224, 229, 238);
+    border-color: rgb(224, 229, 238)
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--mobile .next,
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--mobile .previous {
+    -webkit-flex-basis: 40px;
+    -ms-flex-preferred-size: 40px;
+    flex-basis: 40px;
+    height: 100%
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--setup {
+    height: 40px;
+    margin-top: 25px;
+    margin-bottom: 10px
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--setup .previous,
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--setup .next {
+    background-size: 0
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--setup .pa-scroller {
+    margin: 0 4px
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--setup .scroller-wrapper {
+    margin: 0 4px
+}
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--setup .runtime_sales_pathassistantPathAssistantTab,
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--setup .runtime_sales_pathassistantPathAssistantTab:first-child,
+.THIS .cAITM_CustomPathComponent .runtime_sales_pathassistantPathAssistantTabSet--setup .runtime_sales_pathassistantPathAssistantTab:last-child {
+    height: auto;
+    background-color: #ffffff;
+    border: 1px solid #c4c4c4;
+    font-weight: normal;
+    border-radius: 2px;
+    padding: 0
+}
+.THIS .runtime_sales_pathassistantPathAssistant * {
+    font-size: .875rem
+}
+.THIS .runtime_sales_pathassistantPathAssistant.detailTitle-visible {
+    color: rgb(112, 110, 107);
+    background-color: rgb(250, 250, 249);
+    font-size: .625rem;
+    font-weight: 400;
+    line-height: 1.25;
+    padding: .75rem;
+    text-transform: uppercase;
+    visibility: visible
+}
+.THIS .runtime_sales_pathassistantPathAssistant.detailTitle-hidden {
+    visibility: hidden;
+    width: 0;
+    height: 0
+}
+.THIS .runtime_sales_pathassistantPathAssistant.stepInactive {
+    background-color: white;
+    margin: 0 1rem;
+    padding: 1rem;
+    color: #3c3d3e
+}
+.THIS .flexipageTabsetV2 {
+    position: relative;
+    width: 100%;
+    padding: 0
+}
+.THIS .flexipageTabsetV2>.uiTabBar .uiTabItem .title {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center
+}
+.THIS .flexipageTabsetV2>.uiTabBar .uiTabItem .tabHeader,
+.THIS .flexipageTabsetV2>.uiTabBar .uiTabOverflowMenuItem .uiPopupTrigger a {
+    max-width: 240px;
+    padding-top: 0
+}
+.THIS .flexipageTabsetV2>.uiTabBar .uiTabOverflowMenuItem .uiMenuItem a {
+    font-size: .8125rem;
+    max-width: 240px
+}
+.THIS .flexipageTabsetV2>.uiTab.tabs__content {
+    padding: 1rem 0
+}
+.THIS .runtime_sales_pathassistantPathAssistantTab {
+    position: relative;
+    margin: 0;
+    background-color: transparent;
+    text-align: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex: 1 1 80px;
+    -ms-flex: 1 1 80px;
+    flex: 1 1 80px;
+    min-width: 80px;
+    text-transform: none!important
+}
+.THIS .runtime_sales_pathassistantPathAssistantTab *,
+.THIS .runtime_sales_pathassistantPathAssistantTab:before,
+.THIS .runtime_sales_pathassistantPathAssistantTab:after {
+    box-sizing: border-box
+}
+.THIS .runtime_sales_pathassistantPathAssistantTab.active {
+    background-color: transparent
+}
+.THIS .runtime_sales_pathassistantPathAssistantTab+.runtime_sales_pathassistantPathAssistantTab {
+    margin-left: 5px
+}
+.THIS .runtime_sales_pathassistantPathAssistantTab .tabHeader {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding: 10px 8px 12px 4px;
+    color: rgb(112, 110, 107);
+    width: 100%
+}
+.THIS .runtime_sales_pathassistantPathAssistantTab .tabHeader:focus {
+    outline: none;
+    text-decoration: underline
+}
+.THIS .runtime_sales_pathassistantPathAssistantTab,
+.THIS .runtime_sales_pathassistantPathAssistantTab a,
+.THIS .runtime_sales_pathassistantPathAssistantTab:before,
+.THIS .runtime_sales_pathassistantPathAssistantTab:after {
+    -webkit-transition: .2s;
+    transition: .2s
+}
+.THIS .runtime_sales_pathassistantPathAssistantTab:before,
+.THIS .runtime_sales_pathassistantPathAssistantTab:after {
+    -webkit-transition: border-width 0s;
+    transition: border-width 0s
+}
+.THIS .runtime_sales_pathassistantPathAssistantTab img.checkmark {
+    display: block;
+    width: 16px;
+    height: 16px
+}
+.THIS .runtime_sales_pathassistantPathAssistantTab:before {
+    content: '';
+    position: absolute;
+    -webkit-transform: skew(30deg);
+    -ms-transform: skew(30deg);
+    transform: skew(30deg);
+    width: 100%;
+    height: 50%;
+    top: 0;
+    left: -6px;
+    z-index: -1;
+    border: 1px solid rgb(221, 219, 218);
+    border-bottom: 0;
+    border-top-left-radius: .125rem;
+    border-top-right-radius: .125rem;
+    border-bottom-left-radius: 1px;
+    border-bottom-right-radius: 1px
+}
+.THIS .runtime_sales_pathassistantPathAssistantTab:first-child {
+    border-left: 1px solid rgb(221, 219, 218);
+    border-radius: .125rem;
+    padding-left: 6px
+}
+.THIS .runtime_sales_pathassistantPathAssistantTab:first-child:before,
+.THIS .runtime_sales_pathassistantPathAssistantTab:first-child:after {
+    border-left: 0
+}
+.THIS .runtime_sales_pathassistantPathAssistantTab:after {
+    content: '';
+    position: absolute;
+    -webkit-transform: skew(-30deg);
+    -ms-transform: skew(-30deg);
+    transform: skew(-30deg);
+    width: 100%;
+    height: 50%;
+    top: 50%;
+    left: -6px;
+    z-index: -1;
+    border: 1px solid rgb(221, 219, 218);
+    border-top: 0;
+    border-top-left-radius: 1px;
+    border-top-right-radius: 1px;
+    border-bottom-left-radius: .125rem;
+    border-bottom-right-radius: .125rem
+}
+.THIS .runtime_sales_pathassistantPathAssistantTab:last-child {
+    border-right: 1px solid rgb(221, 219, 218);
+    border-color: #eaedf4;
+    border-radius: .125rem
+}
+.THIS .runtime_sales_pathassistantPathAssistantTab:last-child:before,
+.THIS .runtime_sales_pathassistantPathAssistantTab:last-child:after {
+    width: 200%
+}
+.THIS .runtime_sales_pathassistantPathAssistantTab:first-child .tabHeader {
+    padding-left: 0
+}
+.THIS .runtime_sales_pathassistantPathAssistantTab.complete .tabHeader span {
+    display: inline-block;
+    -webkit-transition: all .2s;
+    transition: all .2s;
+    -webkit-transform-origin: center 20%;
+    -ms-transform-origin: center 20%;
+    transform-origin: center 20%
+}
+.THIS .runtime_sales_pathassistantPathAssistantTab .tabHeader>span:nth-child(1) {
+    padding-top: 1px;
+    color: white;
+    height: 0
+}
+.THIS .runtime_sales_pathassistantPathAssistantTab.complete .tabHeader>span:nth-child(1) {
+    display: block
+}
+.THIS .runtime_sales_pathassistantPathAssistantTab.complete .tabHeader>span:nth-child(1) span {
+    -webkit-transition-timing-function: cubic-bezier(1, 0, 0.5, 0);
+    transition-timing-function: cubic-bezier(1, 0, 0.5, 0);
+    -webkit-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    transform: scale(1, 1)
+}
+.THIS .runtime_sales_pathassistantPathAssistantTab.complete .tabHeader>span:nth-child(2) {
+    display: block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 100%;
+    -webkit-transition-timing-function: cubic-bezier(0, 1, 0, 0.5);
+    transition-timing-function: cubic-bezier(0, 1, 0, 0.5);
+    -webkit-transform: scale(1, 0);
+    -ms-transform: scale(1, 0);
+    transform: scale(1, 0)
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet {
+    position: relative;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    height: 40px;
+    -webkit-flex: 1 0;
+    -ms-flex: 1 0;
+    flex: 1 0
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .uiTabItem {
+    letter-spacing: 0
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .uiTabItem a {
+    border-bottom: none
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .scroller-wrapper {
+    -webkit-flex-grow: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    overflow: hidden
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .previous,
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .next {
+    width: 40px;
+    padding: 0;
+    border-radius: 0
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .pa-tabBar,
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .pa-tabBar ul {
+    height: 100%;
+    width: 100%
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .pa-tabBar ul {
+    width: 100%;
+    white-space: nowrap;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    overflow: hidden;
+    border-radius: .125rem
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .stretch {
+    width: 100%
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .tooltip {
+    position: absolute;
+    top: 125%;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+    z-index: 3;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -webkit-transition: opacity 0s ease-out .25s;
+    white-space: nowrap
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .tooltip:before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    margin-left: -8px;
+    border: 8px solid transparent;
+    border-bottom: 8px solid rgb(22, 50, 92)
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .tooltip .wrapper {
+    position: absolute;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+    z-index: 3;
+    background-color: rgb(22, 50, 92);
+    color: rgb(255, 255, 255);
+    border-radius: .25rem
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .tooltip span {
+    margin: .5rem 1rem;
+    display: inline-block
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .tooltip.tooltip-visible {
+    visibility: visible;
+    opacity: 1
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .tooltip.tooltip-hidden {
+    visibility: hidden;
+    opacity: 0
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .runtime_sales_pathassistantPathAssistantTab.complete {
+    border-color: rgb(75, 202, 129)
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .runtime_sales_pathassistantPathAssistantTab.complete:before,
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .runtime_sales_pathassistantPathAssistantTab.complete:after {
+    background-color: rgb(75, 202, 129);
+    border-color: rgb(75, 202, 129)
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .runtime_sales_pathassistantPathAssistantTab.complete .tabHeader {
+    color: rgb(255, 255, 255)
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .runtime_sales_pathassistantPathAssistantTab.current {
+    border-color: rgb(0, 112, 210)
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .runtime_sales_pathassistantPathAssistantTab.current:before,
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .runtime_sales_pathassistantPathAssistantTab.current:after {
+    border-color: rgb(0, 112, 210)
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .runtime_sales_pathassistantPathAssistantTab.current .tabHeader {
+    color: rgb(0, 112, 210)
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .runtime_sales_pathassistantProcessAssistantTab:after,
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .runtime_sales_pathassistantProcessAssistantTab.current:after {
+    border-top-color: transparent
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .runtime_sales_pathassistantProcessAssistantTab:before,
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .runtime_sales_pathassistantProcessAssistantTab.current:before {
+    border-bottom-color: transparent
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .runtime_sales_pathassistantPathAssistantTab.active {
+    border-color: rgb(6, 28, 63)
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .runtime_sales_pathassistantPathAssistantTab.active:before,
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .runtime_sales_pathassistantPathAssistantTab.active:after {
+    background-color: rgb(6, 28, 63);
+    border-color: rgb(6, 28, 63)
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .runtime_sales_pathassistantPathAssistantTab.active .tabHeader {
+    color: rgb(255, 255, 255)!important
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .runtime_sales_pathassistantPathAssistantTab.current.active {
+    border-color: rgb(0, 112, 210)
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .runtime_sales_pathassistantPathAssistantTab.current.active:before,
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .runtime_sales_pathassistantPathAssistantTab.current.active:after {
+    background-color: rgb(0, 112, 210);
+    border-color: rgb(0, 112, 210)
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet .runtime_sales_pathassistantPathAssistantTab.current.active .tabHeader {
+    color: rgb(255, 255, 255)!important
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop {
+    height: 32px
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .pa-tabBar ul {
+    border-radius: 16px
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .scroller-wrapper {
+    -webkit-order: 1;
+    -ms-flex-order: 1;
+    order: 1
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .scroller {
+    background-color: rgb(255, 255, 255);
+    border-radius: 16px;
+    overflow: hidden
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .next,
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .next:active,
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .previous,
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .previous:active {
+    -webkit-order: 2;
+    -ms-flex-order: 2;
+    order: 2;
+    padding: 0;
+    height: 32px;
+    width: 32px;
+    background: rgb(243, 242, 242);
+    margin-left: .5rem
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .next .forceIcon,
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .previous .forceIcon {
+    font-size: .625rem
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab {
+    width: 80px
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab+.runtime_sales_pathassistantPathAssistantTab {
+    margin-left: 4px!important
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab .tabHeader {
+    margin-right: .5rem;
+    padding: 5px .5rem 5px 1rem
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab .tabHeader span {
+    font-size: .8125rem
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab:first-child,
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab:last-child {
+    padding-left: 0;
+    padding-right: 0;
+    border-radius: 16px
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab:first-child:before,
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab:first-child:after {
+    width: 200%;
+    right: 0;
+    left: auto
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab:last-child:active {
+    border-color: rgb(6, 28, 63)
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab:after,
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab:before {
+    height: 16px;
+    background-color: rgb(243, 242, 242);
+    left: 0
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantProcessAssistantTab:before {
+    border-bottom-color: rgb(243, 242, 242)
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantProcessAssistantTab:after {
+    border-top-color: rgb(243, 242, 242)
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab:before {
+    border-bottom-color: rgb(243, 242, 242)
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab:after {
+    border-top-color: rgb(243, 242, 242)
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab:before {
+    -webkit-transform: skew(45deg);
+    -ms-transform: skew(45deg);
+    transform: skew(45deg)
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab:after {
+    top: 16px;
+    -webkit-transform: skew(-45deg);
+    -ms-transform: skew(-45deg);
+    transform: skew(-45deg)
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab.current:before,
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab.current:after {
+    background-color: white
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantProcessAssistantTab.current:before {
+    border-bottom-color: white
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantProcessAssistantTab.current:after {
+    border-top-color: white
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab.complete .tabHeader:hover>span:nth-child(1) span,
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab.complete .tabHeader:focus>span:nth-child(1) span {
+    display: none;
+    padding-top: 3px
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab.complete .tabHeader:hover>span:nth-child(2),
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab.complete .tabHeader:focus>span:nth-child(2) {
+    -webkit-transition-timing-function: cubic-bezier(1, 0, 0.5, 0);
+    transition-timing-function: cubic-bezier(1, 0, 0.5, 0);
+    -webkit-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    transform: scale(1, 1)
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab.current:hover:before,
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab.current:hover:after {
+    background-color: rgb(236, 235, 234);
+    border-color: rgb(0, 95, 178)
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab.current.active:hover:before,
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab.current.active:hover:after {
+    background-color: rgb(0, 95, 178);
+    border-color: rgb(0, 95, 178)
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab.complete:hover:before,
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab.complete:hover:after {
+    background-color: rgb(4, 132, 75);
+    border-color: rgb(4, 132, 75)
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab.active:hover:before,
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab.active:hover:after {
+    background-color: rgb(22, 50, 92);
+    border-color: rgb(22, 50, 92)
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab:hover:before,
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--desktop .runtime_sales_pathassistantPathAssistantTab:hover:after {
+    background-color: rgb(236, 235, 234);
+    border-color: rgb(236, 235, 234)
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--mobile .next,
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--mobile .previous {
+    -webkit-flex-basis: 40px;
+    -ms-flex-preferred-size: 40px;
+    flex-basis: 40px;
+    height: 100%
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--setup {
+    height: 40px;
+    margin-top: 25px;
+    margin-bottom: 10px
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--setup .previous,
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--setup .next {
+    background-size: 0
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--setup .pa-scroller {
+    margin: 0 4px
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--setup .scroller-wrapper {
+    margin: 0 4px
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--setup .runtime_sales_pathassistantPathAssistantTab,
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--setup .runtime_sales_pathassistantPathAssistantTab:first-child,
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--setup .runtime_sales_pathassistantPathAssistantTab:last-child {
+    height: auto;
+    background-color: #ffffff;
+    border: 1px solid #c4c4c4;
+    font-weight: normal;
+    border-radius: 2px;
+    padding: 0
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--setup .runtime_sales_pathassistantPathAssistantTab:before,
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--setup .runtime_sales_pathassistantPathAssistantTab:after,
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--setup .runtime_sales_pathassistantPathAssistantTab.active:before,
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--setup .runtime_sales_pathassistantPathAssistantTab.active:after {
+    -webkit-transform: none;
+    -ms-transform: none;
+    transform: none;
+    border: 0 none transparent;
+    display: none;
+    visibility: hidden
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--setup .runtime_sales_pathassistantPathAssistantTab a span {
+    font-weight: normal;
+    letter-spacing: 0
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--setup .runtime_sales_pathassistantPathAssistantTab.active {
+    border: 1px solid rgb(0, 112, 210)
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--setup .runtime_sales_pathassistantPathAssistantTab .tabHeader {
+    padding: 10px 4px;
+    width: 100%
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--setup .tooltip {
+    top: 49px
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--setup .tooltip:before {
+    width: 0
+}
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--setup .runtime_sales_pathassistantPathAssistantTab.active a,
+.THIS .runtime_sales_pathassistantPathAssistantTabSet--setup .runtime_sales_pathassistantPathAssistantTab.current.active a {
+    color: #ffffff;
+    border: 0;
+}
+.THIS .runtime_sales_pathassistantPathAssistantHeader {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%
+}
+.THIS .runtime_sales_pathassistantPathAssistantHeader .stepLabel {
+    -webkit-align-self: center;
+    -ms-flex-item-align: center;
+    align-self: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: rgb(22, 50, 92)
+}
+.THIS .runtime_sales_pathassistantPathAssistantHeader .stepAction .pa-spinner {
+    display: -webkit-inline-flex;
+    display: -ms-inline-flexbox;
+    display: inline-flex
+}
+.THIS .runtime_sales_pathassistantPathAssistantHeader .stepAction,
+.THIS .runtime_sales_pathassistantPathAssistantHeader .stepAction:active {
+    white-space: nowrap;
+    background-color: rgb(6, 28, 63);
+    color: rgb(255, 255, 255);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    text-overflow: ellipsis;
+    overflow: hidden
+}
+.THIS .runtime_sales_pathassistantPathAssistantHeader .stepAction:active {
+    background-color: #253647
+}
+.THIS .runtime_sales_pathassistantPathAssistantHeader .stepAction img.hidden {
+    display: none
+}
+.THIS .runtime_sales_pathassistantPathAssistantHeader .stepAction.current {
+    background-color: rgb(0, 112, 210)
+}
+.THIS .runtime_sales_pathassistantPathAssistantHeader .stepAction.current:active {
+    background-color: rgb(0, 57, 107)
+}
+.THIS .runtime_sales_pathassistantPathAssistantHeader .stepAction:disabled,
+.THIS .runtime_sales_pathassistantPathAssistantHeader .stepAction.current:disabled {
+    background-color: rgb(224, 229, 238);
+    color: rgb(112, 110, 107)
+}
+.THIS .runtime_sales_pathassistantPathAssistantHeader .stepAction:disabled .label,
+.THIS .runtime_sales_pathassistantPathAssistantHeader .stepAction.current:disabled .label {
+    color: rgb(112, 110, 107)
+}
+.THIS .runtime_sales_pathassistantPathAssistantHeader select.stepAction,
+.THIS .runtime_sales_pathassistantPathAssistantHeader select.stepAction:active,
+.THIS .runtime_sales_pathassistantPathAssistantHeader select.stepAction:focus {
+    border: 0;
+    padding: 0 1.5rem 0 1rem;
+    border-radius: .25rem;
+    background-color: rgb(6, 28, 63)
+}
+.THIS .runtime_sales_pathassistantPathAssistantHeader select.stepAction,
+.THIS .runtime_sales_pathassistantPathAssistantHeader select.stepAction:active {
+    background-image: url('/projRes/ui-pathassistant-runtime-components/assistant-header/down-white.svg');
+    background-repeat: no-repeat;
+    background-position: 97% 50%;
+    background-size: 1rem 1rem, 100% 100%
+}
+.THIS .runtime_sales_pathassistantPathAssistantHeader--desktop {
+    width: auto
+}
+.THIS .runtime_sales_pathassistantPathAssistantHeader--desktop .stepAction,
+.THIS .runtime_sales_pathassistantPathAssistantHeader--desktop .stepAction:active {
+    border-radius: 16px;
+    height: 32px;
+    min-width: 240px;
+    max-width: 240px
+}
+.THIS .runtime_sales_pathassistantPathAssistantHeader--mobile .stepAction.uiInputSelect {
+    color: rgb(250, 250, 249)
+}
+@media only screen and (min-width: 600px) {
+    .THIS .runtime_sales_pathassistantPathAssistantHeader--mobile .stepLabel {
+        margin: 0 0 0 1rem;
+        -webkit-flex: 1;
+        -ms-flex: 1;
+        flex: 1
+    }
+    .THIS .runtime_sales_pathassistantPathAssistantHeader--mobile .stepAction {
+        margin-left: 1rem;
+        min-width: 290px;
+        -webkit-flex: 0 0 290px;
+        -ms-flex: 0 0 290px;
+        flex: 0 0 290px
+    }
+}
+@media only screen and (max-width: 599px) {
+    .THIS .runtime_sales_pathassistantPathAssistantHeader--mobile {
+        -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap
+    }
+    .THIS .runtime_sales_pathassistantPathAssistantHeader--mobile .stepLabel,
+    .THIS .runtime_sales_pathassistantPathAssistantHeader--mobile .stepAction,
+    .THIS .runtime_sales_pathassistantPathAssistantHeader--mobile .closeStepActionLabel {
+        width: 100%
+    }
+    .THIS .runtime_sales_pathassistantPathAssistantHeader--mobile .stepLabel {
+        margin: 0;
+        padding: 1rem 0;
+        text-align: center;
+        -webkit-order: 1;
+        -ms-flex-order: 1;
+        order: 1
+    }
+    .THIS .runtime_sales_pathassistantPathAssistantHeader--mobile .stepAction,
+    .THIS .runtime_sales_pathassistantPathAssistantHeader--mobile .closeStepActionLabel {
+        -webkit-order: 2;
+        -ms-flex-order: 2;
+        order: 2
+    }
+}
+.THIS .runtime_sales_pathassistantCollapsibleDrawer {
+    width: 100%
+}
+.THIS .runtime_sales_pathassistantCollapsibleDrawer .cd-drawer,
+.THIS .runtime_sales_pathassistantCollapsibleDrawer .cd-header {
+    z-index: 0;
+    position: relative
+}
+.THIS .runtime_sales_pathassistantCollapsibleDrawer .cd-header {
+    z-index: 1
+}
+.THIS .runtime_sales_pathassistantCollapsibleDrawer .header>* {
+    vertical-align: middle
+}
+.THIS .runtime_sales_pathassistantCollapsibleDrawer .cd-drawer {
+    overflow: hidden
+}
+.THIS .runtime_sales_pathassistantCollapsibleDrawer .cd-header .toggleButton {
+    white-space: nowrap;
+    display: -webkit-inline-box;
+    display: -moz-inline-box;
+    display: inline-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 0 1rem;
+    margin: auto;
+    background-color: transparent;
+    border: 0
+}
+.THIS .runtime_sales_pathassistantCollapsibleDrawer .cd-header .toggleButton.slds-is-selected:hover:not([disabled]),
+.THIS .runtime_sales_pathassistantCollapsibleDrawer .cd-header .toggleButton.slds-is-selected:focus:not([disabled]) {
+    border: 0
+}
+.THIS .runtime_sales_pathassistantCollapsibleDrawer .toggleButtonLabel {
+    box-ordinal-group: 2;
+    -webkit-box-ordinal-group: 2;
+    -webkit-order: 1;
+    -ms-flex-order: 1;
+    order: 1;
+    padding-left: .75rem
+}
+.THIS .runtime_sales_pathassistantCollapsibleDrawer .cd-header .cd-arrow {
+    height: 100%;
+    width: 100%
+}
+.THIS .runtime_sales_pathassistantCollapsibleDrawer .cd-header .toggleButton.not-selected .cd-arrow,
+.THIS .runtime_sales_pathassistantCollapsibleDrawer .cd-header .toggleButton.collapsed .cd-arrow {
+    -webkit-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    transform: rotate(-90deg)
+}
+.THIS .runtime_sales_pathassistantCollapsibleDrawer .cd-header .toggleButton.is-selected .cd-arrow,
+.THIS .runtime_sales_pathassistantCollapsibleDrawer .cd-header .toggleButton.open .cd-arrow {
+    -webkit-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg)
+}
+.THIS .runtime_sales_pathassistantCollapsibleDrawer .cd-drawer,
+.THIS .runtime_sales_pathassistantCollapsibleDrawer .cd-header .toggleButton .cd-arrow {
+    -webkit-transition-duration: .4s;
+    transition-duration: .4s
+}
+.THIS .runtime_sales_pathassistantCollapsibleDrawer .cd-drawer.invisibleSlide {
+    max-height: 0;
+    display: none
+}
+.THIS .runtime_sales_pathassistantCollapsibleDrawer .cd-drawer.visibleSlide {
+    max-height: 1024px
+}
+.THIS .runtime_sales_pathassistantPathAssistantCard.paBorder {
+    border-radius: .25rem
+}
+.THIS .runtime_sales_pathassistantPathAssistantCard .toggleButton,
+.THIS .runtime_sales_pathassistantPathAssistantCard .stepAction {
+    height: 32px;
+    text-shadow: none;
+    font-weight: normal;
+    -webkit-font-smoothing: antialiased
+}
+.THIS .runtime_sales_pathassistantPathAssistantCard .pop {
+    -webkit-transition: .2s -webkit-transform ease-in-out;
+    transition: .2s transform ease-in-out
+}
+.THIS .runtime_sales_pathassistantPathAssistantCard .pop--on {
+    -webkit-transform: scaleX(1.1) scaleY(1.0) scaleZ(1.0);
+    -ms-transform: scaleX(1.1) scaleY(1.0) scaleZ(1.0);
+    transform: scaleX(1.1) scaleY(1.0) scaleZ(1.0)
+}
+.THIS .runtime_sales_pathassistantPathAssistantCard .muteCheckmarkAnimation:hover>a.tabHeader>span.title:nth-child(2) {
+    display: block
+}
+.THIS .runtime_sales_pathassistantPathAssistantCard .muteCheckmarkAnimation>a.tabHeader>span.title:nth-child(2) {
+    display: none
+}
+.THIS .runtime_sales_pathassistantPathAssistantCard.won .pa-tabBar .runtime_sales_pathassistantPathAssistantTab {
+    border-color: rgb(75, 202, 129)
+}
+.THIS .runtime_sales_pathassistantPathAssistantCard.won .pa-tabBar .runtime_sales_pathassistantPathAssistantTab .tabHeader {
+    color: rgb(255, 255, 255)
+}
+.THIS .runtime_sales_pathassistantPathAssistantCard.won .pa-tabBar .runtime_sales_pathassistantPathAssistantTab.complete:before,
+.THIS .runtime_sales_pathassistantPathAssistantCard.won .pa-tabBar .runtime_sales_pathassistantPathAssistantTab.complete:after {
+    background-color: rgb(75, 202, 129);
+    border-color: rgb(75, 202, 129)
+}
+.THIS .runtime_sales_pathassistantPathAssistantCard.won .pa-tabBar .runtime_sales_pathassistantPathAssistantTab.ahead:before,
+.THIS .runtime_sales_pathassistantPathAssistantCard.won .pa-tabBar .runtime_sales_pathassistantPathAssistantTab.ahead:after {
+    background-color: rgb(250, 250, 249);
+    border-color: rgb(236, 235, 234)
+}
+.THIS .runtime_sales_pathassistantPathAssistantCard.won .pa-tabBar .runtime_sales_pathassistantPathAssistantTab.ahead .tabHeader {
+    color: rgb(112, 110, 107)
+}
+.THIS .runtime_sales_pathassistantPathAssistantCard.won .pa-tabBar .runtime_sales_pathassistantPathAssistantTab.active {
+    border-color: rgb(4, 132, 75)
+}
+.THIS .runtime_sales_pathassistantPathAssistantCard.won .pa-tabBar .runtime_sales_pathassistantPathAssistantTab.current:before,
+.THIS .runtime_sales_pathassistantPathAssistantCard.won .pa-tabBar .runtime_sales_pathassistantPathAssistantTab.current:after,
+.THIS .runtime_sales_pathassistantPathAssistantCard.won .pa-tabBar .runtime_sales_pathassistantPathAssistantTab.current.active:before,
+.THIS .runtime_sales_pathassistantPathAssistantCard.won .pa-tabBar .runtime_sales_pathassistantPathAssistantTab.current.active:after {
+    background-color: rgb(4, 132, 75);
+    border-color: rgb(4, 132, 75)
+}
+.THIS .runtime_sales_pathassistantPathAssistantCard.won .pa-tabBar .runtime_sales_pathassistantPathAssistantTab.active:before,
+.THIS .runtime_sales_pathassistantPathAssistantCard.won .pa-tabBar .runtime_sales_pathassistantPathAssistantTab.active:after {
+    background-color: rgb(6, 28, 63);
+    border-color: rgb(6, 28, 63)
+}
+.THIS .runtime_sales_pathassistantPathAssistantCard.lost .pa-tabBar .runtime_sales_pathassistantPathAssistantTab {
+    border-color: rgb(236, 235, 234)
+}
+.THIS .runtime_sales_pathassistantPathAssistantCard.lost .pa-tabBar .runtime_sales_pathassistantPathAssistantTab:before,
+.THIS .runtime_sales_pathassistantPathAssistantCard.lost .pa-tabBar .runtime_sales_pathassistantPathAssistantTab:after {
+    background-color: rgb(250, 250, 249);
+    border-color: rgb(236, 235, 234)
+}
+.THIS .runtime_sales_pathassistantPathAssistantCard.lost .pa-tabBar .runtime_sales_pathassistantPathAssistantTab .tabHeader {
+    color: rgb(112, 110, 107)
+}
+.THIS .runtime_sales_pathassistantPathAssistantCard.lost .pa-tabBar .runtime_sales_pathassistantPathAssistantTab.current,
+.THIS .runtime_sales_pathassistantPathAssistantCard.lost .pa-tabBar .runtime_sales_pathassistantPathAssistantTab.current.active {
+    border-color: rgb(212, 80, 76)
+}
+.THIS .runtime_sales_pathassistantPathAssistantCard.lost .pa-tabBar .runtime_sales_pathassistantPathAssistantTab.current:before,
+.THIS .runtime_sales_pathassistantPathAssistantCard.lost .pa-tabBar .runtime_sales_pathassistantPathAssistantTab.current:after,
+.THIS .runtime_sales_pathassistantPathAssistantCard.lost .pa-tabBar .runtime_sales_pathassistantPathAssistantTab.current.active:before,
+.THIS .runtime_sales_pathassistantPathAssistantCard.lost .pa-tabBar .runtime_sales_pathassistantPathAssistantTab.current.active:after {
+    background-color: rgb(212, 80, 76);
+    border-color: rgb(212, 80, 76)
+}
+.THIS .runtime_sales_pathassistantPathAssistantCard.lost .pa-tabBar .runtime_sales_pathassistantPathAssistantTab.active {
+    border-color: rgb(6, 28, 63)
+}
+.THIS .runtime_sales_pathassistantPathAssistantCard.lost .pa-tabBar .runtime_sales_pathassistantPathAssistantTab.active:before,
+.THIS .runtime_sales_pathassistantPathAssistantCard.lost .pa-tabBar .runtime_sales_pathassistantPathAssistantTab.active:after {
+    background-color: rgb(6, 28, 63);
+    border-color: rgb(6, 28, 63)
+}
+.THIS .runtime_sales_pathassistantPathAssistantCard.lost .pa-tabBar .runtime_sales_pathassistantPathAssistantTab.current .tabHeader,
+.THIS .runtime_sales_pathassistantPathAssistantCard.lost .pa-tabBar .runtime_sales_pathassistantPathAssistantTab.active .tabHeader {
+    color: rgb(255, 255, 255)
+}
+.THIS .runtime_sales_pathassistantPathAssistantCard.lost .complete .tabHeader>span:nth-child(1) span {
+    -webkit-transition: all 0s;
+    transition: all 0s;
+    -webkit-transform: scale(1, 0);
+    -ms-transform: scale(1, 0);
+    transform: scale(1, 0)
+}
+.THIS .runtime_sales_pathassistantPathAssistantCard.lost .complete .tabHeader>span:nth-child(2) {
+    -webkit-transition: all 0s;
+    transition: all 0s;
+    -webkit-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    transform: scale(1, 1)
+}
+.THIS .runtime_sales_pathassistantPathAssistantCardDesktop {
+    padding: 16px 0 0 0;
+    background-color: rgb(255, 255, 255)
+}
+.THIS .runtime_sales_pathassistantPathAssistantCardDesktop .pa-drawer .cd-header {
+    padding: 0 .75rem;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    white-space: nowrap;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between
+}
+.THIS .runtime_sales_pathassistantPathAssistantCardDesktop.large .cd-drawer.drawer {
+    margin-bottom: .5rem
+}
+.THIS .runtime_sales_pathassistantPathAssistantCardDesktop.large .cd-header {
+    padding-bottom: 1rem
+}
+.THIS .runtime_sales_pathassistantPathAssistantCardDesktop.medium .cd-header {
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap
+}
+.THIS .runtime_sales_pathassistantPathAssistantCardDesktop.medium {
+    padding-bottom: 0
+}
+.THIS .runtime_sales_pathassistantPathAssistantCardDesktop.medium .cd-drawer {
+    margin-top: 0
+}
+.THIS .runtime_sales_pathassistantPathAssistantCardDesktop.medium .runtime_sales_pathassistantPathAssistantBody--desktop {
+    padding-bottom: .5rem
+}
+.THIS .runtime_sales_pathassistantPathAssistantCardDesktop.medium .runtime_sales_pathassistantPathAssistantHeader--desktop {
+    margin-bottom: 1rem
+}
+.THIS .runtime_sales_pathassistantPathAssistantCardDesktop .pa-drawer .cd-header>*+* {
+    margin-left: .25rem
+}
+.THIS .runtime_sales_pathassistantPathAssistantCardDesktop .runtime_sales_pathassistantPathAssistantTabSet--desktop {
+    margin-left: .5rem
+}
+.THIS .runtime_sales_pathassistantPathAssistantCardDesktop .hide {
+    display: none
+}
+.THIS .runtime_sales_pathassistantPathAssistantCardDesktop.medium .runtime_sales_pathassistantPathAssistantHeader--desktop {
+    width: 100%;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    margin-top: 1rem
+}
+.THIS .runtime_sales_pathassistantPathAssistantCardDesktop .runtime_sales_pathassistantCollapsibleDrawer.pa-drawer .pa-drawer-toggle {
+    display: block;
+    padding: 0;
+    background: rgb(255, 255, 255);
+    border: 1px solid rgb(221, 219, 218);
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+    background-clip: padding-box;
+    color: rgb(0, 112, 210)
+}
+.THIS .runtime_sales_pathassistantPathAssistantCardDesktop .runtime_sales_pathassistantCollapsibleDrawer.pa-drawer .pa-drawer-toggle:disabled {
+    color: rgb(221, 219, 218)
+}
+.THIS .runtime_sales_pathassistantPathAssistantCardDesktop .runtime_sales_pathassistantCollapsibleDrawer.pa-drawer .pa-drawer-toggle:focus {
+    outline: none;
+    box-shadow: 0 0 5px
+}
+.THIS .runtime_sales_pathassistantPathAssistantCardDesktop .pa-border.no-data .cd-drawer {
+    border-color: transparent
+}
+.THIS .runtime_sales_pathassistantPathAssistantCardDesktop .pa-border .cd-drawer {
+    border-top: 1px solid rgb(221, 219, 218)
+}
+.THIS .runtime_sales_pathassistantPathAssistantCardDesktop.lost .runtime_sales_pathassistantPathAssistantTab.complete:hover:before,
+.THIS .runtime_sales_pathassistantPathAssistantCardDesktop.lost .runtime_sales_pathassistantPathAssistantTab.complete:hover:after {
+    background-color: rgb(236, 235, 234);
+    border-color: rgb(236, 235, 234)
+}
+.THIS .runtime_sales_pathassistantPathAssistantCardDesktop.lost .runtime_sales_pathassistantPathAssistantTab.active:hover:before,
+.THIS .runtime_sales_pathassistantPathAssistantCardDesktop.lost .runtime_sales_pathassistantPathAssistantTab.active:hover:after {
+    background-color: rgb(22, 50, 92);
+    border-color: rgb(22, 50, 92)
+}
+.THIS .runtime_sales_pathassistantPathAssistantCardDesktop.lost .runtime_sales_pathassistantPathAssistantTab.current:hover:before,
+.THIS .runtime_sales_pathassistantPathAssistantCardDesktop.lost .runtime_sales_pathassistantPathAssistantTab.current:hover:after,
+.THIS .runtime_sales_pathassistantPathAssistantCardDesktop.lost .runtime_sales_pathassistantPathAssistantTab.current.active:hover:before,
+.THIS .runtime_sales_pathassistantPathAssistantCardDesktop.lost .runtime_sales_pathassistantPathAssistantTab.current.active:hover:after {
+    background-color: rgb(194, 57, 52);
+    border-color: rgb(194, 57, 52)
+}
+.THIS .runtime_sales_pathassistantPathAssistantCardDesktop.won .runtime_sales_pathassistantPathAssistantTab.current:hover:before,
+.THIS .runtime_sales_pathassistantPathAssistantCardDesktop.won .runtime_sales_pathassistantPathAssistantTab.current:hover:after {
+    background-color: rgb(4, 132, 75);
+    border-color: rgb(4, 132, 75)
+}
+.THIS .runtime_sales_pathassistantPathAssistantCardDesktop.won .runtime_sales_pathassistantPathAssistantTab.active:hover:before,
+.THIS .runtime_sales_pathassistantPathAssistantCardDesktop.won .runtime_sales_pathassistantPathAssistantTab.active:hover:after {
+    background-color: rgb(22, 50, 92);
+    border-color: rgb(22, 50, 92)
+}
+
+.THIS .hide_text_when_mouse_not_hover {
+    display: none;
+    
+    
+}
+
+.THIS .hide_text_when_mouse_not_hover_parent:hover .hide_text_when_mouse_not_hover {
+    display: block;
+
+    animation-name: example;
+    animation-duration: 300ms;
+    animation-direction: alternate;
+}
+
+.THIS .hide_text_when_mouse_not_hover_parent:hover .mark_disappearing {
+    display: none;
+}
+
+.THIS .actiiveAction .hide_text_when_mouse_not_hover {
+    display: block;
+
+    animation-name: example;
+    animation-duration: 300ms;
+    animation-direction: alternate;
+}
+
+.THIS .actiiveAction .mark_disappearing {
+    display: none;
+}
+
+@keyframes example {
+    from {padding-top: 20px;}
+    to {padding-top: 0px;}
+}

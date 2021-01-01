@@ -1,0 +1,338 @@
+<aura:component controller="AITM_TenderLocationNewOffer"
+    implements="forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,force:appHostable,force:hasRecordId">
+    <aura:attribute name="lineItems" type="AITM_Tender_Location_Line_Item__c[]" />
+    <aura:attribute name="tenderLocation" type="AITM_Tender_Location__c" default="{'AITM_Status__c' : ''}" />
+    <aura:attribute name="tenderLocationStatus" type="String" />
+    <aura:attribute name="productDefault" type="String" />
+    <aura:attribute name="deliveryType" type="String" />
+    <aura:attribute name="tenderLocId" type="String" />
+    <aura:attribute name="deliveryPoint" type="String" />
+    <aura:attribute name="accountClassification" type="String" />
+    <aura:attribute name="selectedLineId" type="String" />
+    <aura:attribute name="toggleSpinner" type="boolean" default="false" />
+    <aura:attribute name="tableMetadata" type="AITM_Table_Tender_Location_New_Offer__mdt[]" />
+    <aura:attribute name="tenderLocationStatuses" type="Map"
+        default="{ awaitingPrice: 'Awaiting price', ready: 'Ready', priced: 'Priced'}" />
+    <aura:attribute name="fieldsAccess" type="Map" />
+    <aura:attribute name="isOpen" type="boolean" default="false" />
+    <aura:attribute name="isTaxesOpen" type="boolean" default="false" />
+    <aura:attribute name="isOpen_TnF" type="boolean" default="false" />
+    <aura:attribute name="lineItemAcc" type="List" />
+    <aura:attribute name="cloneId" type="String" />
+    <aura:attribute name="selectedCheckBoxes" type="List" default ="[]" />
+    <aura:attribute name="applyToAllTaxesCheck" type="boolean" default="false" />
+    <aura:attribute name="isApplyAll" type="boolean" default="false" />
+    <aura:attribute name="tenderFields" type="AITM_Tender__c" />
+    <aura:attribute name="isOldTaxFeeFlag" type="boolean" />
+    <aura:attribute name="isOldTender" type="boolean" />
+    <aura:attribute name="isCheckedStraddle" type="boolean" default="false" />
+    <aura:attribute name="isLocationStraddled" type="boolean" default="false" />
+    <aura:attribute name="isConfirmUnStraddle" type="boolean" default="false" />
+    <aura:attribute name="isLineChecked" type="boolean" default="true" />
+    <aura:attribute name="handlePartialRefresh" type="boolean" default="true" />
+    <aura:attribute name="calledViaDoInit" type="boolean" default="true" />
+    <aura:attribute name="currencyOptions" type="List" />
+    <aura:attribute name="UOMOptions" type="List" />
+    <aura:attribute name="hoverRow" type="Integer" default="-1" />
+    <aura:attribute name="dynamicTooltipContent" type="String" />
+    <aura:attribute name="hoverRowLineId" type="String" />
+    <aura:attribute name="hoverRowPrice" type="Integer" default="-1" />
+    <aura:attribute name="hoverRowLineIdPricing" type="String" />
+    <aura:attribute name="hoverRowdelpoint" type="Integer" default="-1" />
+    <aura:attribute name="hoverRowLineIddelpoint" type="String" />
+    <aura:attribute name="tableSize" type="Integer"/>
+    <aura:attribute name="isConformApprove" type="boolean" default="false"/>
+    <aura:attribute name="customerServiceLevel" type="String"/>
+    <aura:attribute name="locationServiceLevel" type="String"/>
+
+    <force:recordData aura:id="recordLoaderAuraId" layoutType="FULL" recordId="{!v.recordId}"
+        targetFields="{!v.tenderFields}" />
+
+    <aura:dependency resource="markup://force:navigateToSObject" type="EVENT" />
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    <aura:handler name="AITM_RefreshTableEvent" event="c:AITM_RefreshTableEvent"
+        action="{!c.handleRefreshTableEvent}" />
+    <aura:handler event="force:refreshView" action="{!c.handleRefreshTableEvent}" />
+    <aura:handler event="c:AITM_PartialRefreshEvent" action="{!c.handlePartialRefreshFromLWCEvent}" />
+    <aura:registerEvent name="oSelectedRecordEvent" type="c:AITM_selectedsObjectRecordEvent" />
+    <aura:registerEvent name="splitScreenEvent" type="c:AITM_SplitScreenEvent" />
+    <div class="slds-grid stickyCSS"
+        style="position: sticky; top: 0; background: white; z-index: 2; padding-top: 15px;">
+        <div class="slds-col customerHeaderCSS">
+            <div class="slds-grid">
+                <div class="slds-col-5">
+                    <div>Status</div>
+                </div>
+                <div class="slds-col-5 slds-m-left_xx-small">
+                    <div aura:id="toggle-text-block" style="margin-top:-5px;">
+                        <span class="slds-badge">
+                            <lightning:formattedText value="{!v.tenderLocation.AITM_Status__c}" />
+                            <aura:if isTrue="{!v.fieldsAccess.aitm_status__c.isUpdateable}">
+                                <lightning:buttonIcon iconName="utility:edit" size="xx-small" onclick="{!c.toggleToEdit}" 
+                                                     alternativeText="{!'Edit' + v.name}" title="{!'Edit' + v.name}" />
+                            </aura:if>
+                        </span>
+                    </div>
+                    <aura:renderIf isTrue="{!v.fieldsAccess.aitm_status__c.isUpdateable}">
+                        <div aura:id="toggle-edit-block" class="hide">
+                            <ui:inputSelect class="dynamic" aura:id="picklist-location-status" value="{!v.tenderLocation.AITM_Status__c}"
+                                            change="{!c.changeTenderLocationStatus}" blur="{!c.hideEditBlock}" />
+                        </div>
+                    </aura:renderIf>
+                </div>
+            </div>
+        </div>
+        <div class="slds-col customerHeaderCSS">
+            <lightning:input type="checkbox" aura:id="no-revision" class="new-offer-checkbox" label="No Revision"
+                onchange="{!c.norevision}" value="{!v.tenderLocation.AITM_No_Revision__c}" />
+        </div>
+        <div class="slds-col customerHeaderCSS">
+            <lightning:input type="checkbox" aura:id="Apply-to-all" class="new-offer-checkbox" onchange="{! c.openModel }"
+                checked="{!v.tenderLocation.AITM_Apply_to_all__c}" value="{!v.tenderLocation.AITM_Apply_to_all__c}" label="Pricing All" />
+            <lightning:helptext
+                content="Are you sure you want to apply the changes to all other tender location line items in this location across all customers?" />
+        </div>
+        <!--Added for Apply to All Taxes and Fees checkbox AR-5003  
+            <div class="slds-col">
+                <ui:inputCheckbox aura:id="ApplytoallTaxesandFees" class="new-offer-checkbox" change="{! c.openTaxesModel }" value="{!v.tenderLocation.AITM_Taxes_Fees__c}" />Apply to All
+                Taxes and Fees
+                <lightning:helptext content="Are you sure you want to apply the changes to all other tender location line items in this location across all customers?" />
+            </div>  -->
+        <div class="slds-col customerHeaderCSS">
+            <div class="slds-grid">
+                <lightning:input type="checkbox" aura:id="Apply-to-all-taxes-fees" onchange="{!c.openModel_TnF}"
+                    checked="{!v.applyToAllTaxesCheck}" label="Apply to All Taxes and Fees"
+                    value="{!v.applyToAllTaxesCheck}" />
+                <lightning:helptext
+                    content="Apply all - Taxes and Fees copies over Tax charges of the last edited Tender location line item (TLLI) to other TLLIs present in the same location." />
+            </div>
+        </div>
+        <!--Added for to disable Straddle Taxes and Fees checkbox PBI - 253508 
+            <div class="slds-col">
+                <div class="slds-grid">
+                    <lightning:input type="checkbox" aura:id="straddle-taxes-fees" onchange="{! c.openStraddleModel }" checked="{!v.isCheckedStraddle}" label="Straddle Taxes and Fees" value="{!v.isCheckedStraddle}" />
+            
+                    <lightning:helptext class="customIcon" content="Straddling helps in consolidating taxes and fees information for multiple entities, based on &amp; displayed for the lead customer only, when generating an offer/contract. It is defaulted when tender customers have lead/affiliate relationship. IMPORTANT: If you wish to consolidate T&amp;F ensure to set up Affiliate relationships first" />
+                </div>			
+            </div> -->
+        <div class="slds-grid customerHeaderCSS">
+            <div class="slds-col">
+                <lightning:button variant="brand" class="slds-button" onclick="{!c.cloneSelected}" aura:id="cloneenable"
+                    disabled="true" label="Clone" />
+            </div>
+            <div class="slds-col customerHeaderCSS">
+                <lightning:button variant="neutral" class="slds-button slds-m-left_medium" onclick="{!c.deleteSelected}"
+                    aura:id="deleteenable" disabled="true" label="Delete" />
+            </div>
+        </div>
+
+    </div>
+    
+    <aura:if isTrue="{!v.isConformApprove}">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1"
+                class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close" onclick="{!c.closeApprovalConfirmBox}" alternativeText="close"
+                            variant="bare-inverse" class="slds-modal__close" />
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Please confirm </h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p>
+                            
+                            <p>The service level requested by the customer  "{!v.customerServiceLevel}"  is higher than the default offered for this location {!v.locationServiceLevel}. Are you happy to approve the requested service level for this customer?</p>
+                        </p>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral" label="No" title="No" onclick="{! c.closeApprovalConfirmBox }" />
+                        <lightning:button variant="brand" label="Yes" title="Yes" onclick="{!c.updateUnApproveTenderLocation}" />
+                        
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+
+    <aura:if isTrue="{!v.isOpen}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close" onclick="{! c.closeModel }" alternativeText="close"
+                        variant="bare-inverse" class="slds-modal__close" />
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Please confirm </h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <p>
+                        <b>Are you sure you want to change the pricing basis and Offer differential for all the
+                            Customers?
+                        </b>
+                    </p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning:button variant="neutral" label="No" title="No" onclick="{! c.closeModel }" />
+                    <lightning:button variant="brand" label="Yes" title="Yes" onclick="{!c.handleFilters}" />
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+    <aura:if isTrue="{!v.isOpen_TnF}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close" onclick="{! c.closeModel }" alternativeText="close"
+                        variant="bare-inverse" class="slds-modal__close" />
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Please confirm </h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <p>
+                        <b>Are you sure you want to apply the changes to all other tender location line items in this
+                            location across all customers?
+                        </b>
+                    </p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning:button variant="neutral" label="No" title="No" onclick="{! c.closeModel }" />
+                    <lightning:button variant="brand" label="Yes" title="Yes" onclick="{!c.handleNewTaxesAndFees}" />
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+    <br />
+    <!-- Lower Part Component Starts-->
+    <div class="slds">
+        <div class="outer-div">
+    		<lightning:spinner aura:id="tenderLocationNewOfferSpinner" class="slds-hide spinner" alternativeText="Loading"/>
+		</div>
+        <aura:iteration items="{!v.lineItemAcc}" var="lineItemAcc" indexVar="index">
+            <div class="slds-clearfix">
+                <div class="slds-float_left">
+                    <div>
+                        <div class="customerNameCSS">
+                            <strong>Customer Name </strong>
+                        </div>
+                        <div class="slds-m-bottom_xx-small customerDynamicNameCSS">
+                            <strong>
+                                {!lineItemAcc.Name}({!lineItemAcc.AITM_GRN__c})
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <table
+                class="slds-table slds-table_header-hidden slds-border_left slds-border_right slds-border_top slds-table_bordered slds-p-top_large"
+                id="{!GlobalId + '-dynamic-calculating-top'}">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <aura:iteration items="{!v.tableMetadata}" var="tableField">
+                            <aura:if isTrue="{!and(and(tableField.AITM_Field_Name__c != 'AITM_Customer_Name__c',not(empty(tableField.AITM_Field_Name__c))), tableField.AITM_Is_Table_Footer_Field__c == false)}">
+                                <th title="{!tableField.AITM_Label_Text__c}"
+                                    class="{!((tableField.AITM_Field_Name__c == 'AITM_Start_Date__c' || tableField.AITM_Field_Name__c == 'AITM_End_Date__c') ? 'slds-text-align--center' : '')}">
+                                    <aura:unescapedHtml value="{!tableField.AITM_Label_Text__c}" />
+                                </th>
+                            </aura:if>
+                        </aura:iteration>
+                    </tr>
+                </thead>
+                <aura:iteration items="{!v.lineItems}" var="lineItem">
+                    <aura:if isTrue="{!lineItem.AITM_Account__r.AITM_GRN__c == lineItemAcc.AITM_GRN__c}">
+                        <tr aura:id="customer-table" id="{!GlobalId + '-dynamic-top-tr-' + lineItem.Id}"
+                            class="{!'slds-p-bottom_large '+ (and(v.isLineChecked, lineItem.Id == v.selectedLineId) ? 'backgroundCSS' : '')}">
+                            <aura:iteration items="{!v.tableMetadata}" var="tableField" indexVar="index">
+                                <aura:if isTrue="{!and(tableField.AITM_Is_Table_Footer_Field__c == false,and(tableField.AITM_Field_Name__c != 'AITM_Customer_Name__c',not(empty(tableField.AITM_Field_Name__c))))}">
+                                    <td scope="row" id="{!GlobalId + '-dynamic-top-' + lineItem.Id}"
+                                        class="slds-text-align--left spacingCSS" data-index="{!index}"
+                                        data-value="{!tableField.AITM_Field_Name__c}" data-target="{!lineItem.Id}"
+                                        onmouseover="{!c.showtooltip}" onmouseout="{!c.hidetooltip}">
+                                        <div class="slds-grid">
+                                            <aura:if isTrue="{!tableField.AITM_Field_Name__c == 'AITM_Start_Date__c'}">
+                                                <lightning:input type="checkbox" name="lineItem.AITM_GRN__c" aura:id="boxPack" onchange="{!c.showHide}"
+                    								label="" value="{!lineItem.Id}" />
+                                            </aura:if>
+                                            <c:AITM_ToggleCustomInput aura:id="toggle-input-component"
+                                                name="{!tableField.MasterLabel}" lineItem="{!lineItem}"
+                                                tenderLocation="{!v.tenderLocation}"
+                                                targetObject="{!tableField.AITM_Target_Object__c}"
+                                                targetFieldName="{!tableField.AITM_Field_Name__c}"
+                                                type="{!tableField.AITM_Field_Type__c}"
+                                                numberFormat="{!tableField.AITM_Format__c}"
+                                                isEditable="{!tableField.AITM_Is_Editable__c}" linkText=''
+                                                defaultValue="{!tableField.AITM_Default_Value__c}"
+                                                isFreezed="{!tableField.AITM_Is_Freezed__c}" lineItemId="{!lineItem.Id}"
+                                                currencyOptions="{!v.currencyOptions}" UOMOptions="{!v.UOMOptions}" />
+                                            <div class="slds-p-top_small">
+                                                <aura:if
+                                                    isTrue="{!tableField.AITM_Field_Name__c == 'AITM_Current_Value__c'}">
+                                                    <lightning:buttonIcon iconName="utility:jump_to_right"
+                                                        onclick="{!c.handleSplitScreen}" alternativeText="Utility image"
+                                                        class="slds-button__icon--right slds-button_icon-border slds-button_icon-x-small"
+                                                        value="{!lineItem.Id}" name="{!lineItem.Id}" />
+                                                </aura:if>
+                                            </div>
+                                        </div>
+                                        <aura:if
+                                            isTrue="{!and(equals(lineItem.Id,v.hoverRowLineId), tableField.AITM_Field_Name__c == 'AITM_Percentage_Volume_Offered__c')}">
+                                            <div style="position:absolute; word-wrap: break-word;" aura:id="hover"
+                                                class="slds-glutters slds-cell-wrap">
+                                                <div class="slds-popover slds-popover_tooltip slds-nubbin_top-left"
+                                                    role="tooltip" id="help"
+                                                    style="position:absolute;background:#ff3f6c;">
+                                                    <div class="slds-popover__body">
+                                                        <aura:if
+                                                            isTrue="{!lineItem.AITM_Offered_Volume__c == null || lineItem.AITM_Requested_Volume_USG__c == null}">
+                                                            <lightning:formattedText value="0" />
+                                                            <aura:set attribute="else">
+                                                                <lightning:formattedNumber
+                                                                    value="{!lineItem.AITM_Offered_Volume__c}" />
+                                                            </aura:set>
+                                                        </aura:if>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </aura:if>
+                                        <aura:if
+                                            isTrue="{!and(equals(lineItem.Id,v.hoverRowLineIdPricing), tableField.AITM_Field_Name__c == 'AITM_Pricing_Basis__r.Name')}">
+                                            <div style="position:absolute; word-wrap: break-word;" aura:id="hoverPrice"
+                                                class="slds-glutters slds-cell-wrap">
+                                                <div class="slds-popover slds-popover_tooltip slds-nubbin_top-left"
+                                                    role="tooltip" id="help"
+                                                    style="position:absolute;background:#ff3f6c;">
+                                                    <div class="slds-popover__body">
+                                                        <lightning:formattedText
+                                                            value="{!lineItem.AITM_Pricing_Basis__r.Name}" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </aura:if>
+                                        <aura:if
+                                            isTrue="{!and(equals(lineItem.Id,v.hoverRowLineIddelpoint), tableField.AITM_Field_Name__c == 'AITM_Delivery_Point_Info__c')}">
+                                            <div style="position:absolute; word-wrap:break-word;"
+                                                aura:id="hoverdelpoint" class="slds-glutters">
+                                                <div class="slds-popover slds-popover_tooltip slds-nubbin_top-left"
+                                                    role="tooltip" id="help"
+                                                    style="position:absolute;background:#ff3f6c;">
+                                                    <div class="slds-popover__body">
+                                                        <lightning:formattedText
+                                                            value="{!lineItem.AITM_Delivery_Point_Info__c}" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </aura:if>
+                                    </td>
+                                </aura:if>
+                            </aura:iteration>
+                        </tr>
+                    </aura:if>
+                </aura:iteration>
+				<aura:if isTrue="{!v.tableSize == v.lineItems.length-1}">
+                     <tr style="height:35px;"></tr>
+                </aura:if>
+            </table>
+        </aura:iteration>
+    </div>
+    <!-- Lower Part Component Ends-->
+</aura:component>

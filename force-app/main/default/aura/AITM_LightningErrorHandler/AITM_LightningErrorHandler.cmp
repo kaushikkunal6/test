@@ -1,0 +1,5 @@
+<aura:component access="global">
+	<aura:attribute name="errorHandlerName" type="string" required="false" description="if set, only toasts errors when the name matches" access="global"/>
+	<aura:attribute name="logError" type="boolean" default="true" required="false" access="global"/>
+	<aura:handler event="c:AITM_HandleCallbackErrorEvent" action="{!c.makeToast}"/>
+</aura:component>

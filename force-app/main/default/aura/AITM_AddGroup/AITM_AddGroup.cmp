@@ -1,0 +1,59 @@
+<aura:component implements="force:LightningQuickActionWithoutHeader,force:hasRecordId" controller="AITM_AddGroupController">
+    <aura:attribute name="selectedGroupId" type="Id" description="Selected Group Id" />
+    <aura:attribute name="searchTerm" type="String" description="String to search groups started with" />
+    <aura:attribute name="searchLocked" type="Boolean" description="Indicates if search is locked " default="false" />
+    <aura:attribute name="groups" type="List" description="Groups available for user defined by a search term" /> 
+    <aura:attribute name="invalidaccount" type="List" description="Accounts which do not have mandatory fields in order to get added in Tender Customer related to a group" /> 
+    <aura:attribute name="saveLocked" type="Boolean" description="Indicates if save button will not trigger new" default="false"/>
+    <aura:attribute name="validationMessage" type="Boolean" description="Fires when the data doesn't exist in Account"/>
+
+    
+
+    <div class="slds-modal__header">
+        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.close}"><lightning:icon iconName="utility:close" variant="inverse" size="small"/></button>
+        <h2 class="slds-text-heading--medium">Add Group</h2>
+    </div>   
+
+	
+	<aura:if isTrue="{!v.validationMessage}">
+        <ui:message title="Error" severity="error" closable="true">
+           "{!$Label.c.AITM_ValidateTenderCustomer}" for the Account(s):
+        <br/>
+        <aura:iteration items="{!v.invalidaccount}" var="invalid">
+            "{!invalid.Name}" with GRN "{!invalid.AITM_GRN__c}"
+        <br/>
+        </aura:iteration>  
+        </ui:message>
+    </aura:if>
+
+    <div class="slds-modal__content slds-p-around--medium">
+         <ui:inputText aura:id="groupsInput" label="Choose your Groups"  updateOn="keyup" change="{!c.search}" placeholder="Group Name" value="{!v.searchTerm}" keyup="{!c.search}" />
+            <aura:if isTrue="{! !empty(v.groups) &amp;&amp; !v.searchLocked}">
+                <div class="slds-lookup__menu" id="lookup-66">
+                    <ul class="slds-lookup__list" role="listbox">
+                        <aura:iteration items="{!v.groups}" var="group">
+                            <li role="presentation">
+                                <span class="slds-lookup__item-action slds-media" id="{!group.Id}" onclick="{!c.selectGroup}" data-label="{!group.Name}" role="option">
+                                    <lightning:icon iconName="standard:account" size="small" class="slds-media__figure"/>
+                                    <div class="slds-media__body">
+                                        <div class="slds-lookup__result-text">{!group.Name}</div>                                    
+                                        
+                                    </div>
+                                </span>
+                            </li>
+                        </aura:iteration>
+                    </ul>
+                </div>
+            </aura:if>
+            </div>
+            
+            
+        
+    <aura:if isTrue="{!v.selectedGroupId.length > 0}">
+        <div class="slds-modal__footer">
+            <lightning:button variant="neutral" label="Cancel"  onclick="{!c.close}"/>
+            <lightning:button variant="neutral" name="Save" label="Save"  onclick="{!c.save}"/>
+            
+        </div>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,18 @@
+<apex:component access="global">
+    <apex:attribute name="brand" type="String" description="Branding aral/castrol"/>
+
+    <tr>
+        <td align="center" valign="top">
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" id="emailHeader"
+                   style="{!IF(brand == 'aral', 'background-color:#3363cc', IF(brand == 'bp', 'background-color:#ffffff', 'background-color:#018b46'))}">
+                <tr>
+                    <td align="{!IF((brand == 'aral' || brand == 'bp'), 'left', 'right')}" valign="top">
+                        <apex:image rendered="{!brand == 'aral'}" value="https://www.aral.de/etc/designs/aral-responsive/images/aral-responsive.svg" width="124" height="131"/>
+                        <apex:image rendered="{!brand == 'castrol' || brand == 'bpcastrol'}" value="https://castrol--c.eu6.content.force.com/servlet/servlet.ImageServer?id=01558000001ie2G&oid=00D58000000axyD" width="399" height="88"/>
+                        <apex:image rendered="{!brand == 'bp'}" value="https://www.bp.com/content/bp/en/global/corporate/who-we-are/our-brands/the-bp-brand/jcr:content/article_dropzone/image.img.288.high.png/1511979905918.png" width="123" height="123"/>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</apex:component>

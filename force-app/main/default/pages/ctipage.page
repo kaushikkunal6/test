@@ -1,0 +1,99 @@
+<apex:page controller="GCM_CTIController" extensions="ConnectorEntityController,softphoneerc.InsertAgentWork,GCM_GSYS_DuplicateEmailHandler,AttachmentController" showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+    <apex:stylesheet value="{!$Resource.iwsstyle}" />
+    
+    <apex:includeScript value="/soap/ajax/43.0/connection.js" />
+    <apex:includeScript value="/soap/ajax/43.0/apex.js" />
+    <apex:includeScript value="/support/console/43.0/integration.js" />
+
+    <apex:includeScript value="{!$Resource.softphone_it__jquery}" />
+    <apex:includeScript value="{!$Resource.softphone_it__softphone_connector_core}" />
+    <apex:includeScript value="{!$Resource.attachmentUtil}" />
+    <div id="content" class="softphone_content"></div>
+
+    <script type="text/javascript">
+        console.log('**** Loading settings...');
+        sforce.connection.sessionId = '{!GETSESSIONID()}';
+        var runningUserId = "{!$User.Id}";
+        console.log('running user Id***',runningUserId);
+        var myInteractionMap = new Map();
+        var outboundInteractionMap = new Map();
+        var softphoneSettings = {
+            sfExperience: "{!$Setup.Connector_Settings__c.SF_Experience__c }",
+            integrationType: "{!$Setup.Connector_Settings__c.Integration_Type__c}",
+            isExternalRouting: "{!$Setup.Connector_Settings__c.External_Routing__c}",
+            ixnMgrUrl: "{!$Setup.Connector_Settings__c.IXN_MGR_URL__c }",
+            logLevel: "{!$Setup.Connector_Settings__c.Log_Level__c}",
+            wdeHost: "{!$Setup.Connector_Settings__c.WDE_Host__c  }",
+            wdePort: "{!$Setup.Connector_Settings__c.WDE_Port__c  }",
+            wdeProtocol: "{!$Setup.Connector_Settings__c.WDE_Protocol__c  }",
+            pcEnv: "{!$Setup.Connector_Settings__c.PureCloud_Environment__c }",
+            pcNotReadyId: "{!$Setup.Connector_Settings__c.PureCloud_Not_Ready_Presence_ID__c }",
+            pcOnQueueId: "{!$Setup.Connector_Settings__c.PureCloud_On_Queue_Presence_ID__c}",
+            wweUrl: "{!$Setup.Connector_Settings__c.WWE_URL__c  }",
+            omniReadyId: "{!$Setup.Connector_Settings__c.ER_OmniReadyID__c  }",
+            omniNotReadyId: "{!$Setup.Connector_Settings__c.ER_OmniNotReadyID__c  }",
+            wdeChannelsToSynch: "{!$Setup.Connector_Settings__c.ER_WdeChannelsToSynch__c  }",
+            pcDedicatedLoginWindow : "{!$Setup.Connector_Settings__c.dedicatedLoginWindow__c  }",
+            pcEnableCallLogs : "{!$Setup.Connector_Settings__c.enableCallLogs__c  }",
+            pcHideCallLogContact : "{!$Setup.Connector_Settings__c.hideCallLogContact__c  }",
+            pcHideCallLogRelation : "{!$Setup.Connector_Settings__c.hideCallLogRelation__c  }",
+            pcHideCallLogSubject : "{!$Setup.Connector_Settings__c.hideCallLogSubject__c  }",
+            pcHideWebRTCPopUpOption : "{!$Setup.Connector_Settings__c.hideWebRTCPopUpOption__c  }",
+            pcEmbedWebRTCByDefault : "{!$Setup.Connector_Settings__c.embedWebRTCByDefault__c  }"
+        }
+        if ( ! softphoneSettings.integrationType ){
+            alert("You need to configure the cti-connector-extension package.");
+            
+        }
+        var isLightning = softphoneSettings.sfExperience == 'Lightning';
+        console.log('**** softphoneSettings : ', softphoneSettings);
+        console.log('**** Settings loaded!');
+        
+        var experience = softphoneSettings.sfExperience == 'Lightning' ? '/support/api/43.0/lightning/opencti_min.js' : '/support/api/43.0/interaction.js'
+        loadScript(experience);
+
+        if (softphoneSettings.isExternalRouting == "true") {
+            loadScript("{!ERCOmniUtilsPath}")
+            loadScript("{!$Resource.softphone_it__rxjs}");
+            loadScript("{!$Resource.iwsscript_omni}");
+        
+        } else {
+            loadScript("{!$Resource.iwsscript}");
+        }
+
+        switch (softphoneSettings.integrationType) {
+            case 'PURECLOUD':
+                loadScript("{!$Resource.softphone_it__pureClientSdkBundle}");
+                appendHTML('<apex:iframe height="100%" width="100%" scrolling="true" id="pureFrame" />');
+                break;
+            case 'WDE':
+                loadScript("{!$Resource.wdeintegration}");
+                appendHTML('<div id="IWSConnectorToolbar" name="IWSConnectorToolbar" style="display: none"></div><div class="container-wde"><div class="header"><img src="{!$Resource.logo_softphone}" /><p class="title"></p><p class="version"></p></div><div class="led-msg"><div id="led"></div><p></p><div class="btn-logs"><label>Logs</label><input type="button" onclick="toggleExpand()" id="expand" value="+"></input></div></div><div class="buttons" style="display: none"><input id="saveLogs" type="checkbox" onchange="updateSaveLog()" /><label>Save logs</label><button onclick="download()">Download</button><button onclick="clearLog()">Clear</button></div><div class="logs"><ul></ul></div></div>');
+                break;
+            case 'WWE':
+                appendHTML('<apex:iframe height="100%" width="100%" scrolling="true" id="wweFrame" />');
+                break;
+        }
+
+        loadScript("{!$Resource.iwsutil}");
+        loadScript("{!$Resource.iwsprescript}");
+        loadScript("{!$Resource.iwsconfig}");
+        loadScript("{!$Resource.CTIScriptUtil}");
+        loadScript("{!$Resource.CTISforceConsoleEventListeners}");
+
+        function loadScript(src) {
+            var script = document.createElement('script');
+            script.src = src;
+            script.async = false;
+            document.head.appendChild(script);
+        }
+
+        function appendHTML(content) {
+            $("#content").append(content);
+        }
+    
+    </script>
+    <apex:form >
+        <apex:actionFunction name="deleteDuplicateEmails" action="{!deleteDuplicateEmails}" id="deleteDuplicateEmails" rerender=""/>
+    </apex:form>
+</apex:page>

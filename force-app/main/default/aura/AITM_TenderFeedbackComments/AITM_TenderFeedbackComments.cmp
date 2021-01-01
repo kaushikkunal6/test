@@ -1,0 +1,192 @@
+<aura:component  controller="AITM_TenderFeedbackComments" implements="forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,force:appHostable,force:hasRecordId" access="global">
+    
+    <aura:attribute name="tenderLocationList" type="AITM_Tender_Location__c"/>
+    <aura:attribute name="tenderFields" type="AITM_Tender__c" default="{ 'sobjectType': 'AITM_Tender__c'}"/>
+    <aura:attribute name="tenderLocId" type="String" />
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="incumbentOptions" type="List" />
+    <aura:attribute name="qualityOptions" type="List"/>	    
+    <aura:attribute name="interestOptions" type="List" />
+    <aura:attribute name="currencyOptions" type="List" />
+    <aura:attribute name="UOMOptions" type="List" />
+    <aura:attribute name="hoverRow" type="Integer" default="-1" />
+    <aura:attribute name="hoverRowLineId" type="String" />
+    <aura:attribute name="tenderLocationListToUpdate" type="AITM_Tender_Location__c"/>
+    <aura:attribute name="goodToGo" type="boolean" />
+    <aura:attribute name="isCurrentRound" type="Boolean" default="false" />
+    <aura:attribute name="selectedRound" type="String" description="Contains info regarding selected round" />
+    <aura:handler event="c:AITM_RelatedRecordsFilterEvent" action="{!c.handleFilterEvent}" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    
+    <aura:handler event="force:refreshView" action="{!c.handleRefreshTableEvent}" />
+    
+    <force:recordData aura:id="recordLoaderAuraId" layoutType="FULL" recordId="{!v.recordId}"
+                      fields="Name,AITM_Tender_Information__c,AITM_AM_Comments__c,AITM_Bids_In_By__c,AITM_Number_Of_Rounds__c,AITM_Last_Look_To_Incumbent__c,AITM_Quality_Of_Feedback__c,AITM_Stage__c"  
+                      targetFields="{!v.tenderFields}" mode="EDIT"/>
+   
+    <lightning:spinner aura:id="tenderLocationSpinner"/>
+    <div class="slds-grid slds-wrap">
+        <div class="slds-p-horizontal--small slds-size_1-of-1">
+            <lightning:button variant="brand" label="Save" onclick="{!c.handleSave}"  class="buttonCSS" aura:id="saveId" value="{!v.tenderLocationList}"/>
+        </div>
+        <div class="slds-p-horizontal--small slds-size_1-of-2">
+            <lightning:textarea  aura:id="TenderInfo" label="Tender Information" value="{!v.tenderFields.AITM_Tender_Information__c}" placeholder="Tender Info"/>
+        </div>
+        <div class="slds-p-horizontal--small slds-size_1-of-2">
+            <lightning:textarea aura:id="AMComments" label="AM Comments" value="{!v.tenderFields.AITM_AM_Comments__c}" placeholder="AM Comments" />
+        </div>
+        <div class="slds-p-horizontal--small slds-size_1-of-4">
+            <lightning:input type="Date" aura:id="BidsinBy" label="Bids in by date" value="{!v.tenderFields.AITM_Bids_In_By__c}"/>
+        </div>
+        <div class="slds-p-horizontal--small slds-size_1-of-4">
+            <lightning:input type="number" aura:id="noOfRounds" label="Number of rounds" value="{!v.tenderFields.AITM_Number_Of_Rounds__c}"/>
+        </div>
+        <div class="slds-p-horizontal--small slds-size_1-of-4">
+            <lightning:select  aura:id="incumbentPicklist" label="Last look to incumbent" value="{!v.tenderFields.AITM_Last_Look_To_Incumbent__c}">
+                <aura:iteration items="{!v.incumbentOptions}" var="filter" indexVar="index">
+                    <option value="{!filter.key}" text="{!filter.value}" selected="{!filter.key == !v.tenderFields.AITM_Last_Look_To_Incumbent__c}" />
+                </aura:iteration>
+            </lightning:select>
+        </div>
+        <div class="slds-p-horizontal--small slds-size_1-of-4">
+            <lightning:select  aura:id="feedback" label="Quality of feedback" value="{!v.tenderFields.AITM_Quality_Of_Feedback__c}">
+                <aura:iteration items="{!v.qualityOptions}" var="filter" indexVar="index">
+                    <option value="{!filter.key}" text="{!filter.value}" selected="{!filter.key == !v.tenderFields.AITM_Quality_Of_Feedback__c}" />
+                </aura:iteration>
+            </lightning:select>
+        </div>
+    </div>
+    <br/>
+    <div>
+        <table class="slds-table slds-table_header-hidden slds-border_left slds-border_right slds-border_top slds-table_bordered slds-p-top_large">
+            
+            <thead>
+                <tr class="slds-line-height_reset">
+                    <th scope="col" class="slds-cell-shrink">
+                        <div class="slds-truncate" title="Location Name">LOCATION<br/> NAME</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Pricing Responsibility">PRICING <br/>RESPONSIBILITY</div>
+                    </th>
+                    
+                    <th scope="col">
+                        <div class="slds-truncate" title="AM NOTES/FEEDBACK">AM NOTES/FEEDBACK</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="LM NOTES/FEEDBACK">LM NOTES/FEEDBACK</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="LEVEL OF INTEREST">LEVEL OF <br/>INTEREST</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="CURRENT DIFF.">CURRENT <br/>DIFF.</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="BIDDERS">BIDDERS</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="POSITION">POSITION</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="EST. LEADING BID">EST.LEADING <br/> BID</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="DIST. FROM LEADING BID">DIST. FROM <br/>LEADING BID</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="CURRENCY">CURRENCY</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="UOM">UOM</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <aura:iteration items="{!v.tenderLocationList}" var="tableField" indexVar="index">
+                    <tr class="slds-hint-parent">
+                        <td data-label="Location Name" data-refid="tenderLocId" data-recordid="{!tableField.tenderlocId}"  style="width:100px; word-wrap:break-word;">
+                            <a class="outputLookupLink slds-truncate slds-cell-wrap forceOutputLookup" data-refid="tenderLocId" data-recordid="{!tableField.tenderlocId}" data-special-link="true" href="{!'#/sObject/'+tableField.tenderlocId+'/view/'}" rel="noreferrer" title="{!tableField.locationName}" data-aura-class="forceOutputLookup" onclick="{!c.navigateToSObject}">{!tableField.locationName}</a>
+                        </td>
+                        <td data-label="Pricing Responsibility" class="widthCSS">
+                            <div class="slds-truncate slds-cell-wrap">
+                                <lightning:formattedText value="{!tableField.pricingResponsibility}" id="{!tableField.tenderlocId}"/>
+                            </div>
+                        </td>
+                        <td data-label="AMComments">
+                            <lightning:textarea name="{!index}" id="{!tableField.tenderlocId}" aura:id="AMComments" value="{!tableField.AMFeedback}" class="slds-p-bottom_small" onchange="{!c.captureChange}"/>
+                        </td>
+                        <td data-label="LMComments">
+                            <div class="slds-truncate">
+                                <lightning:textarea  name="{!index}" id="{!tableField.tenderlocId}" aura:id="LMComments" value="{!tableField.LMFeedback}" class="slds-p-bottom_small" onchange="{!c.captureChange}"/>
+                            </div>
+                        </td>
+                        <td data-label="levelOfInterestPicklist" data-target="{!tableField.tenderlocId}" class ="selectInterestCSS">
+                            <lightning:select  name="{!tableField.tenderlocId}" tabindex="{!index}" aura:id="levelOfInterest" variant="label-hidden"  value="{!tableField.LevelOfInterest}" onchange="{!c.capturePicklistChange}" class="slds-p-bottom_small">
+                                <aura:iteration items="{!v.interestOptions}" var="filter">
+                                    <option value="{!filter.key}" text="{!filter.value}"/>
+                                </aura:iteration>
+                            </lightning:select>
+                        </td>
+                        <td data-label="Current Diff" data-index="{!index}" data-value="{!tableField.CurrentDiff}" data-target="{!tableField.tenderlocId}" data-recordid="{!tableField.tenderlocId}" onmouseover="{!c.showtooltip}" onmouseout="{!c.hidetooltip}" class="widthCSS slds-text-align_center">
+                            <div class="slds-truncate">
+                                <lightning:formattedNumber value="{!tableField.CurrentDiff}"/>
+                                <aura:if isTrue="{!and(equals(tableField.tenderlocId,v.hoverRowLineId), tableField.CurrentDiff != null)}">
+                                    <div style="position:absolute; word-wrap: break-word;" aura:id="hover"
+                                         class="slds-glutters slds-cell-wrap">
+                                        <div class="slds-popover slds-popover_tooltip slds-nubbin_top-left"
+                                             role="tooltip" id="help"
+                                             style="position:absolute;background:#ff3f6c;">
+                                            <div class="slds-popover__body">
+                                                <lightning:formattedText value="{!tableField.currencylist+ '/' +tableField.UOM + '-' +tableField.PricingBasis}" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </aura:if>
+                            </div> 
+                        </td>
+                        <td data-label="bidders"  class="numberCSS">
+                            <lightning:input type="number" name="{!index}"  id="{!tableField.tenderlocId}" aura:id="Bidders" value="{!tableField.Bidders}" class="slds-p-bottom_small" onchange="{!c.captureChange}" />
+                            <!--<aura:if isTrue="{!v.tenderFields.AITM_Stage__c == 'Debrief'}">
+                                <lightning:input type="number"  name="{!index}"  id="{!tableField.tenderlocId}" aura:id="Bidders" value="" class="slds-p-bottom_small" />
+                                <aura:set attribute="else">
+                                    <lightning:input type="number" name="{!index}"  id="{!tableField.tenderlocId}" aura:id="Bidders" value="{!tableField.Bidders}" class="slds-p-bottom_small" onchange="{!c.captureChange}" />
+                                </aura:set>
+                            </aura:if>-->
+                        </td>
+                        <td data-label="position" class="numberCSS">
+                            <lightning:input type="number" name="{!index}" id="{!tableField.tenderlocId}" aura:id="position" value="{!tableField.Position}" class="slds-p-bottom_small" onchange="{!c.captureChange}"/>
+                            <!--<aura:if isTrue="{!v.tenderFields.AITM_Stage__c == 'Debrief'}">
+                                <lightning:input type="number" name="{!index}" id="{!tableField.tenderlocId}" aura:id="position" value="" class="slds-p-bottom_small" />
+                                <aura:set attribute="else">
+                                    <lightning:input type="number" name="{!index}" id="{!tableField.tenderlocId}" aura:id="position" value="{!tableField.Position}" class="slds-p-bottom_small" onchange="{!c.captureChange}"/>
+                                </aura:set>
+                            </aura:if>-->
+                        </td>	
+                        <td data-label="estimated" class="numberCSS">
+                            <lightning:input type="number"  name="{!index}" id="{!tableField.tenderlocId}" aura:id="estimated" value="{!tableField.EstimatedleadingBid}" class="slds-p-bottom_small" onchange="{!c.captureChange}"/> 
+                        </td>
+                        <td data-label="distance" class="widthCSS slds-text-align_center">
+                            <lightning:input type="number" name="{!index}" id="{!tableField.tenderlocId}" aura:id="distance" value="{!tableField.DistleadingBid}" class="slds-p-bottom_small" onchange="{!c.captureChange}"/>
+                        </td>
+                        <td data-label="Currency" class ="selectCSS">
+                            <lightning:select  name="{!tableField.tenderlocId}" tabindex="{!index}" aura:id="Currency" variant="label-hidden" value="{!tableField.currencylist}" onchange="{!c.capturePicklistChange}" class="slds-p-bottom_small">
+                                <aura:iteration items="{!v.currencyOptions}" var="filter" indexVar="index">
+                                    <option value="{!filter.key}" text="{!filter.value}" selected="{!filter.key == !tableField.currencylist}" />
+                                </aura:iteration>
+                            </lightning:select>
+                        </td>
+                        <td data-label="UOM" class ="selectCSS">
+                            <lightning:select  name="{!tableField.tenderlocId}" tabindex="{!index}" aura:id="UOM" variant="label-hidden" value="{!tableField.UOM}" onchange="{!c.capturePicklistChange}" class="slds-p-bottom_small">
+                                <aura:iteration items="{!v.UOMOptions}" var="filter" indexVar="index">
+                                    <option value="{!filter.key}" text="{!filter.value}" selected="{!filter.key == !tableField.UOM}" />
+                                </aura:iteration>
+                            </lightning:select>
+                        </td>
+                        
+                    </tr>
+                </aura:iteration></tbody>
+            
+        </table>
+    </div>    
+</aura:component>

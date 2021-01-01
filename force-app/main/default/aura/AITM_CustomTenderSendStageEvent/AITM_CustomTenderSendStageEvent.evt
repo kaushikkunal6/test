@@ -1,0 +1,3 @@
+<aura:event type="APPLICATION" description="Sent by custom tender path component to render valid path based on stage">
+    <aura:attribute name="chosenStage" type="String"/>
+</aura:event>

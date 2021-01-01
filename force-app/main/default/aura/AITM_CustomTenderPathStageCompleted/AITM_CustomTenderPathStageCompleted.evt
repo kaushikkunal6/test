@@ -1,0 +1,10 @@
+<aura:event type="APPLICATION" description="Sent when tender stage is changed">
+    <aura:attribute name="tenderId" 
+                    type="String" 
+                    description="Tender Id to init components"
+    />
+        <aura:attribute name="currentStage" 
+                    type="String" 
+                    description="Actual stage of the tender"
+    />    
+</aura:event>

@@ -1,0 +1,125 @@
+<template>   
+    <template if:true={tfWrapperRelatedFields}>
+        <div class="page-section page-main slds-m-top_xx-small">
+            <lightning-layout horizontal-align="spread">
+                <lightning-layout-item flexibility="grow">
+                    <div class="slds-grid applyRedForLastTender">
+                        <div class="slds-col boldCSS slds-p-left_xx-small">
+                            {labels.LASTTENDER_LABEL}
+                        </div>   
+                        <div class="slds-col slds-p-left_xx-small">
+                        </div>                    
+                        <template if:true={lastTender}>
+                            <div class="slds-col valueCSS">
+                                {lastTender}
+                            </div>
+                        </template>
+                        <template if:true={tfWrapperRelatedFields.record.AITM_Offered_Differential__c}>
+                            <div class="slds-col valueCSS">
+                                /
+                            </div>  
+                            <div class="slds-col valueCSS">
+                                {tfWrapperRelatedFields.record.AITM_Offered_Differential__c}
+                            </div> 
+                        </template>
+                        <template if:true={currency}>
+                            <div class="slds-col valueCSS">
+                                {currency}
+                            </div> 
+                        </template>
+                        <template if:true={uom}>
+                            <div class="slds-col valueCSS">
+                                /
+                            </div> 
+                            <div class="slds-col valueCSS">
+                                {uom}
+                            </div> 
+                        </template>                      
+                    </div>                            
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="grow">
+                    <div class="slds-grid applyRedForProductDensity">
+                        <div class="slds-col boldCSS">
+                            Prod/Density:
+                        </div>
+                        <div class="slds-col slds-p-left_xx-small valueCSS">
+                            {productDefault}
+                        </div>
+                        <div class="slds-col valueCSS">
+                            /
+                        </div>
+                        <div class="slds-col valueCSS">
+                            {density}
+                        </div>                            
+                    </div>                            
+                </lightning-layout-item>
+				<lightning-layout-item flexibility="grow">
+                    <div class="slds-grid applyRedForDeliveryMethod">
+                        <div class="slds-col boldCSS">
+                            Del. Method:
+                        </div>
+                        <div class="slds-col slds-p-left_xx-small valueCSS">
+                            {delPointName}
+                        </div>
+                    </div>                            
+                </lightning-layout-item> 
+				<lightning-layout-item flexibility="grow">
+                    <div class="slds-grid applyRedForMeasure">
+                        <div class="slds-col boldCSS">
+                            {labels.MEASURE_LABEL}
+                        </div>
+                        <div class="slds-col slds-p-left_xx-small valueCSS">
+							{measure}
+                        </div>
+                    </div>                            
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="grow">
+                    <div class="slds-grid applyRedForCreditDaysFrequency">
+                        <div class="slds-col boldCSS">
+                            Credit Days/Invoice Freq:
+                        </div>
+                        <div class="slds-col slds-p-left_xx-small valueCSS">
+							{creditDays}
+                        </div>
+                        <div class="slds-col valueCSS">
+                            /    
+                        </div>
+                        <div class="slds-col valueCSS">
+							{invoiceFrequency}
+                        </div>
+                    </div>                            
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="grow">
+                    <div class="slds-grid applyRedForRiskRating">
+                        <div class="slds-col boldCSS">
+                            {labels.RISK_RATING_LABEL}
+                        </div>
+                        <div class="slds-col slds-p-left_xx-small valueCSS">
+							{creditRating}
+                        </div>
+                    </div>                            
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="grow">
+                    <div class="slds-grid applyRedForExchange">
+                        <div class="slds-col boldCSS">
+                            {labels.EXCHANGE_LABEL}
+                        </div>
+                        <div class="slds-col slds-p-left_xx-small valueCSS">
+							{exchange}
+                        </div>
+                    </div>                            
+                </lightning-layout-item> 
+                <lightning-layout-item flexibility="grow">
+                    <div class="slds-grid applyRedForLevel">
+                        <div class="slds-col boldCSS">
+                            Req. ADS:
+                        </div>
+                        <div class="slds-col slds-p-left_xx-small valueCSS">
+							{level}
+                        </div>
+                    </div>                            
+                </lightning-layout-item>                                           
+            </lightning-layout>
+        </div>
+    </template>
+</template>

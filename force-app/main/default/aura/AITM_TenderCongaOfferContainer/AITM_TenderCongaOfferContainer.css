@@ -1,0 +1,20 @@
+.THIS .slds-spinner_container {
+    width: 105vw;
+    margin-left: -33vw;
+}
+.THIS .left{
+    width: 50%;
+}
+
+.THIS .right {
+    width: 30%;
+}
+
+.THIS .grid-container {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.THIS .grid-item {
+    float: left;
+}

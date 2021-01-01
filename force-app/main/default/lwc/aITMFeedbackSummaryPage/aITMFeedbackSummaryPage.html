@@ -1,0 +1,128 @@
+<template>        
+    <template if:true={loading}>
+        <lightning-spinner size="small" variant="brand"></lightning-spinner>
+    </template>
+    <div class="formBody">
+        <lightning-record-edit-form
+                density="comfy"
+                object-api-name={tenderLocObject}
+                onload={handleOnLoad}
+                onerror={handleError}
+                onsubmit={handleSubmit}
+                onsuccess={handleSuccess}
+                record-id={tenLocId}>   
+            <div class="slds-col slds-size_1-of-1 slds-float_right">
+                <lightning-button variant="success" class="slds-float_right" type="submit" label="Save" disabled={isSaveDisabled}></lightning-button>
+            </div>   
+            <div class="slds-col slds-size_1-of-1 slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-1 boldCSS">
+                    <strong>Comments/Interest</strong>
+                </div>
+            </div>       
+            <div class="slds-col slds-size_1-of-1 slds-grid slds-wrap slds-m-top_xx-small">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field data-field="AITM_Level_Of_Interest__c" field-name="AITM_Level_Of_Interest__c" onchange={onFirstKeyUp}>
+                    </lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-float_right">
+                </div>
+            </div>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-1">
+                    <lightning-input-field field-name="AITM_LM_Comments__c" onchange={onFirstKeyUp}>
+                    </lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-1">
+                    <lightning-input-field field-name="AITM_AM_Comments__c" onchange={onFirstKeyUp}>
+                    </lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-1 boldCSS">
+                    <strong>Additional Delivery Service</strong>
+                </div>
+            </div>  
+            <div class="slds-grid slds-wrap slds-m-top_xx-small">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Location_Default_Service_Level__c" disabled="true" onchange={onFirstKeyUp}>
+                    </lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Aircraft_Type__c" onchange={onFirstKeyUp}>
+                    </lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid slds-wrap slds-m-top_xx-small">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Service_Level__c" onchange={onFirstKeyUp}>
+                    </lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Approve_the_Service_Level__c" onchange={onFirstKeyUp}>
+                    </lightning-input-field>
+                </div>
+                
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-1 boldCSS">
+                    <strong>KPIs</strong>
+                </div>
+            </div> 
+            <div class="slds-grid slds-wrap slds-m-top_xx-small">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Gross_Profit__c" onchange={onFirstKeyUp}>
+                    </lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Working_Capital__c" onchange={onFirstKeyUp}>
+                    </lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid slds-wrap slds-m-top_xx-small">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Volume_USG__c" onchange={onFirstKeyUp}>
+                    </lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Return_On_WC__c" onchange={onFirstKeyUp}>
+                    </lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-1 boldCSS">
+                    <strong>Customer Feedback</strong>
+                </div>
+            </div> 
+            <div class="slds-grid slds-wrap slds-m-top_small">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Number_Of_Bidders__c" onchange={onFirstKeyUp}>
+                    </lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Position__c" onchange={onFirstKeyUp}>
+                    </lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid slds-wrap slds-m-top_xx-small">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Leading_Bid__c" onchange={onFirstKeyUp}>
+                    </lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-2">
+                            Currency
+                            <lightning-input-field field-name="AITM_Leading_Bid_Currency__c" onchange={onFirstKeyUp} variant="label-hidden">
+                            </lightning-input-field>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            UOM
+                            <lightning-input-field field-name="AITM_Unit_Of_Measure__c" onchange={onFirstKeyUp} variant="label-hidden">
+                            </lightning-input-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </lightning-record-edit-form>
+    </div>
+</template>

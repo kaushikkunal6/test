@@ -1,0 +1,73 @@
+<aura:component controller="AITM_CustomTenderPathController" implements="forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,force:hasRecordId">
+    <aura:attribute name="recordId" type="Id" />
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:handler event="force:refreshView" action="{!c.init}"/>
+    <aura:handler event="c:AITM_ForceChangeStageEvent" action="{!c.handleForceChangeStage}"/>
+    <aura:attribute name="completedTenderStages" type="List"/>
+    <aura:attribute name="currentTenderStage" type="List"/>
+    <aura:attribute name="uncompletedTenderStages" type="List"/>
+    <aura:attribute name="lastChosenElementName" type="String"/>
+    <aura:attribute name="chosenElementName" type="String"/>
+    <aura:attribute name="buttonConfirmName" type="String" default="&#10004; Mark Stage as Complete"/>
+    <aura:attribute name="showMoreInfoForStage" type="Boolean" />
+    <aura:attribute name="disableButtonConfirm" type="Boolean" />
+    <aura:registerEvent name="completedStageEvent" type="c:AITM_CustomTenderPathStageCompleted"/>
+    <div class="runtime_sales_pathassistantPathAssistant">
+        <div class="pa-card  large runtime_sales_pathassistantPathAssistantCard runtime_sales_pathassistantPathAssistantCardDesktop">
+            <div class="pa-drawer pa-border no-data runtime_sales_pathassistantCollapsibleDrawer">
+                <div class="cd-header header">
+                    <div class="toggleButtonWrapper">
+                        <button onclick="{!c.buttonShowMoreInfoListener}" class="slds-button slds-button--neutral not-selected slds-not-selected pa-drawer-toggle toggleButton uiButton--stateful uiButton" type="button" title="Show More" >
+                        <span class="assistiveText">Show More</span>
+                        <span class="slds-icon_container slds-icon-utility-switch cd-arrow slds-button__icon forceIcon">
+                        <span><lightning:icon iconName="utility:switch" size="xx-small"/></span>
+                        </span>
+                        </button>
+                    </div>
+                    <div class="tabset-border desktop runtime_sales_pathassistantPathAssistantTabSet--desktop runtime_sales_pathassistantPathAssistantTabSet">
+                        <div class="pa-scroller uiScroller scroller-wrapper scroll-horizontal" style="">
+                            <div class="scroller stretch">
+                                <div class="pa-tabBar uiTabBar">
+                                    <ul class="tabs__nav">
+                                        <aura:iteration items="{!v.completedTenderStages}" var="currentStage">
+                                            <span id="{!currentStage}" onclick="{!c.tapped}" class="complete tabs__item uiTabItem runtime_sales_pathassistantPathAssistantTab hide_text_when_mouse_not_hover_parent" >
+                                                <a id="{!currentStage}" class="tabHeader ">
+                                                    <p id="{!currentStage}" class="mark_disappearing">&#10004;</p>
+                                                    <div id="{!currentStage}" class="hide_text_when_mouse_not_hover">
+                                                        {!currentStage}
+                                                    </div>
+                                                </a>
+                                            </span>
+                                        </aura:iteration>
+                                        <aura:iteration items="{!v.currentTenderStage}" var="currentStage">
+                                            <span id="{!currentStage}" onclick="{!c.tapped}" class="current tabs__item uiTabItem runtime_sales_pathassistantPathAssistantTab active actiiveAction">
+                                            <a id="{!currentStage}" class="tabHeader">
+                                            {!currentStage}
+                                            </a>
+                                            </span>
+                                        </aura:iteration>
+                                        <aura:iteration items="{!v.uncompletedTenderStages}" var="currentStage">
+                                            <span id="{!currentStage}" onclick="{!c.tapped}" class="ahead tabs__item uiTabItem runtime_sales_pathassistantPathAssistantTab">
+                                            <a id="{!currentStage}" class="tabHeader">
+                                            {!currentStage}
+                                            </a>
+                                            </span>
+                                        </aura:iteration>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="runtime_sales_pathassistantPathAssistantHeader--desktop runtime_sales_pathassistantPathAssistantHeader">
+                        <button id="markButton" onclick="{!c.buttonConfirm}" class="slds-button slds-button--brand stepAction current uiButton" type="button" disabled="{!v.disableButtonConfirm}">
+                        <span class="uiOutputText">{!v.buttonConfirmName}</span>
+                        </button>
+                    </div>
+                </div>
+                <aura:if isTrue="{!v.showMoreInfoForStage}">
+                    <c:AITM_CustomTenderShowMoreInfo recordId="{!v.recordId}"/>
+                </aura:if>
+            </div>
+        </div>
+    </div>
+</aura:component>

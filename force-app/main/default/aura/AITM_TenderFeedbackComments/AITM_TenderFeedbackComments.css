@@ -1,0 +1,25 @@
+.THIS .slds-table thead th { 
+	font-size: 11px;
+    color: #3E3E3C;
+    font-family: "Salesforce Sans",Arial,sans-serif;
+}
+.THIS .widthCSS{
+    width:57px;
+}
+.THIS .selectCSS{
+    width:77px;
+}
+.THIS .selectInterestCSS{
+    width:102px;
+}
+.THIS .buttonCSS{
+    position: relative;
+  float: right;
+}
+.THIS .detailStyle{
+    word-wrap: break-word;
+    width:57px;
+}
+.THIS .numberCSS{
+    width:17px;
+}

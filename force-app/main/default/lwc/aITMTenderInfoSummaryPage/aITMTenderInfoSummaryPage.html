@@ -1,0 +1,56 @@
+<template>
+    <template if:true={loading}>
+        <lightning-spinner size="small" variant="brand"></lightning-spinner>
+    </template>
+    <div class="formBody">
+        <lightning-record-edit-form
+                density="comfy"
+                object-api-name={tenderObject}
+                onload={handleOnLoad}
+                onerror={handleError}
+                onsubmit={handleSubmit}
+                onsuccess={handleSuccess}
+                record-id={tenderId}>
+                <div class="slds-col slds-size_1-of-1 slds-float_right">
+                    <lightning-button variant="success" class="slds-float_right" type="submit" label="Save" disabled={isSaveDisabled}></lightning-button>
+                </div>         
+                <div class="slds-col slds-size_1-of-1 slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-1">
+                        <lightning-input-field field-name="AITM_Tender_Information__c" onchange={onFirstKeyUp}>
+                        </lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1">
+                        <label for="AITM_AM_Comments__c">AM Comments for Tender</label>
+                        <lightning-input-field field-name="AITM_AM_Comments__c" onchange={onFirstKeyUp} variant="label-hidden">
+                        </lightning-input-field>
+                    </div>
+                </div>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-2">
+					<lightning-input-field field-name="AITM_Bids_In_By__c" onchange={onFirstKeyUp}>					
+                    </lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+					<lightning-input-field field-name="AITM_Last_Look_To_Incumbent__c" onchange={onFirstKeyUp}>
+                    </lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-2">
+					<lightning-input-field field-name="AITM_Number_Of_Rounds__c" onchange={onFirstKeyUp}>
+                    </lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="AITM_Quality_Of_Feedback__c" onchange={onFirstKeyUp}>
+                    </lightning-input-field>
+                </div>
+            </div>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-1">
+                    <lightning-input-field field-name="AITM_Notes_On_Feedback__c" onchange={onFirstKeyUp}>
+                    </lightning-input-field>
+                </div>
+            </div>
+        </lightning-record-edit-form>
+    </div>
+</template>

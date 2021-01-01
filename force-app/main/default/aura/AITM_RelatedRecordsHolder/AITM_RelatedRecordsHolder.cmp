@@ -1,0 +1,9 @@
+<aura:component controller="AITM_RelatedRecordsHolderController" extensible="true" abstract="true" implements="force:hasRecordId">
+	<aura:attribute name="filterOptions" type="List" description="Filter Options stored as a inner class - List of FilterOption" />
+    <aura:attribute name="selectedFilter" type="String" description="Selected filter name" />
+    <aura:attribute name="searchTerm" type="String" description="Entered search term" />
+    <aura:attribute name="searchTermEntered" type="Boolean" description="Flag for the list to rebuild if searchTerm is removed" default="false"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    {!v.body}
+</aura:component>

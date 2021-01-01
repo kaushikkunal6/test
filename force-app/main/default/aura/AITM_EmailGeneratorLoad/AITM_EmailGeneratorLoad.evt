@@ -1,0 +1,10 @@
+<aura:event type="APPLICATION" description="Init event for emailGenerator">
+    <aura:attribute name="emailBody" 
+                    type="Object" 
+                    description="Contains to, message"
+    />
+    <aura:attribute name="attachments" 
+                    type="List" 
+                    description="List of email attachments"
+    />
+</aura:event>

@@ -1,0 +1,33 @@
+<!--
+ * @author Ragim Ragimov
+ * @company Bluewolf, an IBM Company
+ * @date 7/2017
+ *
+ * A custom branded Phone Verification Visualforce page for BP Community
+-->
+
+<apex:page showHeader="false"
+           standardStylesheets="false"
+           sidebar="false"
+           applyBodyTag="false"
+           controller="REIDP_PhoneVerificationController"
+           title="Verification Code"
+           id="pVerifThree">
+    <apex:composition template="{!$Site.Template}">
+        <apex:define name="body">  
+            <apex:form id="theForm" styleClass="slds-scope slds-align_absolute-center form">
+                <div class="slds-m-bottom_small slds-text-align_center" style="font-size:22px; font-weight=bold; ">
+                    Phone Number Confirmed
+                </div>
+                
+                <div class="slds-m-bottom_small slds-text-align_center" style="font-size:14px;">
+                    Your phone number has been confirmed and added to your profile.
+                </div> 
+                
+                <apex:messages styleClass="error-message slds-m-bottom_medium"/>
+                
+                <apex:commandButton id="confirm_button" styleClass="button slds-m-top_small" value="Confirm" action="{!cancel}"/>
+            </apex:form>
+        </apex:define>
+    </apex:composition>
+</apex:page>

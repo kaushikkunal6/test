@@ -1,0 +1,36 @@
+<apex:component id="CAJBP_PDF_ProductMixPercentage">
+    <apex:attribute name="currencyIsoCode" description="The currency for the rebates." type="String"/>
+    <apex:attribute name="rebates" description="The context rebates to render." type="Object[]"/>
+
+    <apex:variable var="" value="" rendered="{!AND(NOT(ISBLANK(rebates)), rebates.size > 0)}">
+        <div class="cajbp-table-break cajbp-rebates">
+            <table>
+                <thead>
+                    <colgroup>
+                        <col style="width: 150px;"></col>
+                        <col></col>
+                        <col></col>
+                        <col></col>
+                    </colgroup>
+                    <tr>
+                        <td rowspan="2" style="background-color: #FFFFFF; border: 0px solid  #FFFFFF;"></td>
+                        <th style="background-color: #3F87A6; text-align: left; color: #FFFFFF; text-align: center;">{!$Label.CAJBP_PDF_Product}</th>
+                        <th style="background-color: #3F87A6; text-align: left; color: #FFFFFF; text-align: center;">{!$Label.CAJBP_PDF_Target_Volume}</th>
+                        <th style="background-color: #3F87A6; text-align: left; color: #FFFFFF; text-align: center;">{!$Label.CAJBP_PDF_Target_Percentage} (%)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <apex:repeat value="{!rebates}" var="rebate">
+                        <tr>
+                            <th style="background-color: #3F87A6; text-align: left; color: #FFFFFF;"><span><apex:outputText value="{!rebate['recordTypeName']}"/></span></th>
+                            <td><span><apex:outputText value="{!rebate['product']}"/></span></td>
+                            <td><span><apex:outputText value="{!rebate['annualVolumeTargetPercentage']}"/></span></td>
+                            <td><span><apex:outputText value="{!rebate['annualPercentage']}"/></span></td>
+                        </tr>
+                    </apex:repeat>
+                </tbody>
+            </table>
+            <br/>
+        </div>
+    </apex:variable>
+</apex:component>

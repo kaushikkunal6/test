@@ -1,0 +1,140 @@
+<aura:component controller="AITM_CountryByTenderLocationItemCtrl" access="global">
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:attribute name="recordId" type="String" description="Record Id - Tender Id for locations list load" />
+    <aura:attribute name="locations" type="List" description="Contains list of location item records - tender locations" />
+    <aura:attribute name="selectedRound" type="String" description="Contains info regarding selected round" />
+    <aura:attribute name="selectedCountry" type="String" description="Contains info regarding selected country" />
+    <aura:attribute name="showTLLI" type="Boolean" description="Show Tender Location Line Items section on this page?" />
+    <aura:attribute name="tenderLocationStatuses" type="Set" />
+    <aura:attribute name="tenderLocationCurrencies" type="Set" />
+    <aura:attribute name="tenderLocationUoms" type="Set" />
+    <aura:attribute name="fieldsAccess" type="Map"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="force:refreshView" action="{!c.doInit}" />
+    <aura:handler event="c:AITM_RelatedRecordsFilterEvent" action="{!c.handleFilterEvent}" />
+    <aura:handler event="c:AITM_CustomTenderPathStageCompleted" action="{!c.handleChangeStageEvent}" />
+ 
+    <lightning:spinner aura:id="relatedLocationSpinner"/>
+    <div class="slds-float_right slds-p-around_x-small">
+        <lightning:button variant="brand" label="Save" onclick="{!c.handleSave}" />
+    </div>
+    <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-max-medium-table--stacked-horizontal">
+        <thead>
+            <tr class="slds-text-title_caps">
+                <th scope="col">
+                    <div class="slds-truncate" title="IATA">IATA/ICAO</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="DEFAULT DEL POINT">DEFAULT <br/> DEL. POINT</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="PRICING RESPONSIBILITY">PRICING <br/> RESPONSIBILITY</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="CUSTOMER">CUSTOMER</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="REQUESTED VOLUME USG">REQUESTED
+                        <br/> VOLUME <br/>(USG)</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="OFFERED VOLUME USG">OFFERED <br/> VOLUME <br/> (USG)</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="PRICING BASIS">PRICING <br/> BASIS</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="PREVIOUS TENDER DIFF">PREVIOUS <br/> TENDER <br/> DIFF</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="PREVIOUS ROUND DIFFERENTIAL">PREVIOUS <br/> ROUND <br/> DIFF</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="DIFFERENTIAL">DIFFERENTIAL</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="CURRENCY">CURR</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="UOM">UOM</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="STATUS">STATUS</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="INCLUDE IN REVISED OFFER">INCLUDE <br />IN REVISED<br/> OFFER</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <aura:iteration items="{!v.locations}" var="location">
+                <tr>
+                    <th scope="row" data-label="IATA">
+                        <div class="slds-truncate" title="{!location.locationIdentificator}">
+                            <a class="outputLookupLink slds-truncate forceOutputLookup" data-refid="recordId" data-recordid="{!location.recordId}" data-special-link="true" href="{!'#/sObject/'+location.recordId+'/view/'}" rel="noreferrer" title="{!location.locationIdentificator}" data-aura-class="forceOutputLookup" onclick="{!c.navigateToSObject}">{!location.locationIdentificator}</a>
+                        </div>
+                    </th>
+                    <td data-label="DEFAULT DEL. POINT">
+                        <div class="slds-truncate slds-cell-wrap" title="{!location.deliveryPointName}">
+                            <lightning:formattedText value="{!location.deliveryPointName}" />
+                        </div>
+                    </td>
+                    <td data-label="PRICING RESPONSIBILITY">
+                        <div class="slds-truncate slds-cell-wrap" title="{!location.locationManager}">
+                            <lightning:formattedText value="{!location.locationManager}" />
+                        </div>
+                    </td>
+                    <td data-label="CUSTOMER">
+                        <div class="slds-truncate slds-cell-wrap" title="{!location.customer}">
+                            <a class="slds-truncate outputLookupLink forceOutputLookup" data-refid="recordId" data-recordid="{!location.customerId}" data-special-link="true" href="{!'#/sObject/' + location.customerId + '/view/'}" rel="noreferrer" title="{!location.customer}" data-aura-class="forceOutputLookup"  onclick="{!c.navigateToSObject}">{!location.customer}</a>
+                        </div>
+                    </td>
+                    <td data-label="REQUESTED VOLUME USG">
+                        <lightning:formattedNumber value="{!location.volumeUSG}"/>
+                    </td>
+                    <td data-label="OFFERED VOLUME">
+                        <lightning:formattedNumber value="{!location.offeredVolumeUSG}"/>
+                    </td>
+                    <td data-label="PRICING BASIS">
+                        <lightning:formattedText value="{!location.pricingBasis}" />
+                    </td>
+                    <td data-label="PREVIOUS TENDER DIFF">
+                        <lightning:formattedText value="{!location.currentDiff + '-' + location.currentCurr + '/' + location.currentUom}" />
+                    </td>
+                    <td data-label="PREVIOUS ROUND DIFFERENTIAL">
+                        <lightning:formattedNumber value="{!location.previousRoundDiff}"/>
+                    </td>
+                    <td data-label="DIFFERENTIAL">
+                        <div class="slds-form-element__control slds-grow">
+                        <ui:inputText class="slds-input" labelClass="slds-form-element__label slds-form-element__label_edit slds-no-flex" value="{!location.newDiff}" maxlength="6" /></div>
+                    </td>
+                    <td data-label="CURR">
+                        <ui:inputSelect value="{!location.curr}">
+                            <aura:iteration items="{!v.tenderLocationCurrencies}" var="option">
+                                <ui:inputSelectOption text="{!option}" label="{!option}"/>
+                            </aura:iteration>
+                        </ui:inputSelect>
+                    </td>
+                    <td data-label="UOM">
+                        <ui:inputSelect value="{!location.uom}">
+                            <aura:iteration items="{!v.tenderLocationUoms}" var="option">
+                                <ui:inputSelectOption text="{!option}" label="{!option}"/>
+                            </aura:iteration>
+                        </ui:inputSelect>
+                    </td>
+                    <td data-label="STATUS">
+                        <ui:inputSelect value="{!location.lineStatus}">
+                            <aura:iteration items="{!v.tenderLocationStatuses}" var="option">
+                                <ui:inputSelectOption text="{!option}" label="{!option}"/>
+                            </aura:iteration>
+                        </ui:inputSelect>
+                    </td>
+                    <td data-label="INCLUDE IN REVISED OFFER">
+                        <ui:inputCheckbox value="{!location.includeRevisedOffer}" class="pre-info-checkbox" label=""  text="{!location.locationIdentificator}" change="{!c.changeRevisedOfferLocation}" disabled="{!location.round > 1 ? 'false' : 'true'}"/>
+                    </td>
+                </tr>
+            </aura:iteration>
+        </tbody>
+    </table>    
+</aura:component>

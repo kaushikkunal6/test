@@ -1,0 +1,57 @@
+.THIS .slds-lookup__menu {
+    width: 90%;
+    display: block;
+}
+
+.THIS input[type=date]::-webkit-inner-spin-button {
+   display: none;
+}
+
+.THIS .uiInput--default .form-element__label {
+    font-size: .75rem;
+}
+
+.THIS .slds-lookup-text-margin {
+    margin-right: 1rem;
+}
+
+.THIS .slds-lookup__item-action .slds-icon {
+    margin: 0;
+}
+
+.THIS.no-tender-accounts-modal{
+    -webkit-animation: fadein 2s;
+       -moz-animation: fadein 2s;
+        -ms-animation: fadein 2s;
+         -o-animation: fadein 2s;
+            animation: fadein 2s;
+}
+
+.THIS .text-red{
+	color: rgb(194, 57, 52);
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@-moz-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@-ms-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@-o-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}

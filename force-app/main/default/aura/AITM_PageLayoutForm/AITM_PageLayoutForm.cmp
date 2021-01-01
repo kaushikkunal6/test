@@ -1,0 +1,90 @@
+<aura:component controller="AITM_PageLayoutForm" implements="flexipage:availableForRecordHome,force:hasRecordId,force:hasSObjectName,flexipage:availableForAllPageTypes,lightning:isUrlAddressable" description="Component used to display customized page layout form based on fields and sections passed from design or wrapper component">
+    <aura:attribute name="pageLayoutName" type="String" />
+    <aura:attribute name="recordTypeId" type="String" />
+    <aura:attribute name="pageLayout" type="Object" access="private" />
+    <aura:attribute name="relatedRecordId" type="String" />
+    <aura:attribute name="relatedFieldName" type="String" default="AccountId" />
+    <aura:attribute name="mode" type="String" default="edit" />
+    <aura:attribute name="objectName" type="String" default="{!v.sObjectName}" />
+    <aura:attribute name="fields" type="String" />
+    <aura:attribute name="labels" type="String" />    
+    <aura:attribute name="fieldNames" type="String[]" access="private" />
+    <aura:attribute name="labelNames" type="String[]" access="private" />
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <aura:handler event="force:refreshView" action="{!c.init}" />
+    <aura:if isTrue="{!v.mode == 'edit'}">
+        <lightning:recordEditForm objectApiName="{!v.objectName}"
+                              recordId="{!v.recordId}"
+                              recordTypeId="{!v.recordTypeId}"
+                              class="slds-card slds-p-around_medium"
+                              onerror="{!c.handleError}">
+            <lightning:messages />
+            <aura:iteration items="{! v.pageLayout.sections }" var="section">
+                <c:AITM_CollapsibleSection title="{! section.label}">
+                    <div class="slds-grid slds-gutters">
+                        <aura:iteration items="{! section.columns }" var="column">                            
+                            <div class="slds-col">
+                                <aura:iteration items="{! column.fields }" var="field">
+                                    <aura:if isTrue="{!v.relatedFieldName == field.apiName}">            
+                                    	<lightning:inputField fieldName="{! field.apiName }" class="slds-p-top_small slds-m-top_medium" value="{!v.relatedRecordId}" />
+                                    	<aura:set attribute="else">
+                                            <div>{!field.apiName}</div>
+                                            <aura:if isTrue="{!field.apiName == 'Name'}"> 
+                                            	<lightning:inputField fieldName="{! field.apiName }" class="slds-p-top_small slds-m-top_medium slds-hide" />
+                                                <aura:set attribute="else">
+                                                    <lightning:inputField fieldName="{! field.apiName }" class="slds-p-top_small slds-m-top_medium" />
+                                                </aura:set>
+                                            </aura:if>
+                                        </aura:set>
+                                    </aura:if>
+                                </aura:iteration>
+                            </div>
+                        </aura:iteration>
+                    </div>
+                </c:AITM_CollapsibleSection>
+            </aura:iteration>
+            <div class="slds-modal__footer">
+            	<lightning:button class="slds-m-top_small" type="cancel" label="Cancel" variant="brand" onclick="{!c.close}" />
+            	<lightning:button class="slds-m-top_small" type="submit" label="Save" variant="brand" onclick="{!c.onsuccess}" />
+            </div>
+        </lightning:recordEditForm>  
+    <aura:set attribute="else">
+        <lightning:recordEditForm objectApiName="{!v.objectName}"
+                              recordTypeId="{! v.recordTypeId }"
+                              class="slds-card slds-p-around_medium"
+                              onsuccess="{!c.handleOnSuccess}"    
+                              onerror="{!c.handleError}">
+            <lightning:messages />
+
+            <aura:iteration items="{! v.pageLayout.sections }" var="section">
+			   <c:AITM_AuraIfContains items="{!v.labelNames}"  element="{!section.label}"> 
+                <c:AITM_CollapsibleSection title="{! section.label}">
+                    <div class="slds-grid slds-gutters">
+                        <aura:iteration items="{! section.columns }" var="column">
+                            <div class="slds-col">
+                                 <aura:iteration items="{! column.fields }" var="field">  
+                                    <aura:if isTrue="{!v.relatedFieldName == field.apiName}">             
+                                    	<lightning:inputField fieldName="{! field.apiName }" class="slds-p-top_small slds-m-top_medium" value="{!v.relatedRecordId}" />
+                                    	<aura:set attribute="else">
+                                            <aura:if isTrue="{!field.apiName == 'salutation'}">{!field.apiName}
+                                            	<lightning:inputField fieldName="{! field.apiName }" class="slds-p-top_small slds-m-top_medium slds-hide" />
+                                           		<aura:set attribute="else">
+                                                    <lightning:inputField fieldName="{! field.apiName }" class="slds-p-top_small slds-m-top_medium" />
+                                                </aura:set>
+                                            </aura:if>
+                                        </aura:set>
+                                    </aura:if>
+                                </aura:iteration>
+                            </div>
+                        </aura:iteration>
+                    </div>
+                </c:AITM_CollapsibleSection>
+    			</c:AITM_AuraIfContains>
+            </aura:iteration>
+               
+            <lightning:button class="slds-m-top_small" type="cancel" label="Cancel" variant="brand" onclick="{!c.close}" />
+            <lightning:button class="slds-m-top_small" type="submit" label="Save" variant="brand" />
+        </lightning:recordEditForm> 
+    </aura:set>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,106 @@
+<aura:component controller="AITM_RelatedTenderLocationsController" access="global">
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:attribute name="recordId" type="String" description="Record Id - Tender Id for locations list load" />
+    <aura:attribute name="locations" type="List" description="Contains list of location records - tender locations" />
+    <aura:attribute name="selectedFilter" type="Object" description="Contains info regarding selected filter" />
+    <aura:attribute name="selectedRound" type="String" description="Contains info regarding selected round" />
+    <aura:attribute name="enteredSearchTerm" type="String" description="Contains info regarding entered search term" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="force:refreshView" action="{!c.doInit}" />
+    <aura:handler event="c:AITM_RelatedRecordsFilterEvent" action="{!c.handleFilterEvent}" />
+    <aura:handler event="c:AITM_RelatedRecordsSearchEvent" action="{!c.handleSearchEvent}" />
+    <aura:handler event="c:AITM_CustomTenderPathStageCompleted" action="{!c.handleChangeStageEvent}" />
+    <aura:handler event="lightning:tabFocused" action="{!c.onTabFocused}"/>
+
+    <lightning:spinner aura:id="relatedLocationSpinner"/>
+    <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+        <thead>
+            <tr class="slds-text-title_caps">
+                <th scope="col">
+                    <div class="slds-truncate" title="IATA">IATA/ICAO</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate slds-cell-wrap" title="LOCATION NAME">LOCATION NAME</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="COUNTRY">COUNTRY</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="DEFAULT DEL POINT">DEFAULT <br/> DEL <br/> POINT</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="LOCATION MANAGER">LOCATION <br/>MANAGER</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="PRICING RESPONSIBILITY">PRICING <br/> RESPONSIBILITY</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="REQUESTED VOLUME USG">REQUESTED <br/> VOLUME <br/> (USG)</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="OFFERED VOLUME USG">OFFERED <br/> VOLUME <br/> (USG)</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="LAST TENDER RESULT">LAST <br/> TENDER <br/> RESULT</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="STATUS">STATUS</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="INCLUDE IN REVISED OFFER">INCLUDE <br/> IN <br/> REVISED <br/> OFFER</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <aura:iteration items="{!v.locations}" var="location">
+                <tr>
+                    <th scope="row" data-label="IATA">
+                        <div class="slds-truncate slds-cell-wrap" title="{!location.locationIdentificator}">
+                            <a class="outputLookupLink slds-truncate forceOutputLookup" data-refid="recordId" data-recordid="{!location.recordId}" data-special-link="true" href="{!'#/sObject/'+location.recordId+'/view/'}" rel="noreferrer" title="{!location.locationIdentificator}" data-aura-class="forceOutputLookup" onclick="{!c.navigateToSObject}">{!location.locationIdentificator}</a>
+                        </div>
+                    </th>
+                    <td data-label="LOCATION NAME">
+                        <div class="slds-truncate slds-cell-wrap" title="{!location.locationName}">
+                            <a class="outputLookupLink slds-truncate slds-cell-wrap forceOutputLookup" data-refid="recordId" data-recordid="{!location.recordId}" data-special-link="true" href="{!'#/sObject/'+location.recordId+'/view/'}" rel="noreferrer" title="{!location.locationName}" data-aura-class="forceOutputLookup" onclick="{!c.navigateToSObject}">{!location.locationName}</a>
+                        </div>
+                    </td>
+                    <td data-label="COUNTRY">
+                        <div class="slds-truncate slds-cell-wrap" title="{!location.country}">{!location.country}</div>
+                    </td>
+
+                     <td data-label="DEFAULT DEL POINT">
+                        <div class="slds-truncate slds-cell-wrap" title="{!location.defaultdelpoint}"> 
+                            <lightning:formattedText value="{!location.defaultDelPoint}" />
+                        </div>
+                    </td>
+                    <td data-label="LOCATION MANAGER">
+                        <div class="slds-truncate slds-cell-wrap" title="{!location.locationManager}"> 
+                            <lightning:formattedText value="{!location.locationManager}" />
+                        </div>
+                    </td>
+                    <td data-label="PRICING RESPONSIBILITY">
+                        <div class="slds-truncate slds-cell-wrap" title="{!location.pricingResponsibility}">
+                            <lightning:formattedText value="{!location.pricingResponsibility}" />
+                        </div>
+                    </td>
+                    <td data-label="REQUESTED VOLUME USG">
+                        <lightning:formattedNumber value="{!location.volumeUSG}"/>
+                    </td>
+                    <td data-label="OFFERED VOLUME">
+                        <lightning:formattedNumber value="{!location.offeredVolumeUSG}"/>
+                    </td>
+                    <td data-label="LAST TENDER RESULT">
+                        <div class="slds-truncate" title="{!location.lastTenderResult}">{!location.lastTenderResult}</div>
+                    </td>
+                    <td data-label="STATUS">
+                        <div class="slds-truncate slds-cell-wrap" title="{!location.status}">{!location.status}</div>
+                    </td>
+                    <td data-label="INCLUDE IN REVISED OFFER">
+                        <div class="slds-truncate" title="">{!location.includeRevisedOffer}</div>
+                    </td>
+                </tr>
+            </aura:iteration>
+        </tbody>
+    </table>
+</aura:component>

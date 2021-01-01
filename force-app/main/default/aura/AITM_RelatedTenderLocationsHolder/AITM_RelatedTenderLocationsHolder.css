@@ -1,0 +1,48 @@
+.THIS .disabledLink {
+    pointer-events: none;
+    cursor: default;
+}
+
+.THIS .disabledLink:hover {
+    border: none;
+}
+
+.THIS .filtersSelect {
+    margin-left: 2rem;
+    width: 20rem;
+}
+
+.THIS h1.bidsInBy {
+    margin-top: 2rem;
+}
+
+.THIS .searchLocationInput {
+    text-align: center;
+    width: 20rem;
+    margin-left: 2rem;
+}
+
+.THIS .hide {
+	display: none;
+}
+
+.THIS .tabWidthCSS{
+    width: 30rem;
+}
+
+/*
+.THIS .slds-tabs_scoped__content.slds-show{ 
+	border: none !important;
+}
+
+.THIS .slds-tabs_card{
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0px !important;
+}
+
+.THIS .slds-tabs_card.slds-tabs_card{
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0px !important;
+}*/

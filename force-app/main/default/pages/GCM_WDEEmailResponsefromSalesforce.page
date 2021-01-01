@@ -1,0 +1,82 @@
+<apex:page id="pageId" showQuickActionVfHeader="false" lightningStylesheets="true" sidebar="false" showHeader="false" standardController="EmailMessage" extensions="GCM_WDEEmailMessageController">
+    <apex:includeScript value="/support/console/47.0/integration.js"/>
+    <apex:slds />
+    <script type='text/javascript' src='/canvas/sdk/js/publisher.js'></script>
+     <style>
+         #divInbound {
+          display: none;
+        }
+        #divOutbound {
+          display: none;
+        }
+        .slds-modal__container{
+        	max-width: 70rem !important;
+            width:30% !important;
+        }
+        p.center {
+          text-align: center;
+        }
+        p.large {
+          font-size: 130%;
+        }
+    </style>
+    <script>
+        window.onload=function(){ 
+            var calltype = '{!emailTaskRec.CallType}';
+            var type = '{!emailTaskRec.Type}';
+            console.log('Task type'+type+' calltype'+ calltype);
+        	console.log('includes'+type.includes('Inbound'));
+            if(type.includes('Outbound')){
+                document.getElementById("divOutbound").style.display ='block';  
+            }else{
+                document.getElementById("divInbound").style.display ='block';            
+            }
+        }
+        var callbackReplyEmail = function(result) { 
+                if (result.success) { 
+                    Sfdc.canvas.publisher.publish({ name: "publisher.close", payload:{ refresh: "false" }});
+                    console.log('The custom event fired successfully!');
+                } else { 
+                       console.log('The custom event could not be fired!');
+                } 
+             };
+        function fireCustomReplyEvent() { 
+            //Fire an event of type 'ReplyEmail'
+            var recId = '{!emailTaskRec.Id}';
+            console.log('Rec Id'+recId );
+            var interactionId = '{!emailTaskRec.softphone_it__IWS_Interaction_ID__c}';
+            console.log('interactionId '+interactionId );
+            sforce.console.fireEvent('ReplyEmail', JSON.stringify({interactionId : interactionId}), callbackReplyEmail);
+        }
+        function fireCustomReplyAllEvent() { 
+            //Fire an event of type 'ReplyAllEmail'
+            var recId = '{!emailTaskRec.Id}';
+            console.log('Rec Id'+recId );
+            var interactionId = '{!emailTaskRec.softphone_it__IWS_Interaction_ID__c}';
+            console.log('interactionId '+interactionId );
+            sforce.console.fireEvent('ReplyAllEmail', JSON.stringify({interactionId : interactionId}), callbackReplyEmail);
+        }
+        function fireCustomForwardEvent() { 
+            //Fire an event of type 'ForwardEmail'
+            var recId = '{!emailTaskRec.Id}';
+            console.log('Rec Id'+recId );
+            var interactionId = '{!emailTaskRec.softphone_it__IWS_Interaction_ID__c}';
+            console.log('interactionId '+interactionId );
+            sforce.console.fireEvent('ForwardEmail', JSON.stringify({interactionId : interactionId}), callbackReplyEmail);
+        }
+    </script>
+    <apex:form id="interactionForm" >
+        <br/>
+        <apex:outputLabel styleClass="slds-text-heading_medium"> Email Actions </apex:outputLabel>
+        <br/><br/>
+        <div id="divInbound">
+        <apex:commandButton value="Reply" onclick="fireCustomReplyEvent();" styleClass="slds-button slds-button--brand"/> 
+        <apex:commandButton value="Reply All" onclick="fireCustomReplyAllEvent();" styleClass="slds-button slds-button--brand"/> 
+        <apex:commandButton value="Forward" onclick="fireCustomForwardEvent();" styleClass="slds-button slds-button--brand"/> <br/> <br/>
+        </div>
+        <div id="divOutbound">
+        <!--<apex:commandButton value="Resend" onclick="fireCustomForwardEvent();" styleClass="slds-button slds-button--brand"/> -->
+        <apex:commandButton value="Forward" onclick="fireCustomForwardEvent();" styleClass="slds-button slds-button--brand"/> <br/> <br/>
+        </div>
+    </apex:form>
+</apex:page>

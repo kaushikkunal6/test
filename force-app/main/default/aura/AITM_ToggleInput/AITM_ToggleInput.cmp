@@ -1,0 +1,188 @@
+<aura:component controller="AITM_TenderLocationNewOffer">
+
+<aura:attribute name="value" type="String" />
+<aura:attribute name="dateValue" type="String"/>
+<aura:attribute name="oldValue" type="String" />
+<aura:attribute name="targetObject" type="string" />
+<aura:attribute name="targetId" type="String" />
+<aura:attribute name="targetFieldName" type="string" />
+<aura:attribute name="name" type="String" />
+<aura:attribute name="type" type="String" default="text" />
+<aura:attribute name="numberFormat" type="String" default="text" />
+<aura:attribute name="action" type="String" />
+<aura:attribute name="linkText" type="String" />
+<aura:attribute name="linkUrl" type="String" />
+<aura:attribute name="lineItem" type="AITM_Tender_Location_Line_Item__c" />
+<aura:attribute name="tenderLocation" type="AITM_Tender_Location__c" />
+<aura:attribute name="isEditable" type="Boolean" default="false" />
+<aura:attribute name="isAfterInit" type="Boolean" default="false" />
+<aura:attribute name="defaultValue" type="String" />
+<aura:attribute name="isOpen" type="boolean" default="false"/>
+<aura:attribute name="deliveryPoints" type ="List"/>
+<aura:attribute name="deliveryId" type ="String"/>
+<aura:attribute name="lineItemId" type ="String"/>
+<aura:attribute name="debrieflineItemId" type ="String"/>
+<aura:attribute name="currentStage" type ="String"/>
+
+
+<aura:registerEvent name="AITM_RefreshTableEvent" type="c:AITM_RefreshTableEvent" />
+<aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+<aura:handler name="change" value="{!v.dateValue}" action="{!c.editValue}"/>
+<aura:handler name="change" value="{!v.lineItem}" action="{!c.updateValue}"/>
+<aura:handler name="change" value="{!v.tenderLocation}" action="{!c.updateValue}"/>
+
+<div aura:id="toggle-text-block">
+
+	<aura:if isTrue="{!v.type == 'text' || v.type == 'select'}">
+		<ui:outputText value="{!v.value}" click="{!c.toggleToEdit}" class="fixedMaxWidth"/>
+	</aura:if>
+
+	<aura:if isTrue="{!v.type == 'link to record'}">
+		<div>
+			<a class="outputLookupLink slds-truncate forceOutputLookup" data-refid="recordId" data-recordid="{!v.lineItem.Id}" data-special-link="true" href="{!'#/sObject/'+ v.lineItem.Id +'/view/'}" rel="noreferrer" title="{!v.linkText}" data-aura-class="forceOutputLookup" onclick="{!c.navigateToSObject}"><aura:unescapedHtml value="{!v.linkText}" /></a>
+		</div>
+	</aura:if>	
+
+	<aura:if isTrue="{!v.type == 'number'}">
+		<aura:if isTrue="{!v.targetFieldName == 'AITM_Offered_Volume__c'}">
+			<aura:if isTrue="{!v.value == null}">
+				<ui:outputText value="0" click="{!c.toggleToEdit}" class="fixedMaxWidth"/>
+				<aura:set attribute="else">
+					<ui:outputNumber value="{!v.value}" format="{!v.numberFormat}" click="{!c.toggleToEdit}"/>
+				</aura:set>
+			</aura:if>
+			<aura:set attribute="else">
+				<ui:outputNumber value="{!v.value}" format="{!v.numberFormat}" click="{!c.toggleToEdit}"/>
+			</aura:set>
+		</aura:if>
+	</aura:if>	
+
+	<aura:if isTrue="{!v.type == 'date'}">
+		<ui:outputDate value="{!v.value}" click="{!c.toggleToEdit}"/>
+	</aura:if>	
+
+	<aura:if isTrue="{!v.isEditable}">
+	<aura:if isTrue ="{!v.targetFieldName != 'AITM_Delivery_Point_Info__c'}">
+		<button class="slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small hide-button" onclick="{!c.toggleToEdit}">
+			<span class="slds-assistive-text">Edit {!v.name}</span>
+			<lightning:icon iconName="utility:edit" size="xx-small" />
+		</button>
+	</aura:if>
+	</aura:if>
+	<aura:if isTrue="{!v.isEditable}">
+	<aura:if isTrue ="{!v.targetFieldName == 'AITM_Delivery_Point_Info__c'}">
+	<button onclick="{!c.edit}" class="slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small" tabindex="0" title="Edit Rating">
+    <lightning:icon iconName="utility:edit" size="xx-small" alternativeText="edit"/>
+	</button>
+
+	</aura:if>
+	</aura:if>
+	</div>
+	<aura:if isTrue="{!v.type != 'link to record'}">
+	<aura:if isTrue="{!v.isEditable}">
+		<div aura:id="toggle-edit-block" class="hide">
+
+			<aura:if isTrue="{!v.type == 'text'}">
+				<ui:inputText value="{!v.value}" placeholder="{!v.name}" blur="{!c.editValue}" />
+			</aura:if>
+
+			<aura:if isTrue="{!v.type == 'number'}">
+				<ui:inputNumber value="{!v.value}" placeholder="{!v.name}" format="{!v.numberFormat}" blur="{!c.editValue}" />
+			</aura:if>
+
+			<aura:if isTrue="{!v.type == 'select'}">
+				<ui:inputSelect class="dynamic" aura:id="picklist-element" value="{!v.value}" change="{!c.editValue}" blur="{!c.toggleToEdit}" />
+			</aura:if>
+
+			<aura:if isTrue="{!v.type == 'date'}">
+				<ui:inputDate aura:id="date-element" displayDatePicker="true" value="{!v.dateValue}" change="{!c.editValue}" />
+			</aura:if>
+
+		</div>
+	</aura:if>
+</aura:if>
+
+<div aura:id="change-from-default-modal" class="slds-hide" >
+	<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+		<div class="slds-modal__container">
+			<header class="slds-modal__header">
+				<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+				<lightning:icon iconName="utility:close" size="x-small" />
+				<span class="slds-assistive-text">Close</span>
+				</button>
+				<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">You are changing the default value!</h2>
+			</header>
+			<footer class="slds-modal__footer">
+				<button class="slds-button slds-button_neutral" onclick="{!c.closeChangeFromDefaultModal}">Cancel</button>
+				<button class="slds-button slds-button_brand" onclick="{!c.saveChangeFromDefaultModal}">Confirm</button>
+			</footer>
+		</div>
+	</section>
+	<div class="slds-backdrop slds-backdrop_open"></div>
+</div>
+
+<aura:if isTrue="{!v.isOpen}">
+
+<div>
+<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_medium">
+<div class="slds-modal__container">	         
+<header class="slds-modal__header">
+<h2 class="title slds-text-heading--medium">Edit Delivery Points</h2>
+</header>		
+<table class="slds-table slds-table_cell-buffer slds-table_bordered">
+<thead>
+	<tr class="slds-line-height_reset" >
+
+	<th class="slds-text-title_caps" scope="col">
+	<div class="slds-truncate" title="Select">Select</div>
+	</th>
+
+	<th class="slds-text-title_caps" scope="col">
+	<div class="slds-truncate" title="Delivery Point Name">Delivery Point Name</div>
+	</th>
+
+	<th class="slds-text-title_caps" scope="col">
+	<div class="slds-truncate" title="Default Delivery Point">Default Delivery Point</div>
+	</th>
+	<th class="slds-text-title_caps" scope="col">
+	<div class="slds-truncate" title="BP Internal Location+Delivery Point Code">BP Internal Location+Delivery Point Code</div>
+	</th>
+	</tr>
+	</thead>		
+	
+	<tbody>
+	<aura:iteration items="{!v.deliveryPoints}" var="deliveryPoint" >
+
+	<tr class="slds-hint-parent">
+	<td>
+	<ui:inputRadio text="{!deliveryPoint.Id}"  name = "!deliveryPoint.Id" value ="" aura:id ="boxPack3"  change="{!c.onSelect}"/>
+	</td>
+
+		<td data-label="Delivery Point Name">
+	<div class="slds-truncate" title="deliveryPoint.Name">{!deliveryPoint.Name}</div>
+		</td>
+
+		<td data-label="Default Delivery Point">
+	<div class="slds-truncate" title="delivery point default">{!deliveryPoint.AITM_Default_Delivery_Point__c}</div>
+	</td>
+	<td data-label="BP Internal Location+Delivery Point Code">
+	<div class="slds-truncate" title="BP Internal Location+Delivery Point Code">{!deliveryPoint.AITM_BPInter_Location_DeliveryPoint_Cod__c}</div>
+	</td>
+	</tr>
+</aura:iteration>
+</tbody>	
+</table>
+
+	<footer class="slds-modal__footer">
+	<lightning:button label="Cancel"  variant="brand" class="slds-button" onclick="{!c.Close}"/>
+	<lightning:button label="Save"  variant="brand" class="slds-button" onclick="{!c.updateSelected}"/>
+	
+	
+</footer>
+	</div>
+</section>
+<div class="slds-backdrop slds-backdrop_open"></div>
+</div>
+
+</aura:if>
+</aura:component>

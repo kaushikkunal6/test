@@ -1,0 +1,13 @@
+<apex:page controller="AITM_InvitationGenerateXLS" contentType="application/vnd.openxmlformats-officedocument.spreadsheetml.‌​sheet#Air BP Invitation.xls" standardStylesheets="false" showHeader="false" cache="true" readOnly="true">
+    <apex:outputText value="{!xls.header}" escape="false"/>
+    <apex:outputText value="{!xls.headerContent1}" escape="false"/>
+    <apex:outputText value="{!xls.headerContent}" escape="false"/>
+    <apex:outputText value="{!xls.headerContentEmptyRow}" escape="false"/>
+    <apex:outputText value="{!xls.headerNumberOfLocations}" escape="false"/>
+    <apex:outputText value="{!xls.headerContentEmptyRow1}" escape="false"/>
+    <apex:outputText value="{!xls.headerContentEmptyRow2}" escape="false"/>
+    <apex:outputText value="{!xls.headerResultContent}" escape="false"/>
+    <apex:outputText value="{!xls.headerRow}" escape="false"/> 
+    <apex:outputText value="{!xls.data}" escape="false"/>
+    <apex:outputText value="{!xls.footer}" escape="false"/> 
+</apex:page>

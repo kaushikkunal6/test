@@ -1,0 +1,52 @@
+<apex:component id="CAJBP_PDF_JbpSummary">
+    <apex:attribute name="jbp" description="The context jbp payload." required="true" type="Object"/>
+
+    <apex:variable var="" value="" rendered="{!NOT(ISBLANK(jbp))}">
+        <div class="cajbp-table-break cajbp-summary cajbp-image">
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="label">{!$Label.CAJBP_PDF_Field_Owner}:</span><br/><apex:outputText value="{!jbp['ownerName']}"/>&nbsp;</td>
+                        <td><span class="label">{!$ObjectType.CAJBP_Joint_Business_Plan__c.Fields.CAJBP_Account__c.Label}:</span><br/><apex:outputText value="{!jbp['accountName']}"/>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td><span class="label">{!$ObjectType.CAJBP_Joint_Business_Plan__c.Fields.CAJBP_State__c.Label}:</span><br/><apex:outputField value="{!jbp['record']['CAJBP_State__c']}"/>&nbsp;</td>
+                        <td><span class="label">{!$ObjectType.CAJBP_Joint_Business_Plan__c.Fields.CAJBP_Year__c.Label}:</span><br/><apex:outputText value="{!jbp['year']}"/>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td><span class="label">{!$ObjectType.CAJBP_Joint_Business_Plan__c.Fields.CAJBP_JBP_Start_Date__c.Label}:</span><br/><apex:outputText value="{!jbp['startDate']}"/>&nbsp;</td>
+                        <td><span class="label">{!$ObjectType.CAJBP_Joint_Business_Plan__c.Fields.CAJBP_JBP_End_Date__c.Label}:</span><br/><apex:outputText value="{!jbp['endDate']}"/>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td><span class="label">{!$ObjectType.CAJBP_Joint_Business_Plan__c.Fields.CAJBP_Contract_Term_Start_Date__c.Label}:</span><br/><apex:outputText value="{!jbp['termStartDate']}"/>&nbsp;</td>
+                        <td><span class="label">{!$ObjectType.CAJBP_Joint_Business_Plan__c.Fields.CAJBP_Contract_Term_End_Date__c.Label}:</span><br/><apex:outputText value="{!jbp['termEndDate']}"/>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">
+                            <span class="label">{!$ObjectType.CAJBP_Joint_Business_Plan__c.Fields.CAJBP_Description__c.Label}:</span><br/>
+                            <div style="margin-left: -25px;" class="cajbp-reset"><apex:outputField value="{!jbp['record']['CAJBP_Description__c']}"/></div>
+                        </td>
+                        <td valign="top">
+                            <span class="label">{!$ObjectType.CAJBP_Joint_Business_Plan__c.Fields.CAJBP_Vision_Statement__c.Label}:</span><br/>
+                            <div style="margin-left: -25px;" class="cajbp-reset"><apex:outputField value="{!jbp['record']['CAJBP_Vision_Statement__c']}"/></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span class="label">{!$ObjectType.CAJBP_Joint_Business_Plan__c.Fields.CAJBP_SellIn_Previous_Annual_Volume__c.Label}:</span><br/><apex:outputText value="{!jbp['sellInPreviousVolume']}"/>&nbsp;</td>
+                        <td><span class="label">{!$ObjectType.CAJBP_Joint_Business_Plan__c.Fields.CAJBP_SellOut_Previous_Annual_Volume__c.Label}:</span><br/><apex:outputText value="{!jbp['sellOutPreviousVolume']}"/>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td><span class="label">{!$ObjectType.CAJBP_Joint_Business_Plan__c.Fields.CAJBP_SellIn_Previous_Annual_Turnover__c.Label}:</span><br/><apex:outputText value="{!jbp['currencyIsoCode']} {!jbp['sellInPreviousTurnover']}"/>&nbsp;</td>
+                        <td><span class="label">{!$ObjectType.CAJBP_Joint_Business_Plan__c.Fields.CAJBP_SellOut_Previous_Annual_Turnover__c.Label}:</span><br/><apex:outputText value="{!jbp['currencyIsoCode']} {!jbp['sellOutPreviousTurnover']}"/>&nbsp;</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </apex:variable>
+</apex:component>

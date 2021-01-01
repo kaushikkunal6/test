@@ -1,0 +1,9 @@
+.THIS .text-green > td, .THIS .text-green > th{
+	color: rgb(4, 132, 75);
+}
+.THIS .text-blue > td, .THIS .text-blue > th{
+	color: rgb(0, 95, 178);
+}
+.THIS .text-red > td, .THIS .text-red > th{
+	color: rgb(194, 57, 52);
+}

@@ -1,0 +1,25 @@
+<apex:component controller="REIDP_CommunityEmailController" access="global">
+    <apex:attribute name="country" type="String" description="User's country" default="NULL"/>
+    <apex:attribute name="fileName" type="String" description="Footer image" default="CA_Footer_Blank.jpg"/>
+    <apex:attribute name="contactId" type="String" description="User's contact id" assignTo="{!cId}"/>
+    <apex:attribute name="supportEmail" type="String" description="Castrol's support" default="custcare@castrol.com"/>
+    
+    <tr>
+        <td>
+            <table cellpadding="0" width="600" cellspacing="0" align="center" style="background-color:#fff; table-layout:fixed; border-collapse: collapse; border-spacing: 0;">
+                <tr style="background-color: #ffffff;">
+                    <td align="center" style="word-wrap: break-word;font-size:13px; color:#525759; padding-bottom:1rem; padding-top: 4rem">
+                        {!$Label.CastrolSupport}&nbsp;
+                        <a href="{!supportEmail}">{!supportEmail}</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="font-size:0;">
+                        <apex:variable var="resourceUrl" value="{!URLFOR($Resource.CAIDP_Email_Template, fileName)}" />
+                        <img src="{!communityBaseUrl + MID(resourceUrl, FIND('/resource/', resourceUrl), LEN(resourceUrl))}" border="0"  width="600" height="130" style="display: block;"/>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</apex:component>

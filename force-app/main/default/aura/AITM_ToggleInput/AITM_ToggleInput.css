@@ -1,0 +1,10 @@
+.THIS .hide-button {
+	opacity: .5;
+}
+
+.THIS .fixedMaxWidth {
+    display: inline-block;
+    max-width: 10rem;
+    word-wrap:break-word;
+    white-space: normal;
+}

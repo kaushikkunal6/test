@@ -1,0 +1,112 @@
+<aura:component controller="AITM_OfferCustomerBusinessController" implements="forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,force:hasRecordId">
+
+    <aura:attribute name="customers" type="List" description="Contains list of customer records - tender accounts" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <div class="slds">
+        <div class="slds-page-header noborderbottom" role="banner">
+            <div class="slds-grid">
+                <div class="slds-col slds-has-flexi-truncate">
+                    <div class="slds-grid">
+                        <div class="slds-grid slds-type-focus slds-no-space">
+                            <h1 class="slds-page-header__title slds-truncate" title="My Items" style="font-family: 'Salesforce Sans',Arial,sans-serif; font-weight: 300; margin-bottom: 5px;">Tender History</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-max-medium-table--stacked-horizontal">
+        <thead>
+            <tr class="slds-text-title--caps">
+                <th class="initialSortAsc sortable ascending slds-is-sortable  slds-is-resizable" scope="col" title="Customer">
+                    <div>
+                        <span class="slds-truncate" title="Customer">Customer</span>
+                    </div>
+                </th>
+                <th class="initialSortAsc sortable ascending slds-is-sortable  slds-is-resizable" scope="col" title="TenderLink">
+                    <div>
+                        <span class="slds-truncate" title="TenderLink">Tender Link</span>
+                    </div>
+                </th>
+                <th class="initialSortAsc sortable ascending slds-is-sortable  slds-is-resizable" scope="col" title="Pricing Basis">
+                    <div>
+                        <span class="slds-truncate" title="Pricing Basis">Pricing  <br/>  Basis</span>
+                    </div>
+                </th>
+                <th class="initialSortAsc sortable ascending slds-is-sortable  slds-is-resizable" scope="col" title="Description">
+                    <div>
+                        <span class="slds-truncate" title="Description">Description</span>
+                    </div>
+                </th>
+                <th class="initialSortAsc sortable ascending slds-is-sortable  slds-is-resizable" scope="col" title="Tender Volume (USG)">
+                    <div>
+                        <span class="slds-truncate" title="Tender Volume (USG)">Tender Volume <br/> (USG)</span>
+                    </div>
+                </th>
+                <th class="initialSortAsc sortable ascending slds-is-sortable  slds-is-resizable" scope="col" title="Last Tender Result">
+                    <div>
+                        <span class="slds-truncate" title="Last Tender Result">Last Tender <br/> Result</span>
+                    </div>
+                </th>
+                <th class="initialSortAsc sortable ascending slds-is-sortable  slds-is-resizable" scope="col" title="CUR/UOM">
+                    <div>
+                        <span class="slds-truncate" title="CUR/UOM">CUR/  <br/>  UOM</span>
+                    </div>
+                </th>
+                <th class="initialSortAsc sortable ascending slds-is-sortable  slds-is-resizable" scope="col" title="Differential">
+                    <div>
+                        <span class="slds-truncate" title="Differential">Differential</span>
+                    </div>
+                </th>
+            </tr>
+        </thead>
+        <tfoot></tfoot>
+        <tbody>
+            <aura:iteration items="{!v.customers}" var="customer">
+                <tr>
+                    <th scope="row" class="slds-cell-edit cellContainer" tabindex="-1">
+                        <span class="slds-grid slds-grid--align-spread forceInlineEditCell">
+                            <a class="slds-truncate outputLookupLink slds-truncate forceOutputLookup" data-refid="recordId" data-recordid="{!customer.recordId}" data-special-link="true" href="{!'/lightning/r/Account/' + customer.recordId + '/view'}" rel="noreferrer" title="{!customer.name}">{!customer.name}</a>
+                        </span>
+                    </th>
+                    <td scope="row" class="slds-cell-edit cellContainer" tabindex="-1">
+                        <span class="slds-grid slds-grid--align-spread forceInlineEditCell">
+                            <a class="slds-truncate outputLookupLink slds-truncate forceOutputLookup" data-refid="recordId" data-recordid="{!customer.AITM_History_Line_Item__c}" data-special-link="true" href="{!'/lightning/r/AITM_History_Line_Item__c/' + customer.tenderlinkId + '/view'}" rel="noreferrer" title="{!customer.tenderlink}">{!customer.tenderlink}</a>
+                        </span>
+                    </td>
+                    <td class="slds-cell-edit cellContainer" tabindex="-1">
+                        <span class="slds-grid slds-grid--align-spread forceInlineEditCell">
+                            <span class="slds-truncate">{!customer.pricingBasis}</span>
+                        </span>
+                    </td>
+                    <td class="slds-cell-edit cellContainer" tabindex="-1" >
+                        <span class="slds-grid slds-grid--align-spread forceInlineEditCell">
+                            <span class="slds-truncate" style="display: inline-block;  max-width: 10rem;  word-wrap: break-word; white-space: normal;">{!customer.description}</span>
+                        </span>
+                    </td>
+                    <td class="slds-cell-edit cellContainer" tabindex="-1">
+                        <span class="slds-grid slds-grid--align-spread forceInlineEditCell">
+                            <span class="slds-truncate">{!customer.actualsVolume}</span>
+                        </span>
+                    </td>
+                    <td class="slds-cell-edit cellContainer" tabindex="-1">
+                        <span class="slds-grid slds-grid--align-spread forceInlineEditCell">
+                            <span class="slds-truncate">{!customer.lastTenderResult}</span>
+                        </span>
+                    </td>
+                    <td class="slds-cell-edit cellContainer" tabindex="-1">
+                        <span class="slds-grid slds-grid--align-spread forceInlineEditCell">
+                            <span class="slds-truncate">{!customer.curuom}</span>
+                        </span>
+                    </td>
+                    <td class="slds-cell-edit cellContainer" tabindex="-1">
+                        <span class="slds-grid slds-grid--align-spread forceInlineEditCell">
+                            <span class="slds-truncate">{!customer.differential}</span>
+                        </span>
+                    </td>
+                </tr>
+            </aura:iteration>
+        </tbody>
+    </table>
+</aura:component>

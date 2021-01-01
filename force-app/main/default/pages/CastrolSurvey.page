@@ -1,0 +1,564 @@
+<apex:page standardcontroller="SurveyTaker__c" extensions="CALCF_CastrolSurveyController" cache="false" sidebar="false" showheader="false" standardStylesheets="false" action="{!setSurveyStatus}" language="{!languageCode}">
+
+<html>
+<head>
+    <apex:stylesheet value="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css" />
+    <apex:stylesheet value="{!URLFOR($Resource.CastrolFonts, 'fonts.css')}"/>
+
+    <!--LOAD STYLE FOR CASTROL BRAND IF BRAND IS NOT SPECIFIED DEFAULT TO CASTROL AS WELL-->
+    <apex:pageBlock rendered="{! or(brand == 'castrol', brand == 'bpcastrol', ISBLANK(brand))}">
+        <apex:stylesheet value="{!URLFOR($Resource.LCFResources, 'css/header.css')}"/>
+        <apex:stylesheet value="{!URLFOR($Resource.LCFResources, 'css/styles.css')}"/>
+    </apex:pageBlock>
+
+    <!--LOAD STYLE FOR ARAL-->
+    <apex:pageBlock rendered="{! brand == 'aral'}">
+        <apex:stylesheet value="{!URLFOR($Resource.LCFAralResources, 'css/header.css')}"/>
+        <apex:stylesheet value="{!URLFOR($Resource.LCFAralResources, 'css/styles.css')}"/>
+    </apex:pageBlock>
+
+    <!--LOAD STYLE FOR BP-->
+    <apex:pageBlock rendered="{! brand == 'bp'}">
+        <apex:stylesheet value="{!URLFOR($Resource.LCFBPResources, 'css/header.css')}"/>
+        <apex:stylesheet value="{!URLFOR($Resource.LCFBPResources, 'css/styles.css')}"/>
+    </apex:pageBlock>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>{!pageTitle}</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+</head>
+
+<body>
+
+<apex:pageBlock rendered="{!iframe == 'true'}" >
+    <apex:stylesheet value="{!URLFOR($Resource.LCFResources, 'css/iframe.css')}"/>
+</apex:pageBlock>
+
+<apex:pageBlock rendered="{!iframe == 'false'}" >
+    <apex:stylesheet value="{!URLFOR($Resource.LCFResources, 'css/no_iframe.css')}"/>
+</apex:pageBlock>
+
+<style>
+    /* THESE MUST BE DEFINED INLINE AS THE CONTENT IS DYNAMIC */
+    /* THE ADJACENT (+) SELECTOR IS USED INSTEAD OF NTH OF TYPE OR NTH CHILD TO SUPPORT IE8 */
+    .radio-row-table-1-to-5 td:first-child:before {
+      content: "{!labelLeft1to5}";
+    }
+    .radio-row-table-1-to-5 td:first-child + td + td + td + td:before {
+      content: "{!labelRight1to5}";
+    }
+    .radio-row-table-1-to-5 td:first-child + td + td + td + td + td:before {
+      content: "{!labelDontKnow1to5}";
+    }
+    .radio-row-table-0-to-10 td:first-child:before {
+      content: "{!labelLeft0to10}";
+    }
+    .radio-row-table-0-to-10 td:first-child + td + td + td + td + td + td + td + td + td + td:before {
+      content: "{!labelRight0to10}";
+    }
+</style>
+
+
+<div class="page-outer-wrapper">
+
+    <apex:pageBlock id="genericTopbar" rendered="{!iframe == 'false'}" >
+        <!-- GENERIC CASTROL TOPBAR -->
+        <c:CastrolHeader titleValue="{!topbarTitle}" countryValue="{!topbarCountry}" countryValueEn="{!topbarCountryEn}" language="{!languageCode}" secondLng="{!secondLng}" caseId="{!caseId}" contactId="{!contactId}" orderRef="{!orderRef}" templateId="{!templateId}" refTemplate="{!refTemplateId}" surveyId="{!surveyId}" preview="{!preview}" salesOrg="{!salesOrg}" lowScoreRendered="{!lowScoreRendered}" thankYouRendered="{!thankYouRendered}"/>
+    </apex:pageBlock>
+
+    <div class="survey-wrapper wrapper">
+        <div class="survey-container">
+            <apex:form id="theForm" styleClass="form-start">
+
+                <!-- HEADER SECTION -->
+                <div class="survey-top-section section">
+
+                    <!-- IFRAME ONLY ORDER COMPLETE BAR -->
+                    <apex:pageBlock rendered="{!iframe == 'true'}" >
+                        <apex:outputPanel rendered="{!portalMessages != ''}" layout="block" styleClass="portal-messages-section" >
+
+                                <div class="portal-message-holder">
+                                    <img class="message-warning-image" src="{!URLFOR($Resource.LCFResources, 'images/messageWarning.png')}" />
+                                    <ul class="message-list">
+                                        <apex:repeat value="{!portalMessages}" var="m" id="messages">
+                                            <li>{!m}</li>
+                                        </apex:repeat>
+                                    </ul>
+                                </div>
+                        </apex:outputPanel>
+                    </apex:PageBlock>
+                    <!-- END IFRAME ONLY ORDER COMPLETE BAR -->
+
+                    <div class="survey-description-holder container">
+
+                        <!-- SURVEY HEADER -->
+                        <apex:pageBlock rendered="{!lowScoreRendered == false && thankYouRendered == false && isExpired == false && isTaken == false && optOutRendered == false && optOutConfirmRendered == false}" >
+
+                        <div class="survey-header">
+                          <h2 class="title">{!surveyHeader}</h2>
+                          <h5 class="{!IF((globalValidationFailed),'validation-failed','')}">{!surveySubHeader}</h5>
+                          <!-- Apex messages disabled as we have custom validation messages -->
+                          <!-- <apex:pageMessages /> -->
+                          </div>
+                          <div class="global-container">
+                          <apex:outputPanel rendered="{!AND(refTemplateId!='',iframe = 'true')}" >
+                        <h2 class="country"><apex:outputText value="{!IF(languageCode='EN',topbarCountryEn,topbarCountry)}"/></h2>
+
+                            <p class="languageCode selected">{!languageCode}
+                            </p>
+                            <apex:outputLink styleClass="languageCode" value="/Survey">{!secondLng}
+                                <apex:param name="tId" value="{!refTemplateId}"/>
+                                <apex:param name="lng" value="{!languageCode}"/>
+                                <apex:param name="caId" value="{!caseId}"/>
+                                <apex:param name="cId" value="{!contactId}"/>
+                                <apex:param name="oRef" value="{!orderRef}"/>
+                                <apex:param name="Id" value="{!surveyId}"/>
+                                <apex:param name="preview" value="{!preview}"/>
+                                <apex:param name="rtId" value="{!templateId}"/>
+                                <apex:param name="sOrg" value="{!salesOrg}"/>
+                                <apex:param name="w" value="1"/>
+                            </apex:outputLink>
+                        </apex:outputPanel>
+                        </div>
+                        </apex:pageBlock>
+                        <!-- END SURVEY HEADER -->
+
+                        <!-- ISEXPIRED HEADER -->
+                        <apex:pageBlock rendered="{!lowScoreRendered == false && thankYouRendered == false && isTaken == true && optOutRendered == false && optOutConfirmRendered == false}" >
+                            <h2 class="taken-h2 taken-h2-top">
+                              <apex:outputText value="{!takenHeader}">
+                                <apex:param value=""/>
+                                <!-- {!ContactName} -->
+                              </apex:outputText>
+                            </h2>
+                        </apex:pageBlock>
+                        <!-- END ISEXPIRED HEADER -->
+
+                        <!-- ISTAKEN HEADER -->
+                        <apex:pageBlock rendered="{!lowScoreRendered == false && thankYouRendered == false && isExpired == true && optOutRendered == false && optOutConfirmRendered == false}" >
+                            <h2 class="expired-h2 expired-h2-top">
+                              <apex:outputText value="{!expiredHeader}">
+                                <apex:param value=""/>
+                                <!-- {!ContactName} -->
+                              </apex:outputText>
+                            </h2>
+                        </apex:pageBlock>
+                        <!-- END ISTAKEN HEADER -->
+
+                        <!-- OPT-OUT HEADER -->
+                        <apex:pageBlock rendered="{!optOutRendered || optOutConfirmRendered}">
+                            <h2 class="expired-h2 expired-h2-top">
+                              <apex:outputText value="{!$Label.LCF_Opt_Out_Header}"></apex:outputText>
+                            </h2>
+                        </apex:pageBlock>
+                        <!-- END OUT-OUT HEADER -->
+
+                        <!-- THANK YOU HEADER -->
+                        <apex:pageBlock rendered="{!(lowScoreRendered == true || thankYouRendered == true) && optOutRendered == false && optOutConfirmRendered == false}" >
+                            <h2 class="thank-you-h2 thank-you-h2-top">
+                              <apex:outputText value="{!thankYouHeader}">
+                                <apex:param value=""/>
+                                <!-- {!ContactName} -->
+                              </apex:outputText>
+                            </h2>
+                        </apex:pageBlock>
+                        <!-- END THANK YOU HEADER -->
+                    </div>
+                </div>
+                <!-- END HEADER SECTION -->
+
+
+                <!-- CONTENT SECTION  -->
+                    <!-- SURVEY CONTENT -->
+                    <apex:pageBlock rendered="{!lowScoreRendered == false && thankYouRendered == false && isExpired == false && isTaken == false && optOutRendered == false && optOutConfirmRendered == false}" >
+                      <div id="qList" class="survey-questions-section section">
+                        <div  class="container" >
+                            <!-- REPEATING FORM ELEMENTS -->
+                            <apex:repeat value="{!allQuestions}" var="qPreview" id="aQPreview">
+                                <div id="{!qPreview.id}" class="question-holder clearfix">
+                                <apex:pageBlock id="pblock">
+                                    <div class="question{!if(qPreview.is0to10,' q-0-to-10','')}{!if(qPreview.is1to5,' q-1-to-5','')}">
+                                        <h3 class="question-number">{!qPreview.questionHeader} {!qPreview.orderNumber}
+                                        <apex:outputPanel rendered="{!qPreview.required}" styleClass="{!IF((qPreview.validationFailed),'required-asterix','')}">{!$Label.lcf_RequiredText}</apex:outputPanel>
+                                        </h3>
+                                        <p class="question-text">{!qPreview.question}</p>
+                                        <apex:outputPanel rendered="{!qPreview.required}" styleClass="required-text{!IF((qPreview.validationFailed),' required-text-expand','')}" layout="block" ><apex:image styleClass="warning-sign" value="{!URLFOR($Resource.LCFResources, 'images/warning.png')}"/>{!requiredLabel}</apex:outputPanel>
+                                    </div>
+                                    <div class="text-field-holder">
+                                       <apex:inputTextArea html-placeholder="{!qPreview.questionPlaceholderText}" styleClass="text-field" rows="4" rendered="{!qPreview.renderFreeText}" value="{!qPreview.choices}"
+                                            html-data-touchpoint="{!touchpointType}"
+                                            html-data-survey-id="{!surveyId}"
+                                            html-data-q-number="{!qPreview.orderNumber}"
+                                            html-data-q-type="Text-question"
+                                            />
+                                    </div>
+                                    <div class="radio-row-holder radio-row-holder-1-to-5">
+                                      <apex:selectRadio styleClass="radio-row-table radio-row-table-1-to-5 {!IF((qPreview.validationFailed),'required-radio','')}" rendered="{!qPreview.is1to5}" value="{!qPreview.selectedOption}">
+                                            <apex:selectOptions html-data-touchpoint="{!touchpointType}"
+                                            html-data-survey-id="{!surveyId}"
+                                            html-data-q-number="{!qPreview.orderNumber}"
+                                            html-data-q-type="5-point-question"
+                                            value="{!qPreview.rowOptions}"/>
+                                      </apex:selectRadio>
+                                    </div>
+                                    <div class="radio-row-holder radio-row-holder-0-to-10">
+                                      <apex:selectRadio styleClass="radio-row-table radio-row-table-0-to-10 {!IF((qPreview.validationFailed),'required-radio','')}" rendered="{!qPreview.is0to10}" value="{!qPreview.selectedOption}">
+                                            <apex:selectOptions html-data-touchpoint="{!touchpointType}"
+                                            html-data-survey-id="{!surveyId}"
+                                            html-data-q-number="{!qPreview.orderNumber}"
+                                            html-data-q-type="NPS-question"
+                                            value="{!qPreview.rowOptions}"/>
+                                      </apex:selectRadio>
+                                    </div>
+                                </apex:pageBlock>
+                                </div>
+                            </apex:repeat>
+                            <!-- END REPEATING FORM ELEMENTS -->
+
+                        </div>
+                      </div>
+                    </apex:pageBlock>
+                    <!-- END SURVEY CONTENT -->
+
+                    <!-- ISEXPIRED CONTENT -->
+                    <apex:outputPanel rendered="{!lowScoreRendered == false && thankYouRendered == false && isExpired == true && optOutRendered == false && optOutConfirmRendered == false}" layout="block" styleClass="section expired-section">
+
+                        <apex:image rendered="{!or(brand == 'castrol', ISBLANK(brand))}" value="{!URLFOR($Resource.LCFResources, 'images/surveyExpired.png')}" styleClass="expired-image" width="124" height="131"/>
+
+                        <apex:image rendered="{!brand == 'aral'}" value="{!URLFOR($Resource.LCFAralResources, 'images/surveyExpired.png')}" styleClass="expired-image" width="124" height="131"/>
+
+                        <apex:image rendered="{!brand == 'bp'}" value="{!URLFOR($Resource.LCFBPResources, 'images/surveyExpired.png')}" styleClass="expired-image" width="124" height="131"/>
+
+                        <h2 class="expired-h2"><apex:outputText value="{!expiredHeader2}" escape="false"></apex:outputText></h2>
+                        <p class="expired-p"><apex:outputText value="{!expiredDescription}" escape="false"></apex:outputText></p>
+                    </apex:outputPanel>
+                    <!-- END ISEXPIRED CONTENT -->
+
+                    <!-- ISTAKEN CONTENT -->
+                    <apex:outputPanel rendered="{!lowScoreRendered == false && thankYouRendered == false && isTaken == true && optOutRendered == false && optOutConfirmRendered == false}" layout="block" styleClass="section taken-section">
+
+                        <apex:image rendered="{!or(brand == 'castrol', ISBLANK(brand))}" value="{!URLFOR($Resource.LCFResources, 'images/surveyTaken.png')}" styleClass="taken-image" width="124" height="131"/>
+
+                        <apex:image rendered="{!brand == 'aral'}" value="{!URLFOR($Resource.LCFAralResources, 'images/surveyTaken.png')}" styleClass="taken-image" width="124" height="131"/>
+
+                        <apex:image rendered="{!brand == 'bp'}" value="{!URLFOR($Resource.LCFBPResources, 'images/surveyTaken.png')}" styleClass="taken-image" width="124" height="131"/>
+
+                        <h2 class="taken-h2"><apex:outputText value="{!takenHeader2}" escape="false"></apex:outputText></h2>
+                        <p class="taken-p"><apex:outputText value="{!takenDescription}" escape="false"></apex:outputText></p>
+                    </apex:outputPanel>
+                    <!-- END ISTAKEN CONTENT -->
+
+                    <!-- THANK YOU CONTENT -->
+                    <apex:outputPanel rendered="{!lowScoreRendered == false && thankYouRendered == true && optOutRendered == false && optOutConfirmRendered == false}" layout="block" styleClass="section thank-you-section">
+
+                        <apex:image rendered="{!or(brand == 'castrol', ISBLANK(brand))}" value="{!URLFOR($Resource.LCFResources, 'images/surveyThankYou.png')}" styleClass="thank-you-image" width="187" height="131"/>
+
+                        <apex:image rendered="{!brand == 'aral'}" value="{!URLFOR($Resource.LCFAralResources, 'images/surveyThankYou.png')}" styleClass="thank-you-image" width="187" height="131"/>
+
+                        <apex:image rendered="{!brand == 'bp'}" value="{!URLFOR($Resource.LCFBPResources, 'images/surveyThankYou.png')}" styleClass="thank-you-image" width="187" height="131"/>
+
+                        <h2 class="thank-you-h2"><apex:outputText value="{!thankYouHeader2}" escape="false"></apex:outputText></h2>
+                        <p class="thank-you-p"><apex:outputText value="{!thankYouDescription}" escape="false"></apex:outputText></p>
+                    </apex:outputPanel>
+                    <!-- END THANK YOU CONTENT -->
+
+                    <!-- OPT-OUT CONTENT -->
+                    <apex:outputPanel rendered="{!thankYouRendered == false && lowScoreRendered == false && optOutRendered == true}" layout="block" styleClass="section thank-you-section">
+
+                    <apex:image rendered="{!or(brand == 'castrol', ISBLANK(brand))}" value="{!URLFOR($Resource.LCFResources, 'images/surveyOptOut.png')}" styleClass="thank-you-image" width="126" height="131"/>
+
+                    <apex:image rendered="{!brand == 'aral'}" value="{!URLFOR($Resource.LCFAralResources, 'images/surveyOptOut.png')}" styleClass="thank-you-image" width="126" height="131"/>
+
+                    <apex:image rendered="{!brand == 'bp'}" value="{!URLFOR($Resource.LCFBPResources, 'images/surveyOptOut.png')}" styleClass="thank-you-image" width="126" height="131"/>
+
+                        <p class="opt-out-p">
+                            <apex:pageBlock rendered="{!salesOrg != 'DE01'}">
+                                <apex:outputText value="{!$Label.LCF_Opt_Out_Text1}" escape="false"></apex:outputText><br/>
+                            </apex:pageBlock>
+
+                            <apex:pageBlock rendered="{!salesOrg == 'DE01' && languageCode == 'DE'}">
+                                Wenn Sie sich abmelden, erhalten Sie keine weiteren Einladungen zu Befragungen.<br/>
+                            </apex:pageBlock>
+                            <apex:pageBlock rendered="{!salesOrg == 'DE01' && languageCode == 'EN'}">
+                                By selecting opt out, you will not receive a survey request.<br/>
+                            </apex:pageBlock>
+
+                            <apex:outputText value="{!$Label.LCF_Opt_Out_Text2}" escape="false"></apex:outputText>
+                        </p>
+                    </apex:outputPanel>
+                    <!-- END OPT-OUT CONTENT -->
+
+                    <!-- OPT-OUT CONFIRMED CONTENT -->
+                    <apex:outputPanel rendered="{!thankYouRendered == false && lowScoreRendered == false && optOutConfirmRendered == true}" layout="block" styleClass="section thank-you-section">
+
+                        <apex:image rendered="{!or(brand == 'castrol', ISBLANK(brand))}" value="{!URLFOR($Resource.LCFResources, 'images/surveyOptOut.png')}" styleClass="thank-you-image" width="126" height="131"/>
+
+                        <apex:image rendered="{!brand == 'aral'}" value="{!URLFOR($Resource.LCFAralResources, 'images/surveyOptOut.png')}" styleClass="thank-you-image" width="126" height="131"/>
+
+                        <apex:image rendered="{!brand == 'bp'}" value="{!URLFOR($Resource.LCFBPResources, 'images/surveyOptOut.png')}" styleClass="thank-you-image" width="126" height="131"/>
+
+                            <h2 class="thank-you-h2"><apex:outputText value="{!$Label.LCF_Thank_you}" escape="false"></apex:outputText></h2>
+                            <p class="thank-you-p"><apex:outputText value="{!$Label.LCF_Opt_Out_Preferences}" escape="false"></apex:outputText></p>
+                    </apex:outputPanel>
+                    <!-- END OPT-OUT CONFIRMED CONTENT -->
+
+                    <!-- LOW SCORE CONTACT ME CONTENT -->
+                    <apex:outputPanel rendered="{!lowScoreRendered == true && thankYouRendered == false}" layout="block" styleClass="section thank-you-section">
+
+                        <apex:image rendered="{!or(brand == 'castrol', ISBLANK(brand))}" value="{!URLFOR($Resource.LCFResources, 'images/surveyThankYou.png')}" styleClass="thank-you-image" width="187" height="131"/>
+
+                        <apex:image rendered="{!brand == 'aral'}" value="{!URLFOR($Resource.LCFAralResources, 'images/surveyThankYou.png')}" styleClass="thank-you-image" width="187" height="131"/>
+
+                        <apex:image rendered="{!brand == 'bp'}" value="{!URLFOR($Resource.LCFBPResources, 'images/surveyThankYou.png')}" styleClass="thank-you-image" width="187" height="131"/>
+
+                        <p class="thank-you-p"><apex:outputText value="{!$Label.LCF_Apology_Content}" escape="false"></apex:outputText></p>
+                    </apex:outputPanel>
+                    <!-- END LOW SCORE CONTACT ME CONTENT -->
+
+                <!-- END CONTENT SECTION -->
+
+
+                <!-- SURVEY AND THANK YOU FOOTER -->
+                   <div class="survey-footer-section section">
+                        <div class="container survey-footer-holder clearfix">
+
+                            <!-- SURVEY SUBMIT BUTTON -->
+                            <apex:outputPanel rendered="{!lowScoreRendered == false && thankYouRendered == false && isExpired == false && isTaken == false && optOutRendered == false && optOutConfirmRendered == false}" >
+                                <apex:outputPanel rendered="{!iframe == 'true'}">
+                                <div class="iframe-legal-privacy-holder">
+                                    <a href="{!legalNoticeURL}" target="_blank"><img class="legal-style" src="{!URLFOR($Resource.LCFResources, 'images/LCF_icon_legal.png')}" /></a>
+                                    <a href="{!privacyStatementURL}" target="_blank"><img class="legal-style" src="{!URLFOR($Resource.LCFResources, 'images/LCF_icon_security.png')}" /></a>
+                                    <apex:commandLink action="{!optOut}" styleClass="legal-style" rerender="theForm,seeSurvey">{!$Label.LCF_Opt_Out_Button}</apex:commandLink>
+                                </div>
+                                </apex:outputPanel>
+                                <apex:actionStatus id="saveStatus">
+
+                                 <apex:facet name="stop">
+                                        <apex:outputPanel >
+                                            <apex:commandButton action="{!submitResults}" styleClass="button survey-submit-button" value="{!submitButtonText}" rerender="theForm,seeSurvey,genericTopbar" disabled="{!preview}" status="saveStatus"/>
+                                        </apex:outputPanel>
+                                    </apex:facet>
+
+                                <apex:facet name="start">
+                                    <apex:outputPanel >
+                                        <apex:commandButton styleClass="button survey-submit-button" value="{!submitButtonText}" disabled="true" />
+                                    </apex:outputPanel>
+                                </apex:facet>
+
+                                </apex:actionStatus>
+                            </apex:outputPanel>
+                            <!-- END SURVEY SUBMIT BUTTON -->
+
+                            <!-- RETURN TO CASTROL.COM ARAL.DE BUTTON -->
+                            <apex:outputPanel rendered="{!(thankYouRendered == true || isExpired == true || isTaken == true || optOutConfirmRendered == true) && iframe == 'false' && lowScoreRendered == false && optOutRendered == false}" layout="block" styleClass="button-holder" >
+                            <apex:outputPanel rendered="{!iframe == 'true'}">
+                                <div class="iframe-legal-privacy-holder">
+                                    <a href="{!legalNoticeURL}" target="_blank"><img class="legal-style" src="{!URLFOR($Resource.LCFResources, 'images/LCF_icon_legal.png')}" /></a>
+                                    <a href="{!privacyStatementURL}" target="_blank"><img class="legal-style" src="{!URLFOR($Resource.LCFResources, 'images/LCF_icon_security.png')}" /></a>
+                                    <apex:commandLink action="{!optOut}" styleClass="legal-style" rerender="theForm,seeSurvey">{!$Label.LCF_Opt_Out_Button}</apex:commandLink>
+                                </div>
+                            </apex:outputPanel>
+
+                                <apex:pageBlock rendered="{! or(brand == 'castrol', brand == 'bpcastrol', ISBLANK(brand))}">
+                                    <a class="button" href="http://www.castrol.com">castrol.com</a>
+                                </apex:pageBlock>
+
+                                <apex:pageBlock rendered="{! brand == 'aral'}">
+                                    <a class="button" href="http://www.aral.de">aral.de</a>
+                                </apex:pageBlock>
+
+                                <apex:pageBlock rendered="{! brand == 'bp'}">
+                                    <a class="button" href="http://www.bp.de">bp.de</a>
+                                </apex:pageBlock>
+
+                            </apex:outputPanel>
+                            <!-- END RETURN TO CASTROL.COM BUTTON -->
+
+                            <!-- OPT-OUT  BUTTONS -->
+                            <apex:outputPanel rendered="{!optOutRendered == true}" styleClass="survey-contact-button-container">
+                            <div styleClass="survey-contact-button-holder">
+                            <apex:outputPanel rendered="{!iframe == 'true'}">
+                              <div class="iframe-legal-privacy-holder">
+                                <a href="{!legalNoticeURL}" target="_blank"><img class="legal-style" src="{!URLFOR($Resource.LCFResources, 'images/LCF_icon_legal.png')}" /></a>
+                                <a href="{!privacyStatementURL}" target="_blank"><img class="legal-style" src="{!URLFOR($Resource.LCFResources, 'images/LCF_icon_security.png')}" /></a>
+                                <apex:commandLink action="{!optOut}" styleClass="legal-style" rerender="theForm,seeSurvey">{!$Label.LCF_Opt_Out_Button}</apex:commandLink>
+                              </div>
+                              </apex:outputPanel>
+                            <apex:commandButton action="{!doNotOptOut}" rerender="theForm,seeSurvey" value="{!$Label.LCF_Opt_Out_Button_No}" styleClass="button"/>
+                            &nbsp;
+                            <apex:commandButton action="{!doOptOut}" rerender="theForm,seeSurvey" value="{!$Label.LCF_Opt_Out_Button_Yes}" styleClass="button"/></div>
+                            </apex:outputPanel>
+                            <!-- END OPT-OUT BUTTONS -->
+
+                            <!-- LOW SCORE CONTACT ME BUTTONS -->
+                            <apex:outputPanel rendered="{!lowScoreRendered == true && thankYouRendered == false}" styleClass="survey-contact-button-container">
+                            <div styleClass="survey-contact-button-holder">
+                            <apex:outputPanel rendered="{!iframe == 'true'}">
+                                <div class="iframe-legal-privacy-holder">
+                                    <a href="{!legalNoticeURL}" target="_blank"><img class="legal-style" src="{!URLFOR($Resource.LCFResources, 'images/LCF_icon_legal.png')}" /></a>
+                                    <a href="{!privacyStatementURL}" target="_blank"><img class="legal-style" src="{!URLFOR($Resource.LCFResources, 'images/LCF_icon_security.png')}" /></a>
+                                    <apex:commandLink action="{!optOut}" styleClass="legal-style" rerender="theForm,seeSurvey">{!$Label.LCF_Opt_Out_Button}</apex:commandLink>
+                                </div>
+                            </apex:outputPanel>
+
+                            <apex:commandButton action="{!doNotContactMe}" value="{!$Label.LCF_Do_Not_Contact}" styleClass="button button-grey"/>
+                            &nbsp;
+
+                            <!-- Exception for DE users Castrol/Aral there should be Kontaktieren text shown for other countries
+                                it is same as before castrol.com -->
+                            <!--
+                            <apex:commandButton action="{!redirectUserToBrand}" value="castrol.com" styleClass="button" rendered="{! brand != 'aral'}"/>
+
+                            <apex:commandButton action="{!redirectUserToBrand}" value="aral.de" styleClass="button" rendered="{! brand == 'aral'}"/>
+                            -->
+
+                            </div>
+                            </apex:outputPanel>
+                            <!-- END LOW SCORE CONTACT ME BUTTONS -->
+
+                            <!-- LEGAL AND PRIVACY FOR IFRAME  -->
+                            <apex:outputPanel rendered="{!iframe == 'true' && lowScoreRendered == false && optOutConfirmRendered = false && (thankYouRendered = true || isTaken == true || isExpired == true )}" layout="block" styleClass="iframe-legal-privacy-wrapper">
+                              <div class="iframe-legal-privacy-holder">
+
+                                <a href="{!legalNoticeURL}" target="_blank"><img class="legal-style" src="{!URLFOR($Resource.LCFResources, 'images/LCF_icon_legal.png')}" /></a>
+                                <a href="{!privacyStatementURL}" target="_blank"><img class="legal-style" src="{!URLFOR($Resource.LCFResources, 'images/LCF_icon_security.png')}" /></a>
+                                <apex:commandLink action="{!optOut}" styleClass="legal-style" rerender="theForm,seeSurvey">{!$Label.LCF_Opt_Out_Button}</apex:commandLink>
+                              </div>
+                            </apex:outputPanel>
+                            <!-- END LEGAL AND PRIVACY FOR IFRAME  -->
+
+                        </div>
+                    </div>
+                <!-- END SURVEY AND THANK YOU FOOTER -->
+
+
+
+<!-- SCRIPTS SECTION, BEFORE THE CLOSING FORM TAG -->
+
+
+
+
+            <!-- VALIDATION JAVASCRIPT -->
+            <apex:outputPanel rendered="{!globalValidationFailed == true}">
+              <script>
+                // VALIDATION STYLING / TRIGGERING
+                if(window.jQuery) {
+                    //j$ = jQuery.noConflict();
+                    j$(document).ready(function() {
+
+                        // also add ability to click the radio button itself
+                        j$('.required-radio input[type="radio"] + label').click(function(event){
+                            //If we click a radio button, remove the red border on the radio button and remove the required text by collapsing
+
+                            j$(this).parents(".required-radio").removeClass("required-radio");
+                            j$(this).parents(".question-holder").find(".required-text").removeClass("required-text-expand").addClass("required-text-collapse");
+                            j$(this).parents(".question-holder").find(".required-asterix").removeClass("required-asterix");
+
+                        });
+
+                    });
+
+                }
+
+
+                //SCROLL TO TOP IF VALIDATION ERROR
+                if(window.jQuery) {
+                  j$ = jQuery.noConflict();
+                  j$(document).ready(function() {
+                    j$('html, body').animate({
+                        scrollTop: 0
+                    }, 500);
+                  });
+                } else {
+                  var body = document.body;
+                  var html = document.documentElement;
+                  body.scrollTop = 0;
+                  html.scrollTop = 0;
+                }
+              </script>
+            </apex:outputPanel>
+            <!-- END VALIDATION JAVASCRIPT -->
+
+            <!-- THANK YOU PAGE ONLY JAVASCRIPT -->
+            <apex:outputPanel rendered="{!thankYouRendered == true}">
+              <script>
+                //SEND EVENT TO GTM TO SHOW THANK YOU PAGE LOADED
+                dataLayer.push({ 'event': 'thank-you-loaded' });
+              </script>
+            </apex:outputPanel>
+            <!-- END THANK YOU PAGE ONLY JAVASCRIPT -->
+
+<!-- END SCRIPTS SECTION, BEFORE THE CLOSING FORM TAG -->
+
+        </apex:form>
+    </div>
+</div>
+</div>
+
+<!-- NON IFRAME FOOTER -->
+<apex:pageBlock rendered="{!iframe == 'false'}" >
+    <footer class="footer wrapper clearfix">
+        <apex:form >
+            <apex:pageBlock rendered="{! or(brand == 'castrol', ISBLANK(brand))}">
+                <div class="copyright-holder">&copy; Castrol Limited 2009-{!year(today())}</div>
+            </apex:pageBlock>
+
+            <apex:pageBlock rendered="{! brand == 'aral'}" >
+                <div class="copyright-holder">&copy; Aral {!year(today())}</div>
+            </apex:pageBlock>
+
+            <apex:pageBlock rendered="{! brand == 'bpcastrol'}" >
+                <div class="copyright-holder">&copy; BP/Castrol {!year(today())}</div>
+            </apex:pageBlock>
+
+            <apex:pageBlock rendered="{! brand == 'bp'}" >
+                <div class="copyright-holder">&copy; BP {!year(today())}</div>
+            </apex:pageBlock>
+
+            <div class="legal-holder">
+                <a href="{!legalNoticeURL}" target="_blank"><img class="legal-style" src="{!URLFOR($Resource.LCFResources, 'images/LCF_icon_legal.png')}" /></a>
+                <a href="{!privacyStatementURL}" target="_blank"><img class="legal-style" src="{!URLFOR($Resource.LCFResources, 'images/LCF_icon_security.png')}" /></a>
+                <apex:commandLink action="{!optOut}" styleClass="legal-style" style="margin-right: 0px" rerender="theForm,seeSurvey" >{!$Label.LCF_Opt_Out_Button}</apex:commandLink>
+            </div>
+        </apex:form>
+    </footer>
+</apex:pageBlock>
+<!-- END NON IFRAME FOOTER -->
+
+<script>
+    var script = document.createElement('script');
+    script.src = 'https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js';
+    script.onload = jqueryloaded; // thx @Cookie_Monster
+    document.body.appendChild(script);
+
+    dataLayer.push({
+        'data-touchpoint':   '{!touchpointType}',
+        'data-survey-id':    '{!surveyId}'
+    });
+
+    function jqueryloaded() {
+        $( ".text-field" )
+        .focus(function() {
+            var me = $(this);
+            dataLayer.push({
+                'event':            'text-field-focus',
+                'data-q-number':    me.attr('data-q-number'),
+                'data-q-type':      me.attr('data-q-type')
+            });
+        })
+        .keypress(function() {
+            var me = $(this);
+            dataLayer.push({
+                'event':            'text-field-keypress',
+                'data-q-number':    me.attr('data-q-number'),
+                'data-q-type':      me.attr('data-q-type')
+            });
+        });
+
+    }
+</script>
+
+</body>
+</html>
+</apex:page>

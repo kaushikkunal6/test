@@ -1,0 +1,54 @@
+<!--
+ * @author Nazim Aliyev
+ * @company Bluewolf, an IBM Company
+ * @date 6/2017
+ *
+ * This is Universal Links file, required for iOS App to handle links on this domain.
+ * As described in https://developer.apple.com/library/content/documentation/General/Conceptual/AppSearch/UniversalLinks.html
+-->
+<apex:page contentType="application/json" showHeader="false" sidebar="false">
+{
+    "applinks": {
+        "apps": [],
+        "details": [
+            {
+                "appID": "WTW647ASEY.com.bp.mobile.bpme.uk",
+			    "paths": [
+    						"/BP/login",
+							"/login"
+    					 ]
+            },
+            {
+                "appID": "2X24V6EPNE.com.bp.mobile.bpme.aus",
+			    "paths": [ 
+    						"/BP/login",
+							"/login"
+    					 ]
+            },
+            {
+                "appID": "F95VH27263.com.bp.mobile.bpme.nl",
+                "paths": [
+                            "/BP/login",
+							"/login"
+                         ]
+            },
+            {
+                "appID": "39XHTH93F2.com.bp.mobile.bpme.us",
+                "paths": [
+                            "/BP/login",
+							"/login"
+                         ]
+            },
+            {
+                "appID": "YEHYU4D47N.com.aml.ev-app",
+                "paths": [
+                            "/BP/login",
+							"/login",
+							"/BP/_nc_external/identity/ui/login/ForgotPasswordInterstitial",
+						    "/_nc_external/identity/ui/login/ForgotPasswordInterstitial"
+                         ]
+            }
+        ]
+    }
+}
+</apex:page>

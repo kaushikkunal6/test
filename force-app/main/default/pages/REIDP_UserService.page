@@ -1,0 +1,8 @@
+<!--
+ * @author Nazim Aliyev
+ * @company Bluewolf, an IBM Company
+ * @date 4/2018
+ *
+ * This page is used to trigger User changes on behalf of Guest User.
+-->
+<apex:page controller="REIDP_UserServiceController" action="{!processRequest}"/>
